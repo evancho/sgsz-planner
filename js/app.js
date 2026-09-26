@@ -12,6 +12,7 @@ import {
   activeAccount,
   allTactics,
   bingshuLabel,
+  bingshuStep,
   buildUsage,
   compareTactics,
   demoFill,
@@ -20,6 +21,7 @@ import {
   generalBlockReason,
   indexNameUse,
   matchesGeneral,
+  matchesTacticPick,
   newId,
   normalizeState,
   ownsDiancang,
@@ -212,7 +214,7 @@ function installBanner() {
 }
 
 function overlay() {
-  return `${pickerHtml()}${dialogHtml()}`;
+  return `${pickerHtml()}${bingshuSheet()}${dialogHtml()}`;
 }
 
 function colophon() {
@@ -558,7 +560,6 @@ function teamView(id) {
       <div class="team-grid">
         ${team.members.map((member, slot) => memberCard(team, member, slot, current)).join('')}
       </div>
-      ${bingshuDock(team, current)}
       ${colophon()}
     </section>`;
 }
@@ -567,26 +568,36 @@ function memberCard(team, member, slot, current) {
   const general = member ? generalsById().get(member.generalId) : null;
   const books = ui.catalog.branches;
   const label = member?.bingshu ? bingshuLabel(member.bingshu, books) : '';
+  const innate = general ? usefulInnate(general) : '';
   return `
     <article class="member">
       <div class="member-top">
-        <span class="tag">${TEAM_POSITIONS[slot]}</span>
-        <span>
+        <div class="member-id">
+          <span class="tag">${TEAM_POSITIONS[slot]}</span>
+          ${general ? `
+            <h3>${esc(plainName(general))}</h3>
+            <span class="member-meta">${esc(general.camp)} · C${general.cost} · ${esc(general.role)}</span>
+            ${aptHtml(general.apt)}
+            ${innate ? `<span class="member-innate">主戰法 ${esc(innate)}</span>` : ''}
+          ` : ''}
+        </div>
+        <span class="member-move">
           <button type="button" class="icon-btn" data-action="move-member" data-team="${esc(team.id)}" data-slot="${slot}" data-dir="-1" ${slot === 0 ? 'disabled' : ''} aria-label="左移">←</button>
           <button type="button" class="icon-btn" data-action="move-member" data-team="${esc(team.id)}" data-slot="${slot}" data-dir="1" ${slot === 2 ? 'disabled' : ''} aria-label="右移">→</button>
         </span>
       </div>
       ${general ? `
-        <h3>${esc(plainName(general))}</h3>
-        <p class="faint">${esc(general.camp)} · C${general.cost} · ${esc(general.role)}</p>
-        <div class="apt-row">${aptHtml(general.apt)}</div>
-        ${usefulInnate(general) ? `<div class="locked"><span class="faint">主戰法</span><br><strong>${esc(usefulInnate(general))}</strong></div>` : ''}
-        ${learnedButton(team, member, slot, 0)}
-        ${learnedButton(team, member, slot, 1)}
-        ${general.role === '內政' ? '<p class="faint">內政武將在遊戲裡不能開兵書。</p>' : `
-          <button type="button" class="btn" data-action="open-bingshu" data-team="${esc(team.id)}" data-slot="${slot}">${label ? `兵書 · ${esc(label)}` : '選擇兵書'}</button>`}
+        <div class="member-learn">
+          ${learnedButton(team, member, slot, 0)}
+          ${learnedButton(team, member, slot, 1)}
+        </div>
+        <div class="member-actions">
+          ${general.role === '內政'
+            ? '<p class="faint">內政武將在遊戲裡不能開兵書。</p>'
+            : `<button type="button" class="btn ${label ? '' : 'primary'} member-book" data-action="open-bingshu" data-team="${esc(team.id)}" data-slot="${slot}">${label ? `兵書 · ${esc(label)}` : '選擇兵書'}</button>`}
+          <button type="button" class="btn-ghost" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出</button>
+        </div>
         ${general.awaken && current.owned[general.id] && !current.owned[general.id].awaken ? '<p class="warn">尚未標記覺醒。遊戲裡通常還沒有第二個傳承槽，仍可先記。</p>' : ''}
-        <button type="button" class="btn-ghost" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出隊伍</button>
       ` : member ? `
         <p class="warn">圖鑑沒有 ${esc(member.generalId)}</p>
         <button type="button" class="btn-ghost" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出</button>
@@ -601,42 +612,74 @@ function learnedButton(team, member, slot, index) {
   const tacticId = member.learned[index];
   const tactic = tacticId ? tacticsById().get(tacticId) : null;
   const text = tactic ? tactic.name : tacticId ? `未知戰法 ${tacticId}` : '選擇傳承戰法';
-  return `<button type="button" class="slot-btn" data-action="open-tactic" data-team="${esc(team.id)}" data-slot="${slot}" data-learned="${index}"><span class="faint">傳承 ${index + 1}</span><br>${esc(text)}</button>`;
-}
-
-function bingshuDock(team, current) {
-  if (!ui.bingshu || ui.bingshu.teamId !== team.id) return '';
-  const member = team.members[ui.bingshu.slot];
-  const general = member ? generalsById().get(member.generalId) : null;
-  if (!general) return '';
-  if (general.role === '內政') {
-    return `<section class="dock"><h3>${esc(plainName(general))}</h3><p>內政武將無法開啟兵書。</p><button type="button" class="btn" data-action="close-bingshu">關閉</button></section>`;
-  }
-  const selected = member.bingshu;
-  const branch = ui.catalog.branches.find((item) => item.id === selected?.branch);
-  return `
-    <section class="dock">
-      <div class="row-between">
-        <h3>${esc(plainName(general))}的兵書</h3>
-        <button type="button" class="btn-ghost" data-action="close-bingshu">收合</button>
-      </div>
-      <p class="faint">先選體系，再各選一層。點同一項可取消。</p>
-      <div class="branches">
-        ${ui.catalog.branches.map((item) => `<button type="button" class="branch ${selected?.branch === item.id ? 'on' : ''}" data-action="pick-branch" data-branch="${esc(item.id)}">${esc(item.name)}<small>${esc(item.blurb)}</small></button>`).join('')}
-      </div>
-      ${branch ? `
-        <p class="layer-label">主兵書</p>
-        <div class="nodes">${branch.primary.map((node) => nodeButton(node, selected?.primary === node.id, 'primary')).join('')}</div>
-        <p class="layer-label">副兵書</p>
-        <div class="nodes">${branch.secondary.map((node) => nodeButton(node, selected?.secondary === node.id, 'secondary')).join('')}</div>
-        <p class="path">${esc(bingshuLabel(selected, ui.catalog.branches) || '還沒選完')}</p>
-        <button type="button" class="btn-ghost" data-action="clear-bingshu">清除兵書</button>
-      ` : '<p class="muted">先選一個兵書體系。</p>'}
-    </section>`;
+  return `<button type="button" class="slot-btn" data-action="open-tactic" data-team="${esc(team.id)}" data-slot="${slot}" data-learned="${index}"><span class="faint">傳承 ${index + 1}</span><strong>${esc(text)}</strong></button>`;
 }
 
 function nodeButton(node, on, layer) {
   return `<button type="button" class="node ${on ? 'on' : ''}" data-action="pick-node" data-layer="${layer}" data-node="${esc(node.id)}"><strong>${esc(node.name)}</strong><small>${esc(node.desc)}</small></button>`;
+}
+
+function bingshuContext(current = account()) {
+  if (!ui.bingshu) return null;
+  const team = current.teams.find((item) => item.id === ui.bingshu.teamId);
+  const member = team?.members?.[ui.bingshu.slot] || null;
+  return { team, member, book: member?.bingshu || null };
+}
+
+function bingshuSheet() {
+  const ctx = bingshuContext();
+  if (!ctx?.team || !ctx.member) return '';
+  const general = generalsById().get(ctx.member.generalId);
+  if (!general) return '';
+  if (general.role === '內政') {
+    return sheet(`${plainName(general)}的兵書`, `
+      <p>內政武將無法開啟兵書。</p>
+      <button type="button" class="btn" data-action="close-bingshu">關閉</button>
+    `);
+  }
+  const selected = ctx.book;
+  const step = ui.bingshu.step || bingshuStep(selected);
+  const branch = ui.catalog.branches.find((item) => item.id === selected?.branch);
+  const steps = [
+    ['branch', '1 體系', true],
+    ['primary', '2 主兵書', Boolean(selected?.branch)],
+    ['secondary', '3 副兵書', Boolean(selected?.primary)],
+  ];
+  const hints = {
+    branch: '先選體系。選完會進到主兵書。',
+    primary: `體系是${branch?.name || ''}。再選主兵書，點同一項可取消。`,
+    secondary: '最後選副兵書。點同一項可取消。',
+  };
+  let body = '';
+  if (step === 'primary' && branch) {
+    body = `<div class="nodes">${branch.primary.map((node) => nodeButton(node, selected?.primary === node.id, 'primary')).join('')}</div>`;
+  } else if (step === 'secondary' && branch) {
+    body = `<div class="nodes">${branch.secondary.map((node) => nodeButton(node, selected?.secondary === node.id, 'secondary')).join('')}</div>`;
+  } else {
+    body = `<div class="branches">${ui.catalog.branches.map((item) => `<button type="button" class="branch ${selected?.branch === item.id ? 'on' : ''}" data-action="pick-branch" data-branch="${esc(item.id)}">${esc(item.name)}<small>${esc(item.blurb)}</small></button>`).join('')}</div>`;
+  }
+  const path = bingshuLabel(selected, ui.catalog.branches);
+  return `
+    <div class="backdrop" data-action="backdrop-close">
+      <section class="sheet bingshu-sheet" role="dialog" aria-modal="true" aria-label="${esc(plainName(general))}的兵書" tabindex="-1" data-autofocus>
+        <div class="bingshu-head row-between">
+          <h3>${esc(plainName(general))}的兵書</h3>
+          <button type="button" class="btn-ghost" data-action="close-bingshu">關閉</button>
+        </div>
+        <div class="bingshu-steps" role="tablist" aria-label="兵書步驟">
+          ${steps.map(([id, label, enabled], index) => `${index ? '<span class="step-arrow" aria-hidden="true">→</span>' : ''}<button type="button" class="chip" data-action="bingshu-step" data-step="${id}" aria-checked="${step === id}" ${enabled ? '' : 'disabled'}>${label}</button>`).join('')}
+        </div>
+        <p class="faint bingshu-hint">${esc(hints[step] || hints.branch)}</p>
+        <div class="bingshu-body">${body}</div>
+        <footer class="sheet-foot">
+          <p class="path">${esc(path || '還沒選完')}</p>
+          <div class="btn-row">
+            ${selected ? '<button type="button" class="btn-ghost" data-action="clear-bingshu">清除</button>' : ''}
+            <button type="button" class="btn primary" data-action="close-bingshu">完成</button>
+          </div>
+        </footer>
+      </section>
+    </div>`;
 }
 
 function backupView() {
@@ -713,26 +756,56 @@ function tacticPicker() {
   if (!team || !member) return '';
   const usage = usageFor(current);
   const map = tacticsById(current);
-  const query = ui.picker.query.trim().toLowerCase();
-  const options = tacticsFor(current).filter((tactic) => !query || `${tactic.name}${tactic.desc}`.toLowerCase().includes(query));
-  return sheet('選擇傳承戰法', `
-    <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋戰法" autocomplete="off">
-    <button type="button" class="choice" data-action="pick-tactic" data-id="">卸下這個戰法</button>
-    ${options.map((tactic) => {
-      const reason = tacticBlockReason({
-        account: current,
-        team,
-        slot: ui.picker.slot,
-        learnedIndex: ui.picker.learned,
-        tactic,
-        general,
-        tacticsById: map,
-        usage,
-      });
-      const warning = reason ? '' : tacticTroopWarning(general, tactic);
-      return `<button type="button" class="choice" data-action="pick-tactic" data-id="${esc(tactic.id)}" ${reason ? 'disabled' : ''}><strong>${esc(tactic.name)}</strong> · ${esc(tactic.type)}${reason ? ` · ${esc(reason)}` : ''}${warning ? `<br><span class="warn">${esc(warning)}</span>` : ''}</button>`;
-    }).join('')}
-  `);
+  const owned = ui.picker.owned || 'owned';
+  const type = ui.picker.type || '全部';
+  const options = tacticsFor(current).filter((tactic) => matchesTacticPick(tactic, {
+    query: ui.picker.query,
+    type,
+    owned,
+    isOwned: tacticOwned(current, tactic.id),
+  })).sort(compareTactics);
+  const ownTabs = [['owned', '已擁有'], ['all', '全部']];
+  const typeTabs = ['全部', ...TACTIC_TYPES];
+  const empty = owned === 'owned'
+    ? '沒有已擁有的戰法。可以改看「全部」。'
+    : '沒有符合的戰法。';
+  return `
+    <div class="backdrop" data-action="backdrop-close">
+      <section class="sheet picker-sheet" role="dialog" aria-modal="true" aria-label="選擇傳承戰法" tabindex="-1">
+        <div class="picker-head row-between">
+          <h3>選擇傳承戰法</h3>
+          <button type="button" class="btn-ghost" data-action="close-picker">關閉</button>
+        </div>
+        <div class="picker-filters">
+          <div class="chips" role="tablist" aria-label="擁有狀態">
+            ${ownTabs.map(([id, label]) => `<button type="button" class="chip" data-action="set-picker-owned" data-value="${id}" aria-checked="${owned === id}">${label}</button>`).join('')}
+          </div>
+          <div class="chips" role="tablist" aria-label="戰法類型">
+            ${typeTabs.map((tab) => `<button type="button" class="chip" data-action="set-picker-type" data-value="${tab}" aria-checked="${type === tab}">${tab}</button>`).join('')}
+          </div>
+          <label class="sr" for="picker-search">搜尋戰法</label>
+          <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋戰法名稱或說明" autocomplete="off">
+          <p class="faint picker-count">${options.length} 個戰法</p>
+        </div>
+        <div class="picker-list">
+          <button type="button" class="choice" data-action="pick-tactic" data-id="">卸下這個戰法</button>
+          ${options.map((tactic) => {
+            const reason = tacticBlockReason({
+              account: current,
+              team,
+              slot: ui.picker.slot,
+              learnedIndex: ui.picker.learned,
+              tactic,
+              general,
+              tacticsById: map,
+              usage,
+            });
+            const warning = reason ? '' : tacticTroopWarning(general, tactic);
+            return `<button type="button" class="choice" data-action="pick-tactic" data-id="${esc(tactic.id)}" ${reason ? 'disabled' : ''}><strong>${esc(tactic.name)}</strong> ${rankTag(tactic)} <span class="tag">${esc(tactic.type)}</span>${reason ? ` <span class="faint">${esc(reason)}</span>` : ''}${warning ? `<br><span class="warn">${esc(warning)}</span>` : ''}</button>`;
+          }).join('') || `<p class="muted">${empty}</p>`}
+        </div>
+      </section>
+    </div>`;
 }
 
 function customPicker() {
@@ -804,7 +877,7 @@ function render() {
   };
   document.title = `${titles[here.name] || '配將簿'} · 配將簿`;
   document.getElementById('app').innerHTML = shell(view());
-  const lock = Boolean(ui.dialog || ui.picker || (ui.filterOpen && window.innerWidth < 980));
+  const lock = Boolean(ui.dialog || ui.picker || ui.bingshu || (ui.filterOpen && window.innerWidth < 980));
   document.body.classList.toggle('lock', lock);
   const nextSheet = sheetKey ? document.querySelector(`[data-scroll="${sheetKey}"]`) : null;
   if (nextSheet) nextSheet.scrollTop = sheetY;
@@ -838,6 +911,7 @@ function onClick(event) {
     ui.dialog = null;
     ui.pendingImport = null;
     ui.picker = null;
+    ui.bingshu = null;
     render();
     return;
   }
@@ -1032,14 +1106,25 @@ function onClick(event) {
       render();
       break;
     case 'open-tactic':
+      ui.bingshu = null;
       ui.picker = {
         kind: 'tactic',
         teamId: el.dataset.team,
         slot: Number(el.dataset.slot),
         learned: Number(el.dataset.learned),
         query: '',
+        owned: 'owned',
+        type: '全部',
       };
       ui.justOpened = true;
+      render();
+      break;
+    case 'set-picker-owned':
+      if (ui.picker?.kind === 'tactic') ui.picker = { ...ui.picker, owned: el.dataset.value };
+      render();
+      break;
+    case 'set-picker-type':
+      if (ui.picker?.kind === 'tactic') ui.picker = { ...ui.picker, type: el.dataset.value };
       render();
       break;
     case 'close-picker':
@@ -1058,28 +1143,48 @@ function onClick(event) {
     case 'move-member':
       moveMember(current, el.dataset.team, Number(el.dataset.slot), Number(el.dataset.dir));
       break;
-    case 'open-bingshu':
-      ui.bingshu = { teamId: el.dataset.team, slot: Number(el.dataset.slot) };
+    case 'open-bingshu': {
+      ui.picker = null;
+      const slot = Number(el.dataset.slot);
+      const team = current.teams.find((item) => item.id === el.dataset.team);
+      const book = team?.members?.[slot]?.bingshu || null;
+      ui.bingshu = { teamId: el.dataset.team, slot, step: bingshuStep(book) };
+      ui.justOpened = true;
       render();
       break;
+    }
     case 'close-bingshu':
       ui.bingshu = null;
       render();
       break;
+    case 'bingshu-step': {
+      const ctx = bingshuContext(current);
+      const next = el.dataset.step;
+      if (next === 'primary' && !ctx?.book?.branch) break;
+      if (next === 'secondary' && !ctx?.book?.primary) break;
+      ui.bingshu = { ...ui.bingshu, step: next };
+      render();
+      break;
+    }
     case 'pick-branch':
+      ui.bingshu = { ...ui.bingshu, step: 'primary' };
       setBingshu(current, (book) => (book?.branch === el.dataset.branch
         ? book
         : { branch: el.dataset.branch, primary: null, secondary: null }));
       break;
-    case 'pick-node':
+    case 'pick-node': {
+      const layer = el.dataset.layer;
+      const next = el.dataset.node;
+      const turningOff = bingshuContext(current)?.book?.[layer] === next;
+      if (layer === 'primary') ui.bingshu = { ...ui.bingshu, step: turningOff ? 'primary' : 'secondary' };
       setBingshu(current, (book) => {
         if (!book?.branch) return book;
-        const layer = el.dataset.layer;
-        const next = el.dataset.node;
         return { ...book, [layer]: book[layer] === next ? null : next };
       });
       break;
+    }
     case 'clear-bingshu':
+      ui.bingshu = { ...ui.bingshu, step: 'branch' };
       setBingshu(current, () => null);
       break;
     case 'download-backup':
@@ -1274,8 +1379,8 @@ function moveMember(current, teamId, slot, dir) {
     }),
   })));
   if (ui.bingshu?.teamId === teamId) {
-    if (ui.bingshu.slot === slot) ui.bingshu = { teamId, slot: next };
-    else if (ui.bingshu.slot === next) ui.bingshu = { teamId, slot };
+    if (ui.bingshu.slot === slot) ui.bingshu = { teamId, slot: next, step: null };
+    else if (ui.bingshu.slot === next) ui.bingshu = { teamId, slot, step: null };
   }
 }
 
@@ -1411,6 +1516,7 @@ function bind() {
   });
   window.addEventListener('hashchange', () => {
     ui.picker = null;
+    ui.bingshu = null;
     ui.dialog = null;
     ui.pendingImport = null;
     render();

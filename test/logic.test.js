@@ -11,7 +11,9 @@ import {
   freshState,
   generalBlockReason,
   indexNameUse,
+  bingshuStep,
   matchesGeneral,
+  matchesTacticPick,
   normalizeState,
   ownsDiancang,
   setGeneralOwned,
@@ -389,6 +391,30 @@ test('demo team cost counts three generals', () => {
     ['zhangfei', { cost: 6 }],
   ]);
   assert.equal(teamCost(account.teams[0], map), 20);
+});
+
+test('tactic picker hides unowned tactics until the filter is opened up', () => {
+  const tactics = [
+    { id: 'shengqi', name: '盛氣凌敵', type: '指揮', desc: '先手' },
+    { id: 'suo', name: '所向披靡', type: '主動', desc: '傷害' },
+    { id: 'bamen', name: '八門金鎖陣', type: '陣法', desc: '主將先攻' },
+  ];
+  const owned = new Set(['shengqi', 'bamen']);
+  const pick = (tactic, filters) => matchesTacticPick(tactic, { isOwned: owned.has(tactic.id), ...filters });
+  assert.deepEqual(tactics.filter((tactic) => pick(tactic)).map((tactic) => tactic.id), ['shengqi', 'bamen']);
+  assert.deepEqual(tactics.filter((tactic) => pick(tactic, { type: '陣法' })).map((tactic) => tactic.id), ['bamen']);
+  assert.deepEqual(
+    tactics.filter((tactic) => pick(tactic, { owned: 'all', query: '披靡' })).map((tactic) => tactic.id),
+    ['suo'],
+  );
+  assert.deepEqual(tactics.filter((tactic) => pick(tactic, { owned: 'free' })).map((tactic) => tactic.id), ['suo']);
+});
+
+test('bingshu steps go from system to primary book to secondary book', () => {
+  assert.equal(bingshuStep(null), 'branch');
+  assert.equal(bingshuStep({ branch: 'jiubian' }), 'primary');
+  assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi' }), 'secondary');
+  assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi', secondary: 'suzhan' }), 'branch');
 });
 
 test('tactics sort S before A, then type, then name', () => {

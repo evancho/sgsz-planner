@@ -202,6 +202,19 @@ export function tacticOwned(account, tacticId) {
   return Boolean(account.tacticsOwned?.[tacticId]);
 }
 
+/** Picker filter. `owned` defaults to already-owned tactics. */
+export function matchesTacticPick(tactic, filters = {}) {
+  const type = filters.type || '全部';
+  if (type !== '全部' && tactic.type !== type) return false;
+  const owned = filters.owned || 'owned';
+  if (owned === 'owned' && !filters.isOwned) return false;
+  if (owned === 'free' && filters.isOwned) return false;
+  const query = String(filters.query || '').trim().toLowerCase();
+  if (!query) return true;
+  const hay = `${tactic.name} ${tactic.desc} ${tactic.type}`.toLowerCase();
+  return hay.includes(query);
+}
+
 export function buildUsage(account) {
   const generalTeams = new Map();
   const nameTeams = new Map();
@@ -310,6 +323,14 @@ export function teamCost(team, generalsById) {
     if (!member?.generalId) return sum;
     return sum + (generalsById.get(member.generalId)?.cost || 0);
   }, 0);
+}
+
+/** Next 兵書 step: 體系, then 主兵書, then 副兵書. A finished book returns to 體系. */
+export function bingshuStep(book) {
+  if (!book?.branch) return 'branch';
+  if (!book.primary) return 'primary';
+  if (!book.secondary) return 'secondary';
+  return 'branch';
 }
 
 export function bingshuLabel(book, branches) {
