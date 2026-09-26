@@ -1,0 +1,419 @@
+{
+  "catalogVersion": "1.0.0",
+  "branches": [
+    {
+      "id": "zuozhan",
+      "name": "作戰",
+      "blurb": "普通攻擊與突擊",
+      "primary": [
+        {
+          "id": "yigu",
+          "name": "一鼓作氣",
+          "desc": "提高普通攻擊與突擊戰法傷害。"
+        },
+        {
+          "id": "buyong",
+          "name": "不勇則死",
+          "desc": "戰鬥拖長後，有機會打出普通攻擊連擊。"
+        },
+        {
+          "id": "qizheng",
+          "name": "奇正相生",
+          "desc": "謀略武將帶突擊時，強化那段傷害。"
+        },
+        {
+          "id": "manyong",
+          "name": "蠻勇非勇",
+          "desc": "提高智力。"
+        },
+        {
+          "id": "shengyi",
+          "name": "勝而益強",
+          "desc": "造成傷害時有機會回復兵力。"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "shengzhan",
+          "name": "勝戰",
+          "desc": "第二回合無視對方一部分防禦。"
+        },
+        {
+          "id": "zhirui",
+          "name": "執銳",
+          "desc": "穩定提高造成的傷害。"
+        },
+        {
+          "id": "wentao",
+          "name": "文韜",
+          "desc": "偏向智力輸出的加成。"
+        },
+        {
+          "id": "wulue",
+          "name": "武略",
+          "desc": "提高普通攻擊傷害。"
+        },
+        {
+          "id": "cangdao",
+          "name": "藏刀",
+          "desc": "略降傷害，換突擊更容易發動。"
+        },
+        {
+          "id": "fenxian",
+          "name": "分險",
+          "desc": "輔助型突擊的加成。"
+        }
+      ]
+    },
+    {
+      "id": "xushi",
+      "name": "虛實",
+      "blurb": "主動戰法",
+      "primary": [
+        {
+          "id": "mouding",
+          "name": "謀定後動",
+          "desc": "不需準備的主動多等一回合，該次傷害大增。"
+        },
+        {
+          "id": "houfa",
+          "name": "後發先至",
+          "desc": "縮短需要準備的主動戰法。"
+        },
+        {
+          "id": "jizhan",
+          "name": "疾戰突圍",
+          "desc": "有機會跳過準備、直接打出。"
+        },
+        {
+          "id": "yizhi",
+          "name": "以治擊亂",
+          "desc": "打控制中的目標時傷害提高。"
+        },
+        {
+          "id": "gongqi",
+          "name": "攻其不備",
+          "desc": "通用的主動傷害強化。"
+        },
+        {
+          "id": "shunying",
+          "name": "順應天時",
+          "desc": "有機會把負面狀態變得更有利。"
+        },
+        {
+          "id": "damou",
+          "name": "大謀不謀",
+          "desc": "高發動率的主動戰法更容易打滿。"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "guimou",
+          "name": "鬼謀",
+          "desc": "提高主動戰法傷害。"
+        },
+        {
+          "id": "miaosuan",
+          "name": "妙算",
+          "desc": "控制生效後有機會追加傷害。"
+        },
+        {
+          "id": "jiangwei-book",
+          "name": "將威",
+          "desc": "提高會心與奇謀出現率。"
+        },
+        {
+          "id": "shenji",
+          "name": "神機",
+          "desc": "提高速度，主動更早出手。"
+        },
+        {
+          "id": "zhanbu",
+          "name": "占卜",
+          "desc": "略為提高一項防禦。"
+        },
+        {
+          "id": "hebian",
+          "name": "合變",
+          "desc": "略為提高另一項防禦。"
+        }
+      ]
+    },
+    {
+      "id": "junxing",
+      "name": "軍形",
+      "blurb": "承傷與反擊",
+      "primary": [
+        {
+          "id": "yanzhen",
+          "name": "嚴陣以待",
+          "desc": "開局降低受到的傷害。"
+        },
+        {
+          "id": "xibing",
+          "name": "惜兵愛民",
+          "desc": "受傷時有機會回復兵力。"
+        },
+        {
+          "id": "biqi",
+          "name": "避其銳氣",
+          "desc": "主將在開局有機會閃避大量傷害。"
+        },
+        {
+          "id": "sanli",
+          "name": "三里而還",
+          "desc": "中段回合獲得反擊。"
+        },
+        {
+          "id": "shoudao",
+          "name": "守而有道",
+          "desc": "降低受到的謀略傷害。"
+        },
+        {
+          "id": "wuzhan",
+          "name": "無戰而勝",
+          "desc": "受到攻擊時有機會反彈壓力。"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "shoushi",
+          "name": "守勢",
+          "desc": "前三回合減傷。"
+        },
+        {
+          "id": "tiejia",
+          "name": "鐵甲",
+          "desc": "降低突擊與普通攻擊造成的傷害。"
+        },
+        {
+          "id": "jingxin",
+          "name": "靜心",
+          "desc": "降低受到的謀略傷害。"
+        },
+        {
+          "id": "fangbei",
+          "name": "防備",
+          "desc": "全程略為減傷，適合持久。"
+        },
+        {
+          "id": "gangrou",
+          "name": "剛柔",
+          "desc": "受到治療時治療量提高。"
+        },
+        {
+          "id": "yongyi",
+          "name": "勇毅",
+          "desc": "面對特定兵種時減傷更多。"
+        }
+      ]
+    },
+    {
+      "id": "jiubian",
+      "name": "九變",
+      "blurb": "治療與輔助",
+      "primary": [
+        {
+          "id": "lindi",
+          "name": "臨敵不亂",
+          "desc": "有機會解除灼燒、震懾等控制。"
+        },
+        {
+          "id": "wugong",
+          "name": "無功而勵",
+          "desc": "自己被控制時回復兵力。"
+        },
+        {
+          "id": "shiruo",
+          "name": "示敵以弱",
+          "desc": "前期少打一點，之後主動更容易發動。"
+        },
+        {
+          "id": "yuanqi",
+          "name": "援其必攻",
+          "desc": "治療殘血友軍時，額外給減傷。"
+        },
+        {
+          "id": "fenji",
+          "name": "分而疾戰",
+          "desc": "速度較高時，降低自己受到的傷害。"
+        },
+        {
+          "id": "youdi",
+          "name": "誘敵之策",
+          "desc": "把敵軍的輸出引到較不痛的位置。"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "yanxu",
+          "name": "掩虛",
+          "desc": "降低受到的謀略爆發。"
+        },
+        {
+          "id": "jiuzhu",
+          "name": "救主",
+          "desc": "主將更安全，適配鋒矢一類陣法。"
+        },
+        {
+          "id": "suzhan",
+          "name": "速戰",
+          "desc": "提高速度。"
+        },
+        {
+          "id": "baizhan",
+          "name": "百戰",
+          "desc": "自帶主動發動率偏低時更好發動。"
+        },
+        {
+          "id": "chiyuan",
+          "name": "馳援",
+          "desc": "治療或援護友軍的收益提高。"
+        },
+        {
+          "id": "lijun",
+          "name": "勵軍",
+          "desc": "隨機提高一名友軍的傷害。"
+        }
+      ]
+    },
+    {
+      "id": "shiji",
+      "name": "始計",
+      "blurb": "續航與屬性",
+      "primary": [
+        {
+          "id": "dongruo",
+          "name": "洞若觀火",
+          "desc": "受到降屬性時有機會免疫。"
+        },
+        {
+          "id": "leshan",
+          "name": "樂善好施",
+          "desc": "治療有機會大幅提高。"
+        },
+        {
+          "id": "zhenge",
+          "name": "枕戈坐甲",
+          "desc": "中段回合有機會獲得抵御。"
+        },
+        {
+          "id": "sanjun",
+          "name": "三軍之眾",
+          "desc": "中段回合獲得急救。"
+        },
+        {
+          "id": "shenqing",
+          "name": "神清氣淨",
+          "desc": "累積受到控制後，清除我軍一人的負面。"
+        },
+        {
+          "id": "yingji",
+          "name": "應機立斷",
+          "desc": "每回合第一次傷害提高。"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "jiuzhan",
+          "name": "久戰",
+          "desc": "獲得少量攻心與倒戈。"
+        },
+        {
+          "id": "yuanmou",
+          "name": "遠謀",
+          "desc": "提高持續傷害。"
+        },
+        {
+          "id": "ruili",
+          "name": "銳利",
+          "desc": "略微提高突擊發動率。"
+        },
+        {
+          "id": "guixin",
+          "name": "歸心",
+          "desc": "略微提高準備戰法發動率。"
+        },
+        {
+          "id": "chuilian",
+          "name": "錘煉",
+          "desc": "降低受到的持續傷害。"
+        },
+        {
+          "id": "tongjun",
+          "name": "統軍",
+          "desc": "提高統率。"
+        }
+      ]
+    },
+    {
+      "id": "yongjian",
+      "name": "用間",
+      "blurb": "特化取捨",
+      "primary": [
+        {
+          "id": "shenshi",
+          "name": "審時度勢",
+          "desc": "自己更易受傷，但治療明顯提高。"
+        },
+        {
+          "id": "bingxing",
+          "name": "兵行詭道",
+          "desc": "第二回合大幅壓低一名敵我的輸出。"
+        },
+        {
+          "id": "yizhi-bao",
+          "name": "以直報怨",
+          "desc": "被控制時有機會反打兵刃傷害。"
+        },
+        {
+          "id": "yitui",
+          "name": "以退為進",
+          "desc": "先減傷，之後每回合逐漸更易受傷。"
+        },
+        {
+          "id": "qianli",
+          "name": "千里疾行",
+          "desc": "大幅降低武力智力，換突擊更容易發動。"
+        },
+        {
+          "id": "chuqi",
+          "name": "出奇制勝",
+          "desc": "壓低一般傷害，換自帶主動更容易發動。"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "kaihe",
+          "name": "開闔",
+          "desc": "成功發動主動後，短時間減傷。"
+        },
+        {
+          "id": "xianzi",
+          "name": "仙姿",
+          "desc": "依魅力提高武力與智力。"
+        },
+        {
+          "id": "chizhong",
+          "name": "持重",
+          "desc": "中後段免疫混亂。"
+        },
+        {
+          "id": "jingzhun",
+          "name": "精準",
+          "desc": "第二、三回合獲得必中。"
+        },
+        {
+          "id": "shanzhan",
+          "name": "善戰",
+          "desc": "每次造成傷害後，傷害略微提高，可疊加。"
+        },
+        {
+          "id": "fenli",
+          "name": "分利",
+          "desc": "受到兵刃或謀略傷害後，分別提高統率或智力。"
+        }
+      ]
+    }
+  ]
+}

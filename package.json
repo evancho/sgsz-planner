@@ -1,0 +1,8 @@
+{
+  "name": "sgsz-planner",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}

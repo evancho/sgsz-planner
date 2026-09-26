@@ -1,0 +1,451 @@
+/**
+ * One-shot catalog builder. Output JSON is the source of truth;
+ * this script is not required at runtime.
+ *
+ * Aptitude letters follow 騎、盾、弓、槍、器械 (wiki column order).
+ */
+import { writeFileSync } from 'node:fs';
+
+const VERSION = '1.0.0';
+
+const APT_ORDER = ['騎', '盾', '弓', '槍', '器械'];
+
+function parseApt(code) {
+  if (!/^[SABC]{5}$/.test(code)) throw new Error(`bad apt ${code}`);
+  const apt = {};
+  APT_ORDER.forEach((key, i) => {
+    apt[key] = code[i];
+  });
+  return apt;
+}
+
+function g(id, name, camp, cost, role, apt, dyn, innate = '') {
+  return {
+    id,
+    name,
+    camp,
+    cost,
+    role,
+    quality: '名將',
+    collection: name.startsWith('典藏'),
+    dynamic: Boolean(dyn),
+    awaken: role === '軍事',
+    apt: parseApt(apt),
+    innate,
+    nameKey: name.startsWith('典藏') ? name.slice(2) : name,
+  };
+}
+
+const generals = [
+  g('wushuang-caopi', '無雙曹丕', '魏', 7, '軍事', 'SASCC', 1),
+  g('sp-xunyu', 'SP荀彧', '魏', 7, '軍事', 'SBAAC', 1),
+  g('jiaxu', '賈詡', '魏', 7, '軍事', 'SASCA', 1),
+  g('simayi', '司馬懿', '魏', 7, '軍事', 'ASASA', 1, '鷹視狼顧'),
+  g('caocao', '曹操', '魏', 7, '軍事', 'SSAAB', 1, '亂世奸雄'),
+  g('zhangliao', '張遼', '魏', 7, '軍事', 'SABSB', 1, '陷陣之志'),
+  g('sp-guanyu', 'SP關羽', '蜀', 7, '軍事', 'SACSC', 1),
+  g('liubei', '劉備', '蜀', 7, '軍事', 'SSAAC', 1, '仁德載世'),
+  g('pangtong', '龐統', '蜀', 7, '軍事', 'CBSAB', 1),
+  g('machao', '馬超', '蜀', 7, '軍事', 'SBBSB', 1),
+  g('zhugeliang', '諸葛亮', '蜀', 7, '軍事', 'CBSSS', 1, '神機妙算'),
+  g('guanyu', '關羽', '蜀', 7, '軍事', 'SACSC', 1, '威震華夏'),
+  g('sp-sunjian', 'SP孫堅', '吳', 7, '軍事', 'ASSAC', 1),
+  g('sp-lvmeng', 'SP呂蒙', '吳', 7, '軍事', 'BBSSS', 1),
+  g('sunshangxiang', '孫尚香', '吳', 7, '軍事', 'SBSAC', 1),
+  g('zhanghong', '張紘', '吳', 7, '內政', 'CCBCA', 0),
+  g('zhangzhao', '張昭', '吳', 7, '內政', 'CCCBC', 0),
+  g('luxun', '陸遜', '吳', 7, '軍事', 'CBSAA', 1),
+  g('wushuang-lvlingqi', '無雙呂玲綺', '群', 7, '軍事', 'SBSAC', 1),
+  g('sp-machao', 'SP馬超', '群', 7, '軍事', 'SBBSB', 1),
+  g('sp-yuanshao', 'SP袁紹', '群', 7, '軍事', 'BASBS', 1),
+  g('menghuo', '孟獲', '群', 7, '軍事', 'SSBAC', 1),
+  g('yuji', '于吉', '群', 7, '軍事', 'CBCCC', 1),
+  g('dongzhuo', '董卓', '群', 7, '軍事', 'ASSBC', 1),
+  g('lvbu', '呂布', '群', 7, '軍事', 'SBSAC', 1),
+  g('sp-lejin', 'SP樂進', '魏', 6, '軍事', 'SABSS', 1),
+  g('sp-dianwei', 'SP典韋', '魏', 6, '軍事', 'ASCAC', 1),
+  g('sp-xuchu', 'SP許褚', '魏', 6, '軍事', 'ASBSC', 1),
+  g('sp-caozhen', 'SP曹真', '魏', 6, '軍事', 'SSBAC', 1),
+  g('sp-liuye', 'SP劉曄', '魏', 6, '軍事', 'SCSBS', 1),
+  g('sp-pangde', 'SP龐德', '魏', 6, '軍事', 'ABSBB', 1),
+  g('sp-guojia', 'SP郭嘉', '魏', 6, '軍事', 'SAABB', 1),
+  g('majun', '馬鈞', '魏', 6, '內政', 'CCCCS', 0),
+  g('wangyi', '王異', '魏', 6, '軍事', 'ABSCB', 1),
+  g('chenqun', '陳群', '魏', 6, '內政', 'CBBCC', 0),
+  g('caozhi', '曹植', '魏', 6, '內政', 'BBCCB', 0),
+  g('xuchu', '許褚', '魏', 6, '軍事', 'ASBSC', 1),
+  g('zhanghe', '張郃', '魏', 6, '軍事', 'ASBSA', 1),
+  g('haozhao', '郝昭', '魏', 6, '軍事', 'BSABS', 1),
+  g('caoren', '曹仁', '魏', 6, '軍事', 'ASBAC', 1),
+  g('zhenji', '甄姬', '魏', 6, '內政', 'BBCCB', 0),
+  g('chengyu', '程昱', '魏', 6, '軍事', 'SCACA', 1),
+  g('xunyu', '荀彧', '魏', 6, '內政', 'CCBCC', 0),
+  g('xunyou', '荀攸', '魏', 6, '軍事', 'SBSCB', 1),
+  g('dianwei', '典韋', '魏', 6, '軍事', 'ASCAC', 1),
+  g('xuhuang', '徐晃', '魏', 6, '軍事', 'ASCAB', 1),
+  g('xiahoudun', '夏侯惇', '魏', 6, '軍事', 'SACAB', 1),
+  g('zhonghui', '鍾會', '魏', 6, '軍事', 'ABSAA', 1),
+  g('wushuang-xingcai', '無雙星彩', '蜀', 6, '軍事', 'BSCSB', 1),
+  g('wushuang-guanping', '無雙關平', '蜀', 6, '軍事', 'SACSC', 1),
+  g('sp-huangzhong', 'SP黃忠', '蜀', 6, '軍事', 'ASSAC', 1),
+  g('sp-fazheng', 'SP法正', '蜀', 6, '軍事', 'BSAAA', 1),
+  g('sp-zhugeliang', 'SP諸葛亮', '蜀', 6, '軍事', 'CBSSS', 1),
+  g('yiji', '伊籍', '蜀', 6, '軍事', 'SBBAC', 1),
+  g('yanyan', '嚴顏', '蜀', 6, '軍事', 'BASAB', 1),
+  g('zhangbao', '張苞', '蜀', 6, '軍事', 'AABSC', 1),
+  g('guanxing', '關興', '蜀', 6, '軍事', 'AABSC', 1),
+  g('madai', '馬岱', '蜀', 6, '軍事', 'SSBAB', 1),
+  g('guanyinping', '關銀屏', '蜀', 6, '軍事', 'SBCSC', 1),
+  g('mayunlu', '馬雲祿', '蜀', 6, '軍事', 'SCBAC', 1),
+  g('chendao', '陳到', '蜀', 6, '軍事', 'CBBSB', 1),
+  g('jiangwei', '姜維', '蜀', 6, '軍事', 'SASAC', 1),
+  g('weiyan', '魏延', '蜀', 6, '軍事', 'ASBSC', 1),
+  g('huangzhong', '黃忠', '蜀', 6, '軍事', 'ASSAC', 1),
+  g('zhaoyun', '趙雲', '蜀', 6, '軍事', 'SAASC', 1, '一身是膽'),
+  g('zhangfei', '張飛', '蜀', 6, '軍事', 'ASCSC', 1, '萬夫莫敵'),
+  g('wushuang-daqiao', '無雙大喬', '吳', 6, '軍事', 'ACSAC', 1),
+  g('wushuang-zhuran', '無雙朱然', '吳', 6, '軍事', 'BBSAB', 1),
+  g('sp-bulianshi', 'SP步練師', '吳', 6, '軍事', 'CCSCA', 1),
+  g('sp-zhouyu', 'SP周瑜', '吳', 6, '軍事', 'BASAC', 1),
+  g('mazhong', '馬忠', '吳', 6, '軍事', 'CASAA', 1),
+  g('lingtong', '凌統', '吳', 6, '軍事', 'SACAC', 1),
+  g('lusu', '魯肅', '吳', 6, '軍事', 'BASAA', 1),
+  g('sunquan', '孫權', '吳', 6, '軍事', 'SBSAC', 1),
+  g('ganning', '甘寧', '吳', 6, '軍事', 'AASSS', 1),
+  g('zhoutai', '周泰', '吳', 6, '軍事', 'SSAAC', 1),
+  g('lvmeng', '呂蒙', '吳', 6, '軍事', 'BBSSS', 1),
+  g('taishici', '太史慈', '吳', 6, '軍事', 'SCSBC', 1),
+  g('sunjian', '孫堅', '吳', 6, '軍事', 'ASSAC', 1),
+  g('lukang', '陸抗', '吳', 6, '軍事', 'ABSAS', 1),
+  g('zhouyu', '周瑜', '吳', 6, '軍事', 'BASAC', 1),
+  g('sp-luzhi', 'SP盧植', '群', 6, '軍事', 'BCSBS', 1),
+  g('sp-diaochan', 'SP貂蟬', '群', 6, '軍事', 'BCSCC', 1),
+  g('sp-dongzhuo', 'SP董卓', '群', 6, '軍事', 'ASSBC', 1),
+  g('sp-zhangbao', 'SP張寶', '群', 6, '軍事', 'BSAAS', 1),
+  g('sp-huangfusong', 'SP皇甫嵩', '群', 6, '軍事', 'AAASS', 1),
+  g('sp-zhujun', 'SP朱儁', '群', 6, '軍事', 'CBSBA', 1),
+  g('quyi', '麴義', '群', 6, '軍事', 'BCSCB', 1),
+  g('xuyou', '許攸', '群', 6, '軍事', 'AAAAC', 1),
+  g('caiyong', '蔡邕', '群', 6, '內政', 'CCBCC', 0),
+  g('duosi', '朵思大王', '群', 6, '軍事', 'SSACC', 1),
+  g('jushou', '沮授', '群', 6, '軍事', 'BSSAA', 1),
+  g('yuanshu', '袁術', '群', 6, '軍事', 'SBSBC', 1),
+  g('tianfeng', '田豐', '群', 6, '軍事', 'ASBAA', 1),
+  g('lvlingqi', '呂玲綺', '群', 6, '軍事', 'SBSAC', 1),
+  g('zhurong', '祝融夫人', '群', 6, '軍事', 'SAAAC', 1),
+  g('wutugu', '兀突骨', '群', 6, '軍事', 'SSCBC', 1),
+  g('gongsunzan', '公孫瓚', '群', 6, '軍事', 'SCSCB', 1),
+  g('yuanshao', '袁紹', '群', 6, '軍事', 'BASBS', 1),
+  g('zhangjiao', '張角', '群', 6, '軍事', 'ASSBA', 1),
+  g('wushuang-zhenji', '無雙甄姬', '魏', 5, '軍事', 'SBSBC', 1),
+  g('manchong', '滿寵', '魏', 5, '軍事', 'ASABA', 1),
+  g('wangshuang', '王雙', '魏', 5, '軍事', 'ASCAB', 1),
+  g('wangyuanji', '王元姬', '魏', 5, '軍事', 'ABASB', 1),
+  g('caochun', '曹純', '魏', 5, '軍事', 'SCBBC', 1),
+  g('yujin', '于禁', '魏', 5, '軍事', 'ASBAC', 1),
+  g('lejin', '樂進', '魏', 5, '軍事', 'SABSS', 1),
+  g('dengai', '鄧艾', '魏', 5, '軍事', 'ABASS', 1),
+  g('xiahouyuan', '夏侯淵', '魏', 5, '軍事', 'SBSBA', 1),
+  g('pangde', '龐德', '魏', 5, '軍事', 'ABSBB', 1),
+  g('guojia', '郭嘉', '魏', 5, '軍事', 'SAABB', 1),
+  g('jiangwan', '蔣琬', '蜀', 5, '內政', 'BCSCS', 0),
+  g('wangping', '王平', '蜀', 5, '軍事', 'BBSCC', 1),
+  g('xushu', '徐庶', '蜀', 5, '軍事', 'SBABB', 1),
+  g('wushuang-xiaoqiao', '無雙小喬', '吳', 5, '軍事', 'BCAAC', 1),
+  g('huanggai', '黃蓋', '吳', 5, '軍事', 'BASAB', 1),
+  g('chengpu', '程普', '吳', 5, '軍事', 'BAASB', 1),
+  g('sunce', '孫策', '吳', 5, '軍事', 'SBASA', 1),
+  g('sp-zhangliang', 'SP張梁', '群', 5, '軍事', 'BABSA', 1),
+  g('zhangrang', '張讓', '群', 5, '軍事', 'CSABB', 1),
+  g('gaolan', '高覽', '群', 5, '軍事', 'AABSC', 1),
+  g('muludawang', '木鹿大王', '群', 5, '軍事', 'SCCAC', 1),
+  g('liru', '李儒', '群', 5, '軍事', 'SBABB', 1),
+  g('gaoshun', '高順', '群', 5, '軍事', 'CSBCS', 1),
+  g('mateng', '馬騰', '群', 5, '軍事', 'SCBCC', 1),
+  g('wenchou', '文醜', '群', 5, '軍事', 'AASAC', 1),
+  g('huaxiong', '華雄', '群', 5, '軍事', 'SBBAC', 1),
+  g('yanliang', '顏良', '群', 5, '軍事', 'AABSC', 1),
+  g('huatuo', '華佗', '群', 5, '軍事', 'CCCCC', 1),
+  g('zuoci', '左慈', '群', 5, '軍事', 'CCCCC', 1),
+  g('caopi', '曹丕', '魏', 4, '軍事', 'AASCC', 1),
+  g('sp-huangyueying', 'SP黃月英', '蜀', 4, '軍事', 'CCCCS', 1),
+  g('zhangshi', '張氏', '蜀', 4, '軍事', 'ABBSC', 1),
+  g('huangyueying', '黃月英', '蜀', 4, '軍事', 'CCCCS', 1),
+  g('fazheng', '法正', '蜀', 4, '軍事', 'BSAAA', 1),
+  g('zhugege', '諸葛恪', '吳', 4, '軍事', 'CCASA', 1),
+  g('daqiao', '大喬', '吳', 4, '軍事', 'CCBCC', 1),
+  g('diaochan', '貂蟬', '群', 4, '軍事', 'BCBCC', 1),
+  g('chengong', '陳宮', '群', 4, '軍事', 'ABSAA', 1),
+  g('simahui', '司馬徽', '群', 4, '內政', 'CCBCC', 0),
+  g('zhangchunhua', '張春華', '魏', 3, '軍事', 'AAACB', 1),
+  g('xiaoqiao', '小喬', '吳', 3, '軍事', 'CCBCC', 1),
+  g('zoushi', '鄒氏', '群', 3, '內政', 'CBCCC', 0),
+  g('dongbai', '董白', '群', 3, '軍事', 'CCCBC', 1),
+  g('caiwenji', '蔡文姬', '群', 3, '軍事', 'BCCCC', 1),
+  g('diancang-zhouyu', '典藏周瑜', '吳', 6, '軍事', 'BASAC', 1),
+  g('diancang-luxun', '典藏陸遜', '吳', 7, '軍事', 'CBSAA', 1),
+  g('diancang-sunshangxiang', '典藏孫尚香', '吳', 7, '軍事', 'SBSAC', 1),
+];
+
+const ids = new Set();
+for (const general of generals) {
+  if (ids.has(general.id)) throw new Error(`dup ${general.id}`);
+  ids.add(general.id);
+}
+
+function t(id, name, type, source, from, troops, desc) {
+  return {
+    id,
+    name,
+    type,
+    source,
+    from,
+    troops,
+    copies: 1,
+    orange: true,
+    desc,
+  };
+}
+
+const star = (id, name, type, source, from, troops, desc) =>
+  t(id, name, type, source, from, troops, desc);
+
+const tactics = [
+  star('bamen', '八門金鎖陣', '陣法', '傳承', ['caoren'], null, '戰鬥前三回合，壓低敵軍兩人的輸出，並讓我軍主將先手行動。'),
+  star('fengshi', '鋒矢陣', '陣法', '傳承', ['huangyueying', 'lejin'], ['騎', '盾', '槍'], '主將傷害提高也更易受傷；副將傷害下降，但更耐打。'),
+  star('jixing', '箕形陣', '陣法', '事件', [], null, '壓低敵軍主將造成的傷害。'),
+  star('yulin', '魚鱗陣', '陣法', '事件', [], null, '提升統率，並有機會獲得抵御或治療。'),
+  star('sanshi', '三勢陣', '陣法', '事件', [], null, '三人陣營都不同時，強化主將自帶主動或突擊，並輪流調整副將攻防。'),
+  star('wufeng', '武鋒陣', '陣法', '事件', [], null, '依我軍陣營搭配，在戰鬥中提高傷害。'),
+  star('xingyi', '形一陣', '陣法', '事件', [], null, '提高主將輸出，並讓副將更耐打。'),
+  star('qianlong', '潛龍陣', '陣法', '事件', [], null, '前幾回合收著，之後提高我軍傷害。'),
+  star('zanbi', '暫避其鋒', '指揮', '傳承', ['pangde', 'xushu'], null, '戰鬥開局數回合，降低我軍全體受到的傷害。'),
+  star('shengqi', '盛氣凌人', '指揮', '傳承', ['yanliang'], null, '開局讓敵軍多人進入繳械，壓制普通攻擊與突擊。'),
+  star('zuoshou', '坐守孤城', '指揮', '傳承', [], null, '降低受到的傷害，並在受傷後回復兵力。'),
+  star('zhengzhuang', '整裝待發', '指揮', '傳承', [], null, '開局數回合獲得抵御，擋下一次傷害。'),
+  star('yudi', '御敵屏障', '指揮', '傳承', [], null, '開局為我軍提供一層減傷。'),
+  star('yingcheng', '嬰城自守', '指揮', '傳承', [], null, '降低我軍受到的傷害，適合拖節奏。'),
+  star('fuji', '撫輯軍民', '指揮', '事件', [], null, '穩定治療我軍兵力最低的武將。'),
+  star('guagu', '刮骨療毒', '指揮', '事件', [], null, '治療我軍，並有機會解除負面狀態。'),
+  star('pozhen', '破陣摧堅', '主動', '傳承', ['sunce', 'wenchou'], null, '降低目標統率與智力，並造成兵刃傷害。需要準備一回合。'),
+  star('suoxiang', '所向披靡', '主動', '傳承', [], null, '對敵軍群體造成兵刃傷害。'),
+  star('simian', '四面楚歌', '主動', '傳承', [], null, '對敵軍全體造成傷害，適合收割殘兵。'),
+  star('wanjian', '萬箭齊發', '主動', '傳承', [], null, '對敵軍群體造成兵刃傷害，吃弓兵隊伍的爆發。'),
+  star('chensha', '沉沙決水', '主動', '傳承', [], null, '對敵軍群體造成謀略傷害。'),
+  star('hantian', '熯天熾地', '主動', '傳承', [], null, '對敵軍群體施加灼燒，之後持續掉血。'),
+  star('fengzhuo', '風助火勢', '主動', '傳承', [], null, '提高已有灼燒的傷害，或再補一層火。'),
+  star('yaoshu', '妖術', '主動', '傳承', [], null, '對敵軍施加混亂，讓他們打亂出手。'),
+  star('zongbing', '縱兵劫掠', '主動', '傳承', [], null, '對敵軍單體造成較高兵刃傷害。'),
+  star('shengdong', '聲東擊西', '主動', '傳承', [], null, '打擊敵軍單體，並有機會附加控制。'),
+  star('chenhuo', '趁火打劫', '主動', '傳承', [], null, '優先打擊已經受傷或帶負面狀態的目標。'),
+  star('taiping', '太平道法', '主動', '傳承', ['zhangjiao'], null, '對敵軍群體造成謀略傷害，智力越高越痛。'),
+  star('shibie', '士別三日', '主動', '事件', ['lvmeng'], null, '準備後打出高額謀略傷害，並提高之後的輸出。'),
+  star('weimou', '威謀靡亢', '主動', '事件', [], null, '謀略傷害之外，還能壓低目標的主動戰法。'),
+  star('duohun', '奪魂挾魄', '主動', '事件', [], null, '偷取敵軍屬性，此消彼長。'),
+  star('beishe', '杯蛇鬼車', '主動', '傳承', [], null, '對敵軍群體造成謀略傷害，並有機會附加沙暴或混亂一類負面。'),
+  star('shangbing', '上兵伐謀', '主動', '傳承', [], null, '謀略單體爆發，適合高智力武將。'),
+  star('shier', '十二奇策', '主動', '傳承', ['xunyou'], null, '連續對敵軍發動謀略攻擊，打多段傷害。'),
+  star('liaoshi', '料事如神', '主動', '傳承', [], null, '有機會讓敵軍的主動戰法落空，並反打謀略傷害。'),
+  star('woxin', '臥薪嘗膽', '主動', '傳承', [], null, '先降低自己的傷害，幾回合後大幅提高輸出。'),
+  star('anduchen', '暗渡陳倉', '主動', '傳承', [], null, '準備後對敵軍單體造成高額兵刃傷害。'),
+  star('bingwu', '兵無常勢', '主動', '傳承', [], null, '依當前兵種與局面，在兵刃和謀略之間切換輸出。'),
+  star('luolei', '落雷', '主動', '傳承', [], null, '對敵軍單體造成謀略傷害，發動率較高。'),
+  star('chengxu', '乘虛而入', '主動', '傳承', [], null, '攻擊已經被控制的目標時傷害更高。'),
+  star('yiqi', '一騎當千', '突擊', '傳承', [], null, '普通攻擊後對敵軍單體打出高額兵刃傷害。'),
+  star('baiqi', '百騎劫營', '突擊', '傳承', [], null, '普通攻擊後追打敵軍群體。'),
+  star('shouqi', '手起刀落', '突擊', '傳承', [], null, '普通攻擊後補一刀，有機會打出會心。'),
+  star('baoli', '暴戾無仁', '突擊', '傳承', [], null, '普通攻擊後對敵軍單體造成沉重兵刃傷害。'),
+  star('guishen', '鬼神霆威', '突擊', '傳承', [], null, '普通攻擊後對敵軍群體發動兵刃追擊。'),
+  star('hengge', '橫戈躍馬', '突擊', '傳承', [], null, '普通攻擊後連續追打，適合騎兵爆發。'),
+  star('jiaofeng', '交鋒接刃', '突擊', '傳承', [], null, '普通攻擊後有機會再打一段，並提高連擊收益。'),
+  star('zherui', '折銳摧矜', '突擊', '傳承', [], null, '普通攻擊後壓低目標統率，讓後續物理更痛。'),
+  star('ancang', '暗藏殺機', '突擊', '傳承', [], null, '普通攻擊後對兵力較低的目標補刀。'),
+  star('wangong', '彎弓飲羽', '被動', '傳承', ['huangzhong'], null, '提高普通攻擊傷害，適合弓兵主力。'),
+  star('baibu', '百步穿楊', '被動', '傳承', [], null, '提高會心率，讓遠程輸出更穩。'),
+  star('yongguan', '勇冠三軍', '被動', '傳承', [], null, '戰鬥中逐步提高自身造成的傷害。'),
+  star('tieqi', '鐵騎驅馳', '被動', '傳承', [], null, '提高騎兵普通攻擊與追擊的傷害。'),
+  star('hejun', '合軍聚眾', '被動', '傳承', [], null, '提高自身兵力上限或開局兵力。'),
+  star('pojun', '破軍', '被動', '傳承', [], null, '攻擊時無視目標一部分防禦。'),
+  star('buru', '不辱使命', '被動', '傳承', [], null, '我軍其他人受傷時，自己獲得增傷或減傷。'),
+  star('zhongyong', '忠勇義烈', '被動', '傳承', [], null, '為友軍分擔傷害，自己更扛打。'),
+  star('yiyi', '以逸待勞', '被動', '傳承', [], null, '前幾回合減傷，之後提高傷害。'),
+  star('xiliang', '西涼鐵騎', '兵種', '傳承', ['mateng'], ['騎'], '將部隊轉為西涼鐵騎，提高騎兵爆發。'),
+  star('hubao', '虎豹騎', '兵種', '傳承', ['caochun'], ['騎'], '將部隊轉為虎豹騎，普通攻擊後更容易追擊。'),
+  star('baima', '白馬義從', '兵種', '傳承', ['gongsunzan'], ['騎'], '將部隊轉為白馬義從，提高速度、搶先手。'),
+  star('xianzhen', '陷陣營', '兵種', '傳承', ['gaoshun'], ['盾'], '將部隊轉為陷陣營，提高盾兵的生存與反打。'),
+  star('tengjia', '藤甲兵', '兵種', '傳承', ['wutugu'], ['盾'], '將部隊轉為藤甲兵，大幅降低兵刃傷害，但怕灼燒。'),
+  star('huwei', '虎衛軍', '兵種', '傳承', ['dianwei'], ['盾'], '將部隊轉為虎衛軍，提高反擊與扛傷。'),
+  star('daji', '大戟士', '兵種', '傳承', ['zhanghe'], ['槍'], '將部隊轉為大戟士，強化槍兵對騎兵的壓制。'),
+  star('baimao', '白毦兵', '兵種', '傳承', ['chendao'], ['槍'], '將部隊轉為白毦兵，提高槍兵輸出。'),
+  star('wudang', '無當飛軍', '兵種', '傳承', ['wangping'], ['弓'], '將部隊轉為無當飛軍，提高弓兵傷害與續航。'),
+  star('jinfan', '錦帆軍', '兵種', '傳承', ['ganning'], ['弓'], '將部隊轉為錦帆軍，強化弓兵的追擊與水戰感。'),
+  star('xiangbing', '象兵', '兵種', '傳承', ['muludawang'], ['器械'], '將部隊轉為象兵，提高攻城與前排壓力。'),
+  star('qingzhou', '青州兵', '兵種', '傳承', ['caocao'], ['盾'], '將部隊轉為青州兵，受傷後有機會回血。'),
+  star('xiandeng', '先登死士', '兵種', '傳承', [], ['槍'], '將部隊轉為先登死士，開局更敢換血。'),
+  star('jiefan', '解煩兵', '兵種', '傳承', ['sunquan'], ['槍'], '將部隊轉為解煩兵，提高槍兵的穩定輸出。'),
+  star('youji', '游擊軍', '兵種', '傳承', [], ['弓'], '將部隊轉為游擊軍，提高機動與第一輪傷害。'),
+  star('guose', '國色', '內政', '傳承', ['zoushi'], null, '提高魅力，尋訪與鍛造一類委任更好用。'),
+  star('jingshu', '經術政要', '內政', '傳承', [], null, '提高政治，內政委任的收益上升。'),
+  star('nenggong', '能工巧匠', '內政', '傳承', ['majun'], null, '縮短鍛造時間或降低鍛造消耗。'),
+  star('kaituo', '開拓疆土', '內政', '傳承', [], null, '提高資源產量。'),
+  star('fengyi', '豐衣足食', '內政', '傳承', [], null, '提高石料、糧食一類資源的產量。'),
+  star('chujiang', '出將入相', '內政', '傳承', [], null, '同時略為提高政治與魅力。'),
+];
+
+const tacticIds = new Set();
+for (const tactic of tactics) {
+  if (tacticIds.has(tactic.id)) throw new Error(`dup tactic ${tactic.id}`);
+  tacticIds.add(tactic.id);
+  for (const fromId of tactic.from) {
+    if (!ids.has(fromId)) throw new Error(`missing general ${fromId} for ${tactic.id}`);
+  }
+}
+
+const node = (id, name, desc) => ({ id, name, desc });
+
+const bingshu = {
+  catalogVersion: VERSION,
+  branches: [
+    {
+      id: 'zuozhan',
+      name: '作戰',
+      blurb: '普通攻擊與突擊',
+      primary: [
+        node('yigu', '一鼓作氣', '提高普通攻擊與突擊戰法傷害。'),
+        node('buyong', '不勇則死', '戰鬥拖長後，有機會打出普通攻擊連擊。'),
+        node('qizheng', '奇正相生', '謀略武將帶突擊時，強化那段傷害。'),
+        node('manyong', '蠻勇非勇', '提高智力。'),
+        node('shengyi', '勝而益強', '造成傷害時有機會回復兵力。'),
+      ],
+      secondary: [
+        node('shengzhan', '勝戰', '第二回合無視對方一部分防禦。'),
+        node('zhirui', '執銳', '穩定提高造成的傷害。'),
+        node('wentao', '文韜', '偏向智力輸出的加成。'),
+        node('wulue', '武略', '提高普通攻擊傷害。'),
+        node('cangdao', '藏刀', '略降傷害，換突擊更容易發動。'),
+        node('fenxian', '分險', '輔助型突擊的加成。'),
+      ],
+    },
+    {
+      id: 'xushi',
+      name: '虛實',
+      blurb: '主動戰法',
+      primary: [
+        node('mouding', '謀定後動', '不需準備的主動多等一回合，該次傷害大增。'),
+        node('houfa', '後發先至', '縮短需要準備的主動戰法。'),
+        node('jizhan', '疾戰突圍', '有機會跳過準備、直接打出。'),
+        node('yizhi', '以治擊亂', '打控制中的目標時傷害提高。'),
+        node('gongqi', '攻其不備', '通用的主動傷害強化。'),
+        node('shunying', '順應天時', '有機會把負面狀態變得更有利。'),
+        node('damou', '大謀不謀', '高發動率的主動戰法更容易打滿。'),
+      ],
+      secondary: [
+        node('guimou', '鬼謀', '提高主動戰法傷害。'),
+        node('miaosuan', '妙算', '控制生效後有機會追加傷害。'),
+        node('jiangwei-book', '將威', '提高會心與奇謀出現率。'),
+        node('shenji', '神機', '提高速度，主動更早出手。'),
+        node('zhanbu', '占卜', '略為提高一項防禦。'),
+        node('hebian', '合變', '略為提高另一項防禦。'),
+      ],
+    },
+    {
+      id: 'junxing',
+      name: '軍形',
+      blurb: '承傷與反擊',
+      primary: [
+        node('yanzhen', '嚴陣以待', '開局降低受到的傷害。'),
+        node('xibing', '惜兵愛民', '受傷時有機會回復兵力。'),
+        node('biqi', '避其銳氣', '主將在開局有機會閃避大量傷害。'),
+        node('sanli', '三里而還', '中段回合獲得反擊。'),
+        node('shoudao', '守而有道', '降低受到的謀略傷害。'),
+        node('wuzhan', '無戰而勝', '受到攻擊時有機會反彈壓力。'),
+      ],
+      secondary: [
+        node('shoushi', '守勢', '前三回合減傷。'),
+        node('tiejia', '鐵甲', '降低突擊與普通攻擊造成的傷害。'),
+        node('jingxin', '靜心', '降低受到的謀略傷害。'),
+        node('fangbei', '防備', '全程略為減傷，適合持久。'),
+        node('gangrou', '剛柔', '受到治療時治療量提高。'),
+        node('yongyi', '勇毅', '面對特定兵種時減傷更多。'),
+      ],
+    },
+    {
+      id: 'jiubian',
+      name: '九變',
+      blurb: '治療與輔助',
+      primary: [
+        node('lindi', '臨敵不亂', '有機會解除灼燒、震懾等控制。'),
+        node('wugong', '無功而勵', '自己被控制時回復兵力。'),
+        node('shiruo', '示敵以弱', '前期少打一點，之後主動更容易發動。'),
+        node('yuanqi', '援其必攻', '治療殘血友軍時，額外給減傷。'),
+        node('fenji', '分而疾戰', '速度較高時，降低自己受到的傷害。'),
+        node('youdi', '誘敵之策', '把敵軍的輸出引到較不痛的位置。'),
+      ],
+      secondary: [
+        node('yanxu', '掩虛', '降低受到的謀略爆發。'),
+        node('jiuzhu', '救主', '主將更安全，適配鋒矢一類陣法。'),
+        node('suzhan', '速戰', '提高速度。'),
+        node('baizhan', '百戰', '自帶主動發動率偏低時更好發動。'),
+        node('chiyuan', '馳援', '治療或援護友軍的收益提高。'),
+        node('lijun', '勵軍', '隨機提高一名友軍的傷害。'),
+      ],
+    },
+    {
+      id: 'shiji',
+      name: '始計',
+      blurb: '續航與屬性',
+      primary: [
+        node('dongruo', '洞若觀火', '受到降屬性時有機會免疫。'),
+        node('leshan', '樂善好施', '治療有機會大幅提高。'),
+        node('zhenge', '枕戈坐甲', '中段回合有機會獲得抵御。'),
+        node('sanjun', '三軍之眾', '中段回合獲得急救。'),
+        node('shenqing', '神清氣淨', '累積受到控制後，清除我軍一人的負面。'),
+        node('yingji', '應機立斷', '每回合第一次傷害提高。'),
+      ],
+      secondary: [
+        node('jiuzhan', '久戰', '獲得少量攻心與倒戈。'),
+        node('yuanmou', '遠謀', '提高持續傷害。'),
+        node('ruili', '銳利', '略微提高突擊發動率。'),
+        node('guixin', '歸心', '略微提高準備戰法發動率。'),
+        node('chuilian', '錘煉', '降低受到的持續傷害。'),
+        node('tongjun', '統軍', '提高統率。'),
+      ],
+    },
+    {
+      id: 'yongjian',
+      name: '用間',
+      blurb: '特化取捨',
+      primary: [
+        node('shenshi', '審時度勢', '自己更易受傷，但治療明顯提高。'),
+        node('bingxing', '兵行詭道', '第二回合大幅壓低一名敵我的輸出。'),
+        node('yizhi-bao', '以直報怨', '被控制時有機會反打兵刃傷害。'),
+        node('yitui', '以退為進', '先減傷，之後每回合逐漸更易受傷。'),
+        node('qianli', '千里疾行', '大幅降低武力智力，換突擊更容易發動。'),
+        node('chuqi', '出奇制勝', '壓低一般傷害，換自帶主動更容易發動。'),
+      ],
+      secondary: [
+        node('kaihe', '開闔', '成功發動主動後，短時間減傷。'),
+        node('xianzi', '仙姿', '依魅力提高武力與智力。'),
+        node('chizhong', '持重', '中後段免疫混亂。'),
+        node('jingzhun', '精準', '第二、三回合獲得必中。'),
+        node('shanzhan', '善戰', '每次造成傷害後，傷害略微提高，可疊加。'),
+        node('fenli', '分利', '受到兵刃或謀略傷害後，分別提高統率或智力。'),
+      ],
+    },
+  ],
+};
+
+const meta = {
+  catalogVersion: VERSION,
+  updated: '2026-09-26',
+  scope: '常見五星名將與常見 S 級戰法。名冊刻意未收全，直接編輯 data 底下的 JSON 即可擴充。',
+};
+
+writeFileSync('data/meta.json', `${JSON.stringify(meta, null, 2)}\n`);
+writeFileSync('data/generals.json', `${JSON.stringify({ catalogVersion: VERSION, generals }, null, 2)}\n`);
+writeFileSync('data/tactics.json', `${JSON.stringify({ catalogVersion: VERSION, tactics }, null, 2)}\n`);
+writeFileSync('data/bingshu.json', `${JSON.stringify(bingshu, null, 2)}\n`);
+
+const byCamp = {};
+for (const general of generals) byCamp[general.camp] = (byCamp[general.camp] || 0) + 1;
+console.log(`generals ${generals.length}`, byCamp, `tactics ${tactics.length}`);

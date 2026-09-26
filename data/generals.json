@@ -1,0 +1,2965 @@
+{
+  "catalogVersion": "1.0.0",
+  "generals": [
+    {
+      "id": "wushuang-caopi",
+      "name": "無雙曹丕",
+      "camp": "魏",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "S",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "無雙曹丕"
+    },
+    {
+      "id": "sp-xunyu",
+      "name": "SP荀彧",
+      "camp": "魏",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "A",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "SP荀彧"
+    },
+    {
+      "id": "jiaxu",
+      "name": "賈詡",
+      "camp": "魏",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "S",
+        "槍": "C",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "賈詡"
+    },
+    {
+      "id": "simayi",
+      "name": "司馬懿",
+      "camp": "魏",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "A",
+        "槍": "S",
+        "器械": "A"
+      },
+      "innate": "鷹視狼顧",
+      "nameKey": "司馬懿"
+    },
+    {
+      "id": "caocao",
+      "name": "曹操",
+      "camp": "魏",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "S",
+        "弓": "A",
+        "槍": "A",
+        "器械": "B"
+      },
+      "innate": "亂世奸雄",
+      "nameKey": "曹操"
+    },
+    {
+      "id": "zhangliao",
+      "name": "張遼",
+      "camp": "魏",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "B",
+        "槍": "S",
+        "器械": "B"
+      },
+      "innate": "陷陣之志",
+      "nameKey": "張遼"
+    },
+    {
+      "id": "sp-guanyu",
+      "name": "SP關羽",
+      "camp": "蜀",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "C",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "SP關羽"
+    },
+    {
+      "id": "liubei",
+      "name": "劉備",
+      "camp": "蜀",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "S",
+        "弓": "A",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "仁德載世",
+      "nameKey": "劉備"
+    },
+    {
+      "id": "pangtong",
+      "name": "龐統",
+      "camp": "蜀",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "龐統"
+    },
+    {
+      "id": "machao",
+      "name": "馬超",
+      "camp": "蜀",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "B",
+        "槍": "S",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "馬超"
+    },
+    {
+      "id": "zhugeliang",
+      "name": "諸葛亮",
+      "camp": "蜀",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "B",
+        "弓": "S",
+        "槍": "S",
+        "器械": "S"
+      },
+      "innate": "神機妙算",
+      "nameKey": "諸葛亮"
+    },
+    {
+      "id": "guanyu",
+      "name": "關羽",
+      "camp": "蜀",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "C",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "威震華夏",
+      "nameKey": "關羽"
+    },
+    {
+      "id": "sp-sunjian",
+      "name": "SP孫堅",
+      "camp": "吳",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "SP孫堅"
+    },
+    {
+      "id": "sp-lvmeng",
+      "name": "SP呂蒙",
+      "camp": "吳",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "B",
+        "弓": "S",
+        "槍": "S",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "SP呂蒙"
+    },
+    {
+      "id": "sunshangxiang",
+      "name": "孫尚香",
+      "camp": "吳",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "孫尚香"
+    },
+    {
+      "id": "zhanghong",
+      "name": "張紘",
+      "camp": "吳",
+      "cost": 7,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "B",
+        "槍": "C",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "張紘"
+    },
+    {
+      "id": "zhangzhao",
+      "name": "張昭",
+      "camp": "吳",
+      "cost": 7,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "C",
+        "槍": "B",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "張昭"
+    },
+    {
+      "id": "luxun",
+      "name": "陸遜",
+      "camp": "吳",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "陸遜"
+    },
+    {
+      "id": "wushuang-lvlingqi",
+      "name": "無雙呂玲綺",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "無雙呂玲綺"
+    },
+    {
+      "id": "sp-machao",
+      "name": "SP馬超",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "B",
+        "槍": "S",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "SP馬超"
+    },
+    {
+      "id": "sp-yuanshao",
+      "name": "SP袁紹",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "A",
+        "弓": "S",
+        "槍": "B",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "SP袁紹"
+    },
+    {
+      "id": "menghuo",
+      "name": "孟獲",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "S",
+        "弓": "B",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "孟獲"
+    },
+    {
+      "id": "yuji",
+      "name": "于吉",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "B",
+        "弓": "C",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "于吉"
+    },
+    {
+      "id": "dongzhuo",
+      "name": "董卓",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "S",
+        "槍": "B",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "董卓"
+    },
+    {
+      "id": "lvbu",
+      "name": "呂布",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "呂布"
+    },
+    {
+      "id": "sp-lejin",
+      "name": "SP樂進",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "B",
+        "槍": "S",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "SP樂進"
+    },
+    {
+      "id": "sp-dianwei",
+      "name": "SP典韋",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "C",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "SP典韋"
+    },
+    {
+      "id": "sp-xuchu",
+      "name": "SP許褚",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "B",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "SP許褚"
+    },
+    {
+      "id": "sp-caozhen",
+      "name": "SP曹真",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "S",
+        "弓": "B",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "SP曹真"
+    },
+    {
+      "id": "sp-liuye",
+      "name": "SP劉曄",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "C",
+        "弓": "S",
+        "槍": "B",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "SP劉曄"
+    },
+    {
+      "id": "sp-pangde",
+      "name": "SP龐德",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "B",
+        "弓": "S",
+        "槍": "B",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "SP龐德"
+    },
+    {
+      "id": "sp-guojia",
+      "name": "SP郭嘉",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "A",
+        "槍": "B",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "SP郭嘉"
+    },
+    {
+      "id": "majun",
+      "name": "馬鈞",
+      "camp": "魏",
+      "cost": 6,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "C",
+        "槍": "C",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "馬鈞"
+    },
+    {
+      "id": "wangyi",
+      "name": "王異",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "B",
+        "弓": "S",
+        "槍": "C",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "王異"
+    },
+    {
+      "id": "chenqun",
+      "name": "陳群",
+      "camp": "魏",
+      "cost": 6,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "C",
+        "盾": "B",
+        "弓": "B",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "陳群"
+    },
+    {
+      "id": "caozhi",
+      "name": "曹植",
+      "camp": "魏",
+      "cost": 6,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "B",
+        "盾": "B",
+        "弓": "C",
+        "槍": "C",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "曹植"
+    },
+    {
+      "id": "xuchu",
+      "name": "許褚",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "B",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "許褚"
+    },
+    {
+      "id": "zhanghe",
+      "name": "張郃",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "B",
+        "槍": "S",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "張郃"
+    },
+    {
+      "id": "haozhao",
+      "name": "郝昭",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "S",
+        "弓": "A",
+        "槍": "B",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "郝昭"
+    },
+    {
+      "id": "caoren",
+      "name": "曹仁",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "B",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "曹仁"
+    },
+    {
+      "id": "zhenji",
+      "name": "甄姬",
+      "camp": "魏",
+      "cost": 6,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "B",
+        "盾": "B",
+        "弓": "C",
+        "槍": "C",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "甄姬"
+    },
+    {
+      "id": "chengyu",
+      "name": "程昱",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "C",
+        "弓": "A",
+        "槍": "C",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "程昱"
+    },
+    {
+      "id": "xunyu",
+      "name": "荀彧",
+      "camp": "魏",
+      "cost": 6,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "B",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "荀彧"
+    },
+    {
+      "id": "xunyou",
+      "name": "荀攸",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "S",
+        "槍": "C",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "荀攸"
+    },
+    {
+      "id": "dianwei",
+      "name": "典韋",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "C",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "典韋"
+    },
+    {
+      "id": "xuhuang",
+      "name": "徐晃",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "C",
+        "槍": "A",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "徐晃"
+    },
+    {
+      "id": "xiahoudun",
+      "name": "夏侯惇",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "C",
+        "槍": "A",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "夏侯惇"
+    },
+    {
+      "id": "zhonghui",
+      "name": "鍾會",
+      "camp": "魏",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "鍾會"
+    },
+    {
+      "id": "wushuang-xingcai",
+      "name": "無雙星彩",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "S",
+        "弓": "C",
+        "槍": "S",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "無雙星彩"
+    },
+    {
+      "id": "wushuang-guanping",
+      "name": "無雙關平",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "C",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "無雙關平"
+    },
+    {
+      "id": "sp-huangzhong",
+      "name": "SP黃忠",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "SP黃忠"
+    },
+    {
+      "id": "sp-fazheng",
+      "name": "SP法正",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "S",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "SP法正"
+    },
+    {
+      "id": "sp-zhugeliang",
+      "name": "SP諸葛亮",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "B",
+        "弓": "S",
+        "槍": "S",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "SP諸葛亮"
+    },
+    {
+      "id": "yiji",
+      "name": "伊籍",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "B",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "伊籍"
+    },
+    {
+      "id": "yanyan",
+      "name": "嚴顏",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "A",
+        "弓": "S",
+        "槍": "A",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "嚴顏"
+    },
+    {
+      "id": "zhangbao",
+      "name": "張苞",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "B",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "張苞"
+    },
+    {
+      "id": "guanxing",
+      "name": "關興",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "B",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "關興"
+    },
+    {
+      "id": "madai",
+      "name": "馬岱",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "S",
+        "弓": "B",
+        "槍": "A",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "馬岱"
+    },
+    {
+      "id": "guanyinping",
+      "name": "關銀屏",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "C",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "關銀屏"
+    },
+    {
+      "id": "mayunlu",
+      "name": "馬雲祿",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "C",
+        "弓": "B",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "馬雲祿"
+    },
+    {
+      "id": "chendao",
+      "name": "陳到",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "B",
+        "弓": "B",
+        "槍": "S",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "陳到"
+    },
+    {
+      "id": "jiangwei",
+      "name": "姜維",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "姜維"
+    },
+    {
+      "id": "weiyan",
+      "name": "魏延",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "B",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "魏延"
+    },
+    {
+      "id": "huangzhong",
+      "name": "黃忠",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "黃忠"
+    },
+    {
+      "id": "zhaoyun",
+      "name": "趙雲",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "A",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "一身是膽",
+      "nameKey": "趙雲"
+    },
+    {
+      "id": "zhangfei",
+      "name": "張飛",
+      "camp": "蜀",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "C",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "萬夫莫敵",
+      "nameKey": "張飛"
+    },
+    {
+      "id": "wushuang-daqiao",
+      "name": "無雙大喬",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "C",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "無雙大喬"
+    },
+    {
+      "id": "wushuang-zhuran",
+      "name": "無雙朱然",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "無雙朱然"
+    },
+    {
+      "id": "sp-bulianshi",
+      "name": "SP步練師",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "S",
+        "槍": "C",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "SP步練師"
+    },
+    {
+      "id": "sp-zhouyu",
+      "name": "SP周瑜",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "A",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "SP周瑜"
+    },
+    {
+      "id": "mazhong",
+      "name": "馬忠",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "A",
+        "弓": "S",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "馬忠"
+    },
+    {
+      "id": "lingtong",
+      "name": "凌統",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "C",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "凌統"
+    },
+    {
+      "id": "lusu",
+      "name": "魯肅",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "A",
+        "弓": "S",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "魯肅"
+    },
+    {
+      "id": "sunquan",
+      "name": "孫權",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "孫權"
+    },
+    {
+      "id": "ganning",
+      "name": "甘寧",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "S",
+        "槍": "S",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "甘寧"
+    },
+    {
+      "id": "zhoutai",
+      "name": "周泰",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "S",
+        "弓": "A",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "周泰"
+    },
+    {
+      "id": "lvmeng",
+      "name": "呂蒙",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "B",
+        "弓": "S",
+        "槍": "S",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "呂蒙"
+    },
+    {
+      "id": "taishici",
+      "name": "太史慈",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "C",
+        "弓": "S",
+        "槍": "B",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "太史慈"
+    },
+    {
+      "id": "sunjian",
+      "name": "孫堅",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "孫堅"
+    },
+    {
+      "id": "lukang",
+      "name": "陸抗",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "陸抗"
+    },
+    {
+      "id": "zhouyu",
+      "name": "周瑜",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "A",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "周瑜"
+    },
+    {
+      "id": "sp-luzhi",
+      "name": "SP盧植",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "C",
+        "弓": "S",
+        "槍": "B",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "SP盧植"
+    },
+    {
+      "id": "sp-diaochan",
+      "name": "SP貂蟬",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "C",
+        "弓": "S",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "SP貂蟬"
+    },
+    {
+      "id": "sp-dongzhuo",
+      "name": "SP董卓",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "S",
+        "槍": "B",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "SP董卓"
+    },
+    {
+      "id": "sp-zhangbao",
+      "name": "SP張寶",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "S",
+        "弓": "A",
+        "槍": "A",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "SP張寶"
+    },
+    {
+      "id": "sp-huangfusong",
+      "name": "SP皇甫嵩",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "S",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "SP皇甫嵩"
+    },
+    {
+      "id": "sp-zhujun",
+      "name": "SP朱儁",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "B",
+        "弓": "S",
+        "槍": "B",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "SP朱儁"
+    },
+    {
+      "id": "quyi",
+      "name": "麴義",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "C",
+        "弓": "S",
+        "槍": "C",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "麴義"
+    },
+    {
+      "id": "xuyou",
+      "name": "許攸",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "許攸"
+    },
+    {
+      "id": "caiyong",
+      "name": "蔡邕",
+      "camp": "群",
+      "cost": 6,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "B",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "蔡邕"
+    },
+    {
+      "id": "duosi",
+      "name": "朵思大王",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "S",
+        "弓": "A",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "朵思大王"
+    },
+    {
+      "id": "jushou",
+      "name": "沮授",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "S",
+        "弓": "S",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "沮授"
+    },
+    {
+      "id": "yuanshu",
+      "name": "袁術",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "S",
+        "槍": "B",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "袁術"
+    },
+    {
+      "id": "tianfeng",
+      "name": "田豐",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "B",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "田豐"
+    },
+    {
+      "id": "lvlingqi",
+      "name": "呂玲綺",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "呂玲綺"
+    },
+    {
+      "id": "zhurong",
+      "name": "祝融夫人",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "祝融夫人"
+    },
+    {
+      "id": "wutugu",
+      "name": "兀突骨",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "S",
+        "弓": "C",
+        "槍": "B",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "兀突骨"
+    },
+    {
+      "id": "gongsunzan",
+      "name": "公孫瓚",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "C",
+        "弓": "S",
+        "槍": "C",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "公孫瓚"
+    },
+    {
+      "id": "yuanshao",
+      "name": "袁紹",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "A",
+        "弓": "S",
+        "槍": "B",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "袁紹"
+    },
+    {
+      "id": "zhangjiao",
+      "name": "張角",
+      "camp": "群",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "S",
+        "槍": "B",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "張角"
+    },
+    {
+      "id": "wushuang-zhenji",
+      "name": "無雙甄姬",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "S",
+        "槍": "B",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "無雙甄姬"
+    },
+    {
+      "id": "manchong",
+      "name": "滿寵",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "A",
+        "槍": "B",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "滿寵"
+    },
+    {
+      "id": "wangshuang",
+      "name": "王雙",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "C",
+        "槍": "A",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "王雙"
+    },
+    {
+      "id": "wangyuanji",
+      "name": "王元姬",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "B",
+        "弓": "A",
+        "槍": "S",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "王元姬"
+    },
+    {
+      "id": "caochun",
+      "name": "曹純",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "C",
+        "弓": "B",
+        "槍": "B",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "曹純"
+    },
+    {
+      "id": "yujin",
+      "name": "于禁",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "S",
+        "弓": "B",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "于禁"
+    },
+    {
+      "id": "lejin",
+      "name": "樂進",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "B",
+        "槍": "S",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "樂進"
+    },
+    {
+      "id": "dengai",
+      "name": "鄧艾",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "B",
+        "弓": "A",
+        "槍": "S",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "鄧艾"
+    },
+    {
+      "id": "xiahouyuan",
+      "name": "夏侯淵",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "S",
+        "槍": "B",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "夏侯淵"
+    },
+    {
+      "id": "pangde",
+      "name": "龐德",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "B",
+        "弓": "S",
+        "槍": "B",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "龐德"
+    },
+    {
+      "id": "guojia",
+      "name": "郭嘉",
+      "camp": "魏",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "A",
+        "弓": "A",
+        "槍": "B",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "郭嘉"
+    },
+    {
+      "id": "jiangwan",
+      "name": "蔣琬",
+      "camp": "蜀",
+      "cost": 5,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "B",
+        "盾": "C",
+        "弓": "S",
+        "槍": "C",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "蔣琬"
+    },
+    {
+      "id": "wangping",
+      "name": "王平",
+      "camp": "蜀",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "B",
+        "弓": "S",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "王平"
+    },
+    {
+      "id": "xushu",
+      "name": "徐庶",
+      "camp": "蜀",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "A",
+        "槍": "B",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "徐庶"
+    },
+    {
+      "id": "wushuang-xiaoqiao",
+      "name": "無雙小喬",
+      "camp": "吳",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "C",
+        "弓": "A",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "無雙小喬"
+    },
+    {
+      "id": "huanggai",
+      "name": "黃蓋",
+      "camp": "吳",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "A",
+        "弓": "S",
+        "槍": "A",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "黃蓋"
+    },
+    {
+      "id": "chengpu",
+      "name": "程普",
+      "camp": "吳",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "A",
+        "弓": "A",
+        "槍": "S",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "程普"
+    },
+    {
+      "id": "sunce",
+      "name": "孫策",
+      "camp": "吳",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "A",
+        "槍": "S",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "孫策"
+    },
+    {
+      "id": "sp-zhangliang",
+      "name": "SP張梁",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "A",
+        "弓": "B",
+        "槍": "S",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "SP張梁"
+    },
+    {
+      "id": "zhangrang",
+      "name": "張讓",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "S",
+        "弓": "A",
+        "槍": "B",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "張讓"
+    },
+    {
+      "id": "gaolan",
+      "name": "高覽",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "B",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "高覽"
+    },
+    {
+      "id": "muludawang",
+      "name": "木鹿大王",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "C",
+        "弓": "C",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "木鹿大王"
+    },
+    {
+      "id": "liru",
+      "name": "李儒",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "A",
+        "槍": "B",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "李儒"
+    },
+    {
+      "id": "gaoshun",
+      "name": "高順",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "S",
+        "弓": "B",
+        "槍": "C",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "高順"
+    },
+    {
+      "id": "mateng",
+      "name": "馬騰",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "C",
+        "弓": "B",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "馬騰"
+    },
+    {
+      "id": "wenchou",
+      "name": "文醜",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "文醜"
+    },
+    {
+      "id": "huaxiong",
+      "name": "華雄",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "B",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "華雄"
+    },
+    {
+      "id": "yanliang",
+      "name": "顏良",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "B",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "顏良"
+    },
+    {
+      "id": "huatuo",
+      "name": "華佗",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "C",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "華佗"
+    },
+    {
+      "id": "zuoci",
+      "name": "左慈",
+      "camp": "群",
+      "cost": 5,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "C",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "左慈"
+    },
+    {
+      "id": "caopi",
+      "name": "曹丕",
+      "camp": "魏",
+      "cost": 4,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "S",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "曹丕"
+    },
+    {
+      "id": "sp-huangyueying",
+      "name": "SP黃月英",
+      "camp": "蜀",
+      "cost": 4,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "C",
+        "槍": "C",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "SP黃月英"
+    },
+    {
+      "id": "zhangshi",
+      "name": "張氏",
+      "camp": "蜀",
+      "cost": 4,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "B",
+        "弓": "B",
+        "槍": "S",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "張氏"
+    },
+    {
+      "id": "huangyueying",
+      "name": "黃月英",
+      "camp": "蜀",
+      "cost": 4,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "C",
+        "槍": "C",
+        "器械": "S"
+      },
+      "innate": "",
+      "nameKey": "黃月英"
+    },
+    {
+      "id": "fazheng",
+      "name": "法正",
+      "camp": "蜀",
+      "cost": 4,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "S",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "法正"
+    },
+    {
+      "id": "zhugege",
+      "name": "諸葛恪",
+      "camp": "吳",
+      "cost": 4,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "A",
+        "槍": "S",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "諸葛恪"
+    },
+    {
+      "id": "daqiao",
+      "name": "大喬",
+      "camp": "吳",
+      "cost": 4,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "B",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "大喬"
+    },
+    {
+      "id": "diaochan",
+      "name": "貂蟬",
+      "camp": "群",
+      "cost": 4,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "C",
+        "弓": "B",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "貂蟬"
+    },
+    {
+      "id": "chengong",
+      "name": "陳宮",
+      "camp": "群",
+      "cost": 4,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "陳宮"
+    },
+    {
+      "id": "simahui",
+      "name": "司馬徽",
+      "camp": "群",
+      "cost": 4,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "B",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "司馬徽"
+    },
+    {
+      "id": "zhangchunhua",
+      "name": "張春華",
+      "camp": "魏",
+      "cost": 3,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "C",
+        "器械": "B"
+      },
+      "innate": "",
+      "nameKey": "張春華"
+    },
+    {
+      "id": "xiaoqiao",
+      "name": "小喬",
+      "camp": "吳",
+      "cost": 3,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "B",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "小喬"
+    },
+    {
+      "id": "zoushi",
+      "name": "鄒氏",
+      "camp": "群",
+      "cost": 3,
+      "role": "內政",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": false,
+      "apt": {
+        "騎": "C",
+        "盾": "B",
+        "弓": "C",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "鄒氏"
+    },
+    {
+      "id": "dongbai",
+      "name": "董白",
+      "camp": "群",
+      "cost": 3,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "C",
+        "弓": "C",
+        "槍": "B",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "董白"
+    },
+    {
+      "id": "caiwenji",
+      "name": "蔡文姬",
+      "camp": "群",
+      "cost": 3,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "C",
+        "弓": "C",
+        "槍": "C",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "蔡文姬"
+    },
+    {
+      "id": "diancang-zhouyu",
+      "name": "典藏周瑜",
+      "camp": "吳",
+      "cost": 6,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": true,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "B",
+        "盾": "A",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "周瑜"
+    },
+    {
+      "id": "diancang-luxun",
+      "name": "典藏陸遜",
+      "camp": "吳",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": true,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "C",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "",
+      "nameKey": "陸遜"
+    },
+    {
+      "id": "diancang-sunshangxiang",
+      "name": "典藏孫尚香",
+      "camp": "吳",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": true,
+      "dynamic": true,
+      "awaken": true,
+      "apt": {
+        "騎": "S",
+        "盾": "B",
+        "弓": "S",
+        "槍": "A",
+        "器械": "C"
+      },
+      "innate": "",
+      "nameKey": "孫尚香"
+    }
+  ]
+}
