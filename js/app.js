@@ -24,6 +24,7 @@ import {
   matchesTacticPick,
   newId,
   normalizeState,
+  removeFromTeamPrompt,
   ownsDiancang,
   setGeneralOwned,
   setTacticOwned,
@@ -595,12 +596,12 @@ function memberCard(team, member, slot, current) {
           ${general.role === '內政'
             ? '<p class="faint">內政武將在遊戲裡不能開兵書。</p>'
             : `<button type="button" class="btn ${label ? '' : 'primary'} member-book" data-action="open-bingshu" data-team="${esc(team.id)}" data-slot="${slot}">${label ? `兵書 · ${esc(label)}` : '選擇兵書'}</button>`}
-          <button type="button" class="btn-ghost" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出</button>
+          <button type="button" class="btn-ghost" data-action="ask-clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出隊伍</button>
         </div>
         ${general.awaken && current.owned[general.id] && !current.owned[general.id].awaken ? '<p class="warn">尚未標記覺醒。遊戲裡通常還沒有第二個傳承槽，仍可先記。</p>' : ''}
       ` : member ? `
         <p class="warn">圖鑑沒有 ${esc(member.generalId)}</p>
-        <button type="button" class="btn-ghost" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出</button>
+        <button type="button" class="btn-ghost" data-action="ask-clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出隊伍</button>
       ` : `
         <p class="muted">這個位置還空著。</p>
         <button type="button" class="slot-btn" data-action="open-general" data-team="${esc(team.id)}" data-slot="${slot}">選擇武將</button>
@@ -1134,6 +1135,24 @@ function onClick(event) {
     case 'pick-general':
       assignGeneral(current, ui.picker.teamId, ui.picker.slot, el.dataset.id);
       break;
+    case 'ask-clear-general': {
+      ui.picker = null;
+      ui.bingshu = null;
+      const slot = Number(el.dataset.slot);
+      const team = current.teams.find((item) => item.id === el.dataset.team);
+      const member = team?.members?.[slot];
+      const general = member ? generalsById().get(member.generalId) : null;
+      const name = general ? plainName(general) : '';
+      openDialog({
+        kind: 'clear-general',
+        teamId: el.dataset.team,
+        slot,
+        title: '移出隊伍',
+        text: removeFromTeamPrompt(name),
+        confirm: '確定',
+      });
+      break;
+    }
     case 'clear-general':
       assignGeneral(current, el.dataset.team, Number(el.dataset.slot), '');
       break;
@@ -1461,6 +1480,10 @@ function confirmDialog() {
   if (dialog.kind === 'demo') {
     commit(updateAccount(ui.state, dialog.id, (item) => demoFill(item)));
     toast('已載入範例');
+    return;
+  }
+  if (dialog.kind === 'clear-general') {
+    assignGeneral(account(), dialog.teamId, dialog.slot, '');
     return;
   }
   if (dialog.kind === 'delete-team') {

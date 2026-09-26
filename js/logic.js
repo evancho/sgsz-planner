@@ -318,6 +318,11 @@ export function generalBlockReason({ account, team, slot, general, generalsById,
   return '';
 }
 
+export function removeFromTeamPrompt(name) {
+  const who = String(name || '').trim() || '這名武將';
+  return `確定要把${who}移出隊伍？`;
+}
+
 export function teamCost(team, generalsById) {
   return (team.members || []).reduce((sum, member) => {
     if (!member?.generalId) return sum;

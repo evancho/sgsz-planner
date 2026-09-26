@@ -16,6 +16,7 @@ import {
   matchesTacticPick,
   normalizeState,
   ownsDiancang,
+  removeFromTeamPrompt,
   setGeneralOwned,
   setTacticOwned,
   sortGenerals,
@@ -408,6 +409,11 @@ test('tactic picker hides unowned tactics until the filter is opened up', () => 
     ['suo'],
   );
   assert.deepEqual(tactics.filter((tactic) => pick(tactic, { owned: 'free' })).map((tactic) => tactic.id), ['suo']);
+});
+
+test('removing a general asks for that general by name', () => {
+  assert.equal(removeFromTeamPrompt('SP皇甫嵩'), '確定要把SP皇甫嵩移出隊伍？');
+  assert.equal(removeFromTeamPrompt('  '), '確定要把這名武將移出隊伍？');
 });
 
 test('bingshu steps go from system to primary book to secondary book', () => {
