@@ -6,6 +6,7 @@ import {
   QUALITIES,
   ROLE_FILTERS,
   SORTS,
+  TAG_FILTERS,
   TACTIC_TYPES,
   TROOP_ORDER,
   activeAccount,
@@ -18,6 +19,7 @@ import {
   exportPayload,
   generalBlockReason,
   indexNameUse,
+  isDuwei,
   matchesGeneral,
   newId,
   normalizeState,
@@ -69,6 +71,7 @@ function emptyFilters() {
     role: [],
     collection: [],
     dynamic: [],
+    tag: [],
   };
 }
 
@@ -326,6 +329,7 @@ function filterPanel() {
         ${filterGroup('品質', 'quality', QUALITIES)}
         ${filterGroup('適性A以上', 'troop', TROOP_ORDER)}
         ${filterGroup('陣營', 'camp', CAMP_ORDER)}
+        ${filterGroup('都尉', 'tag', TAG_FILTERS)}
         ${filterGroup('COST', 'cost', COST_BUCKETS)}
         ${filterGroup('類型', 'role', ROLE_FILTERS)}
         ${filterGroup('典藏', 'collection', COLLECTION_FILTERS)}
@@ -348,13 +352,20 @@ function filterGroup(label, key, values) {
     </div>`;
 }
 
+function duweiMark(general) {
+  if (!isDuwei(general)) return '';
+  return '<span class="mini duwei" title="英雄命示都尉。統御以 7 計，天賦身經百戰可 +1。">都尉</span>';
+}
+
 function generalCard(general, current, usage) {
   const owned = current.owned[general.id];
   const where = usage.generalTeams.get(general.id);
   const open = Boolean(owned && ui.openGenerals[general.id]);
   const innate = usefulInnate(general);
   const name = plainName(general);
+  const duwei = isDuwei(general);
   const chipHtml = [
+    duweiMark(general),
     ownsDiancang(owned) ? '<span class="mini">典藏</span>' : '',
     owned?.awaken ? '<span class="mini">覺醒</span>' : '',
     owned && owned.red > 0 ? `<span class="mini">紅${owned.red}</span>` : '',
@@ -363,17 +374,18 @@ function generalCard(general, current, usage) {
   const nameEl = owned
     ? `<button type="button" class="grow-name" data-action="toggle-expand" data-id="${esc(general.id)}" aria-expanded="${open}"><strong>${esc(name)}</strong></button>`
     : `<div class="grow-name"><strong>${esc(name)}</strong></div>`;
+  const costTitle = duwei ? '統御 7；天賦身經百戰可 +1' : `統御 ${general.cost}`;
   return `
     <article class="gcard grow ${CAMP_CLASS[general.camp] || 'qun'} ${open ? 'open' : ''} ${chipHtml ? 'has-chips' : ''}">
       <div class="grow-row">
         <span class="camp">${esc(general.camp)}</span>
-        <span class="cost" title="統御 ${general.cost}">C${general.cost}</span>
+        <span class="cost" title="${esc(costTitle)}">C${general.cost}</span>
         ${nameEl}
         <div class="apt-row">${aptHtml(general.apt)}</div>
         <button type="button" class="check ${owned ? 'on' : ''}" data-action="toggle-own" data-id="${esc(general.id)}" aria-pressed="${owned ? 'true' : 'false'}"><span class="box"></span>擁有</button>
         ${chipHtml ? `<div class="grow-chips">${chipHtml}</div>` : ''}
       </div>
-      ${open ? `<div class="grow-more">${ownedControls(general, owned)}${innate ? `<p class="faint innate">自帶 · ${esc(innate)}</p>` : ''}</div>` : ''}
+      ${open ? `<div class="grow-more">${ownedControls(general, owned)}${innate ? `<p class="faint innate">自帶 · ${esc(innate)}</p>` : ''}${duwei ? '<p class="faint">統御以 7 計；天賦身經百戰可 +1。</p>' : ''}</div>` : ''}
     </article>`;
 }
 
@@ -435,7 +447,28 @@ function tacticsView(mode) {
     </section>`;
 }
 
+function seasonChip(tactic) {
+  if (tactic.source !== '賽季') return '';
+  if (String(tactic.name).startsWith('拓·')) return '<span class="mini season">拓</span>';
+  if (String(tactic.name).startsWith('精·')) return '<span class="mini season">精</span>';
+  return '<span class="mini season">賽季</span>';
+}
+
 function tacticRow(tactic, current, usage) {
+  if (tactic.source === '自帶') {
+    const owners = (tactic.from || []).map((id) => generalsById().get(id)?.name).filter(Boolean).join('、');
+    return `
+      <article class="trow">
+        <div class="body">
+          <h3>${esc(tactic.name)}
+            <span class="tag">${esc(tactic.type)}</span>
+            <span class="tag ghost">自帶</span>
+          </h3>
+          <p class="muted">${esc(tactic.desc)}</p>
+          ${owners ? `<p class="faint">自帶武將：${esc(owners)}。不進傳承槽。</p>` : '<p class="faint">不進傳承槽。</p>'}
+        </div>
+      </article>`;
+  }
   const owned = tacticOwned(current, tactic.id);
   const used = tacticUseCount(usage, tactic.id);
   const copies = tactic.copies || 1;
@@ -451,6 +484,7 @@ function tacticRow(tactic, current, usage) {
       <button type="button" class="check ${owned ? 'on' : ''}" data-action="toggle-tactic" data-id="${esc(tactic.id)}" aria-pressed="${owned}"><span class="box"></span>擁有</button>
       <div class="body">
         <h3>${esc(tactic.name)}
+          ${seasonChip(tactic)}
           ${rankTag(tactic)}
           <span class="tag">${esc(tactic.type)}</span>
           <span class="tag ghost">${esc(tactic.source)}</span>
@@ -577,8 +611,8 @@ function memberCard(team, member, slot, current) {
         </span>
       </div>
       ${general ? `
-        <h3>${esc(plainName(general))}</h3>
-        <p class="faint">${esc(general.camp)} · C${general.cost} · ${esc(general.role)}</p>
+        <h3>${esc(plainName(general))}${duweiMark(general)}</h3>
+        <p class="faint">${esc(general.camp)} · C${general.cost}${isDuwei(general) ? '（天賦可 +1）' : ''} · ${esc(general.role)}</p>
         <div class="apt-row">${aptHtml(general.apt)}</div>
         ${usefulInnate(general) ? `<div class="locked"><span class="faint">主戰法</span><br><strong>${esc(usefulInnate(general))}</strong></div>` : ''}
         ${learnedButton(team, member, slot, 0)}
@@ -687,7 +721,7 @@ function generalPicker() {
   if (!team) return '';
   const usage = usageFor(current);
   const query = ui.picker.query.trim();
-  const options = ui.catalog.generals.filter((general) => current.owned[general.id] && (!query || plainName(general).includes(query) || general.name.includes(query)));
+  const options = ui.catalog.generals.filter((general) => current.owned[general.id] && (!query || plainName(general).includes(query) || general.name.includes(query) || (isDuwei(general) && '都尉'.includes(query))));
   return sheet('選擇武將', `
     <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋已擁有武將" autocomplete="off">
     <button type="button" class="choice" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${ui.picker.slot}">這個位置留空</button>
@@ -700,7 +734,7 @@ function generalPicker() {
         generalsById: generalsById(),
         usage,
       });
-      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${esc(general.camp)} C${general.cost} ${esc(plainName(general))}${reason ? ` · ${esc(reason)}` : ''}</button>`;
+      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${esc(general.camp)} C${general.cost} ${esc(plainName(general))}${isDuwei(general) ? ' · 都尉' : ''}${reason ? ` · ${esc(reason)}` : ''}</button>`;
     }).join('') || '<p class="muted">還沒有勾選擁有的武將。</p>'}
   `);
 }
@@ -714,7 +748,7 @@ function tacticPicker() {
   const usage = usageFor(current);
   const map = tacticsById(current);
   const query = ui.picker.query.trim().toLowerCase();
-  const options = tacticsFor(current).filter((tactic) => !query || `${tactic.name}${tactic.desc}`.toLowerCase().includes(query));
+  const options = tacticsFor(current).filter((tactic) => tactic.source !== '自帶' && (!query || `${tactic.name}${tactic.desc}`.toLowerCase().includes(query)));
   return sheet('選擇傳承戰法', `
     <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋戰法" autocomplete="off">
     <button type="button" class="choice" data-action="pick-tactic" data-id="">卸下這個戰法</button>
@@ -906,6 +940,7 @@ function onClick(event) {
         role: [...ROLE_FILTERS],
         collection: [...COLLECTION_FILTERS],
         dynamic: [...DYNAMIC_FILTERS],
+        tag: [...TAG_FILTERS],
       };
       render();
       break;

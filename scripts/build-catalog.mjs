@@ -7,7 +7,7 @@
 import { writeFileSync } from 'node:fs';
 import { tacticRows } from './tactic-catalog.mjs';
 
-const VERSION = '1.2.0';
+const VERSION = '1.2.2';
 
 const APT_ORDER = ['騎', '盾', '弓', '槍', '器械'];
 
@@ -20,8 +20,8 @@ function parseApt(code) {
   return apt;
 }
 
-function g(id, name, camp, cost, role, apt, dyn, innate = '') {
-  return {
+function g(id, name, camp, cost, role, apt, dyn, innate = '', tags = null) {
+  const general = {
     id,
     name,
     camp,
@@ -35,6 +35,8 @@ function g(id, name, camp, cost, role, apt, dyn, innate = '') {
     innate,
     nameKey: name,
   };
+  if (tags?.length) general.tags = tags;
+  return general;
 }
 
 const generals = [
@@ -183,6 +185,19 @@ const generals = [
   g('zoushi', '鄒氏', '群', 3, '內政', 'CBCCC', 0),
   g('dongbai', '董白', '群', 3, '軍事', 'CCCBC', 1),
   g('caiwenji', '蔡文姬', '群', 3, '軍事', 'BCCCC', 1),
+  // 英雄命示都尉。拜師才決定陣營，名冊預設群。適性未知，暫以全 A 佔位。統御記基礎 7。
+  g('duwei-shenheng', '沈姮', '群', 7, '軍事', 'AAAAA', 0, '風焰相形', ['都尉']),
+  g('duwei-qinxi', '秦溪', '群', 7, '軍事', 'AAAAA', 0, '先聲奪人', ['都尉']),
+  g('duwei-liuqin', '柳沁', '群', 7, '軍事', 'AAAAA', 0, '杯弓蛇影', ['都尉']),
+  g('duwei-xiaozhi', '蕭芷', '群', 7, '軍事', 'AAAAA', 0, '堅如磐石', ['都尉']),
+  g('duwei-chenyi', '陳翊', '群', 7, '軍事', 'AAAAA', 0, '劍拔弩張', ['都尉']),
+  g('duwei-zhoushao', '周劭', '群', 7, '軍事', 'AAAAA', 0, '流雲千變', ['都尉']),
+  g('duwei-chenxi', '陳熙', '群', 7, '軍事', 'AAAAA', 0, '針鋒相對', ['都尉']),
+  g('duwei-suxin', '蘇信', '群', 7, '軍事', 'AAAAA', 0, '技高一籌', ['都尉']),
+  g('duwei-huangfuhong', '皇甫宏', '群', 7, '軍事', 'AAAAA', 0, '破釜沉舟', ['都尉']),
+  g('duwei-xuyan', '徐彥', '群', 7, '軍事', 'AAAAA', 0, '緩兵之計', ['都尉']),
+  g('duwei-yangqi', '楊琪', '群', 7, '軍事', 'AAAAA', 0, '愈戰愈勇', ['都尉']),
+  g('duwei-machan', '馬禪', '群', 7, '軍事', 'AAAAA', 0, '運籌帷幄', ['都尉']),
 ];
 
 const ids = new Set();
@@ -192,11 +207,12 @@ for (const general of generals) {
 }
 
 const TACTIC_TYPES = ['指揮', '主動', '突擊', '被動', '兵種', '陣法', '內政'];
+const TACTIC_SOURCES = ['傳承', '事件', '自帶', '賽季'];
 
 function t(row) {
   if (row.rank !== 'S' && row.rank !== 'A') throw new Error(`rank ${row.id}`);
   if (!TACTIC_TYPES.includes(row.type)) throw new Error(`type ${row.id}`);
-  if (row.source !== '傳承' && row.source !== '事件') throw new Error(`source ${row.id}`);
+  if (!TACTIC_SOURCES.includes(row.source)) throw new Error(`source ${row.id}`);
   return {
     id: row.id,
     name: row.name,
@@ -211,7 +227,42 @@ function t(row) {
   };
 }
 
-const tactics = tacticRows.map(t);
+function extra(id, name, type, source, from, troops, desc) {
+  return { id, name, type, source, from, troops, rank: 'S', desc };
+}
+
+const extraTactics = [
+  extra('fengyan', '風焰相形', '指揮', '自帶', ['duwei-shenheng'], null, '成功發動主動或突擊戰法時，有機率治療我軍單體，並有較高機率立刻再施放一次；再次發動無需準備與冷卻。'),
+  extra('xiansheng', '先聲奪人', '指揮', '自帶', ['duwei-qinxi'], null, '偷取敵軍武力最高者的武力與速度給我軍武力最高者，並偷取智力最高者的智力與統率給我軍智力最高者。可疊加，持續兩回合。'),
+  extra('beigong', '杯弓蛇影', '指揮', '自帶', ['duwei-liuqin'], null, '戰鬥前數回合降低敵軍全體戰鬥屬性；中後段並有機率使敵軍群體陷入恐懼，造成傷害或施加控制時可能失敗。'),
+  extra('jianru', '堅如磐石', '指揮', '自帶', ['duwei-xiaozhi'], null, '每回合依統率差對敵軍單體造成無視防禦的傷害，並將一部分轉為可抵擋傷害的俘兵，隨機施放數次。'),
+  extra('jianba', '劍拔弩張', '指揮', '自帶', ['duwei-chenyi'], null, '友軍受傷時有機率對敵軍單體反打，每名武將每回合次數有限；我軍統率最高者被控制時，還會對敵軍全體造成傷害。'),
+  extra('liuyun', '流雲千變', '主動', '自帶', ['duwei-zhoushao'], null, '隨機施放因利制權、坐守孤城、淨化、智計、料事如神、杯蛇鬼車其中一項的滿級效果，可執行一到兩次，無需準備與冷卻。'),
+  extra('zhenfeng', '針鋒相對', '指揮', '自帶', ['duwei-chenxi'], null, '自身無法造成傷害。第二回合起，友軍受到普通攻擊後有機率發動反擊，且可觸發普通攻擊類效果。'),
+  extra('jigao', '技高一籌', '指揮', '自帶', ['duwei-suxin'], null, '敵軍發動主動戰法時，我軍智力最高者有機率打出謀略反擊；發動突擊戰法時，武力最高者有機率打出兵刃反擊。'),
+  extra('pofu', '破釜沉舟', '指揮', '自帶', ['duwei-huangfuhong'], null, '使我軍統率最高者減傷，並有較高機率嘲諷敵軍全體；偶數回合還有機率治療該武將。'),
+  extra('huanbing', '緩兵之計', '主動', '自帶', ['duwei-xuyan'], null, '對敵我隨機武將多次施加抵御。落到我軍則降低受到的傷害，落到敵軍則降低其造成的傷害，持續一回合。'),
+  extra('yuzhan', '愈戰愈勇', '指揮', '自帶', ['duwei-yangqi'], null, '我軍發動主動戰法後有機率提高戰鬥屬性，可疊加到戰鬥結束；累積觸發數次後治療我軍全體。'),
+  extra('yunwei', '運籌帷幄', '指揮', '自帶', ['duwei-machan'], null, '戰鬥前數回合降低友軍受到的傷害，並賦予急救，受傷時有機率依智力獲得治療。'),
+  extra('huijun', '麾軍結陣', '指揮', '事件', [], null, '前四回合提高攜帶者主動戰法的發動率，第五回合造成傷害並治療。'),
+  extra('yanren', '燕人咆哮', '被動', '自帶', ['zhangfei'], null, '第二、四回合對敵軍全體造成兵刃傷害；目標處於繳械或計窮時降低統率。自身為主將時，第六回合再打一輪。'),
+  extra('jiangtian', '江天長焰', '指揮', '自帶', ['sp-zhouyu'], null, '每回合對敵軍施加長焰，提高其受到的謀略傷害，並造成謀略傷害。自身為主將時，長焰夠多有機率再打一次。'),
+  extra('huoshao', '火燒連營', '主動', '自帶', ['luxun'], null, '對敵軍群體造成謀略傷害並施加灼燒；目標已在灼燒時傷害更高。'),
+  extra('weiwu', '威武並昭', '突擊', '自帶', ['sp-machao'], null, '普通攻擊後對敵軍單體造成兵刃傷害，並降低目標統率。'),
+  extra('fuwei', '扶危定傾', '指揮', '自帶', ['sp-huangfusong'], null, '援護我軍承受一部分傷害，受到普通攻擊時反擊，並以休整回復兵力。'),
+  extra('aoni', '傲睨王侯', '指揮', '自帶', ['xuyou'], null, '偷取敵軍屬性，轉為我軍的持續增益。'),
+  extra('shenmou', '深謀遠慮', '指揮', '傳承', ['sp-bulianshi'], ['弓', '器械'], '將我軍主將的普通攻擊轉為謀略傷害，造成謀略傷害時治療我軍單體。僅弓兵與器械。'),
+  extra('gangrou-ji', '剛柔並濟', '指揮', '傳承', ['sp-dongzhuo'], ['弓', '器械'], '降低我軍兵力最低者受到的傷害，並壓低敵軍兵力最高者的輸出。僅弓兵與器械。'),
+  extra('tuo-duohun', '拓·奪魂挾魄', '主動', '賽季', [], null, '英雄命示賽季商店的奪魂挾魄拓本，每輪最多可購兩項。沿用原戰法：偷取敵軍屬性，此消彼長。'),
+  extra('tuo-shibie', '拓·士別三日', '被動', '賽季', [], null, '英雄命示賽季商店的士別三日拓本，每輪最多可購兩項。沿用原戰法：前三回合無法普通攻擊但有機率規避，第四回合提高智力並對敵軍全體造成謀略傷害。'),
+  extra('tuo-yigua', '拓·以寡敵眾', '被動', '賽季', [], null, '英雄命示賽季商店的以寡敵眾拓本，每輪最多可購兩項。沿用原戰法：第2、4、6回合依武力治療自己並提高武力，第5回合對敵軍全體造成兵刃傷害。'),
+  extra('tuo-jifeng', '拓·疾風驟雨', '主動', '賽季', [], null, '英雄命示賽季商店的疾風驟雨拓本，每輪最多可購兩項。與原戰法分開登記，具體係數以遊戲內為準。'),
+  extra('jing-yulin', '精·魚鱗陣', '陣法', '賽季', [], null, '英雄命示賽季商店的魚鱗陣精進版，每輪最多可購兩項。提升統率，並有機會獲得抵御或治療。具體係數以遊戲內為準。'),
+  extra('jing-fengshi', '精·鋒矢陣', '陣法', '賽季', [], ['騎', '盾', '槍'], '英雄命示賽季商店的鋒矢陣精進版，每輪最多可購兩項。沿用原戰法：主將傷害提高也更易受傷，副將傷害下降但更耐打。'),
+];
+
+const tactics = [...tacticRows.map(t), ...extraTactics.map(t)];
+
 
 const tacticIds = new Set();
 for (const tactic of tactics) {
@@ -359,7 +410,7 @@ const bingshu = {
 const meta = {
   catalogVersion: VERSION,
   updated: '2026-09-26',
-  scope: '戰鬥類 S 級收到兗州之戰的公開清冊，並補上已核對的後續事件戰法；A 級只收已核對類型的常用戰法。直接編輯 scripts/tactic-catalog.mjs 後重跑建置即可擴充。',
+  scope: '戰鬥類 S 級收到兗州之戰的公開清冊，並補上已核對的後續事件戰法；A 級只收已核對類型的常用戰法。另收英雄命示都尉自帶，以及賽季商店的拓本與精進陣法。直接編輯 scripts/tactic-catalog.mjs 或本腳本的增補列後重跑建置即可擴充。',
 };
 
 writeFileSync('data/meta.json', `${JSON.stringify(meta, null, 2)}\n`);
