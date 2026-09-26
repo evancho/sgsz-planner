@@ -96,6 +96,13 @@ function toast(message) {
   }, 2800);
 }
 
+function collapseGeneral(id) {
+  if (!id || !ui.openGenerals[id]) return;
+  const next = { ...ui.openGenerals };
+  delete next[id];
+  ui.openGenerals = next;
+}
+
 function commit(next) {
   ui.state = next;
   try {
@@ -931,6 +938,7 @@ function onClick(event) {
       break;
     }
     case 'set-red':
+      collapseGeneral(el.dataset.id);
       commit(updateAccount(ui.state, current.id, (item) => ({
         ...item,
         owned: {
@@ -940,6 +948,7 @@ function onClick(event) {
       })));
       break;
     case 'set-flag':
+      collapseGeneral(el.dataset.id);
       commit(updateAccount(ui.state, current.id, (item) => ({
         ...item,
         owned: {
