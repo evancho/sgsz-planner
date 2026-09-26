@@ -1,18 +1,1979 @@
 {
-  "catalogVersion": "1.1.0",
+  "catalogVersion": "1.2.0",
   "tactics": [
     {
-      "id": "bamen",
-      "name": "八門金鎖陣",
-      "type": "陣法",
+      "id": "zanbi",
+      "name": "暫避其鋒",
+      "type": "指揮",
       "source": "傳承",
       "from": [
-        "caoren"
+        "pangde",
+        "xushu"
       ],
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "戰鬥前三回合，壓低敵軍兩人的輸出，並讓我軍主將先手行動。"
+      "rank": "S",
+      "desc": "開局三回合，降低我軍智力最高者受到的兵刃傷害，以及武力最高者受到的謀略傷害。"
+    },
+    {
+      "id": "shengqi",
+      "name": "盛氣凌敵",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "caopi",
+        "yanliang"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "開局兩回合，使敵軍兩人每回合都有高機率繳械，無法普通攻擊。"
+    },
+    {
+      "id": "yongwu",
+      "name": "用武通神",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "simayi"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "第 2、4、6、8 回合對敵軍兩人造成逐漸提高的謀略傷害。"
+    },
+    {
+      "id": "hengge",
+      "name": "橫戈躍馬",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "haozhao",
+        "lingtong"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "開局三回合，降低雙方謀略傷害，並提高普通攻擊與突擊傷害。"
+    },
+    {
+      "id": "shoubi",
+      "name": "守而必固",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "chengyu",
+        "caozhi"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "嘲諷敵軍主將，並提高自己的統率，持續數回合。"
+    },
+    {
+      "id": "qiji",
+      "name": "奇計良謀",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "lusu",
+        "jiangwan"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "開局三回合，壓低敵軍武力最高者的兵刃傷害，以及智力最高者的謀略傷害。"
+    },
+    {
+      "id": "cuorui",
+      "name": "挫銳",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "sunjian",
+        "chenqun"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "開局三回合使敵軍單體虛弱，造成傷害時有機率打空。"
+    },
+    {
+      "id": "shezhan",
+      "name": "舌戰群儒",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "zhugeliang"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "敵軍嘗試發動主動戰法時，有機率壓低其發動率，並略為提高我軍主動發動率。"
+    },
+    {
+      "id": "mengzhong",
+      "name": "夢中弒臣",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "caocao"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "自己為主將時，開局由副將分擔傷害；之後若帶有負面，有機率獲得反擊。"
+    },
+    {
+      "id": "yixin",
+      "name": "義心昭烈",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "liubei"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "自己造成治療時降低目標受到的主動傷害；兵力過低時，我軍短時間分攤傷害。"
+    },
+    {
+      "id": "fengmang",
+      "name": "鋒芒畢露",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "mazhong"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "我軍群體發動準備戰法時，有機率獲得會心與奇謀，可疊加。"
+    },
+    {
+      "id": "futang",
+      "name": "赴湯蹈火",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [
+        "sp-sunjian"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "行動時有機率為我軍群體疊加抵御，並讓抵御更能留住。"
+    },
+    {
+      "id": "fuji",
+      "name": "撫輯軍民",
+      "type": "指揮",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "前兩回合降低我軍兩人造成與受到的傷害，第三回合再為他們治療。"
+    },
+    {
+      "id": "tieqi",
+      "name": "鐵騎驅馳",
+      "type": "指揮",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "騎"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "騎兵專用。開局兩回合使敵軍遇襲；我軍發動突擊後，降低普攻目標統率。"
+    },
+    {
+      "id": "feigong",
+      "name": "非攻制勝",
+      "type": "指揮",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的指揮戰法。"
+    },
+    {
+      "id": "linwei",
+      "name": "臨危救主",
+      "type": "指揮",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的指揮戰法。"
+    },
+    {
+      "id": "zhongzhi",
+      "name": "眾志成城",
+      "type": "指揮",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的指揮戰法。"
+    },
+    {
+      "id": "zhiji",
+      "name": "知己知彼",
+      "type": "指揮",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "有機率提高友軍造成的傷害，攜帶者速度要快才吃得到。"
+    },
+    {
+      "id": "yudi",
+      "name": "御敵屏障",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "戰鬥前四回合，降低我軍兩人受到的傷害。傳承自郭淮。"
+    },
+    {
+      "id": "qihu",
+      "name": "騎虎難下",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "其他友軍受到普通攻擊時，有機率禁療該友軍，並對敵軍兩人造成兵刃傷害。傳承自劉封。"
+    },
+    {
+      "id": "zhangzhe",
+      "name": "長者之風",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "提高我軍全體武力與智力。傳承自李典。"
+    },
+    {
+      "id": "zhaxiang",
+      "name": "詐降",
+      "type": "指揮",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "首回合自己混亂，之後數回合獲得休整。傳承自廖化。"
+    },
+    {
+      "id": "zhengzhuang",
+      "name": "整裝待發",
+      "type": "指揮",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "偶數回合治療我軍兩人，受智力影響。"
+    },
+    {
+      "id": "weimou",
+      "name": "威謀靡亢",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "weiyan",
+        "jushou"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後使敵軍兩人虛弱；已虛弱者改為叛逃，持續掉血。"
+    },
+    {
+      "id": "powei",
+      "name": "破軍威勝",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "wangshuang",
+        "manchong"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "降低敵軍單體統率，並造成兵刃傷害。"
+    },
+    {
+      "id": "guagu",
+      "name": "刮骨療毒",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "huatuo"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "為損失兵力最多的我軍單體清除負面狀態，並依智力治療。"
+    },
+    {
+      "id": "duohun",
+      "name": "奪魂挾魄",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "xiaoqiao",
+        "caiwenji"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "偷取敵軍屬性，此消彼長。"
+    },
+    {
+      "id": "hengsao",
+      "name": "橫掃千軍",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "zhaoyun",
+        "guanyu"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "對敵軍全體造成兵刃傷害；目標已繳械或計窮時，有機率震懾。"
+    },
+    {
+      "id": "pozhen",
+      "name": "破陣摧堅",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "sunce",
+        "wenchou"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後降低敵軍兩人的統率與智力，並造成兵刃傷害。"
+    },
+    {
+      "id": "suoxiang",
+      "name": "所向披靡",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "machao",
+        "xuchu"
+      ],
+      "troops": [
+        "騎",
+        "盾",
+        "槍",
+        "器械"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後對敵軍全體造成高額兵刃傷害。騎、盾、槍、器械可用。"
+    },
+    {
+      "id": "youdi",
+      "name": "誘敵深入",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "simahui",
+        "huaxiong"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後對敵軍兩人施加沙暴，並提高其受到的兵刃傷害。"
+    },
+    {
+      "id": "linji",
+      "name": "臨機制勝",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "傳承取得的主動戰法。"
+    },
+    {
+      "id": "beishe",
+      "name": "杯蛇鬼車",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "yuji",
+        "zuoci"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後對敵軍兩人造成謀略傷害，並治療我軍兩人。"
+    },
+    {
+      "id": "yanzhu",
+      "name": "焰逐風飛",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "sp-zhouyu",
+        "sp-zhugeliang"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP周瑜、SP諸葛亮傳承的主動戰法。"
+    },
+    {
+      "id": "weishu",
+      "name": "偽書相間",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "jiaxu"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "對敵軍單體造成謀略傷害；未混亂則施加混亂，已混亂則使其打向友軍。"
+    },
+    {
+      "id": "woxin",
+      "name": "臥薪嘗膽",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "sunquan"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "對敵軍兩人造成兵刃傷害，並依自身功能性狀態提高震懾機率。"
+    },
+    {
+      "id": "fengzhuo",
+      "name": "風助火勢",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "zhouyu",
+        "huanggai"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "對敵軍單體造成謀略傷害；目標已灼燒時再補一段。"
+    },
+    {
+      "id": "hantian",
+      "name": "熯天熾地",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "luxun"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後對敵軍全體造成火攻，並施加灼燒。"
+    },
+    {
+      "id": "wanjian",
+      "name": "萬箭齊發",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "huangzhong",
+        "xiahouyuan"
+      ],
+      "troops": [
+        "弓"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "弓兵專用。準備後對敵軍全體造成兵刃傷害，並有機率潰逃。"
+    },
+    {
+      "id": "simian",
+      "name": "四面楚歌",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "xunyu",
+        "liru"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後對敵軍兩人施加中毒。"
+    },
+    {
+      "id": "yili",
+      "name": "一力拒守",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "zhoutai",
+        "yanyan"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "治療自己並提高統率，可疊加；自己為副將時治療改受武力影響。"
+    },
+    {
+      "id": "chensha",
+      "name": "沉沙決水",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "guojia",
+        "fazheng"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後對敵軍兩人施加水攻，並提高其受到的謀略傷害。"
+    },
+    {
+      "id": "xingji",
+      "name": "形機軍略",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "jiangwei",
+        "yuanshu"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "對敵軍單體同時造成兵刃與謀略傷害。"
+    },
+    {
+      "id": "qingguo",
+      "name": "傾國傾城",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "diaochan"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "貂蟬傳承的主動戰法。"
+    },
+    {
+      "id": "chenmu",
+      "name": "瞋目橫矛",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "zhangfei"
+      ],
+      "troops": [
+        "騎",
+        "盾",
+        "槍",
+        "器械"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "提高自己武力並獲得群攻。騎、盾、槍、器械可用。"
+    },
+    {
+      "id": "yunchou",
+      "name": "運籌決算",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "xunyou",
+        "zhangchunhua"
+      ],
+      "troops": [
+        "騎",
+        "弓"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "騎兵、弓兵可用。準備後對敵軍全體造成謀略傷害。"
+    },
+    {
+      "id": "chengdi",
+      "name": "乘敵不虞",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "pangtong",
+        "mayunlu"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後使敵軍主將虛弱，並使我軍主將獲得休整。"
+    },
+    {
+      "id": "huangtian",
+      "name": "黃天泰平",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "zhangjiao"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後以自己混亂為代價，使敵軍兩人計窮。"
+    },
+    {
+      "id": "bingfeng",
+      "name": "兵鋒",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "zhangzhao",
+        "menghuo"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "使自己與一名友軍進入連擊，每回合可以普通攻擊兩次。"
+    },
+    {
+      "id": "zhice",
+      "name": "智計",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "chengong",
+        "zhanghong"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "降低敵軍兩人的武力與智力，可疊加。"
+    },
+    {
+      "id": "jiemeng",
+      "name": "結盟",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "sunshangxiang"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "選擇一名異性友軍，對方獲得治療或功能性增益時，自己有機率得到相同效果。"
+    },
+    {
+      "id": "yijin",
+      "name": "益其金鼓",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "sp-lvmeng",
+        "dongbai"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP呂蒙、董白傳承的主動戰法。"
+    },
+    {
+      "id": "jieli",
+      "name": "竭力佐謀",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "sp-xunyu",
+        "zhangrang"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP荀彧、張讓傳承的主動戰法。"
+    },
+    {
+      "id": "dingmou",
+      "name": "定謀貴決",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "xuyou"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "許攸傳承的主動戰法。"
+    },
+    {
+      "id": "yinli",
+      "name": "因利制權",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "sp-liuye",
+        "zhugege"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP劉曄、諸葛恪傳承的主動戰法。"
+    },
+    {
+      "id": "jifeng",
+      "name": "疾風驟雨",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "sp-zhangbao",
+        "sp-zhangliang"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP張寶、SP張梁傳承的主動戰法。"
+    },
+    {
+      "id": "shangbing",
+      "name": "上兵伐謀",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "sp-caozhen"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP曹真傳承的主動戰法。"
+    },
+    {
+      "id": "wanjun",
+      "name": "萬軍奪帥",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "sp-machao",
+        "sp-xuchu"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP馬超、SP許褚傳承的主動戰法。"
+    },
+    {
+      "id": "yihua",
+      "name": "移花接木",
+      "type": "主動",
+      "source": "傳承",
+      "from": [
+        "madai"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "馬岱傳承的主動戰法。"
+    },
+    {
+      "id": "caochuan",
+      "name": "草船借箭",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "移除我軍群體負面，並給予急救，受傷時有機率依統率回復。"
+    },
+    {
+      "id": "yingcheng",
+      "name": "嬰城自守",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "治療我軍兩人，並使他們獲得一回合休整。"
+    },
+    {
+      "id": "huochi",
+      "name": "火熾原燎",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的火系主動戰法。"
+    },
+    {
+      "id": "jushui",
+      "name": "據水斷橋",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "騎",
+        "盾",
+        "槍",
+        "器械"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "對敵軍群體施加潰逃並降低其傷害，自己獲得倒戈。騎、盾、槍、器械可用。"
+    },
+    {
+      "id": "jueqi",
+      "name": "絕其汲道",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後對敵軍群體造成兵刃傷害，並施加禁療。"
+    },
+    {
+      "id": "fenzui",
+      "name": "焚輜營壘",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "對敵軍兩人造成謀略傷害，並施加禁療。"
+    },
+    {
+      "id": "jueshui",
+      "name": "決水潰城",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "準備後對敵軍群體施加破壞與水攻；首回合發動時可不準備。"
+    },
+    {
+      "id": "jiqi",
+      "name": "擊其惰歸",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "盾"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "盾兵專用。下回合前若受到沉重傷害則治療並減謀略傷，否則對敵軍全體造成兵刃傷害。"
+    },
+    {
+      "id": "duxing",
+      "name": "獨行赴斗",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "嘲諷敵軍全體，並提高自己的統率。"
+    },
+    {
+      "id": "linfeng",
+      "name": "臨鋒決敵",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的主動戰法。"
+    },
+    {
+      "id": "chediao",
+      "name": "掣刀斫敵",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的主動戰法。"
+    },
+    {
+      "id": "zhongwang",
+      "name": "眾望所歸",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的主動戰法。"
+    },
+    {
+      "id": "shuzhuang",
+      "name": "梳妝擲戟",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的主動戰法。"
+    },
+    {
+      "id": "lingji",
+      "name": "靈機一動",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的主動戰法。"
+    },
+    {
+      "id": "zhanjiang",
+      "name": "斬將搴旗",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "對敵軍群體造成兵刃傷害，並有機率計窮。"
+    },
+    {
+      "id": "zuoshou",
+      "name": "坐守孤城",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "回復我軍兩人兵力，受智力影響。傳承自審配。"
+    },
+    {
+      "id": "luofeng",
+      "name": "落鳳",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "對隨機敵軍單體造成兵刃傷害，並計窮一回合。傳承自張任。"
+    },
+    {
+      "id": "qingyong",
+      "name": "輕勇飛燕",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "對敵軍單體造成兵刃傷害，隨機打出數段。傳承自張燕。"
+    },
+    {
+      "id": "yaoshu",
+      "name": "妖術",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "準備後對敵軍全體施加沙暴，並使自己獲得一次抵御。傳承自張寶。"
+    },
+    {
+      "id": "bishiji",
+      "name": "避實擊虛",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "對統率最低的敵軍單體造成兵刃傷害。傳承自臧霸。"
+    },
+    {
+      "id": "buru",
+      "name": "不辱使命",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "對敵軍單體造成兵刃傷害，並有機率震懾。傳承自潘璋。"
+    },
+    {
+      "id": "zuoyou",
+      "name": "左右開弓",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": [
+        "弓"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "弓兵專用。提高會心並對敵軍單體造成兵刃傷害；目標為騎兵時附加潰逃。傳承自韓當。"
+    },
+    {
+      "id": "duanbing",
+      "name": "短兵相見",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "降低敵軍單體統率，並造成兵刃傷害。傳承自丁奉。"
+    },
+    {
+      "id": "baolian",
+      "name": "暴斂四方",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "對敵軍單體造成兩次兵刃傷害；目標已震懾時施加禁療。傳承自郭汜。"
+    },
+    {
+      "id": "zongbing",
+      "name": "縱兵劫掠",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "對敵軍單體造成兵刃傷害並震懾。傳承自李傕。"
+    },
+    {
+      "id": "tianjiang",
+      "name": "天降火雨",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "準備後對敵軍兩人造成兵刃傷害並施加灼燒。傳承自蔣欽。"
+    },
+    {
+      "id": "tuji",
+      "name": "屠幾上肉",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "對敵軍單體同時造成兵刃與謀略傷害。傳承自曹真。"
+    },
+    {
+      "id": "liaoshi",
+      "name": "料事如神",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "對敵軍兩人造成謀略傷害，並降低其造成的傷害。傳承自劉曄。"
+    },
+    {
+      "id": "shengdong",
+      "name": "聲東擊西",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "準備後對敵軍兩人造成謀略傷害，並降低速度。傳承自董允、朱儁。"
+    },
+    {
+      "id": "luolei",
+      "name": "落雷",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "對隨機單體造成謀略傷害，並提高其受到的謀略傷害；有小機率打到友軍。傳承自陳琳。"
+    },
+    {
+      "id": "yiqi",
+      "name": "一騎當千",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [
+        "lvbu"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "普通攻擊後對敵軍全體造成兵刃傷害；自己為主將時這段更痛。"
+    },
+    {
+      "id": "baoli",
+      "name": "暴戾無仁",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [
+        "dongzhuo"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "普通攻擊後再打一段兵刃傷害，並使目標混亂。"
+    },
+    {
+      "id": "baiqi",
+      "name": "百騎劫營",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [
+        "ganning"
+      ],
+      "troops": [
+        "騎"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "騎兵專用。普通攻擊後追打敵軍單體，並有機率再打敵軍主將。"
+    },
+    {
+      "id": "zhechong",
+      "name": "折衝御侮",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [
+        "taishici",
+        "dianwei"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "普通攻擊後降低隨機敵軍的統率與智力；自己不是主將時，再給主將抵御。"
+    },
+    {
+      "id": "sucheng",
+      "name": "速乘其利",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [
+        "wangyuanji",
+        "sp-zhujun"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "普通攻擊後對目標造成兵刃傷害，並計窮一回合。"
+    },
+    {
+      "id": "xiancheng",
+      "name": "先成其慮",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "傳承取得的突擊戰法。"
+    },
+    {
+      "id": "kedi",
+      "name": "克敵制勝",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [
+        "chengpu",
+        "yujin"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "普通攻擊後造成謀略傷害；目標潰逃或中毒時，有機率虛弱。"
+    },
+    {
+      "id": "yongzhe",
+      "name": "勇者得前",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [
+        "zhangliao"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "普通攻擊後獲得一次抵御，並提高下一次主動戰法傷害。"
+    },
+    {
+      "id": "dangfeng",
+      "name": "當鋒摧決",
+      "type": "突擊",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "普通攻擊後造成謀略傷害，並偽報一回合，壓制被動與指揮。"
+    },
+    {
+      "id": "guishen",
+      "name": "鬼神霆威",
+      "type": "突擊",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "普通攻擊後再打一段高額兵刃；自己為主將且目標殘血時傷害更高。"
+    },
+    {
+      "id": "cuifeng",
+      "name": "摧鋒斷刃",
+      "type": "突擊",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "普通攻擊後追加數段兵刃傷害；目標武力較低時再壓低其傷害。"
+    },
+    {
+      "id": "wangong",
+      "name": "彎弓飲羽",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "普通攻擊後降低目標統率，並計窮一回合。傳承自沙摩柯。"
+    },
+    {
+      "id": "shouqi",
+      "name": "手起刀落",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "普通攻擊後再對目標打出一段兵刃傷害。傳承自文聘。"
+    },
+    {
+      "id": "ancang",
+      "name": "暗藏玄機",
+      "type": "突擊",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "普通攻擊後追打兵刃；打到敵軍主將時再補一段謀略傷害。傳承自韓遂。"
+    },
+    {
+      "id": "shibie",
+      "name": "士別三日",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "lvmeng"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "前三回合無法普通攻擊但有機率規避，第四回合提高智力並對敵軍全體造成謀略傷害。"
+    },
+    {
+      "id": "bingwu",
+      "name": "兵無常勢",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "zhurong",
+        "tianfeng"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "自己累積第三次普通攻擊時，對目標造成謀略傷害並治療自己。"
+    },
+    {
+      "id": "juedi",
+      "name": "絕地反擊",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "xiahoudun",
+        "lvlingqi"
+      ],
+      "troops": [
+        "騎",
+        "盾",
+        "槍"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "每次受到兵刃傷害提高武力；第五回合依疊層對敵軍全體造成兵刃傷害。騎、盾、槍可用。"
+    },
+    {
+      "id": "wenwu",
+      "name": "文武雙全",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "zhonghui",
+        "dengai"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "造成謀略傷害時提高智力，造成兵刃傷害時提高武力，皆可疊加。"
+    },
+    {
+      "id": "hejun",
+      "name": "合軍聚眾",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "xuhuang",
+        "yuanshao"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "使自己獲得休整，每回合回復兵力。"
+    },
+    {
+      "id": "chengsheng",
+      "name": "乘勝長驅",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "lukang",
+        "gaolan"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "每回合提高自己造成的傷害，可疊加到戰鬥結束。"
+    },
+    {
+      "id": "shizheng",
+      "name": "士爭先赴",
+      "type": "被動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "傳承取得的被動戰法。"
+    },
+    {
+      "id": "meihuo",
+      "name": "魅惑",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "daqiao",
+        "zhenji"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "受到普通攻擊時，有機率使攻擊者陷入混亂、計窮、繳械、虛弱之一。"
+    },
+    {
+      "id": "zhongyong",
+      "name": "忠勇義烈",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "sp-guanyu",
+        "sp-pangde"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP關羽、SP龐德傳承的被動戰法。"
+    },
+    {
+      "id": "zhengjun",
+      "name": "整軍經武",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "sp-huangfusong"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP皇甫嵩傳承的被動戰法。"
+    },
+    {
+      "id": "zhenyu",
+      "name": "臻於至善",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "wangyi"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "王異傳承的被動戰法。"
+    },
+    {
+      "id": "gongbu",
+      "name": "功不唐捐",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "sp-huangyueying"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP黃月英傳承的被動戰法。"
+    },
+    {
+      "id": "yigua",
+      "name": "以寡敵眾",
+      "type": "被動",
+      "source": "傳承",
+      "from": [
+        "sp-dianwei"
+      ],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "SP典韋傳承的被動戰法。"
+    },
+    {
+      "id": "taiping",
+      "name": "太平道法",
+      "type": "被動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "提高奇謀與自帶主動戰法發動率；自己為黃巾軍主將時，副將也吃到發動率。"
+    },
+    {
+      "id": "luoyi",
+      "name": "裸衣血戰",
+      "type": "被動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "無法發動主動。前三回合獲得高額連擊與倒戈，並降低自己與一名敵軍的統率。"
+    },
+    {
+      "id": "huju",
+      "name": "虎踞鷹揚",
+      "type": "被動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "免疫繳械；普通攻擊後提高自己造成的兵刃傷害，可疊加。"
+    },
+    {
+      "id": "yinxian",
+      "name": "引弦力戰",
+      "type": "被動",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "弓"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "弓兵專用。普通攻擊後有機率獲得群攻；已有群攻則提高武力。"
+    },
+    {
+      "id": "xueren",
+      "name": "血刃爭鋒",
+      "type": "被動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "提高普通攻擊傷害，並在普攻後對目標累積酣鬥，疊滿後再提高普攻傷害。"
+    },
+    {
+      "id": "qiling",
+      "name": "氣凌三軍",
+      "type": "被動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "受到普通攻擊時反擊；自己為副將時反擊更痛。"
+    },
+    {
+      "id": "gangyong",
+      "name": "剛勇無前",
+      "type": "被動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "受到兵刃傷害後，下回合提高會心，並提高下一次攻擊的傷害。"
+    },
+    {
+      "id": "zhongdong",
+      "name": "眾動萬計",
+      "type": "被動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的被動戰法。"
+    },
+    {
+      "id": "qianli",
+      "name": "千里走單騎",
+      "type": "被動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的被動戰法。"
+    },
+    {
+      "id": "baimei",
+      "name": "白眉",
+      "type": "被動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "提高自身主動戰法的發動率。傳承自馬良。"
+    },
+    {
+      "id": "ziyu",
+      "name": "自愈",
+      "type": "被動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "A",
+      "desc": "使自己獲得休整，每回合回復兵力。傳承自董襲。"
+    },
+    {
+      "id": "hubao",
+      "name": "虎豹騎",
+      "type": "兵種",
+      "source": "傳承",
+      "from": [
+        "caochun"
+      ],
+      "troops": [
+        "騎"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "騎兵進階為虎豹騎，提高武力，並提高突擊戰法發動率。"
+    },
+    {
+      "id": "xiliang",
+      "name": "西涼鐵騎",
+      "type": "兵種",
+      "source": "傳承",
+      "from": [
+        "mateng"
+      ],
+      "troops": [
+        "騎"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "騎兵進階為西涼鐵騎，開局數回合提高我軍會心。"
+    },
+    {
+      "id": "xiangbing",
+      "name": "象兵",
+      "type": "兵種",
+      "source": "傳承",
+      "from": [
+        "muludawang"
+      ],
+      "troops": [
+        "騎"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "騎兵進階為象兵。延後結算部分傷害，但灼燒時會群攻並混亂。"
+    },
+    {
+      "id": "baima",
+      "name": "白馬義從",
+      "type": "兵種",
+      "source": "傳承",
+      "from": [
+        "gongsunzan"
+      ],
+      "troops": [
+        "弓"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "弓兵進階為白馬義從。提高行軍速度，開局先攻並提高主動發動率。"
+    },
+    {
+      "id": "wudang",
+      "name": "無當飛軍",
+      "type": "兵種",
+      "source": "傳承",
+      "from": [
+        "wangping"
+      ],
+      "troops": [
+        "弓"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "弓兵進階為無當飛軍。提高統率與速度，並在首回合施加中毒。"
+    },
+    {
+      "id": "baimao",
+      "name": "白毦兵",
+      "type": "兵種",
+      "source": "傳承",
+      "from": [
+        "chendao"
+      ],
+      "troops": [
+        "槍"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "槍兵進階為白毦兵。普通攻擊後有機率再打一段謀略傷害。"
+    },
+    {
+      "id": "daji",
+      "name": "大戟士",
+      "type": "兵種",
+      "source": "傳承",
+      "from": [
+        "zhanghe"
+      ],
+      "troops": [
+        "槍"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "槍兵進階為大戟士。普通攻擊時有機率對另一名敵軍造成兵刃傷害。"
+    },
+    {
+      "id": "xianzhen",
+      "name": "陷陣營",
+      "type": "兵種",
+      "source": "傳承",
+      "from": [
+        "gaoshun"
+      ],
+      "troops": [
+        "盾"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "盾兵進階為陷陣營。提高武力與統率，開局數回合獲得急救。"
+    },
+    {
+      "id": "tengjia",
+      "name": "藤甲兵",
+      "type": "兵種",
+      "source": "傳承",
+      "from": [
+        "wutugu"
+      ],
+      "troops": [
+        "盾"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "盾兵進階為藤甲兵。大幅降低兵刃傷害，但怕灼燒。"
+    },
+    {
+      "id": "xiandeng",
+      "name": "先登死士",
+      "type": "兵種",
+      "source": "傳承",
+      "from": [
+        "quyi"
+      ],
+      "troops": [
+        "槍"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "槍兵進階為先登死士，使我軍免疫遇襲。傳承自麴義。"
+    },
+    {
+      "id": "qingzhou",
+      "name": "青州兵",
+      "type": "兵種",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "槍"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "槍兵進階為青州兵。造成傷害時有機率提高本次傷害，並壓低下次敵軍傷害。"
+    },
+    {
+      "id": "jinfan",
+      "name": "錦帆軍",
+      "type": "兵種",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "弓"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "弓兵進階為錦帆軍。普通攻擊有機率潰逃；目標已潰逃則再造成兵刃並回血。"
+    },
+    {
+      "id": "huwei",
+      "name": "虎衛軍",
+      "type": "兵種",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "盾"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "盾兵進階為虎衛軍。主將即將被普攻時，副將提高武力並反打攻擊者。"
+    },
+    {
+      "id": "danyang",
+      "name": "丹陽兵",
+      "type": "兵種",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "盾"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "盾兵進階為丹陽兵，偏向壓制謀略傷害。"
+    },
+    {
+      "id": "feixiong",
+      "name": "飛熊軍",
+      "type": "兵種",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "騎"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "騎兵進階為飛熊軍，治療可以轉成謀略傷害。"
+    },
+    {
+      "id": "jiefan",
+      "name": "解煩衛",
+      "type": "兵種",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "槍"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "槍兵進階為解煩衛。普通攻擊時有機率造成傷害，否則回復兵力。"
     },
     {
       "id": "fengshi",
@@ -30,29 +1991,37 @@
       ],
       "copies": 1,
       "orange": true,
-      "desc": "主將傷害提高也更易受傷；副將傷害下降，但更耐打。"
+      "rank": "S",
+      "desc": "騎、盾、槍可用。提高主將傷害也更易受傷；副將傷害下降，但更耐打。"
     },
     {
       "id": "jixing",
       "name": "箕形陣",
       "type": "陣法",
-      "source": "事件",
-      "from": [],
+      "source": "傳承",
+      "from": [
+        "guanyinping",
+        "sp-yuanshao"
+      ],
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "壓低敵軍主將造成的傷害。"
+      "rank": "S",
+      "desc": "開局兩回合壓低敵軍主將造成的傷害，並讓兩名副將分別少吃兵刃或謀略。"
     },
     {
-      "id": "yulin",
-      "name": "魚鱗陣",
+      "id": "bamen",
+      "name": "八門金鎖陣",
       "type": "陣法",
-      "source": "事件",
-      "from": [],
+      "source": "傳承",
+      "from": [
+        "caoren"
+      ],
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "提升統率，並有機會獲得抵御或治療。"
+      "rank": "S",
+      "desc": "戰鬥前三回合，壓低敵軍兩人造成的傷害，並讓我軍主將先攻。"
     },
     {
       "id": "sanshi",
@@ -63,18 +2032,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "三人陣營都不同時，強化主將自帶主動或突擊，並輪流調整副將攻防。"
-    },
-    {
-      "id": "wufeng",
-      "name": "武鋒陣",
-      "type": "陣法",
-      "source": "事件",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "依我軍陣營搭配，在戰鬥中提高傷害。"
+      "rank": "S",
+      "desc": "三人陣營都不同時，提高主將自帶主動或突擊的發動率，並輪流調整兩名副將。"
     },
     {
       "id": "xingyi",
@@ -85,7 +2044,20 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "提高主將輸出，並讓副將更耐打。"
+      "rank": "S",
+      "desc": "事件兌換的陣法。"
+    },
+    {
+      "id": "wufeng",
+      "name": "武鋒陣",
+      "type": "陣法",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "三人兵種適性都不同時，主將更易成為目標並減傷，兩名副將分別增傷或治療。"
     },
     {
       "id": "qianlong",
@@ -96,864 +2068,34 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "前幾回合收著，之後提高我軍傷害。"
-    },
-    {
-      "id": "zanbi",
-      "name": "暫避其鋒",
-      "type": "指揮",
-      "source": "傳承",
-      "from": [
-        "pangde",
-        "xushu"
-      ],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "戰鬥開局數回合，降低我軍全體受到的傷害。"
-    },
-    {
-      "id": "shengqi",
-      "name": "盛氣凌人",
-      "type": "指揮",
-      "source": "傳承",
-      "from": [
-        "yanliang"
-      ],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "開局讓敵軍多人進入繳械，壓制普通攻擊與突擊。"
-    },
-    {
-      "id": "zuoshou",
-      "name": "坐守孤城",
-      "type": "指揮",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "降低受到的傷害，並在受傷後回復兵力。"
-    },
-    {
-      "id": "zhengzhuang",
-      "name": "整裝待發",
-      "type": "指揮",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "開局數回合獲得抵御，擋下一次傷害。"
-    },
-    {
-      "id": "yudi",
-      "name": "御敵屏障",
-      "type": "指揮",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "開局為我軍提供一層減傷。"
-    },
-    {
-      "id": "yingcheng",
-      "name": "嬰城自守",
-      "type": "指揮",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "降低我軍受到的傷害，適合拖節奏。"
-    },
-    {
-      "id": "fuji",
-      "name": "撫輯軍民",
-      "type": "指揮",
-      "source": "事件",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "穩定治療我軍兵力最低的武將。"
-    },
-    {
-      "id": "guagu",
-      "name": "刮骨療毒",
-      "type": "指揮",
-      "source": "事件",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "治療我軍，並有機會解除負面狀態。"
-    },
-    {
-      "id": "pozhen",
-      "name": "破陣摧堅",
-      "type": "主動",
-      "source": "傳承",
-      "from": [
-        "sunce",
-        "wenchou"
-      ],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "降低目標統率與智力，並造成兵刃傷害。需要準備一回合。"
-    },
-    {
-      "id": "suoxiang",
-      "name": "所向披靡",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "對敵軍群體造成兵刃傷害。"
-    },
-    {
-      "id": "simian",
-      "name": "四面楚歌",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "對敵軍全體造成傷害，適合收割殘兵。"
-    },
-    {
-      "id": "wanjian",
-      "name": "萬箭齊發",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "對敵軍群體造成兵刃傷害，吃弓兵隊伍的爆發。"
-    },
-    {
-      "id": "chensha",
-      "name": "沉沙決水",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "對敵軍群體造成謀略傷害。"
-    },
-    {
-      "id": "hantian",
-      "name": "熯天熾地",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "對敵軍群體施加灼燒，之後持續掉血。"
-    },
-    {
-      "id": "fengzhuo",
-      "name": "風助火勢",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "提高已有灼燒的傷害，或再補一層火。"
-    },
-    {
-      "id": "yaoshu",
-      "name": "妖術",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "對敵軍施加混亂，讓他們打亂出手。"
-    },
-    {
-      "id": "zongbing",
-      "name": "縱兵劫掠",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "對敵軍單體造成較高兵刃傷害。"
-    },
-    {
-      "id": "shengdong",
-      "name": "聲東擊西",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "打擊敵軍單體，並有機會附加控制。"
-    },
-    {
-      "id": "chenhuo",
-      "name": "趁火打劫",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "優先打擊已經受傷或帶負面狀態的目標。"
-    },
-    {
-      "id": "taiping",
-      "name": "太平道法",
-      "type": "主動",
-      "source": "傳承",
-      "from": [
-        "zhangjiao"
-      ],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "對敵軍群體造成謀略傷害，智力越高越痛。"
-    },
-    {
-      "id": "shibie",
-      "name": "士別三日",
-      "type": "主動",
-      "source": "事件",
-      "from": [
-        "lvmeng"
-      ],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "準備後打出高額謀略傷害，並提高之後的輸出。"
-    },
-    {
-      "id": "weimou",
-      "name": "威謀靡亢",
-      "type": "主動",
-      "source": "事件",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "謀略傷害之外，還能壓低目標的主動戰法。"
-    },
-    {
-      "id": "duohun",
-      "name": "奪魂挾魄",
-      "type": "主動",
-      "source": "事件",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "偷取敵軍屬性，此消彼長。"
-    },
-    {
-      "id": "beishe",
-      "name": "杯蛇鬼車",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "對敵軍群體造成謀略傷害，並有機會附加沙暴或混亂一類負面。"
-    },
-    {
-      "id": "shangbing",
-      "name": "上兵伐謀",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "謀略單體爆發，適合高智力武將。"
-    },
-    {
-      "id": "shier",
-      "name": "十二奇策",
-      "type": "主動",
-      "source": "傳承",
-      "from": [
-        "xunyou"
-      ],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "連續對敵軍發動謀略攻擊，打多段傷害。"
-    },
-    {
-      "id": "liaoshi",
-      "name": "料事如神",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "有機會讓敵軍的主動戰法落空，並反打謀略傷害。"
-    },
-    {
-      "id": "woxin",
-      "name": "臥薪嘗膽",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "先降低自己的傷害，幾回合後大幅提高輸出。"
-    },
-    {
-      "id": "anduchen",
-      "name": "暗渡陳倉",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "準備後對敵軍單體造成高額兵刃傷害。"
-    },
-    {
-      "id": "bingwu",
-      "name": "兵無常勢",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "依當前兵種與局面，在兵刃和謀略之間切換輸出。"
-    },
-    {
-      "id": "luolei",
-      "name": "落雷",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "對敵軍單體造成謀略傷害，發動率較高。"
-    },
-    {
-      "id": "chengxu",
-      "name": "乘虛而入",
-      "type": "主動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "攻擊已經被控制的目標時傷害更高。"
-    },
-    {
-      "id": "yiqi",
-      "name": "一騎當千",
-      "type": "突擊",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "普通攻擊後對敵軍單體打出高額兵刃傷害。"
-    },
-    {
-      "id": "baiqi",
-      "name": "百騎劫營",
-      "type": "突擊",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "普通攻擊後追打敵軍群體。"
-    },
-    {
-      "id": "shouqi",
-      "name": "手起刀落",
-      "type": "突擊",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "普通攻擊後補一刀，有機會打出會心。"
-    },
-    {
-      "id": "baoli",
-      "name": "暴戾無仁",
-      "type": "突擊",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "普通攻擊後對敵軍單體造成沉重兵刃傷害。"
-    },
-    {
-      "id": "guishen",
-      "name": "鬼神霆威",
-      "type": "突擊",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "普通攻擊後對敵軍群體發動兵刃追擊。"
-    },
-    {
-      "id": "hengge",
-      "name": "橫戈躍馬",
-      "type": "突擊",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "普通攻擊後連續追打，適合騎兵爆發。"
-    },
-    {
-      "id": "jiaofeng",
-      "name": "交鋒接刃",
-      "type": "突擊",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "普通攻擊後有機會再打一段，並提高連擊收益。"
-    },
-    {
-      "id": "zherui",
-      "name": "折銳摧矜",
-      "type": "突擊",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "普通攻擊後壓低目標統率，讓後續物理更痛。"
-    },
-    {
-      "id": "ancang",
-      "name": "暗藏殺機",
-      "type": "突擊",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "普通攻擊後對兵力較低的目標補刀。"
-    },
-    {
-      "id": "wangong",
-      "name": "彎弓飲羽",
-      "type": "被動",
-      "source": "傳承",
-      "from": [
-        "huangzhong"
-      ],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "提高普通攻擊傷害，適合弓兵主力。"
-    },
-    {
-      "id": "baibu",
-      "name": "百步穿楊",
-      "type": "被動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "提高會心率，讓遠程輸出更穩。"
-    },
-    {
-      "id": "yongguan",
-      "name": "勇冠三軍",
-      "type": "被動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "戰鬥中逐步提高自身造成的傷害。"
-    },
-    {
-      "id": "tieqi",
-      "name": "鐵騎驅馳",
-      "type": "被動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "提高騎兵普通攻擊與追擊的傷害。"
-    },
-    {
-      "id": "hejun",
-      "name": "合軍聚眾",
-      "type": "被動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "提高自身兵力上限或開局兵力。"
-    },
-    {
-      "id": "pojun",
-      "name": "破軍",
-      "type": "被動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "攻擊時無視目標一部分防禦。"
-    },
-    {
-      "id": "buru",
-      "name": "不辱使命",
-      "type": "被動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "我軍其他人受傷時，自己獲得增傷或減傷。"
-    },
-    {
-      "id": "zhongyong",
-      "name": "忠勇義烈",
-      "type": "被動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "為友軍分擔傷害，自己更扛打。"
-    },
-    {
-      "id": "yiyi",
-      "name": "以逸待勞",
-      "type": "被動",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "前幾回合減傷，之後提高傷害。"
-    },
-    {
-      "id": "xiliang",
-      "name": "西涼鐵騎",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "mateng"
-      ],
-      "troops": [
-        "騎"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為西涼鐵騎，提高騎兵爆發。"
-    },
-    {
-      "id": "hubao",
-      "name": "虎豹騎",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "caochun"
-      ],
-      "troops": [
-        "騎"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為虎豹騎，普通攻擊後更容易追擊。"
-    },
-    {
-      "id": "baima",
-      "name": "白馬義從",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "gongsunzan"
-      ],
-      "troops": [
-        "騎"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為白馬義從，提高速度、搶先手。"
-    },
-    {
-      "id": "xianzhen",
-      "name": "陷陣營",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "gaoshun"
-      ],
-      "troops": [
-        "盾"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為陷陣營，提高盾兵的生存與反打。"
-    },
-    {
-      "id": "tengjia",
-      "name": "藤甲兵",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "wutugu"
-      ],
-      "troops": [
-        "盾"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為藤甲兵，大幅降低兵刃傷害，但怕灼燒。"
-    },
-    {
-      "id": "huwei",
-      "name": "虎衛軍",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "dianwei"
-      ],
-      "troops": [
-        "盾"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為虎衛軍，提高反擊與扛傷。"
-    },
-    {
-      "id": "daji",
-      "name": "大戟士",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "zhanghe"
-      ],
-      "troops": [
-        "槍"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為大戟士，強化槍兵對騎兵的壓制。"
-    },
-    {
-      "id": "baimao",
-      "name": "白毦兵",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "chendao"
-      ],
-      "troops": [
-        "槍"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為白毦兵，提高槍兵輸出。"
-    },
-    {
-      "id": "wudang",
-      "name": "無當飛軍",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "wangping"
-      ],
-      "troops": [
-        "弓"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為無當飛軍，提高弓兵傷害與續航。"
-    },
-    {
-      "id": "jinfan",
-      "name": "錦帆軍",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "ganning"
-      ],
-      "troops": [
-        "弓"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為錦帆軍，強化弓兵的追擊與水戰感。"
-    },
-    {
-      "id": "xiangbing",
-      "name": "象兵",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "muludawang"
-      ],
-      "troops": [
-        "器械"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為象兵，提高攻城與前排壓力。"
-    },
-    {
-      "id": "qingzhou",
-      "name": "青州兵",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "caocao"
-      ],
-      "troops": [
-        "盾"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為青州兵，受傷後有機會回血。"
-    },
-    {
-      "id": "xiandeng",
-      "name": "先登死士",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [],
-      "troops": [
-        "槍"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為先登死士，開局更敢換血。"
-    },
-    {
-      "id": "jiefan",
-      "name": "解煩兵",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [
-        "sunquan"
-      ],
-      "troops": [
-        "槍"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為解煩兵，提高槍兵的穩定輸出。"
-    },
-    {
-      "id": "youji",
-      "name": "游擊軍",
-      "type": "兵種",
-      "source": "傳承",
-      "from": [],
-      "troops": [
-        "弓"
-      ],
-      "copies": 1,
-      "orange": true,
-      "desc": "將部隊轉為游擊軍，提高機動與第一輪傷害。"
-    },
-    {
-      "id": "guose",
-      "name": "國色",
-      "type": "內政",
-      "source": "傳承",
-      "from": [
-        "zoushi"
-      ],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "提高魅力，尋訪與鍛造一類委任更好用。"
+      "rank": "S",
+      "desc": "事件兌換的陣法。"
     },
     {
       "id": "jingshu",
       "name": "經術政要",
       "type": "內政",
       "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "提高政治，內政委任的收益上升。"
-    },
-    {
-      "id": "nenggong",
-      "name": "能工巧匠",
-      "type": "內政",
-      "source": "傳承",
       "from": [
-        "majun"
+        "caiyong"
       ],
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "縮短鍛造時間或降低鍛造消耗。"
+      "rank": "S",
+      "desc": "提高政治，適合內政委任。傳承自蔡邕。"
     },
     {
-      "id": "kaituo",
-      "name": "開拓疆土",
+      "id": "canglin",
+      "name": "倉廩豐實",
       "type": "內政",
-      "source": "傳承",
+      "source": "事件",
       "from": [],
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "提高資源產量。"
-    },
-    {
-      "id": "fengyi",
-      "name": "豐衣足食",
-      "type": "內政",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "提高石料、糧食一類資源的產量。"
-    },
-    {
-      "id": "chujiang",
-      "name": "出將入相",
-      "type": "內政",
-      "source": "傳承",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "desc": "同時略為提高政治與魅力。"
+      "rank": "A",
+      "desc": "委任為糧草官時提高糧食產量。"
     }
   ]
 }

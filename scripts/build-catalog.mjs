@@ -5,8 +5,9 @@
  * Aptitude letters follow 騎、盾、弓、槍、器械 (wiki column order).
  */
 import { writeFileSync } from 'node:fs';
+import { tacticRows } from './tactic-catalog.mjs';
 
-const VERSION = '1.1.0';
+const VERSION = '1.2.0';
 
 const APT_ORDER = ['騎', '盾', '弓', '槍', '器械'];
 
@@ -190,104 +191,27 @@ for (const general of generals) {
   ids.add(general.id);
 }
 
-function t(id, name, type, source, from, troops, desc) {
+const TACTIC_TYPES = ['指揮', '主動', '突擊', '被動', '兵種', '陣法', '內政'];
+
+function t(row) {
+  if (row.rank !== 'S' && row.rank !== 'A') throw new Error(`rank ${row.id}`);
+  if (!TACTIC_TYPES.includes(row.type)) throw new Error(`type ${row.id}`);
+  if (row.source !== '傳承' && row.source !== '事件') throw new Error(`source ${row.id}`);
   return {
-    id,
-    name,
-    type,
-    source,
-    from,
-    troops,
+    id: row.id,
+    name: row.name,
+    type: row.type,
+    source: row.source,
+    from: row.from,
+    troops: row.troops,
     copies: 1,
     orange: true,
-    desc,
+    rank: row.rank,
+    desc: row.desc,
   };
 }
 
-const star = (id, name, type, source, from, troops, desc) =>
-  t(id, name, type, source, from, troops, desc);
-
-const tactics = [
-  star('bamen', '八門金鎖陣', '陣法', '傳承', ['caoren'], null, '戰鬥前三回合，壓低敵軍兩人的輸出，並讓我軍主將先手行動。'),
-  star('fengshi', '鋒矢陣', '陣法', '傳承', ['huangyueying', 'lejin'], ['騎', '盾', '槍'], '主將傷害提高也更易受傷；副將傷害下降，但更耐打。'),
-  star('jixing', '箕形陣', '陣法', '事件', [], null, '壓低敵軍主將造成的傷害。'),
-  star('yulin', '魚鱗陣', '陣法', '事件', [], null, '提升統率，並有機會獲得抵御或治療。'),
-  star('sanshi', '三勢陣', '陣法', '事件', [], null, '三人陣營都不同時，強化主將自帶主動或突擊，並輪流調整副將攻防。'),
-  star('wufeng', '武鋒陣', '陣法', '事件', [], null, '依我軍陣營搭配，在戰鬥中提高傷害。'),
-  star('xingyi', '形一陣', '陣法', '事件', [], null, '提高主將輸出，並讓副將更耐打。'),
-  star('qianlong', '潛龍陣', '陣法', '事件', [], null, '前幾回合收著，之後提高我軍傷害。'),
-  star('zanbi', '暫避其鋒', '指揮', '傳承', ['pangde', 'xushu'], null, '戰鬥開局數回合，降低我軍全體受到的傷害。'),
-  star('shengqi', '盛氣凌人', '指揮', '傳承', ['yanliang'], null, '開局讓敵軍多人進入繳械，壓制普通攻擊與突擊。'),
-  star('zuoshou', '坐守孤城', '指揮', '傳承', [], null, '降低受到的傷害，並在受傷後回復兵力。'),
-  star('zhengzhuang', '整裝待發', '指揮', '傳承', [], null, '開局數回合獲得抵御，擋下一次傷害。'),
-  star('yudi', '御敵屏障', '指揮', '傳承', [], null, '開局為我軍提供一層減傷。'),
-  star('yingcheng', '嬰城自守', '指揮', '傳承', [], null, '降低我軍受到的傷害，適合拖節奏。'),
-  star('fuji', '撫輯軍民', '指揮', '事件', [], null, '穩定治療我軍兵力最低的武將。'),
-  star('guagu', '刮骨療毒', '指揮', '事件', [], null, '治療我軍，並有機會解除負面狀態。'),
-  star('pozhen', '破陣摧堅', '主動', '傳承', ['sunce', 'wenchou'], null, '降低目標統率與智力，並造成兵刃傷害。需要準備一回合。'),
-  star('suoxiang', '所向披靡', '主動', '傳承', [], null, '對敵軍群體造成兵刃傷害。'),
-  star('simian', '四面楚歌', '主動', '傳承', [], null, '對敵軍全體造成傷害，適合收割殘兵。'),
-  star('wanjian', '萬箭齊發', '主動', '傳承', [], null, '對敵軍群體造成兵刃傷害，吃弓兵隊伍的爆發。'),
-  star('chensha', '沉沙決水', '主動', '傳承', [], null, '對敵軍群體造成謀略傷害。'),
-  star('hantian', '熯天熾地', '主動', '傳承', [], null, '對敵軍群體施加灼燒，之後持續掉血。'),
-  star('fengzhuo', '風助火勢', '主動', '傳承', [], null, '提高已有灼燒的傷害，或再補一層火。'),
-  star('yaoshu', '妖術', '主動', '傳承', [], null, '對敵軍施加混亂，讓他們打亂出手。'),
-  star('zongbing', '縱兵劫掠', '主動', '傳承', [], null, '對敵軍單體造成較高兵刃傷害。'),
-  star('shengdong', '聲東擊西', '主動', '傳承', [], null, '打擊敵軍單體，並有機會附加控制。'),
-  star('chenhuo', '趁火打劫', '主動', '傳承', [], null, '優先打擊已經受傷或帶負面狀態的目標。'),
-  star('taiping', '太平道法', '主動', '傳承', ['zhangjiao'], null, '對敵軍群體造成謀略傷害，智力越高越痛。'),
-  star('shibie', '士別三日', '主動', '事件', ['lvmeng'], null, '準備後打出高額謀略傷害，並提高之後的輸出。'),
-  star('weimou', '威謀靡亢', '主動', '事件', [], null, '謀略傷害之外，還能壓低目標的主動戰法。'),
-  star('duohun', '奪魂挾魄', '主動', '事件', [], null, '偷取敵軍屬性，此消彼長。'),
-  star('beishe', '杯蛇鬼車', '主動', '傳承', [], null, '對敵軍群體造成謀略傷害，並有機會附加沙暴或混亂一類負面。'),
-  star('shangbing', '上兵伐謀', '主動', '傳承', [], null, '謀略單體爆發，適合高智力武將。'),
-  star('shier', '十二奇策', '主動', '傳承', ['xunyou'], null, '連續對敵軍發動謀略攻擊，打多段傷害。'),
-  star('liaoshi', '料事如神', '主動', '傳承', [], null, '有機會讓敵軍的主動戰法落空，並反打謀略傷害。'),
-  star('woxin', '臥薪嘗膽', '主動', '傳承', [], null, '先降低自己的傷害，幾回合後大幅提高輸出。'),
-  star('anduchen', '暗渡陳倉', '主動', '傳承', [], null, '準備後對敵軍單體造成高額兵刃傷害。'),
-  star('bingwu', '兵無常勢', '主動', '傳承', [], null, '依當前兵種與局面，在兵刃和謀略之間切換輸出。'),
-  star('luolei', '落雷', '主動', '傳承', [], null, '對敵軍單體造成謀略傷害，發動率較高。'),
-  star('chengxu', '乘虛而入', '主動', '傳承', [], null, '攻擊已經被控制的目標時傷害更高。'),
-  star('yiqi', '一騎當千', '突擊', '傳承', [], null, '普通攻擊後對敵軍單體打出高額兵刃傷害。'),
-  star('baiqi', '百騎劫營', '突擊', '傳承', [], null, '普通攻擊後追打敵軍群體。'),
-  star('shouqi', '手起刀落', '突擊', '傳承', [], null, '普通攻擊後補一刀，有機會打出會心。'),
-  star('baoli', '暴戾無仁', '突擊', '傳承', [], null, '普通攻擊後對敵軍單體造成沉重兵刃傷害。'),
-  star('guishen', '鬼神霆威', '突擊', '傳承', [], null, '普通攻擊後對敵軍群體發動兵刃追擊。'),
-  star('hengge', '橫戈躍馬', '突擊', '傳承', [], null, '普通攻擊後連續追打，適合騎兵爆發。'),
-  star('jiaofeng', '交鋒接刃', '突擊', '傳承', [], null, '普通攻擊後有機會再打一段，並提高連擊收益。'),
-  star('zherui', '折銳摧矜', '突擊', '傳承', [], null, '普通攻擊後壓低目標統率，讓後續物理更痛。'),
-  star('ancang', '暗藏殺機', '突擊', '傳承', [], null, '普通攻擊後對兵力較低的目標補刀。'),
-  star('wangong', '彎弓飲羽', '被動', '傳承', ['huangzhong'], null, '提高普通攻擊傷害，適合弓兵主力。'),
-  star('baibu', '百步穿楊', '被動', '傳承', [], null, '提高會心率，讓遠程輸出更穩。'),
-  star('yongguan', '勇冠三軍', '被動', '傳承', [], null, '戰鬥中逐步提高自身造成的傷害。'),
-  star('tieqi', '鐵騎驅馳', '被動', '傳承', [], null, '提高騎兵普通攻擊與追擊的傷害。'),
-  star('hejun', '合軍聚眾', '被動', '傳承', [], null, '提高自身兵力上限或開局兵力。'),
-  star('pojun', '破軍', '被動', '傳承', [], null, '攻擊時無視目標一部分防禦。'),
-  star('buru', '不辱使命', '被動', '傳承', [], null, '我軍其他人受傷時，自己獲得增傷或減傷。'),
-  star('zhongyong', '忠勇義烈', '被動', '傳承', [], null, '為友軍分擔傷害，自己更扛打。'),
-  star('yiyi', '以逸待勞', '被動', '傳承', [], null, '前幾回合減傷，之後提高傷害。'),
-  star('xiliang', '西涼鐵騎', '兵種', '傳承', ['mateng'], ['騎'], '將部隊轉為西涼鐵騎，提高騎兵爆發。'),
-  star('hubao', '虎豹騎', '兵種', '傳承', ['caochun'], ['騎'], '將部隊轉為虎豹騎，普通攻擊後更容易追擊。'),
-  star('baima', '白馬義從', '兵種', '傳承', ['gongsunzan'], ['騎'], '將部隊轉為白馬義從，提高速度、搶先手。'),
-  star('xianzhen', '陷陣營', '兵種', '傳承', ['gaoshun'], ['盾'], '將部隊轉為陷陣營，提高盾兵的生存與反打。'),
-  star('tengjia', '藤甲兵', '兵種', '傳承', ['wutugu'], ['盾'], '將部隊轉為藤甲兵，大幅降低兵刃傷害，但怕灼燒。'),
-  star('huwei', '虎衛軍', '兵種', '傳承', ['dianwei'], ['盾'], '將部隊轉為虎衛軍，提高反擊與扛傷。'),
-  star('daji', '大戟士', '兵種', '傳承', ['zhanghe'], ['槍'], '將部隊轉為大戟士，強化槍兵對騎兵的壓制。'),
-  star('baimao', '白毦兵', '兵種', '傳承', ['chendao'], ['槍'], '將部隊轉為白毦兵，提高槍兵輸出。'),
-  star('wudang', '無當飛軍', '兵種', '傳承', ['wangping'], ['弓'], '將部隊轉為無當飛軍，提高弓兵傷害與續航。'),
-  star('jinfan', '錦帆軍', '兵種', '傳承', ['ganning'], ['弓'], '將部隊轉為錦帆軍，強化弓兵的追擊與水戰感。'),
-  star('xiangbing', '象兵', '兵種', '傳承', ['muludawang'], ['器械'], '將部隊轉為象兵，提高攻城與前排壓力。'),
-  star('qingzhou', '青州兵', '兵種', '傳承', ['caocao'], ['盾'], '將部隊轉為青州兵，受傷後有機會回血。'),
-  star('xiandeng', '先登死士', '兵種', '傳承', [], ['槍'], '將部隊轉為先登死士，開局更敢換血。'),
-  star('jiefan', '解煩兵', '兵種', '傳承', ['sunquan'], ['槍'], '將部隊轉為解煩兵，提高槍兵的穩定輸出。'),
-  star('youji', '游擊軍', '兵種', '傳承', [], ['弓'], '將部隊轉為游擊軍，提高機動與第一輪傷害。'),
-  star('guose', '國色', '內政', '傳承', ['zoushi'], null, '提高魅力，尋訪與鍛造一類委任更好用。'),
-  star('jingshu', '經術政要', '內政', '傳承', [], null, '提高政治，內政委任的收益上升。'),
-  star('nenggong', '能工巧匠', '內政', '傳承', ['majun'], null, '縮短鍛造時間或降低鍛造消耗。'),
-  star('kaituo', '開拓疆土', '內政', '傳承', [], null, '提高資源產量。'),
-  star('fengyi', '豐衣足食', '內政', '傳承', [], null, '提高石料、糧食一類資源的產量。'),
-  star('chujiang', '出將入相', '內政', '傳承', [], null, '同時略為提高政治與魅力。'),
-];
+const tactics = tacticRows.map(t);
 
 const tacticIds = new Set();
 for (const tactic of tactics) {
@@ -435,7 +359,7 @@ const bingshu = {
 const meta = {
   catalogVersion: VERSION,
   updated: '2026-09-26',
-  scope: '常見五星名將與常見 S 級戰法。名冊刻意未收全，直接編輯 data 底下的 JSON 即可擴充。',
+  scope: '戰鬥類 S 級收到兗州之戰的公開清冊，並補上已核對的後續事件戰法；A 級只收已核對類型的常用戰法。直接編輯 scripts/tactic-catalog.mjs 後重跑建置即可擴充。',
 };
 
 writeFileSync('data/meta.json', `${JSON.stringify(meta, null, 2)}\n`);

@@ -4,6 +4,7 @@ import {
   activeChoice,
   buildUsage,
   costBucket,
+  compareTactics,
   demoFill,
   emptyAccount,
   exportPayload,
@@ -326,4 +327,14 @@ test('demo team cost counts three generals', () => {
     ['zhangfei', { cost: 6 }],
   ]);
   assert.equal(teamCost(account.teams[0], map), 20);
+});
+
+test('tactics sort S before A, then type, then name', () => {
+  const rows = [
+    { name: '坐守孤城', type: '主動', rank: 'A' },
+    { name: '刮骨療毒', type: '主動', rank: 'S' },
+    { name: '盛氣凌敵', type: '指揮', rank: 'S' },
+    { name: '暫避其鋒', type: '指揮', rank: 'S' },
+  ].sort(compareTactics);
+  assert.deepEqual(rows.map((row) => row.name), ['盛氣凌敵', '暫避其鋒', '刮骨療毒', '坐守孤城']);
 });

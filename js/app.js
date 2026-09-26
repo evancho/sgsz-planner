@@ -12,6 +12,7 @@ import {
   allTactics,
   bingshuLabel,
   buildUsage,
+  compareTactics,
   demoFill,
   emptyAccount,
   exportPayload,
@@ -406,20 +407,14 @@ function tacticsView(mode) {
     if (ui.tacticTab && ui.tacticTab !== '全部' && tactic.type !== ui.tacticTab) return false;
     if (!query) return true;
     return `${tactic.name} ${tactic.desc} ${tactic.type}`.toLowerCase().includes(query);
-  }).sort((a, b) => {
-    const rank = (tactic) => {
-      if (!tacticOwned(current, tactic.id)) return 2;
-      return tacticUseCount(usage, tactic.id) ? 0 : 1;
-    };
-    return rank(a) - rank(b) || a.name.localeCompare(b.name, 'zh-Hant');
-  });
+  }).sort(compareTactics);
   const tabs = ['全部', ...TACTIC_TYPES];
   return `
     <section>
       <div class="page-head">
         <div>
           <h2>${mode === 'event' ? '事件戰法' : '戰法'}</h2>
-          <p class="sub">${mode === 'event' ? '賽季事件兌換的戰法。勾選代表這個帳號已經有了。' : '橙戰法可勾選擁有。已裝進隊伍的會變成灰色已佔用，不能再裝第二次。'}</p>
+          <p class="sub">${mode === 'event' ? '賽季事件兌換的戰法。先排 S 級，再排 A 級。勾選代表這個帳號已經有了。' : '可勾選的是 S、A 級戰法。列表先排 S 級，再排 A 級。已裝進隊伍的會變成灰色已佔用，不能再裝第二次。'}</p>
         </div>
       </div>
       <div class="entry-row">
@@ -456,6 +451,7 @@ function tacticRow(tactic, current, usage) {
       <button type="button" class="check ${owned ? 'on' : ''}" data-action="toggle-tactic" data-id="${esc(tactic.id)}" aria-pressed="${owned}"><span class="box"></span>擁有</button>
       <div class="body">
         <h3>${esc(tactic.name)}
+          ${rankTag(tactic)}
           <span class="tag">${esc(tactic.type)}</span>
           <span class="tag ghost">${esc(tactic.source)}</span>
           ${tactic.custom ? '<span class="mini">自訂</span>' : ''}
@@ -468,10 +464,16 @@ function tacticRow(tactic, current, usage) {
     </article>`;
 }
 
+function rankTag(tactic) {
+  if (tactic.rank !== 'S' && tactic.rank !== 'A') return '';
+  const grade = tactic.rank === 'S' ? 's' : 'a';
+  return `<span class="tag grade-${grade}" aria-label="等級 ${tactic.rank}">${tactic.rank}</span>`;
+}
+
 function inheritView() {
   const current = account();
   const query = ui.inheritQuery.trim();
-  const list = ui.catalog.tactics.filter((tactic) => tactic.source === '傳承' && (!query || `${tactic.name}${tactic.desc}`.includes(query)));
+  const list = ui.catalog.tactics.filter((tactic) => tactic.source === '傳承' && (!query || `${tactic.name}${tactic.desc}`.includes(query))).sort(compareTactics);
   return `
     <section>
       <div class="page-head">
@@ -498,7 +500,7 @@ function inheritRow(tactic, current) {
   return `
     <article class="trow">
       <div class="body">
-        <h3>${esc(tactic.name)} <span class="tag">${esc(tactic.type)}</span></h3>
+        <h3>${esc(tactic.name)} ${rankTag(tactic)} <span class="tag">${esc(tactic.type)}</span></h3>
         <p class="muted">${esc(tactic.desc)}</p>
         <p class="faint">常見來源：${esc(sourceText)}</p>
       </div>

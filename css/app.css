@@ -321,6 +321,8 @@ button.grow-name { cursor: pointer; }
   color: var(--gold-2);
 }
 .tag.ghost { color: var(--muted); }
+.tag.grade-s { color: #1a1208; background: var(--gold); border-color: var(--gold); font-weight: 700; }
+.tag.grade-a { color: #1a1208; background: #d7b4f0; border-color: #d7b4f0; font-weight: 700; }
 .list { display: flex; flex-direction: column; gap: 8px; }
 .trow { padding: 12px; align-items: flex-start; box-shadow: none; }
 .trow .body { flex: 1; min-width: 0; }

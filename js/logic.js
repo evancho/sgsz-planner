@@ -172,6 +172,17 @@ export function sortGenerals(list, mode) {
   return copy;
 }
 
+const TACTIC_RANK = { S: 0, A: 1 };
+
+export function compareTactics(a, b) {
+  const rankDiff = (TACTIC_RANK[a.rank] ?? 2) - (TACTIC_RANK[b.rank] ?? 2);
+  if (rankDiff) return rankDiff;
+  const typeDiff = (TACTIC_TYPES.indexOf(a.type) < 0 ? 99 : TACTIC_TYPES.indexOf(a.type))
+    - (TACTIC_TYPES.indexOf(b.type) < 0 ? 99 : TACTIC_TYPES.indexOf(b.type));
+  if (typeDiff) return typeDiff;
+  return a.name.localeCompare(b.name, 'zh-Hant');
+}
+
 export function allTactics(catalogTactics, account) {
   const custom = (account?.customTactics || []).map((tactic) => ({
     ...tactic,
