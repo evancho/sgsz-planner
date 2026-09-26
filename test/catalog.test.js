@@ -8,7 +8,7 @@ const tacticsFile = JSON.parse(readFileSync(new URL('../data/tactics.json', impo
 const bingshu = JSON.parse(readFileSync(new URL('../data/bingshu.json', import.meta.url)));
 
 test('catalog files share one version', () => {
-  assert.equal(meta.catalogVersion, '1.2.1');
+  assert.equal(meta.catalogVersion, '1.2.2');
   assert.equal(generalsFile.catalogVersion, meta.catalogVersion);
   assert.equal(tacticsFile.catalogVersion, meta.catalogVersion);
   assert.equal(bingshu.catalogVersion, meta.catalogVersion);
@@ -111,7 +111,7 @@ test('generals and tactics are internally consistent', () => {
   const seasonShop = [
     ['tuo-duohun', '拓·奪魂挾魄', '主動', 'duohun'],
     ['tuo-shibie', '拓·士別三日', '被動', 'shibie'],
-    ['tuo-yibao', '拓·以暴制暴', '主動', null],
+    ['tuo-yigua', '拓·以寡敵眾', '被動', 'yigua'],
     ['tuo-jifeng', '拓·疾風驟雨', '主動', 'jifeng'],
     ['jing-yulin', '精·魚鱗陣', '陣法', null],
     ['jing-fengshi', '精·鋒矢陣', '陣法', 'fengshi'],
@@ -133,4 +133,7 @@ test('generals and tactics are internally consistent', () => {
       assert.notEqual(base.source, '賽季');
     }
   }
+  assert.equal(tacticsFile.tactics.some((tactic) => tactic.name.includes('以暴制暴') || tactic.id === 'tuo-yibao'), false);
+  assert.equal(byName.get('以寡敵眾').id, 'yigua');
+  assert.equal(byName.get('以寡敵眾').type, '被動');
 });
