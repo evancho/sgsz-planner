@@ -52,6 +52,7 @@ const ui = {
   toast: '',
   justOpened: false,
   openGenerals: {},
+  nameDraft: {},
   installHidden: localStorage.getItem('sgsz-hide-install') === '1',
 };
 
@@ -234,6 +235,10 @@ function accountsView() {
     </section>`;
 }
 
+function accountNameValue(item) {
+  return Object.prototype.hasOwnProperty.call(ui.nameDraft, item.id) ? ui.nameDraft[item.id] : item.name;
+}
+
 function help(title, text) {
   return `<article class="help-card"><h3>${title}</h3><p class="help">${text}</p></article>`;
 }
@@ -244,8 +249,8 @@ function accountCard(item, active) {
   return `
     <article class="account-card">
       <header>
-        <label>名稱
-          <input class="field" id="account-name-${esc(item.id)}" data-model="account-name" data-id="${esc(item.id)}" value="${esc(item.name)}" maxlength="24" autocomplete="off">
+        <label for="nickname-${esc(item.id)}">名稱
+          <input class="field" type="text" id="nickname-${esc(item.id)}" name="nickname" data-model="account-name" data-id="${esc(item.id)}" value="${esc(accountNameValue(item))}" maxlength="24" autocomplete="nickname" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="done">
         </label>
         ${active ? '<span class="active-pill">使用中</span>' : `<button type="button" class="btn" data-action="use-account" data-id="${esc(item.id)}">切換</button>`}
       </header>
@@ -1097,8 +1102,7 @@ function onInput(event) {
   else if (model === 'draft-name') ui.draft = { ...ui.draft, name: el.value };
   else if (model === 'draft-desc') ui.draft = { ...ui.draft, desc: el.value };
   else if (model === 'account-name') {
-    const name = el.value.slice(0, 24);
-    commit(updateAccount(ui.state, el.dataset.id, (item) => ({ ...item, name })));
+    ui.nameDraft[el.dataset.id] = el.value;
     return;
   } else if (model === 'team-name' || model === 'team-notes') {
     const field = model === 'team-name' ? 'name' : 'notes';
@@ -1126,11 +1130,28 @@ function onChange(event) {
   }
 }
 
+function persistAccountName(el) {
+  const id = el.dataset.id;
+  if (!id) return;
+  const name = el.value.trim().slice(0, 24) || '未命名帳號';
+  if (el.value !== name) el.value = name;
+  delete ui.nameDraft[id];
+  const existing = ui.state.accounts.find((item) => item.id === id);
+  if (!existing || existing.name === name) return;
+  ui.state = updateAccount(ui.state, id, (item) => ({ ...item, name }));
+  try {
+    saveState(ui.state);
+  } catch {
+    toast('儲存空間不足，這次變更可能沒寫入。');
+  }
+  document.querySelectorAll('select[data-action="switch-account"] option').forEach((option) => {
+    if (option.value === id) option.textContent = name;
+  });
+}
+
 function onBlur(event) {
   const el = event.target;
-  if (el.dataset.model === 'account-name' && !el.value.trim()) {
-    commit(updateAccount(ui.state, el.dataset.id, (item) => ({ ...item, name: '未命名帳號' })));
-  }
+  if (el.dataset.model === 'account-name') persistAccountName(el);
   if (el.dataset.model === 'team-name' && !el.value.trim()) {
     commit(updateAccount(ui.state, account().id, (item) => ({
       ...item,
@@ -1363,6 +1384,11 @@ function bind() {
   document.body.addEventListener('change', onChange);
   document.body.addEventListener('focusout', onBlur);
   document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && event.target?.dataset?.model === 'account-name' && !event.isComposing) {
+      event.preventDefault();
+      event.target.blur();
+      return;
+    }
     if (event.key !== 'Escape') return;
     if (ui.dialog) {
       ui.dialog = null;
