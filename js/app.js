@@ -7,6 +7,7 @@ import {
   ROLE_FILTERS,
   SORTS,
   TACTIC_TYPES,
+  TEAM_POSITIONS,
   TROOP_ORDER,
   activeAccount,
   allTactics,
@@ -58,7 +59,6 @@ const ui = {
 };
 
 const CAMP_CLASS = { 魏: 'wei', 蜀: 'shu', 吳: 'wu', 群: 'qun' };
-const POSITIONS = ['副將', '主將', '副將'];
 
 function emptyFilters() {
   return {
@@ -516,7 +516,7 @@ function teamsView() {
       <div class="page-head">
         <div>
           <h2>隊伍</h2>
-          <p class="sub">一隊三名武將。中間是主將。主戰法固定為自帶，旁邊兩格是傳承。</p>
+          <p class="sub">一隊三名武將。第一位是主將，後面兩位是副將。主戰法固定為自帶，旁邊兩格是傳承。</p>
         </div>
         <button type="button" class="btn primary" data-action="add-team">新增隊伍</button>
       </div>
@@ -570,7 +570,7 @@ function memberCard(team, member, slot, current) {
   return `
     <article class="member">
       <div class="member-top">
-        <span class="tag">${POSITIONS[slot]}</span>
+        <span class="tag">${TEAM_POSITIONS[slot]}</span>
         <span>
           <button type="button" class="icon-btn" data-action="move-member" data-team="${esc(team.id)}" data-slot="${slot}" data-dir="-1" ${slot === 0 ? 'disabled' : ''} aria-label="左移">←</button>
           <button type="button" class="icon-btn" data-action="move-member" data-team="${esc(team.id)}" data-slot="${slot}" data-dir="1" ${slot === 2 ? 'disabled' : ''} aria-label="右移">→</button>
