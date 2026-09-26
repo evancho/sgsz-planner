@@ -70,6 +70,12 @@ Android 可用 Chrome 的「加到主畫面」。電腦直接用瀏覽器即可�
 
 三份 JSON 的 `catalogVersion` 請一起改。`scripts/build-catalog.mjs` 會**覆寫**這三份檔案，只有想整批重產時才執行 `node scripts/build-catalog.mjs`。
 
+## 更新
+
+App 開著的時候如果 GitHub Pages 有新版本，上方會出現「有新版本可用」。點「重新載入」才會換上，不會自己重整。
+
+確認方式：這版先開過一次，再把 `sw.js` 裡的 `CACHE` 改成新名稱並部署。回到這個分頁（或主畫面 App）就會看到提示；點下去之後提示消失，也不會一直重複跳出。
+
 ## 開發
 
 靜態檔，沒有建置步驟。在這個資料夾執行：

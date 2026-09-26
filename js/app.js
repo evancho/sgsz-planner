@@ -189,6 +189,7 @@ function shell(body) {
         </label>
       </header>
       ${installBanner()}
+      ${updateBanner()}
       <main id="main">${body}</main>
       <nav class="tabbar" aria-label="主要功能">
         ${tabs.map(([id, label]) => `<a href="#/${id}" ${here === id ? 'aria-current="page"' : ''}>${icon(id)}<span>${label}</span></a>`).join('')}
@@ -196,6 +197,11 @@ function shell(body) {
       ${overlay()}
       <div class="toast" role="status">${esc(ui.toast)}</div>
     </div>`;
+}
+
+function updateBanner() {
+  if (!ui.updateReady) return '';
+  return `<div class="banner" id="update-banner" role="status"><span>有新版本可用</span><button type="button" class="btn" data-action="apply-update">重新載入</button></div>`;
 }
 
 function installBanner() {
@@ -841,6 +847,9 @@ function onClick(event) {
       localStorage.setItem('sgsz-hide-install', '1');
       render();
       break;
+    case 'apply-update':
+      applyUpdate();
+      break;
     case 'add-account': {
       const id = newId('acct');
       const next = {
@@ -1423,17 +1432,62 @@ async function loadCatalog() {
   };
 }
 
+let swRegistration = null;
+let updateReload = false;
+
+function showUpdateBanner() {
+  ui.updateReady = true;
+  if (document.getElementById('update-banner')) return;
+  const header = document.querySelector('.top');
+  if (!header) return;
+  const banner = document.createElement('div');
+  banner.className = 'banner';
+  banner.id = 'update-banner';
+  banner.setAttribute('role', 'status');
+  banner.innerHTML = '<span>有新版本可用</span><button type="button" class="btn" data-action="apply-update">重新載入</button>';
+  header.insertAdjacentElement('afterend', banner);
+}
+
+function considerWaitingWorker() {
+  if (!navigator.serviceWorker.controller || !swRegistration?.waiting) return;
+  showUpdateBanner();
+}
+
+function applyUpdate() {
+  const naming = document.activeElement;
+  if (naming?.dataset?.model === 'account-name') persistAccountName(naming);
+  updateReload = true;
+  const waiting = swRegistration?.waiting;
+  if (waiting) {
+    waiting.postMessage({ type: 'SKIP_WAITING' });
+    return;
+  }
+  location.reload();
+}
+
 function registerSW() {
   if (!('serviceWorker' in navigator)) return;
-  let hadController = Boolean(navigator.serviceWorker.controller);
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!hadController) {
-      hadController = true;
-      return;
-    }
+    if (!updateReload) return;
+    updateReload = false;
     location.reload();
   });
-  navigator.serviceWorker.register('./sw.js').catch(() => {});
+  const check = () => {
+    if (document.visibilityState !== 'visible' || !swRegistration) return;
+    swRegistration.update().catch(() => {});
+  };
+  document.addEventListener('visibilitychange', check);
+  window.addEventListener('focus', check);
+  navigator.serviceWorker.register('./sw.js').then((registration) => {
+    swRegistration = registration;
+    considerWaitingWorker();
+    const watch = (worker) => {
+      if (!worker) return;
+      worker.addEventListener('statechange', () => queueMicrotask(() => considerWaitingWorker()));
+    };
+    watch(registration.installing);
+    registration.addEventListener('updatefound', () => watch(registration.installing));
+  }).catch(() => {});
 }
 
 async function boot() {
