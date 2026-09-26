@@ -179,18 +179,21 @@ textarea.notes { min-height: 84px; }
 .gcard { padding: 12px 12px 12px 16px; position: relative; overflow: hidden; }
 .gcard.grow { padding: 0 6px 0 10px; border-radius: 12px; }
 .grow-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto max-content minmax(0, 1fr) auto;
   align-items: center;
-  gap: 6px;
+  column-gap: 6px;
+  row-gap: 2px;
   min-height: 48px;
-  flex-wrap: nowrap;
 }
+.gcard.grow .camp { grid-column: 1; grid-row: 1; font-size: 15px; }
+.gcard.grow .cost { grid-column: 2; grid-row: 1; padding: 0 6px; font-size: 12px; line-height: 1.6; }
 .grow-name {
-  flex: 1 1 auto;
-  min-width: 0;
+  grid-column: 3;
+  grid-row: 1;
+  min-width: max-content;
   display: flex;
   align-items: center;
-  gap: 4px;
   margin: 0;
   padding: 0;
   border: 0;
@@ -198,31 +201,20 @@ textarea.notes { min-height: 84px; }
   color: inherit;
   font: inherit;
   text-align: left;
-  min-height: 44px;
+  min-height: 36px;
   border-radius: 0;
 }
 button.grow-name { cursor: pointer; }
 .grow-name strong {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 16px;
   font-weight: 700;
 }
-.gcard.grow .camp { flex: 0 0 auto; font-size: 15px; }
-.gcard.grow .cost { flex: 0 0 auto; padding: 0 6px; font-size: 12px; line-height: 1.6; }
-.gcard.grow .mini { flex: 0 0 auto; padding: 0 5px; font-size: 11px; }
-.gcard.grow .stamp {
-  transform: none;
-  flex: 0 0 auto;
-  letter-spacing: 0;
-  font-size: 11px;
-  line-height: 1.4;
-  padding: 0 3px;
-}
 .gcard.grow .apt-row {
-  flex: 0 0 auto;
+  grid-column: 4;
+  grid-row: 1;
+  min-width: 0;
+  overflow: hidden;
   flex-wrap: nowrap;
   margin: 0;
   gap: 1px;
@@ -232,6 +224,28 @@ button.grow-name { cursor: pointer; }
   padding: 0;
   font-size: 11px;
   white-space: nowrap;
+  flex: 0 0 auto;
+}
+.gcard.grow .check { grid-column: 5; grid-row: 1; }
+.grow-chips {
+  grid-column: 3 / 5;
+  grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-width: 0;
+  padding-bottom: 4px;
+}
+.gcard.grow.has-chips .camp,
+.gcard.grow.has-chips .cost,
+.gcard.grow.has-chips .check { grid-row: 1 / span 2; }
+.gcard.grow .mini { padding: 0 5px; font-size: 11px; }
+.gcard.grow .stamp {
+  transform: none;
+  letter-spacing: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 0 3px;
 }
 .gcard.grow .check {
   flex: 0 0 auto;

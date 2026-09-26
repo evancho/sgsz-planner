@@ -145,22 +145,29 @@ export function sortGenerals(list, mode) {
     const index = CAMP_ORDER.indexOf(camp);
     return index === -1 ? 99 : index;
   };
+  const byCampThenName = (a, b) => {
+    const campDiff = campIndex(a.camp) - campIndex(b.camp);
+    if (campDiff) return campDiff;
+    return a.name.localeCompare(b.name, 'zh-Hant');
+  };
   copy.sort((a, b) => {
-    if (mode === 'cost-desc' && a.cost !== b.cost) return b.cost - a.cost;
-    if (mode === 'cost-asc' && a.cost !== b.cost) return a.cost - b.cost;
+    if (mode === 'cost-desc' || mode === 'cost-asc') {
+      if (a.cost !== b.cost) return mode === 'cost-desc' ? b.cost - a.cost : a.cost - b.cost;
+      return byCampThenName(a, b);
+    }
     if (mode === 'camp') {
       const campDiff = campIndex(a.camp) - campIndex(b.camp);
       if (campDiff) return campDiff;
+      if (a.cost !== b.cost) return b.cost - a.cost;
+      return a.name.localeCompare(b.name, 'zh-Hant');
     }
     if (mode === 'name') return a.name.localeCompare(b.name, 'zh-Hant');
     if (mode === 'rare') {
       const rareDiff = rarityKey(b) - rarityKey(a);
       if (rareDiff) return rareDiff;
     }
-    const campDiff = campIndex(a.camp) - campIndex(b.camp);
-    if (campDiff) return campDiff;
     if (a.cost !== b.cost) return b.cost - a.cost;
-    return a.name.localeCompare(b.name, 'zh-Hant');
+    return byCampThenName(a, b);
   });
   return copy;
 }

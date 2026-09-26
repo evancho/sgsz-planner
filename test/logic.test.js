@@ -7,6 +7,7 @@ import {
   demoFill,
   emptyAccount,
   exportPayload,
+  freshState,
   generalBlockReason,
   indexNameUse,
   matchesGeneral,
@@ -171,6 +172,31 @@ test('sort by cost then camp', () => {
   assert.equal(sorted[0].cost <= sorted[1].cost, true);
   const byCamp = sortGenerals(generals, 'camp');
   assert.equal(byCamp[0].camp, '魏');
+  const list = [
+    { ...generals[2], id: 'wu7', name: '周瑜', camp: '吳', cost: 7 },
+    { ...generals[0], id: 'shu7', name: '關羽', camp: '蜀', cost: 7 },
+    { ...generals[3], id: 'wei6', name: '荀彧', camp: '魏', cost: 6 },
+    { ...generals[0], id: 'wei7', name: '曹操', camp: '魏', cost: 7 },
+    { ...generals[0], id: 'qun7', name: '呂布', camp: '群', cost: 7 },
+  ];
+  assert.deepEqual(sortGenerals(list, 'cost-desc').map((general) => `${general.camp}${general.cost}${general.name}`), [
+    '魏7曹操',
+    '蜀7關羽',
+    '吳7周瑜',
+    '群7呂布',
+    '魏6荀彧',
+  ]);
+});
+
+test('a new account owns no generals or tactics', () => {
+  const account = emptyAccount('acct-new', '主帳');
+  assert.deepEqual(account.owned, {});
+  assert.deepEqual(account.tacticsOwned, {});
+  assert.deepEqual(account.teams, []);
+  const state = freshState();
+  assert.equal(Object.keys(state.accounts[0].owned).length, 0);
+  assert.equal(Object.keys(state.accounts[0].tacticsOwned).length, 0);
+  assert.equal(state.accounts[0].teams.length, 0);
 });
 
 test('tactic occupancy blocks a second assign and a second formation', () => {

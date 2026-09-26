@@ -38,7 +38,7 @@ const ui = {
   catalog: null,
   state: null,
   filters: emptyFilters(),
-  sort: 'rare',
+  sort: 'cost-desc',
   quick: 'all',
   query: '',
   tacticQuery: '',
@@ -353,25 +353,24 @@ function generalCard(general, current, usage) {
   const open = Boolean(owned && ui.openGenerals[general.id]);
   const innate = usefulInnate(general);
   const name = plainName(general);
-  const chips = [
+  const chipHtml = [
     ownsDiancang(owned) ? '<span class="mini">典藏</span>' : '',
     owned?.awaken ? '<span class="mini">覺醒</span>' : '',
     owned && owned.red > 0 ? `<span class="mini">紅${owned.red}</span>` : '',
-  ].join('');
-  const stamp = where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : '';
-  const nameInner = `<strong>${esc(name)}</strong>${chips}`;
+    where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : '',
+  ].filter(Boolean).join('');
   const nameEl = owned
-    ? `<button type="button" class="grow-name" data-action="toggle-expand" data-id="${esc(general.id)}" aria-expanded="${open}">${nameInner}</button>`
+    ? `<button type="button" class="grow-name" data-action="toggle-expand" data-id="${esc(general.id)}" aria-expanded="${open}"><strong>${esc(name)}</strong></button>`
     : `<div class="grow-name"><strong>${esc(name)}</strong></div>`;
   return `
-    <article class="gcard grow ${CAMP_CLASS[general.camp] || 'qun'} ${open ? 'open' : ''}">
+    <article class="gcard grow ${CAMP_CLASS[general.camp] || 'qun'} ${open ? 'open' : ''} ${chipHtml ? 'has-chips' : ''}">
       <div class="grow-row">
         <span class="camp">${esc(general.camp)}</span>
         <span class="cost" title="統御 ${general.cost}">C${general.cost}</span>
         ${nameEl}
-        ${stamp}
         <div class="apt-row">${aptHtml(general.apt)}</div>
         <button type="button" class="check ${owned ? 'on' : ''}" data-action="toggle-own" data-id="${esc(general.id)}" aria-pressed="${owned ? 'true' : 'false'}"><span class="box"></span>擁有</button>
+        ${chipHtml ? `<div class="grow-chips">${chipHtml}</div>` : ''}
       </div>
       ${open ? `<div class="grow-more">${ownedControls(general, owned)}${innate ? `<p class="faint innate">自帶 · ${esc(innate)}</p>` : ''}</div>` : ''}
     </article>`;
