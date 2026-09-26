@@ -4,6 +4,8 @@
 
 線上版：<https://evancho.github.io/sgsz-planner/>
 
+若這個網址還沒開，到倉庫 **Settings → Pages**，Build and deployment 選 **Deploy from a branch**，分支選 `main`、資料夾選 `/ (root)`，再按 Save。程式已經在 `main`。
+
 ## 加到 iPhone 主畫面
 
 1. 用 **Safari** 打開上面的網址（Chrome 的「加入主畫面」不一定能離線）。
