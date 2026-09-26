@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { isInventoryTactic } from '../js/logic.js';
 
 const meta = JSON.parse(readFileSync(new URL('../data/meta.json', import.meta.url)));
 const generalsFile = JSON.parse(readFileSync(new URL('../data/generals.json', import.meta.url)));
@@ -8,10 +9,35 @@ const tacticsFile = JSON.parse(readFileSync(new URL('../data/tactics.json', impo
 const bingshu = JSON.parse(readFileSync(new URL('../data/bingshu.json', import.meta.url)));
 
 test('catalog files share one version', () => {
-  assert.equal(meta.catalogVersion, '1.2.2');
+  assert.equal(meta.catalogVersion, '1.2.3');
   assert.equal(generalsFile.catalogVersion, meta.catalogVersion);
   assert.equal(tacticsFile.catalogVersion, meta.catalogVersion);
   assert.equal(bingshu.catalogVersion, meta.catalogVersion);
+  const sw = readFileSync(new URL('../sw.js', import.meta.url), 'utf8');
+  assert.match(sw, new RegExp(`const CACHE = 'sgsz-planner-${meta.catalogVersion.replaceAll('.', '\\.')}'`));
+});
+
+test('戰法 inventory keeps equipable sources and drops innate tactics', () => {
+  const sources = new Set(tacticsFile.tactics.map((tactic) => tactic.source));
+  assert.deepEqual([...sources].sort(), ['事件', '傳承', '賽季', '自帶'].sort());
+  const innate = tacticsFile.tactics.filter((tactic) => tactic.source === '自帶');
+  assert.ok(innate.length > 0);
+  for (const name of ['先聲奪人', '江天長焰', '扶危定傾']) {
+    const tactic = innate.find((item) => item.name === name);
+    assert.ok(tactic, name);
+    assert.equal(isInventoryTactic(tactic), false);
+  }
+  for (const source of ['傳承', '事件', '賽季']) {
+    const tactic = tacticsFile.tactics.find((item) => item.source === source);
+    assert.ok(tactic, source);
+    assert.equal(isInventoryTactic(tactic), true);
+  }
+  assert.equal(isInventoryTactic({ source: '自訂', name: '自訂戰法' }), true);
+  assert.equal(isInventoryTactic({ source: '賽季商店', name: '商店戰法' }), true);
+  for (const general of generalsFile.generals.filter((item) => item.innate)) {
+    assert.equal(typeof general.innate, 'string');
+    assert.notEqual(general.innate, '');
+  }
 });
 
 test('generals and tactics are internally consistent', () => {

@@ -20,6 +20,7 @@ import {
   generalBlockReason,
   indexNameUse,
   isDuwei,
+  isInventoryTactic,
   matchesGeneral,
   newId,
   normalizeState,
@@ -415,6 +416,7 @@ function tacticsView(mode) {
   const usage = usageFor(current);
     const query = ui.tacticQuery.trim().toLowerCase();
   const list = tacticsFor(current).filter((tactic) => {
+    if (!isInventoryTactic(tactic)) return false;
     if (mode === 'event' && tactic.source !== '事件') return false;
     if (ui.tacticTab && ui.tacticTab !== '全部' && tactic.type !== ui.tacticTab) return false;
     if (!query) return true;
@@ -426,7 +428,7 @@ function tacticsView(mode) {
       <div class="page-head">
         <div>
           <h2>${mode === 'event' ? '事件戰法' : '戰法'}</h2>
-          <p class="sub">${mode === 'event' ? '賽季事件兌換的戰法。先排 S 級，再排 A 級。勾選代表這個帳號已經有了。' : '可勾選的是 S、A 級戰法。列表先排 S 級，再排 A 級。已裝進隊伍的會變成灰色已佔用，不能再裝第二次。'}</p>
+          <p class="sub">${mode === 'event' ? '賽季事件兌換的戰法。先排 S 級，再排 A 級。勾選代表這個帳號已經有了。' : '這裡列出可勾選的傳承、事件、賽季商店，以及自己新增的戰法。列表先排 S 級，再排 A 級。已裝進隊伍的會變成灰色已佔用，不能再裝第二次。'}</p>
         </div>
       </div>
       <div class="entry-row">
@@ -455,20 +457,6 @@ function seasonChip(tactic) {
 }
 
 function tacticRow(tactic, current, usage) {
-  if (tactic.source === '自帶') {
-    const owners = (tactic.from || []).map((id) => generalsById().get(id)?.name).filter(Boolean).join('、');
-    return `
-      <article class="trow">
-        <div class="body">
-          <h3>${esc(tactic.name)}
-            <span class="tag">${esc(tactic.type)}</span>
-            <span class="tag ghost">自帶</span>
-          </h3>
-          <p class="muted">${esc(tactic.desc)}</p>
-          ${owners ? `<p class="faint">自帶武將：${esc(owners)}。不進傳承槽。</p>` : '<p class="faint">不進傳承槽。</p>'}
-        </div>
-      </article>`;
-  }
   const owned = tacticOwned(current, tactic.id);
   const used = tacticUseCount(usage, tactic.id);
   const copies = tactic.copies || 1;
@@ -748,7 +736,7 @@ function tacticPicker() {
   const usage = usageFor(current);
   const map = tacticsById(current);
   const query = ui.picker.query.trim().toLowerCase();
-  const options = tacticsFor(current).filter((tactic) => tactic.source !== '自帶' && (!query || `${tactic.name}${tactic.desc}`.toLowerCase().includes(query)));
+  const options = tacticsFor(current).filter((tactic) => isInventoryTactic(tactic) && (!query || `${tactic.name}${tactic.desc}`.toLowerCase().includes(query)));
   return sheet('選擇傳承戰法', `
     <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋戰法" autocomplete="off">
     <button type="button" class="choice" data-action="pick-tactic" data-id="">卸下這個戰法</button>

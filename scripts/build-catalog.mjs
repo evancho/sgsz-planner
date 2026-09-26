@@ -7,7 +7,7 @@
 import { writeFileSync } from 'node:fs';
 import { tacticRows } from './tactic-catalog.mjs';
 
-const VERSION = '1.2.2';
+const VERSION = '1.2.3';
 
 const APT_ORDER = ['騎', '盾', '弓', '槍', '器械'];
 

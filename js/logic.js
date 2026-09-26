@@ -199,6 +199,13 @@ export function compareTactics(a, b) {
   return a.name.localeCompare(b.name, 'zh-Hant');
 }
 
+// 戰法頁可勾選、可裝進傳承槽的來源。圖鑑裡的「賽季」就是賽季商店。
+export const INVENTORY_SOURCES = ['傳承', '事件', '賽季', '賽季商店', '自訂'];
+
+export function isInventoryTactic(tactic) {
+  return INVENTORY_SOURCES.includes(tactic?.source);
+}
+
 export function allTactics(catalogTactics, account) {
   const custom = (account?.customTactics || []).map((tactic) => ({
     ...tactic,

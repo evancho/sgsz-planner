@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   activeChoice,
+  allTactics,
   buildUsage,
   costBucket,
   compareTactics,
@@ -12,6 +13,7 @@ import {
   generalBlockReason,
   indexNameUse,
   isDuwei,
+  isInventoryTactic,
   matchesGeneral,
   normalizeState,
   ownsDiancang,
@@ -363,6 +365,21 @@ test('demo team cost counts three generals', () => {
     ['zhangfei', { cost: 6 }],
   ]);
   assert.equal(teamCost(account.teams[0], map), 20);
+});
+
+test('inventory list drops innate tactics and keeps custom ones', () => {
+  const catalog = [
+    { id: 'xiansheng', name: '先聲奪人', source: '自帶', type: '指揮' },
+    { id: 'yongwu', name: '用武通神', source: '傳承', type: '指揮' },
+    { id: 'fuji', name: '撫輯軍民', source: '事件', type: '指揮' },
+    { id: 'tuo-duohun', name: '拓·奪魂挾魄', source: '賽季', type: '主動' },
+  ];
+  const account = emptyAccount('acct-1');
+  account.customTactics = [{ id: 'custom-1', name: '自訂突擊', type: '突擊', desc: '' }];
+  const listed = allTactics(catalog, account).filter(isInventoryTactic);
+  assert.deepEqual(listed.map((tactic) => tactic.name), ['用武通神', '撫輯軍民', '拓·奪魂挾魄', '自訂突擊']);
+  assert.equal(listed.some((tactic) => tactic.source === '自帶'), false);
+  assert.equal(usefulInnate({ innate: '先聲奪人' }), '先聲奪人');
 });
 
 test('tactics sort S before A, then type, then name', () => {
