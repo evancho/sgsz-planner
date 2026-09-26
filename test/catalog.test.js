@@ -8,7 +8,7 @@ const tacticsFile = JSON.parse(readFileSync(new URL('../data/tactics.json', impo
 const bingshu = JSON.parse(readFileSync(new URL('../data/bingshu.json', import.meta.url)));
 
 test('catalog files share one version', () => {
-  assert.equal(meta.catalogVersion, '1.0.0');
+  assert.equal(meta.catalogVersion, '1.1.0');
   assert.equal(generalsFile.catalogVersion, meta.catalogVersion);
   assert.equal(tacticsFile.catalogVersion, meta.catalogVersion);
   assert.equal(bingshu.catalogVersion, meta.catalogVersion);
@@ -26,8 +26,14 @@ test('generals and tactics are internally consistent', () => {
       assert.match(general.apt[troop], /^[SABC]$/);
     }
     if (general.role === '內政') assert.equal(general.awaken, false);
-    if (general.name.startsWith('典藏')) assert.equal(general.collection, true);
+    assert.equal(general.name.includes('典藏'), false, general.name);
+    assert.equal(general.collection, false);
+    assert.notEqual(general.innate, '自帶戰法');
   }
+  const sunshangxiang = generalsFile.generals.find((general) => general.id === 'sunshangxiang');
+  assert.equal(sunshangxiang.name, '孫尚香');
+  assert.equal(sunshangxiang.innate, '梟姬');
+  assert.equal(generalsFile.generals.some((general) => general.id.startsWith('diancang-')), false);
   assert.ok(generalsFile.generals.length >= 80);
 
   const tacticIds = new Set();

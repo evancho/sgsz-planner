@@ -6,7 +6,7 @@
  */
 import { writeFileSync } from 'node:fs';
 
-const VERSION = '1.0.0';
+const VERSION = '1.1.0';
 
 const APT_ORDER = ['騎', '盾', '弓', '槍', '器械'];
 
@@ -27,12 +27,12 @@ function g(id, name, camp, cost, role, apt, dyn, innate = '') {
     cost,
     role,
     quality: '名將',
-    collection: name.startsWith('典藏'),
+    collection: false,
     dynamic: Boolean(dyn),
     awaken: role === '軍事',
     apt: parseApt(apt),
     innate,
-    nameKey: name.startsWith('典藏') ? name.slice(2) : name,
+    nameKey: name,
   };
 }
 
@@ -51,7 +51,7 @@ const generals = [
   g('guanyu', '關羽', '蜀', 7, '軍事', 'SACSC', 1, '威震華夏'),
   g('sp-sunjian', 'SP孫堅', '吳', 7, '軍事', 'ASSAC', 1),
   g('sp-lvmeng', 'SP呂蒙', '吳', 7, '軍事', 'BBSSS', 1),
-  g('sunshangxiang', '孫尚香', '吳', 7, '軍事', 'SBSAC', 1),
+  g('sunshangxiang', '孫尚香', '吳', 7, '軍事', 'SBSAC', 1, '梟姬'),
   g('zhanghong', '張紘', '吳', 7, '內政', 'CCBCA', 0),
   g('zhangzhao', '張昭', '吳', 7, '內政', 'CCCBC', 0),
   g('luxun', '陸遜', '吳', 7, '軍事', 'CBSAA', 1),
@@ -182,9 +182,6 @@ const generals = [
   g('zoushi', '鄒氏', '群', 3, '內政', 'CBCCC', 0),
   g('dongbai', '董白', '群', 3, '軍事', 'CCCBC', 1),
   g('caiwenji', '蔡文姬', '群', 3, '軍事', 'BCCCC', 1),
-  g('diancang-zhouyu', '典藏周瑜', '吳', 6, '軍事', 'BASAC', 1),
-  g('diancang-luxun', '典藏陸遜', '吳', 7, '軍事', 'CBSAA', 1),
-  g('diancang-sunshangxiang', '典藏孫尚香', '吳', 7, '軍事', 'SBSAC', 1),
 ];
 
 const ids = new Set();

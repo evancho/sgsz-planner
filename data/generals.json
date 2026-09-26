@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "1.0.0",
+  "catalogVersion": "1.1.0",
   "generals": [
     {
       "id": "wushuang-caopi",
@@ -298,7 +298,7 @@
         "槍": "A",
         "器械": "C"
       },
-      "innate": "",
+      "innate": "梟姬",
       "nameKey": "孫尚香"
     },
     {
@@ -2900,66 +2900,6 @@
       },
       "innate": "",
       "nameKey": "蔡文姬"
-    },
-    {
-      "id": "diancang-zhouyu",
-      "name": "典藏周瑜",
-      "camp": "吳",
-      "cost": 6,
-      "role": "軍事",
-      "quality": "名將",
-      "collection": true,
-      "dynamic": true,
-      "awaken": true,
-      "apt": {
-        "騎": "B",
-        "盾": "A",
-        "弓": "S",
-        "槍": "A",
-        "器械": "C"
-      },
-      "innate": "",
-      "nameKey": "周瑜"
-    },
-    {
-      "id": "diancang-luxun",
-      "name": "典藏陸遜",
-      "camp": "吳",
-      "cost": 7,
-      "role": "軍事",
-      "quality": "名將",
-      "collection": true,
-      "dynamic": true,
-      "awaken": true,
-      "apt": {
-        "騎": "C",
-        "盾": "B",
-        "弓": "S",
-        "槍": "A",
-        "器械": "A"
-      },
-      "innate": "",
-      "nameKey": "陸遜"
-    },
-    {
-      "id": "diancang-sunshangxiang",
-      "name": "典藏孫尚香",
-      "camp": "吳",
-      "cost": 7,
-      "role": "軍事",
-      "quality": "名將",
-      "collection": true,
-      "dynamic": true,
-      "awaken": true,
-      "apt": {
-        "騎": "S",
-        "盾": "B",
-        "弓": "S",
-        "槍": "A",
-        "器械": "C"
-      },
-      "innate": "",
-      "nameKey": "孫尚香"
     }
   ]
 }

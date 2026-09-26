@@ -175,7 +175,76 @@ textarea.notes { min-height: 84px; }
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 12px;
 }
+.roster { display: flex; flex-direction: column; gap: 6px; }
 .gcard { padding: 12px 12px 12px 16px; position: relative; overflow: hidden; }
+.gcard.grow { padding: 0 6px 0 10px; border-radius: 12px; }
+.grow-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 48px;
+  flex-wrap: nowrap;
+}
+.grow-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  min-height: 44px;
+  border-radius: 0;
+}
+button.grow-name { cursor: pointer; }
+.grow-name strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 700;
+}
+.gcard.grow .camp { flex: 0 0 auto; font-size: 15px; }
+.gcard.grow .cost { flex: 0 0 auto; padding: 0 6px; font-size: 12px; line-height: 1.6; }
+.gcard.grow .mini { flex: 0 0 auto; padding: 0 5px; font-size: 11px; }
+.gcard.grow .stamp {
+  transform: none;
+  flex: 0 0 auto;
+  letter-spacing: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 0 3px;
+}
+.gcard.grow .apt-row {
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  margin: 0;
+  gap: 1px;
+}
+.gcard.grow .apt {
+  background: transparent;
+  padding: 0;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.gcard.grow .check {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 4px 6px;
+  white-space: nowrap;
+  gap: 4px;
+}
+.grow-more {
+  padding: 2px 4px 10px 22px;
+  border-top: 1px solid rgba(214, 176, 106, 0.14);
+}
+.grow-more .innate { margin-top: 8px; }
 .gcard::before {
   content: "";
   position: absolute;

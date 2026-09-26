@@ -11,11 +11,13 @@ import {
   indexNameUse,
   matchesGeneral,
   normalizeState,
+  ownsDiancang,
   setGeneralOwned,
   setTacticOwned,
   sortGenerals,
   tacticBlockReason,
   teamCost,
+  usefulInnate,
 } from '../js/logic.js';
 
 const generals = [
@@ -135,7 +137,28 @@ test('aptitude, camp, collection and dynamic filters combine', () => {
   );
   assert.equal(
     matchesGeneral(generals[1], null, blankFilters({ collection: ['典藏'] }), {}),
+    false,
+  );
+  assert.equal(
+    matchesGeneral(generals[1], { red: 0, dynamic: true, awaken: false }, blankFilters({ collection: ['典藏'] }), {}),
     true,
+  );
+  assert.equal(
+    matchesGeneral(guanyu, { red: 5, dynamic: false, awaken: true }, blankFilters({ collection: ['典藏'] }), {}),
+    false,
+  );
+  assert.equal(ownsDiancang({ dynamic: true }), true);
+  assert.equal(ownsDiancang({ red: 5, dynamic: false }), false);
+  assert.equal(usefulInnate({ innate: '梟姬' }), '梟姬');
+  assert.equal(usefulInnate({ innate: '自帶戰法' }), '');
+  assert.equal(usefulInnate({ innate: '' }), '');
+  assert.equal(
+    matchesGeneral({ ...generals[1], name: '典藏周瑜', innate: '自帶戰法' }, null, blankFilters({ query: '周瑜' }), {}),
+    true,
+  );
+  assert.equal(
+    matchesGeneral({ ...generals[1], innate: '' }, null, blankFilters({ query: '自帶戰法' }), {}),
+    false,
   );
   assert.equal(
     matchesGeneral(guanyu, null, blankFilters({ quality: ['良將'] }), {}),

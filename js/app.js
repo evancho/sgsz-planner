@@ -20,6 +20,7 @@ import {
   matchesGeneral,
   newId,
   normalizeState,
+  ownsDiancang,
   setGeneralOwned,
   setTacticOwned,
   sortGenerals,
@@ -29,6 +30,7 @@ import {
   tacticUseCount,
   teamCost,
   updateAccount,
+  usefulInnate,
 } from './logic.js';
 import { loadState, saveState } from './store.js';
 
@@ -49,6 +51,7 @@ const ui = {
   draft: { name: '', type: '主動', desc: '' },
   toast: '',
   justOpened: false,
+  openGenerals: {},
   installHidden: localStorage.getItem('sgsz-hide-install') === '1',
 };
 
@@ -65,6 +68,10 @@ function emptyFilters() {
     collection: [],
     dynamic: [],
   };
+}
+
+function plainName(general) {
+  return String(general?.name || '').replace(/^典藏/, '');
 }
 
 function esc(value) {
@@ -275,7 +282,7 @@ function generalsView() {
               ${quickChip('team', '部隊中')}
             </div>
           </div>
-          <div class="grid">
+          <div class="roster">
             ${matched.map((general) => generalCard(general, current, usage)).join('') || '<div class="empty"><p>沒有符合的武將。</p><p class="faint">圖鑑目前只收名將。把品質改回名將，或清空篩選。</p></div>'}
           </div>
           ${colophon()}
@@ -325,20 +332,30 @@ function filterGroup(label, key, values) {
 function generalCard(general, current, usage) {
   const owned = current.owned[general.id];
   const where = usage.generalTeams.get(general.id);
+  const open = Boolean(owned && ui.openGenerals[general.id]);
+  const innate = usefulInnate(general);
+  const name = plainName(general);
+  const chips = [
+    ownsDiancang(owned) ? '<span class="mini">典藏</span>' : '',
+    owned?.awaken ? '<span class="mini">覺醒</span>' : '',
+    owned && owned.red > 0 ? `<span class="mini">紅${owned.red}</span>` : '',
+  ].join('');
+  const stamp = where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : '';
+  const nameInner = `<strong>${esc(name)}</strong>${chips}`;
+  const nameEl = owned
+    ? `<button type="button" class="grow-name" data-action="toggle-expand" data-id="${esc(general.id)}" aria-expanded="${open}">${nameInner}</button>`
+    : `<div class="grow-name"><strong>${esc(name)}</strong></div>`;
   return `
-    <article class="gcard ${CAMP_CLASS[general.camp] || 'qun'}">
-      <header>
+    <article class="gcard grow ${CAMP_CLASS[general.camp] || 'qun'} ${open ? 'open' : ''}">
+      <div class="grow-row">
         <span class="camp">${esc(general.camp)}</span>
         <span class="cost" title="統御 ${general.cost}">C${general.cost}</span>
-      </header>
-      <h3>${esc(general.name)}
-        ${general.collection ? '<span class="mini">典藏</span>' : ''}
-        ${where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : ''}
-      </h3>
-      <div class="apt-row">${aptHtml(general.apt)}</div>
-      <p class="faint">自帶 · ${esc(general.innate || '自帶戰法')}</p>
-      <button type="button" class="check ${owned ? 'on' : ''}" data-action="toggle-own" data-id="${esc(general.id)}" aria-pressed="${owned ? 'true' : 'false'}"><span class="box"></span>擁有</button>
-      ${owned ? ownedControls(general, owned) : ''}
+        ${nameEl}
+        ${stamp}
+        <div class="apt-row">${aptHtml(general.apt)}</div>
+        <button type="button" class="check ${owned ? 'on' : ''}" data-action="toggle-own" data-id="${esc(general.id)}" aria-pressed="${owned ? 'true' : 'false'}"><span class="box"></span>擁有</button>
+      </div>
+      ${open ? `<div class="grow-more">${ownedControls(general, owned)}${innate ? `<p class="faint innate">自帶 · ${esc(innate)}</p>` : ''}</div>` : ''}
     </article>`;
 }
 
@@ -458,7 +475,7 @@ function inheritView() {
 function inheritRow(tactic, current) {
   const sources = tactic.from.map((id) => generalsById().get(id)).filter(Boolean);
   const sourceText = sources.length
-    ? sources.map((general) => `${general.name}${current.owned[general.id] ? '（已擁有）' : ''}`).join('、')
+    ? sources.map((general) => `${plainName(general)}${current.owned[general.id] ? '（已擁有）' : ''}`).join('、')
     : '來源待補，可直接標記';
   const owned = tacticOwned(current, tactic.id);
   return `
@@ -541,10 +558,10 @@ function memberCard(team, member, slot, current) {
         </span>
       </div>
       ${general ? `
-        <h3>${esc(general.name)}</h3>
+        <h3>${esc(plainName(general))}</h3>
         <p class="faint">${esc(general.camp)} · C${general.cost} · ${esc(general.role)}</p>
         <div class="apt-row">${aptHtml(general.apt)}</div>
-        <div class="locked"><span class="faint">主戰法</span><br><strong>${esc(general.innate || '自帶戰法')}</strong></div>
+        ${usefulInnate(general) ? `<div class="locked"><span class="faint">主戰法</span><br><strong>${esc(usefulInnate(general))}</strong></div>` : ''}
         ${learnedButton(team, member, slot, 0)}
         ${learnedButton(team, member, slot, 1)}
         ${general.role === '內政' ? '<p class="faint">內政武將在遊戲裡不能開兵書。</p>' : `
@@ -574,14 +591,14 @@ function bingshuDock(team, current) {
   const general = member ? generalsById().get(member.generalId) : null;
   if (!general) return '';
   if (general.role === '內政') {
-    return `<section class="dock"><h3>${esc(general.name)}</h3><p>內政武將無法開啟兵書。</p><button type="button" class="btn" data-action="close-bingshu">關閉</button></section>`;
+    return `<section class="dock"><h3>${esc(plainName(general))}</h3><p>內政武將無法開啟兵書。</p><button type="button" class="btn" data-action="close-bingshu">關閉</button></section>`;
   }
   const selected = member.bingshu;
   const branch = ui.catalog.branches.find((item) => item.id === selected?.branch);
   return `
     <section class="dock">
       <div class="row-between">
-        <h3>${esc(general.name)}的兵書</h3>
+        <h3>${esc(plainName(general))}的兵書</h3>
         <button type="button" class="btn-ghost" data-action="close-bingshu">收合</button>
       </div>
       <p class="faint">先選體系，再各選一層。點同一項可取消。</p>
@@ -651,7 +668,7 @@ function generalPicker() {
   if (!team) return '';
   const usage = usageFor(current);
   const query = ui.picker.query.trim();
-  const options = ui.catalog.generals.filter((general) => current.owned[general.id] && (!query || general.name.includes(query)));
+  const options = ui.catalog.generals.filter((general) => current.owned[general.id] && (!query || plainName(general).includes(query) || general.name.includes(query)));
   return sheet('選擇武將', `
     <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋已擁有武將" autocomplete="off">
     <button type="button" class="choice" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${ui.picker.slot}">這個位置留空</button>
@@ -664,7 +681,7 @@ function generalPicker() {
         generalsById: generalsById(),
         usage,
       });
-      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${esc(general.camp)} C${general.cost} ${esc(general.name)}${reason ? ` · ${esc(reason)}` : ''}</button>`;
+      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${esc(general.camp)} C${general.cost} ${esc(plainName(general))}${reason ? ` · ${esc(reason)}` : ''}</button>`;
     }).join('') || '<p class="muted">還沒有勾選擁有的武將。</p>'}
   `);
 }
@@ -892,10 +909,23 @@ function onClick(event) {
       ui.quick = el.dataset.value;
       render();
       break;
+    case 'toggle-expand': {
+      if (event.target.closest('a')) return;
+      const id = el.dataset.id;
+      ui.openGenerals = { ...ui.openGenerals, [id]: !ui.openGenerals[id] };
+      render();
+      break;
+    }
     case 'toggle-own': {
       const general = generalsById().get(el.dataset.id);
       if (!general) return;
       const owned = !current.owned[general.id];
+      if (owned) ui.openGenerals = { ...ui.openGenerals, [general.id]: true };
+      else {
+        const next = { ...ui.openGenerals };
+        delete next[general.id];
+        ui.openGenerals = next;
+      }
       commit(updateAccount(ui.state, current.id, (item) => setGeneralOwned(item, general, owned)));
       if (!owned) toast('已取消擁有，並從隊伍移出');
       break;

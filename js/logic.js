@@ -91,7 +91,8 @@ export function dynamicState(general, ownedRecord) {
 export function matchesGeneral(general, ownedRecord, filters, extras) {
   const query = (filters.query || '').trim().toLowerCase();
   if (query) {
-    const hay = `${general.name} ${general.innate || ''} ${general.camp}`.toLowerCase();
+    const display = String(general.name || '').replace(/^典藏/, '');
+    const hay = `${display} ${usefulInnate(general)} ${general.camp} ${ownsDiancang(ownedRecord) ? '典藏' : ''}`.toLowerCase();
     if (!hay.includes(query)) return false;
   }
   const quality = activeChoice(filters.quality, QUALITIES);
@@ -104,7 +105,7 @@ export function matchesGeneral(general, ownedRecord, filters, extras) {
   if (role && !role.has(general.role)) return false;
   const collection = activeChoice(filters.collection, COLLECTION_FILTERS);
   if (collection) {
-    const label = general.collection ? '典藏' : '非典藏';
+    const label = ownsDiancang(ownedRecord) ? '典藏' : '非典藏';
     if (!collection.has(label)) return false;
   }
   const troops = activeChoice(filters.troop, TROOP_ORDER);
@@ -120,9 +121,18 @@ export function matchesGeneral(general, ownedRecord, filters, extras) {
   return true;
 }
 
+export function ownsDiancang(ownedRecord) {
+  return Boolean(ownedRecord?.dynamic);
+}
+
+export function usefulInnate(general) {
+  const name = String(general?.innate || '').trim();
+  if (!name || name === '自帶戰法') return '';
+  return name;
+}
+
 function rarityKey(general) {
   let score = (QUALITY_RANK[general.quality] || 0) * 100;
-  if (general.collection) score += 30;
   if (general.name.startsWith('無雙')) score += 20;
   if (general.name.startsWith('SP')) score += 20;
   score += general.cost;
