@@ -11,6 +11,7 @@ import {
   freshState,
   generalBlockReason,
   indexNameUse,
+  isDuwei,
   matchesGeneral,
   normalizeState,
   ownsDiancang,
@@ -198,6 +199,41 @@ test('a new account owns no generals or tactics', () => {
   assert.equal(Object.keys(state.accounts[0].owned).length, 0);
   assert.equal(Object.keys(state.accounts[0].tacticsOwned).length, 0);
   assert.equal(state.accounts[0].teams.length, 0);
+});
+
+test('都尉 tag filters and groups after the same camp and cost', () => {
+  const chenyi = {
+    id: 'duwei-chenyi',
+    name: '陳翊',
+    camp: '群',
+    cost: 7,
+    role: '軍事',
+    quality: '名將',
+    tags: ['都尉'],
+    apt: { 騎: 'A', 弓: 'A', 槍: 'A', 盾: 'A', 器械: 'A' },
+    innate: '劍拔弩張',
+    nameKey: '陳翊',
+  };
+  const lvbu = {
+    id: 'lvbu',
+    name: '呂布',
+    camp: '群',
+    cost: 7,
+    role: '軍事',
+    quality: '名將',
+    apt: { 騎: 'S', 弓: 'S', 槍: 'A', 盾: 'B', 器械: 'C' },
+    innate: '',
+    nameKey: '呂布',
+  };
+  assert.equal(isDuwei(chenyi), true);
+  assert.equal(isDuwei(lvbu), false);
+  assert.equal(matchesGeneral(chenyi, null, blankFilters({ query: '都尉' }), {}), true);
+  assert.equal(matchesGeneral(lvbu, null, blankFilters({ query: '都尉' }), {}), false);
+  assert.equal(matchesGeneral(chenyi, null, blankFilters({ tag: ['都尉'] }), {}), true);
+  assert.equal(matchesGeneral(lvbu, null, blankFilters({ tag: ['都尉'] }), {}), false);
+  assert.equal(matchesGeneral(chenyi, null, blankFilters({ tag: ['非都尉'] }), {}), false);
+  const grouped = sortGenerals([chenyi, lvbu], 'camp');
+  assert.deepEqual(grouped.map((general) => general.id), ['lvbu', 'duwei-chenyi']);
 });
 
 test('tactic occupancy blocks a second assign and a second formation', () => {

@@ -8,7 +8,7 @@ const tacticsFile = JSON.parse(readFileSync(new URL('../data/tactics.json', impo
 const bingshu = JSON.parse(readFileSync(new URL('../data/bingshu.json', import.meta.url)));
 
 test('catalog files share one version', () => {
-  assert.equal(meta.catalogVersion, '1.2.0');
+  assert.equal(meta.catalogVersion, '1.2.1');
   assert.equal(generalsFile.catalogVersion, meta.catalogVersion);
   assert.equal(tacticsFile.catalogVersion, meta.catalogVersion);
   assert.equal(bingshu.catalogVersion, meta.catalogVersion);
@@ -67,4 +67,70 @@ test('generals and tactics are internally consistent', () => {
   assert.ok(tacticsFile.tactics.filter((tactic) => tactic.rank === 'S').length >= 120);
   assert.ok(tacticsFile.tactics.some((tactic) => tactic.type === '陣法' && tactic.name === '八門金鎖陣'));
   assert.ok(bingshu.branches.length === 6);
+
+  const duwei = [
+    ['duwei-shenheng', '沈姮', '風焰相形', '指揮'],
+    ['duwei-qinxi', '秦溪', '先聲奪人', '指揮'],
+    ['duwei-liuqin', '柳沁', '杯弓蛇影', '指揮'],
+    ['duwei-xiaozhi', '蕭芷', '堅如磐石', '指揮'],
+    ['duwei-chenyi', '陳翊', '劍拔弩張', '指揮'],
+    ['duwei-zhoushao', '周劭', '流雲千變', '主動'],
+    ['duwei-chenxi', '陳熙', '針鋒相對', '指揮'],
+    ['duwei-suxin', '蘇信', '技高一籌', '指揮'],
+    ['duwei-huangfuhong', '皇甫宏', '破釜沉舟', '指揮'],
+    ['duwei-xuyan', '徐彥', '緩兵之計', '主動'],
+    ['duwei-yangqi', '楊琪', '愈戰愈勇', '指揮'],
+    ['duwei-machan', '馬禪', '運籌帷幄', '指揮'],
+  ];
+  for (const [id, name, innate, type] of duwei) {
+    const general = generalsFile.generals.find((item) => item.id === id);
+    assert.ok(general, id);
+    assert.equal(general.name, name);
+    assert.equal(general.camp, '群');
+    assert.equal(general.cost, 7);
+    assert.equal(general.innate, innate);
+    assert.deepEqual(general.tags, ['都尉']);
+    assert.equal(general.dynamic, false);
+    const tactic = tacticsFile.tactics.find((item) => item.name === innate && item.from.includes(id));
+    assert.ok(tactic, innate);
+    assert.equal(tactic.type, type);
+    assert.equal(tactic.source, '自帶');
+    assert.equal(tactic.orange, true);
+    assert.equal(tactic.rank, 'S');
+  }
+  for (const name of ['麾軍結陣', '燕人咆哮', '江天長焰', '火燒連營', '威武並昭', '扶危定傾', '傲睨王侯', '精·魚鱗陣', '深謀遠慮', '剛柔並濟']) {
+    const tactic = tacticsFile.tactics.find((item) => item.name === name);
+    assert.ok(tactic, name);
+    assert.equal(tactic.orange, true);
+    assert.equal(tactic.rank, 'S');
+  }
+  assert.equal(tacticsFile.tactics.find((tactic) => tactic.name === '精·魚鱗陣').type, '陣法');
+  assert.equal(tacticsFile.tactics.find((tactic) => tactic.id === 'yunchou').name, '運籌決算');
+  assert.equal(tacticsFile.tactics.find((tactic) => tactic.name === '運籌帷幄').id, 'yunwei');
+
+  const seasonShop = [
+    ['tuo-duohun', '拓·奪魂挾魄', '主動', 'duohun'],
+    ['tuo-shibie', '拓·士別三日', '被動', 'shibie'],
+    ['tuo-yibao', '拓·以暴制暴', '主動', null],
+    ['tuo-jifeng', '拓·疾風驟雨', '主動', 'jifeng'],
+    ['jing-yulin', '精·魚鱗陣', '陣法', null],
+    ['jing-fengshi', '精·鋒矢陣', '陣法', 'fengshi'],
+  ];
+  for (const [id, name, type, baseId] of seasonShop) {
+    const tactic = tacticsFile.tactics.find((item) => item.id === id);
+    assert.ok(tactic, id);
+    assert.equal(tactic.name, name);
+    assert.equal(tactic.type, type);
+    assert.equal(tactic.source, '賽季');
+    assert.equal(tactic.rank, 'S');
+    assert.equal(tactic.orange, true);
+    assert.match(tactic.desc, /英雄命示賽季商店/);
+    if (baseId) {
+      const base = tacticsFile.tactics.find((item) => item.id === baseId);
+      assert.ok(base, baseId);
+      assert.equal(base.type, type);
+      assert.notEqual(base.name, name);
+      assert.notEqual(base.source, '賽季');
+    }
+  }
 });

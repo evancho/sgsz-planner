@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "1.2.0",
+  "catalogVersion": "1.2.1",
   "generals": [
     {
       "id": "wushuang-caopi",
@@ -2900,6 +2900,282 @@
       },
       "innate": "",
       "nameKey": "蔡文姬"
+    },
+    {
+      "id": "duwei-shenheng",
+      "name": "沈姮",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "風焰相形",
+      "nameKey": "沈姮",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-qinxi",
+      "name": "秦溪",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "先聲奪人",
+      "nameKey": "秦溪",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-liuqin",
+      "name": "柳沁",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "杯弓蛇影",
+      "nameKey": "柳沁",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-xiaozhi",
+      "name": "蕭芷",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "堅如磐石",
+      "nameKey": "蕭芷",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-chenyi",
+      "name": "陳翊",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "劍拔弩張",
+      "nameKey": "陳翊",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-zhoushao",
+      "name": "周劭",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "流雲千變",
+      "nameKey": "周劭",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-chenxi",
+      "name": "陳熙",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "針鋒相對",
+      "nameKey": "陳熙",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-suxin",
+      "name": "蘇信",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "技高一籌",
+      "nameKey": "蘇信",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-huangfuhong",
+      "name": "皇甫宏",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "破釜沉舟",
+      "nameKey": "皇甫宏",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-xuyan",
+      "name": "徐彥",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "緩兵之計",
+      "nameKey": "徐彥",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-yangqi",
+      "name": "楊琪",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "愈戰愈勇",
+      "nameKey": "楊琪",
+      "tags": [
+        "都尉"
+      ]
+    },
+    {
+      "id": "duwei-machan",
+      "name": "馬禪",
+      "camp": "群",
+      "cost": 7,
+      "role": "軍事",
+      "quality": "名將",
+      "collection": false,
+      "dynamic": false,
+      "awaken": true,
+      "apt": {
+        "騎": "A",
+        "盾": "A",
+        "弓": "A",
+        "槍": "A",
+        "器械": "A"
+      },
+      "innate": "運籌帷幄",
+      "nameKey": "馬禪",
+      "tags": [
+        "都尉"
+      ]
     }
   ]
 }
