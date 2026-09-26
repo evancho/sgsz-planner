@@ -6,6 +6,7 @@ import {
   QUALITIES,
   ROLE_FILTERS,
   SORTS,
+  TAG_FILTERS,
   TACTIC_TYPES,
   TEAM_POSITIONS,
   TROOP_ORDER,
@@ -21,6 +22,8 @@ import {
   exportPayload,
   generalBlockReason,
   indexNameUse,
+  isDuwei,
+  isInventoryTactic,
   matchesGeneral,
   matchesTacticPick,
   newId,
@@ -73,6 +76,7 @@ function emptyFilters() {
     role: [],
     collection: [],
     dynamic: [],
+    tag: [],
   };
 }
 
@@ -330,6 +334,7 @@ function filterPanel() {
         ${filterGroup('品質', 'quality', QUALITIES)}
         ${filterGroup('適性A以上', 'troop', TROOP_ORDER)}
         ${filterGroup('陣營', 'camp', CAMP_ORDER)}
+        ${filterGroup('都尉', 'tag', TAG_FILTERS)}
         ${filterGroup('COST', 'cost', COST_BUCKETS)}
         ${filterGroup('類型', 'role', ROLE_FILTERS)}
         ${filterGroup('典藏', 'collection', COLLECTION_FILTERS)}
@@ -352,13 +357,20 @@ function filterGroup(label, key, values) {
     </div>`;
 }
 
+function duweiMark(general) {
+  if (!isDuwei(general)) return '';
+  return '<span class="mini duwei" title="英雄命示都尉。統御以 7 計，天賦身經百戰可 +1。">都尉</span>';
+}
+
 function generalCard(general, current, usage) {
   const owned = current.owned[general.id];
   const where = usage.generalTeams.get(general.id);
   const open = Boolean(owned && ui.openGenerals[general.id]);
   const innate = usefulInnate(general);
   const name = plainName(general);
+  const duwei = isDuwei(general);
   const chipHtml = [
+    duweiMark(general),
     ownsDiancang(owned) ? '<span class="mini">典藏</span>' : '',
     owned?.awaken ? '<span class="mini">覺醒</span>' : '',
     owned && owned.red > 0 ? `<span class="mini">紅${owned.red}</span>` : '',
@@ -367,17 +379,18 @@ function generalCard(general, current, usage) {
   const nameEl = owned
     ? `<button type="button" class="grow-name" data-action="toggle-expand" data-id="${esc(general.id)}" aria-expanded="${open}"><strong>${esc(name)}</strong></button>`
     : `<div class="grow-name"><strong>${esc(name)}</strong></div>`;
+  const costTitle = duwei ? '統御 7；天賦身經百戰可 +1' : `統御 ${general.cost}`;
   return `
     <article class="gcard grow ${CAMP_CLASS[general.camp] || 'qun'} ${open ? 'open' : ''} ${chipHtml ? 'has-chips' : ''}">
       <div class="grow-row">
         <span class="camp">${esc(general.camp)}</span>
-        <span class="cost" title="統御 ${general.cost}">C${general.cost}</span>
+        <span class="cost" title="${esc(costTitle)}">C${general.cost}</span>
         ${nameEl}
         <div class="apt-row">${aptHtml(general.apt)}</div>
         <button type="button" class="check ${owned ? 'on' : ''}" data-action="toggle-own" data-id="${esc(general.id)}" aria-pressed="${owned ? 'true' : 'false'}"><span class="box"></span>擁有</button>
         ${chipHtml ? `<div class="grow-chips">${chipHtml}</div>` : ''}
       </div>
-      ${open ? `<div class="grow-more">${ownedControls(general, owned)}${innate ? `<p class="faint innate">自帶 · ${esc(innate)}</p>` : ''}</div>` : ''}
+      ${open ? `<div class="grow-more">${ownedControls(general, owned)}${innate ? `<p class="faint innate">自帶 · ${esc(innate)}</p>` : ''}${duwei ? '<p class="faint">統御以 7 計；天賦身經百戰可 +1。</p>' : ''}</div>` : ''}
     </article>`;
 }
 
@@ -407,6 +420,7 @@ function tacticsView(mode) {
   const usage = usageFor(current);
     const query = ui.tacticQuery.trim().toLowerCase();
   const list = tacticsFor(current).filter((tactic) => {
+    if (!isInventoryTactic(tactic)) return false;
     if (mode === 'event' && tactic.source !== '事件') return false;
     if (ui.tacticTab && ui.tacticTab !== '全部' && tactic.type !== ui.tacticTab) return false;
     if (!query) return true;
@@ -418,7 +432,7 @@ function tacticsView(mode) {
       <div class="page-head">
         <div>
           <h2>${mode === 'event' ? '事件戰法' : '戰法'}</h2>
-          <p class="sub">${mode === 'event' ? '賽季事件兌換的戰法。先排 S 級，再排 A 級。勾選代表這個帳號已經有了。' : '可勾選的是 S、A 級戰法。列表先排 S 級，再排 A 級。已裝進隊伍的會變成灰色已佔用，不能再裝第二次。'}</p>
+          <p class="sub">${mode === 'event' ? '賽季事件兌換的戰法。先排 S 級，再排 A 級。勾選代表這個帳號已經有了。' : '這裡列出可勾選的傳承、事件、賽季商店，以及自己新增的戰法。列表先排 S 級，再排 A 級。已裝進隊伍的會變成灰色已佔用，不能再裝第二次。'}</p>
         </div>
       </div>
       <div class="entry-row">
@@ -439,6 +453,13 @@ function tacticsView(mode) {
     </section>`;
 }
 
+function seasonChip(tactic) {
+  if (tactic.source !== '賽季') return '';
+  if (String(tactic.name).startsWith('拓·')) return '<span class="mini season">拓</span>';
+  if (String(tactic.name).startsWith('精·')) return '<span class="mini season">精</span>';
+  return '<span class="mini season">賽季</span>';
+}
+
 function tacticRow(tactic, current, usage) {
   const owned = tacticOwned(current, tactic.id);
   const used = tacticUseCount(usage, tactic.id);
@@ -455,6 +476,7 @@ function tacticRow(tactic, current, usage) {
       <button type="button" class="check ${owned ? 'on' : ''}" data-action="toggle-tactic" data-id="${esc(tactic.id)}" aria-pressed="${owned}"><span class="box"></span>擁有</button>
       <div class="body">
         <h3>${esc(tactic.name)}
+          ${seasonChip(tactic)}
           ${rankTag(tactic)}
           <span class="tag">${esc(tactic.type)}</span>
           <span class="tag ghost">${esc(tactic.source)}</span>
@@ -577,8 +599,8 @@ function memberCard(team, member, slot, current) {
         <div class="member-id">
           <span class="tag">${TEAM_POSITIONS[slot]}</span>
           ${general ? `
-            <h3>${esc(plainName(general))}</h3>
-            <span class="member-meta">${esc(general.camp)} · C${general.cost} · ${esc(general.role)}</span>
+            <h3>${esc(plainName(general))}${duweiMark(general)}</h3>
+            <span class="member-meta">${esc(general.camp)} · C${general.cost}${isDuwei(general) ? '（天賦可 +1）' : ''} · ${esc(general.role)}</span>
             ${aptHtml(general.apt)}
             ${innate ? `<span class="member-innate">主戰法 ${esc(innate)}</span>` : ''}
           ` : ''}
@@ -732,7 +754,7 @@ function generalPicker() {
   if (!team) return '';
   const usage = usageFor(current);
   const query = ui.picker.query.trim();
-  const options = ui.catalog.generals.filter((general) => current.owned[general.id] && (!query || plainName(general).includes(query) || general.name.includes(query)));
+  const options = ui.catalog.generals.filter((general) => current.owned[general.id] && (!query || plainName(general).includes(query) || general.name.includes(query) || (isDuwei(general) && '都尉'.includes(query))));
   return sheet('選擇武將', `
     <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋已擁有武將" autocomplete="off">
     <button type="button" class="choice" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${ui.picker.slot}">這個位置留空</button>
@@ -745,7 +767,7 @@ function generalPicker() {
         generalsById: generalsById(),
         usage,
       });
-      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${esc(general.camp)} C${general.cost} ${esc(plainName(general))}${reason ? ` · ${esc(reason)}` : ''}</button>`;
+      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${esc(general.camp)} C${general.cost} ${esc(plainName(general))}${isDuwei(general) ? ' · 都尉' : ''}${reason ? ` · ${esc(reason)}` : ''}</button>`;
     }).join('') || '<p class="muted">還沒有勾選擁有的武將。</p>'}
   `);
 }
@@ -760,7 +782,7 @@ function tacticPicker() {
   const map = tacticsById(current);
   const owned = ui.picker.owned || 'owned';
   const type = ui.picker.type || '全部';
-  const options = tacticsFor(current).filter((tactic) => matchesTacticPick(tactic, {
+  const options = tacticsFor(current).filter((tactic) => isInventoryTactic(tactic) && matchesTacticPick(tactic, {
     query: ui.picker.query,
     type,
     owned,
@@ -803,7 +825,7 @@ function tacticPicker() {
               usage,
             });
             const warning = reason ? '' : tacticTroopWarning(general, tactic);
-            return `<button type="button" class="choice" data-action="pick-tactic" data-id="${esc(tactic.id)}" ${reason ? 'disabled' : ''}><strong>${esc(tactic.name)}</strong> ${rankTag(tactic)} <span class="tag">${esc(tactic.type)}</span>${reason ? ` <span class="faint">${esc(reason)}</span>` : ''}${warning ? `<br><span class="warn">${esc(warning)}</span>` : ''}</button>`;
+            return `<button type="button" class="choice" data-action="pick-tactic" data-id="${esc(tactic.id)}" ${reason ? 'disabled' : ''}><strong>${esc(tactic.name)}</strong> ${seasonChip(tactic)} ${rankTag(tactic)} <span class="tag">${esc(tactic.type)}</span>${reason ? ` <span class="faint">${esc(reason)}</span>` : ''}${warning ? `<br><span class="warn">${esc(warning)}</span>` : ''}</button>`;
           }).join('') || `<p class="muted">${empty}</p>`}
         </div>
       </section>
@@ -982,6 +1004,7 @@ function onClick(event) {
         role: [...ROLE_FILTERS],
         collection: [...COLLECTION_FILTERS],
         dynamic: [...DYNAMIC_FILTERS],
+        tag: [...TAG_FILTERS],
       };
       render();
       break;

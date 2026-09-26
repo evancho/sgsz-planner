@@ -1,4 +1,4 @@
-const CACHE = 'sgsz-planner-1.1.9';
+const CACHE = 'sgsz-planner-1.2.4';
 
 const ASSETS = [
   './',

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   activeChoice,
+  allTactics,
   buildUsage,
   costBucket,
   compareTactics,
@@ -13,6 +14,8 @@ import {
   generalBlockReason,
   indexNameUse,
   bingshuStep,
+  isDuwei,
+  isInventoryTactic,
   matchesGeneral,
   matchesTacticPick,
   normalizeState,
@@ -203,6 +206,41 @@ test('a new account owns no generals or tactics', () => {
   assert.equal(Object.keys(state.accounts[0].owned).length, 0);
   assert.equal(Object.keys(state.accounts[0].tacticsOwned).length, 0);
   assert.equal(state.accounts[0].teams.length, 0);
+});
+
+test('都尉 tag filters and groups after the same camp and cost', () => {
+  const chenyi = {
+    id: 'duwei-chenyi',
+    name: '陳翊',
+    camp: '群',
+    cost: 7,
+    role: '軍事',
+    quality: '名將',
+    tags: ['都尉'],
+    apt: { 騎: 'A', 弓: 'A', 槍: 'A', 盾: 'A', 器械: 'A' },
+    innate: '劍拔弩張',
+    nameKey: '陳翊',
+  };
+  const lvbu = {
+    id: 'lvbu',
+    name: '呂布',
+    camp: '群',
+    cost: 7,
+    role: '軍事',
+    quality: '名將',
+    apt: { 騎: 'S', 弓: 'S', 槍: 'A', 盾: 'B', 器械: 'C' },
+    innate: '',
+    nameKey: '呂布',
+  };
+  assert.equal(isDuwei(chenyi), true);
+  assert.equal(isDuwei(lvbu), false);
+  assert.equal(matchesGeneral(chenyi, null, blankFilters({ query: '都尉' }), {}), true);
+  assert.equal(matchesGeneral(lvbu, null, blankFilters({ query: '都尉' }), {}), false);
+  assert.equal(matchesGeneral(chenyi, null, blankFilters({ tag: ['都尉'] }), {}), true);
+  assert.equal(matchesGeneral(lvbu, null, blankFilters({ tag: ['都尉'] }), {}), false);
+  assert.equal(matchesGeneral(chenyi, null, blankFilters({ tag: ['非都尉'] }), {}), false);
+  const grouped = sortGenerals([chenyi, lvbu], 'camp');
+  assert.deepEqual(grouped.map((general) => general.id), ['lvbu', 'duwei-chenyi']);
 });
 
 test('tactic occupancy blocks a second assign and a second formation', () => {
@@ -427,6 +465,21 @@ test('bingshu steps go from system to primary book to secondary book', () => {
   assert.equal(bingshuStep({ branch: 'jiubian' }), 'primary');
   assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi' }), 'secondary');
   assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi', secondary: 'suzhan' }), 'branch');
+});
+
+test('inventory list drops innate tactics and keeps custom ones', () => {
+  const catalog = [
+    { id: 'xiansheng', name: '先聲奪人', source: '自帶', type: '指揮' },
+    { id: 'yongwu', name: '用武通神', source: '傳承', type: '指揮' },
+    { id: 'fuji', name: '撫輯軍民', source: '事件', type: '指揮' },
+    { id: 'tuo-duohun', name: '拓·奪魂挾魄', source: '賽季', type: '主動' },
+  ];
+  const account = emptyAccount('acct-1');
+  account.customTactics = [{ id: 'custom-1', name: '自訂突擊', type: '突擊', desc: '' }];
+  const listed = allTactics(catalog, account).filter(isInventoryTactic);
+  assert.deepEqual(listed.map((tactic) => tactic.name), ['用武通神', '撫輯軍民', '拓·奪魂挾魄', '自訂突擊']);
+  assert.equal(listed.some((tactic) => tactic.source === '自帶'), false);
+  assert.equal(usefulInnate({ innate: '先聲奪人' }), '先聲奪人');
 });
 
 test('tactics sort S before A, then type, then name', () => {

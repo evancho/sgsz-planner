@@ -10,6 +10,7 @@ export const COST_BUCKETS = ['7+', '6', '5', '4', '3-'];
 export const DYNAMIC_FILTERS = ['已解鎖', '可解鎖', '無動態'];
 export const COLLECTION_FILTERS = ['典藏', '非典藏'];
 export const ROLE_FILTERS = ['軍事', '內政'];
+export const TAG_FILTERS = ['都尉', '非都尉'];
 export const SORTS = [
   { id: 'rare', label: '稀有' },
   { id: 'cost-desc', label: 'COST 高→低' },
@@ -90,11 +91,16 @@ export function dynamicState(general, ownedRecord) {
   return '可解鎖';
 }
 
+export function isDuwei(general) {
+  return Array.isArray(general?.tags) && general.tags.includes('都尉');
+}
+
 export function matchesGeneral(general, ownedRecord, filters, extras) {
   const query = (filters.query || '').trim().toLowerCase();
   if (query) {
     const display = String(general.name || '').replace(/^典藏/, '');
-    const hay = `${display} ${usefulInnate(general)} ${general.camp} ${ownsDiancang(ownedRecord) ? '典藏' : ''}`.toLowerCase();
+    const tags = Array.isArray(general.tags) ? general.tags.join(' ') : '';
+    const hay = `${display} ${usefulInnate(general)} ${general.camp} ${tags} ${ownsDiancang(ownedRecord) ? '典藏' : ''}`.toLowerCase();
     if (!hay.includes(query)) return false;
   }
   const quality = activeChoice(filters.quality, QUALITIES);
@@ -117,6 +123,11 @@ export function matchesGeneral(general, ownedRecord, filters, extras) {
   }
   const dynamic = activeChoice(filters.dynamic, DYNAMIC_FILTERS);
   if (dynamic && !dynamic.has(dynamicState(general, ownedRecord))) return false;
+  const tag = activeChoice(filters.tag, TAG_FILTERS);
+  if (tag) {
+    const label = isDuwei(general) ? '都尉' : '非都尉';
+    if (!tag.has(label)) return false;
+  }
   if (filters.quick === 'owned' && !ownedRecord) return false;
   if (filters.quick === 'free' && ownedRecord) return false;
   if (filters.quick === 'team' && !extras?.inTeam) return false;
@@ -147,10 +158,15 @@ export function sortGenerals(list, mode) {
     const index = CAMP_ORDER.indexOf(camp);
     return index === -1 ? 99 : index;
   };
+  const byDuweiThenName = (a, b) => {
+    const duweiDiff = Number(isDuwei(a)) - Number(isDuwei(b));
+    if (duweiDiff) return duweiDiff;
+    return a.name.localeCompare(b.name, 'zh-Hant');
+  };
   const byCampThenName = (a, b) => {
     const campDiff = campIndex(a.camp) - campIndex(b.camp);
     if (campDiff) return campDiff;
-    return a.name.localeCompare(b.name, 'zh-Hant');
+    return byDuweiThenName(a, b);
   };
   copy.sort((a, b) => {
     if (mode === 'cost-desc' || mode === 'cost-asc') {
@@ -161,9 +177,9 @@ export function sortGenerals(list, mode) {
       const campDiff = campIndex(a.camp) - campIndex(b.camp);
       if (campDiff) return campDiff;
       if (a.cost !== b.cost) return b.cost - a.cost;
-      return a.name.localeCompare(b.name, 'zh-Hant');
+      return byDuweiThenName(a, b);
     }
-    if (mode === 'name') return a.name.localeCompare(b.name, 'zh-Hant');
+    if (mode === 'name') return byDuweiThenName(a, b);
     if (mode === 'rare') {
       const rareDiff = rarityKey(b) - rarityKey(a);
       if (rareDiff) return rareDiff;
@@ -183,6 +199,13 @@ export function compareTactics(a, b) {
     - (TACTIC_TYPES.indexOf(b.type) < 0 ? 99 : TACTIC_TYPES.indexOf(b.type));
   if (typeDiff) return typeDiff;
   return a.name.localeCompare(b.name, 'zh-Hant');
+}
+
+// 戰法頁可勾選、可裝進傳承槽的來源。圖鑑裡的「賽季」就是賽季商店。
+export const INVENTORY_SOURCES = ['傳承', '事件', '賽季', '賽季商店', '自訂'];
+
+export function isInventoryTactic(tactic) {
+  return INVENTORY_SOURCES.includes(tactic?.source);
 }
 
 export function allTactics(catalogTactics, account) {
