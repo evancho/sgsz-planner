@@ -6,20 +6,25 @@ import {
   buildUsage,
   costBucket,
   compareTactics,
+  deleteTeamPrompt,
   demoFill,
   emptyAccount,
   exportPayload,
   freshState,
   generalBlockReason,
   indexNameUse,
+  bingshuStep,
   isDuwei,
   isInventoryTactic,
   matchesGeneral,
+  matchesTacticPick,
   normalizeState,
   ownsDiancang,
+  removeFromTeamPrompt,
   setGeneralOwned,
   setTacticOwned,
   sortGenerals,
+  TEAM_POSITIONS,
   tacticBlockReason,
   teamCost,
   usefulInnate,
@@ -315,10 +320,10 @@ test('unowning a general or tactic pulls them off teams', () => {
   let account = demoFill(emptyAccount('acct-1', '主帳'));
   account = setGeneralOwned(account, generalsById.get('guanyu'), false);
   assert.equal(account.owned.guanyu, undefined);
-  assert.equal(account.teams[0].members[0], null);
+  assert.equal(account.teams[0].members[1], null);
   account = setTacticOwned(account, 'bamen', false);
   assert.equal(account.tacticsOwned.bamen, undefined);
-  assert.equal(account.teams[0].members[1].learned[0], null);
+  assert.equal(account.teams[0].members[0].learned[0], null);
 });
 
 test('backup rejects foreign json and keeps a round trip', () => {
@@ -334,7 +339,12 @@ test('backup rejects foreign json and keeps a round trip', () => {
   const payload = exportPayload(state, '1.0.0');
   const again = normalizeState(payload);
   assert.equal(again.ok, true);
+  assert.equal(again.state.backupVersion, 2);
   assert.equal(again.state.accounts[0].teams[0].name, '桃園盾');
+  assert.deepEqual(
+    again.state.accounts[0].teams[0].members.map((member) => member.generalId),
+    ['liubei', 'guanyu', 'zhangfei'],
+  );
   assert.equal(again.state.accounts[0].owned.guanyu.red, 5);
   const messy = normalizeState({
     app: 'sgsz-planner',
@@ -354,7 +364,63 @@ test('backup rejects foreign json and keeps a round trip', () => {
   assert.equal(messy.state.accounts[0].owned.guanyu.red, 5);
   assert.equal(messy.state.accounts[0].owned.guanyu.dynamic, false);
   assert.equal(messy.state.accounts[0].customTactics[0].type, '主動');
-  assert.equal(messy.state.accounts[0].teams[0].members[1].learned[1], null);
+  assert.equal(messy.state.accounts[0].teams[0].members[0].generalId, 'guanyu');
+  assert.equal(messy.state.accounts[0].teams[0].members[0].learned[1], null);
+  assert.equal(messy.state.accounts[0].teams[0].members[1], null);
+  assert.equal(messy.state.backupVersion, 2);
+});
+
+test('team slots list the commander first and keep each role when importing v1', () => {
+  assert.deepEqual(TEAM_POSITIONS, ['主將', '副將', '副將']);
+  const account = demoFill(emptyAccount('acct-1', '主帳'));
+  assert.deepEqual(account.teams[0].members.map((member) => member.generalId), ['liubei', 'guanyu', 'zhangfei']);
+  assert.equal(account.teams[1].members[0], null);
+  assert.equal(account.teams[1].members[1].generalId, 'zhugeliang');
+
+  const legacy = normalizeState({
+    app: 'sgsz-planner',
+    backupVersion: 1,
+    activeAccountId: 'acct-1',
+    accounts: [{
+      id: 'acct-1',
+      name: '槍司',
+      teams: [{
+        id: 't-1',
+        name: '一隊',
+        members: [
+          { generalId: 'machao', learned: [null, null] },
+          { generalId: 'huangfusong', learned: [null, null] },
+          { generalId: 'zhangfei', learned: [null, null] },
+        ],
+      }],
+    }],
+  });
+  assert.equal(legacy.ok, true);
+  assert.equal(legacy.state.backupVersion, 2);
+  assert.deepEqual(
+    legacy.state.accounts[0].teams[0].members.map((member) => member.generalId),
+    ['huangfusong', 'machao', 'zhangfei'],
+  );
+
+  const current = normalizeState({
+    app: 'sgsz-planner',
+    backupVersion: 2,
+    activeAccountId: 'acct-1',
+    accounts: [{
+      id: 'acct-1',
+      name: '槍司',
+      teams: [{
+        id: 't-1',
+        name: '一隊',
+        members: legacy.state.accounts[0].teams[0].members,
+      }],
+    }],
+  });
+  assert.equal(current.ok, true);
+  assert.deepEqual(
+    current.state.accounts[0].teams[0].members.map((member) => member.generalId),
+    ['huangfusong', 'machao', 'zhangfei'],
+  );
 });
 
 test('demo team cost counts three generals', () => {
@@ -365,6 +431,40 @@ test('demo team cost counts three generals', () => {
     ['zhangfei', { cost: 6 }],
   ]);
   assert.equal(teamCost(account.teams[0], map), 20);
+});
+
+test('tactic picker hides unowned tactics until the filter is opened up', () => {
+  const tactics = [
+    { id: 'shengqi', name: '盛氣凌敵', type: '指揮', desc: '先手' },
+    { id: 'suo', name: '所向披靡', type: '主動', desc: '傷害' },
+    { id: 'bamen', name: '八門金鎖陣', type: '陣法', desc: '主將先攻' },
+  ];
+  const owned = new Set(['shengqi', 'bamen']);
+  const pick = (tactic, filters) => matchesTacticPick(tactic, { isOwned: owned.has(tactic.id), ...filters });
+  assert.deepEqual(tactics.filter((tactic) => pick(tactic)).map((tactic) => tactic.id), ['shengqi', 'bamen']);
+  assert.deepEqual(tactics.filter((tactic) => pick(tactic, { type: '陣法' })).map((tactic) => tactic.id), ['bamen']);
+  assert.deepEqual(
+    tactics.filter((tactic) => pick(tactic, { owned: 'all', query: '披靡' })).map((tactic) => tactic.id),
+    ['suo'],
+  );
+  assert.deepEqual(tactics.filter((tactic) => pick(tactic, { owned: 'free' })).map((tactic) => tactic.id), ['suo']);
+});
+
+test('removing a general asks for that general by name', () => {
+  assert.equal(removeFromTeamPrompt('SP皇甫嵩'), '確定要把SP皇甫嵩移出隊伍？');
+  assert.equal(removeFromTeamPrompt('  '), '確定要把這名武將移出隊伍？');
+});
+
+test('deleting a team names it and says the delete cannot be undone', () => {
+  assert.equal(deleteTeamPrompt('槍隊'), '確定刪除隊伍「槍隊」？此操作無法復原');
+  assert.equal(deleteTeamPrompt('  '), '確定刪除隊伍「這支隊伍」？此操作無法復原');
+});
+
+test('bingshu steps go from system to primary book to secondary book', () => {
+  assert.equal(bingshuStep(null), 'branch');
+  assert.equal(bingshuStep({ branch: 'jiubian' }), 'primary');
+  assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi' }), 'secondary');
+  assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi', secondary: 'suzhan' }), 'branch');
 });
 
 test('inventory list drops innate tactics and keeps custom ones', () => {

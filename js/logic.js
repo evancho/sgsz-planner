@@ -1,5 +1,7 @@
 export const APP_ID = 'sgsz-planner';
-export const BACKUP_VERSION = 1;
+export const BACKUP_VERSION = 2;
+/** Index 0 is 主將. The following slots are 副將, in list order. */
+export const TEAM_POSITIONS = ['主將', '副將', '副將'];
 export const CAMP_ORDER = ['魏', '蜀', '吳', '群'];
 export const TROOP_ORDER = ['騎', '弓', '槍', '盾', '器械'];
 export const QUALITIES = ['名將', '良將', '裨將', '偏將', '軍士'];
@@ -223,6 +225,19 @@ export function tacticOwned(account, tacticId) {
   return Boolean(account.tacticsOwned?.[tacticId]);
 }
 
+/** Picker filter. `owned` defaults to already-owned tactics. */
+export function matchesTacticPick(tactic, filters = {}) {
+  const type = filters.type || '全部';
+  if (type !== '全部' && tactic.type !== type) return false;
+  const owned = filters.owned || 'owned';
+  if (owned === 'owned' && !filters.isOwned) return false;
+  if (owned === 'free' && filters.isOwned) return false;
+  const query = String(filters.query || '').trim().toLowerCase();
+  if (!query) return true;
+  const hay = `${tactic.name} ${tactic.desc} ${tactic.type}`.toLowerCase();
+  return hay.includes(query);
+}
+
 export function buildUsage(account) {
   const generalTeams = new Map();
   const nameTeams = new Map();
@@ -326,11 +341,29 @@ export function generalBlockReason({ account, team, slot, general, generalsById,
   return '';
 }
 
+export function removeFromTeamPrompt(name) {
+  const who = String(name || '').trim() || '這名武將';
+  return `確定要把${who}移出隊伍？`;
+}
+
+export function deleteTeamPrompt(name) {
+  const title = String(name || '').trim() || '這支隊伍';
+  return `確定刪除隊伍「${title}」？此操作無法復原`;
+}
+
 export function teamCost(team, generalsById) {
   return (team.members || []).reduce((sum, member) => {
     if (!member?.generalId) return sum;
     return sum + (generalsById.get(member.generalId)?.cost || 0);
   }, 0);
+}
+
+/** Next 兵書 step: 體系, then 主兵書, then 副兵書. A finished book returns to 體系. */
+export function bingshuStep(book) {
+  if (!book?.branch) return 'branch';
+  if (!book.primary) return 'primary';
+  if (!book.secondary) return 'secondary';
+  return 'branch';
 }
 
 export function bingshuLabel(book, branches) {
@@ -361,7 +394,14 @@ function normalizeMember(raw) {
   return { generalId, learned, bingshu };
 }
 
-function normalizeAccount(raw) {
+/** Backup v1 stored 副將、主將、副將. Later backups store 主將 first. */
+export function orderTeamMembers(members, backupVersion) {
+  const normalized = [0, 1, 2].map((index) => normalizeMember(members?.[index]));
+  if (backupVersion === 1) return [normalized[1], normalized[0], normalized[2]];
+  return normalized;
+}
+
+function normalizeAccount(raw, backupVersion) {
   if (!raw || typeof raw !== 'object') return null;
   const id = cleanId(raw.id);
   if (!id) return null;
@@ -408,7 +448,7 @@ function normalizeAccount(raw) {
       const teamId = cleanId(item?.id);
       if (!teamId || teamIds.has(teamId)) continue;
       teamIds.add(teamId);
-      const members = [0, 1, 2].map((index) => normalizeMember(item.members?.[index]));
+      const members = orderTeamMembers(item.members, backupVersion);
       teams.push({
         id: teamId,
         name: clip(item?.name, 24) || '未命名隊伍',
@@ -431,7 +471,8 @@ export function normalizeState(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) {
     return { ok: false, error: '這不是本工具的備份檔' };
   }
-  if (input.app !== APP_ID || input.backupVersion !== BACKUP_VERSION) {
+  const backupVersion = input.backupVersion;
+  if (input.app !== APP_ID || (backupVersion !== 1 && backupVersion !== BACKUP_VERSION)) {
     return { ok: false, error: '這不是本工具的備份檔' };
   }
   if (!Array.isArray(input.accounts) || input.accounts.length === 0) {
@@ -443,7 +484,7 @@ export function normalizeState(input) {
   const accounts = [];
   const seen = new Set();
   for (const raw of input.accounts) {
-    const account = normalizeAccount(raw);
+    const account = normalizeAccount(raw, backupVersion);
     if (!account) return { ok: false, error: '帳號資料不完整' };
     if (seen.has(account.id)) return { ok: false, error: '帳號編號重複' };
     seen.add(account.id);
@@ -579,14 +620,14 @@ export function demoFill(account) {
         notes: '劉關張。八門先手，關羽盛氣，張飛破陣。',
         members: [
           {
-            generalId: 'guanyu',
-            learned: ['shengqi', null],
-            bingshu: { branch: 'xushi', primary: 'yizhi', secondary: 'guimou' },
-          },
-          {
             generalId: 'liubei',
             learned: ['bamen', 'zanbi'],
             bingshu: { branch: 'jiubian', primary: 'yuanqi', secondary: 'lijun' },
+          },
+          {
+            generalId: 'guanyu',
+            learned: ['shengqi', null],
+            bingshu: { branch: 'xushi', primary: 'yizhi', secondary: 'guimou' },
           },
           {
             generalId: 'zhangfei',
@@ -600,12 +641,12 @@ export function demoFill(account) {
         name: '蜀弓',
         notes: '諸葛亮先佔位，另外兩格還沒定。',
         members: [
+          null,
           {
             generalId: 'zhugeliang',
             learned: [null, null],
             bingshu: { branch: 'xushi', primary: 'houfa', secondary: 'guimou' },
           },
-          null,
           null,
         ],
       },
