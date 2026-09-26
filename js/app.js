@@ -15,6 +15,7 @@ import {
   bingshuStep,
   buildUsage,
   compareTactics,
+  deleteTeamPrompt,
   demoFill,
   emptyAccount,
   exportPayload,
@@ -1092,15 +1093,19 @@ function onClick(event) {
       location.hash = `#/teams/${id}`;
       break;
     }
-    case 'ask-delete-team':
+    case 'ask-delete-team': {
+      ui.picker = null;
+      ui.bingshu = null;
+      const team = current.teams.find((item) => item.id === el.dataset.id);
       openDialog({
         kind: 'delete-team',
         id: el.dataset.id,
         title: '刪除隊伍',
-        text: '隊伍裡的配置會刪掉，武將與戰法仍算擁有。',
-        confirm: '刪除',
+        text: deleteTeamPrompt(team?.name),
+        confirm: '確定',
       });
       break;
+    }
     case 'open-general':
       ui.picker = { kind: 'general', teamId: el.dataset.team, slot: Number(el.dataset.slot), query: '' };
       ui.justOpened = true;

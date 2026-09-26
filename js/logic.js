@@ -323,6 +323,11 @@ export function removeFromTeamPrompt(name) {
   return `確定要把${who}移出隊伍？`;
 }
 
+export function deleteTeamPrompt(name) {
+  const title = String(name || '').trim() || '這支隊伍';
+  return `確定刪除隊伍「${title}」？此操作無法復原`;
+}
+
 export function teamCost(team, generalsById) {
   return (team.members || []).reduce((sum, member) => {
     if (!member?.generalId) return sum;

@@ -5,6 +5,7 @@ import {
   buildUsage,
   costBucket,
   compareTactics,
+  deleteTeamPrompt,
   demoFill,
   emptyAccount,
   exportPayload,
@@ -414,6 +415,11 @@ test('tactic picker hides unowned tactics until the filter is opened up', () => 
 test('removing a general asks for that general by name', () => {
   assert.equal(removeFromTeamPrompt('SP皇甫嵩'), '確定要把SP皇甫嵩移出隊伍？');
   assert.equal(removeFromTeamPrompt('  '), '確定要把這名武將移出隊伍？');
+});
+
+test('deleting a team names it and says the delete cannot be undone', () => {
+  assert.equal(deleteTeamPrompt('槍隊'), '確定刪除隊伍「槍隊」？此操作無法復原');
+  assert.equal(deleteTeamPrompt('  '), '確定刪除隊伍「這支隊伍」？此操作無法復原');
 });
 
 test('bingshu steps go from system to primary book to secondary book', () => {
