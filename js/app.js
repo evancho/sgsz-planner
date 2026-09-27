@@ -628,7 +628,6 @@ function memberCard(team, member, slot, current) {
             : `<button type="button" class="btn ${label ? '' : 'primary'} member-book" data-action="open-bingshu" data-team="${esc(team.id)}" data-slot="${slot}">${label ? `兵書 · ${esc(label)}` : '選擇兵書'}</button>`}
           <button type="button" class="btn-ghost" data-action="ask-clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出隊伍</button>
         </div>
-        ${general.awaken && current.owned[general.id] && !current.owned[general.id].awaken ? '<p class="warn">尚未標記覺醒。遊戲裡通常還沒有第二個傳承槽，仍可先記。</p>' : ''}
       ` : member ? `
         <p class="warn">圖鑑沒有 ${esc(member.generalId)}</p>
         <button type="button" class="btn-ghost" data-action="ask-clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出隊伍</button>
