@@ -157,6 +157,7 @@ function route() {
   if (parts[0] === 'teams' && parts[1]) return { name: 'team', id: teamId };
   if (parts[0] === 'teams') return { name: 'teams' };
   if (parts[0] === 'backup') return { name: 'backup' };
+  if (parts[0] === 'changelog') return { name: 'changelog' };
   return { name: 'generals' };
 }
 
@@ -224,7 +225,9 @@ function overlay() {
 }
 
 function colophon() {
-  return `<p class="colophon">圖鑑 ${esc(ui.catalog.version)} · 只存在這台裝置 · 沒有自動同步</p>`;
+  const release = ui.catalog.release;
+  const stamp = release ? `${release.version} · ${release.date}` : '';
+  return `<p class="colophon">版本 ${stamp ? `<a href="#/changelog">${esc(stamp)}</a>` : '—'} · <a href="#/changelog">更新紀錄</a> · 圖鑑 ${esc(ui.catalog.version)} · 只存在這台裝置 · 沒有自動同步</p>`;
 }
 
 function accountsView() {
@@ -245,6 +248,10 @@ function accountsView() {
         ${help('加入主畫面', '用 iPhone Safari 打開這個網站，點分享，再點「加入主畫面」。圖示會像 App 一樣留在桌面，並在第一次載入後離線可用。')}
         ${help('多帳號', '上方選單可直接切換。武將紅度、戰法有無、隊伍都跟著帳號走，不會混在一起。')}
         ${help('備份', '到備份頁下載 JSON。換手機時用「匯入」整包還原，包含全部帳號。')}
+        <a class="help-card" href="#/changelog">
+          <h3>更新紀錄</h3>
+          <p class="help">目前 ${esc(ui.catalog.release?.version || '')} · ${esc(ui.catalog.release?.date || '')}。查看每次更新改了什麼。</p>
+        </a>
       </div>
       ${colophon()}
     </section>`;
@@ -706,6 +713,29 @@ function bingshuSheet() {
     </div>`;
 }
 
+function changelogView() {
+  const release = ui.catalog.release || { version: '', date: '', releases: [] };
+  const releases = Array.isArray(release.releases) ? release.releases : [];
+  return `
+    <section>
+      <div class="page-head">
+        <div>
+          <h2>更新紀錄</h2>
+          <p class="sub">目前 ${esc(release.version)} · ${esc(release.date)}</p>
+        </div>
+        <a class="btn" href="#/accounts">返回帳號</a>
+      </div>
+      <div class="stack">
+        ${releases.map((item, index) => `
+          <article class="help-card release">
+            <h3>${esc(item.version)} <span class="mini">${esc(item.date)}</span>${index === 0 ? ' <span class="active-pill">目前</span>' : ''}</h3>
+            <ul class="changes">${(item.changes || []).map((line) => `<li>${esc(line)}</li>`).join('')}</ul>
+          </article>`).join('') || '<div class="empty">還沒有更新紀錄。</div>'}
+      </div>
+      ${colophon()}
+    </section>`;
+}
+
 function backupView() {
   const payload = JSON.stringify(exportPayload(ui.state, ui.catalog.version), null, 2);
   return `
@@ -876,6 +906,7 @@ function view() {
   if (here.name === 'teams') return teamsView();
   if (here.name === 'team') return teamView(here.id);
   if (here.name === 'backup') return backupView();
+  if (here.name === 'changelog') return changelogView();
   return generalsView();
 }
 
@@ -1575,14 +1606,16 @@ function bind() {
 }
 
 async function loadCatalog() {
-  const [meta, generals, tactics, bingshu] = await Promise.all([
+  const [meta, generals, tactics, bingshu, release] = await Promise.all([
     fetch('./data/meta.json').then((response) => response.json()),
     fetch('./data/generals.json').then((response) => response.json()),
     fetch('./data/tactics.json').then((response) => response.json()),
     fetch('./data/bingshu.json').then((response) => response.json()),
+    fetch('./data/version.json').then((response) => response.json()),
   ]);
   return {
     version: meta.catalogVersion,
+    release,
     generals: generals.generals,
     tactics: tactics.tactics,
     branches: bingshu.branches,

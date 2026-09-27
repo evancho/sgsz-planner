@@ -481,6 +481,11 @@ button.grow-name { cursor: pointer; }
 }
 .fatal { margin: 24px; }
 .colophon { margin-top: 18px; color: var(--faint); font-size: 12px; }
+.colophon a { color: var(--gold-2); }
+a.help-card { color: inherit; text-decoration: none; display: block; }
+.release h3 { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.release .changes { margin: 8px 0 0; padding-left: 1.2em; }
+.release .changes li + li { margin-top: 4px; }
 .toast {
   position: fixed;
   left: 50%;

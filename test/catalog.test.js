@@ -7,6 +7,7 @@ const meta = JSON.parse(readFileSync(new URL('../data/meta.json', import.meta.ur
 const generalsFile = JSON.parse(readFileSync(new URL('../data/generals.json', import.meta.url)));
 const tacticsFile = JSON.parse(readFileSync(new URL('../data/tactics.json', import.meta.url)));
 const bingshu = JSON.parse(readFileSync(new URL('../data/bingshu.json', import.meta.url)));
+const appRelease = JSON.parse(readFileSync(new URL('../data/version.json', import.meta.url)));
 
 test('catalog files share one version', () => {
   assert.equal(meta.catalogVersion, '1.2.3');
@@ -14,7 +15,7 @@ test('catalog files share one version', () => {
   assert.equal(tacticsFile.catalogVersion, meta.catalogVersion);
   assert.equal(bingshu.catalogVersion, meta.catalogVersion);
   const sw = readFileSync(new URL('../sw.js', import.meta.url), 'utf8');
-  assert.match(sw, /const CACHE = 'sgsz-planner-1\.2\.4'/);
+  assert.match(sw, new RegExp(`const CACHE = 'sgsz-planner-${appRelease.version.replaceAll('.', '\\.')}'`));
 });
 
 test('戰法 inventory keeps equipable sources and drops innate tactics', () => {
