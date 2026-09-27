@@ -227,7 +227,7 @@ function overlay() {
 function colophon() {
   const release = ui.catalog.release;
   const stamp = release ? `${release.version} · ${release.date}` : '';
-  return `<p class="colophon">版本 ${stamp ? `<a href="#/changelog">${esc(stamp)}</a>` : '—'} · <a href="#/changelog">更新紀錄</a> · 圖鑑 ${esc(ui.catalog.version)} · 只存在這台裝置 · 沒有自動同步</p>`;
+  return `<p class="colophon">版本 ${stamp ? `<a href="#/changelog">${esc(stamp)}</a>` : '—'} · <a href="#/changelog">更新紀錄</a></p>`;
 }
 
 function accountsView() {
