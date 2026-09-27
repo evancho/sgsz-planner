@@ -401,8 +401,12 @@ function generalCard(general, current, usage) {
     </article>`;
 }
 
+function aptLabel(troop) {
+  return troop === '器械' ? '器' : troop;
+}
+
 function aptHtml(apt) {
-  return TROOP_ORDER.map((troop) => `<span class="apt apt-${apt[troop]}"><i>${troop}</i>${apt[troop]}</span>`).join('');
+  return TROOP_ORDER.map((troop) => `<span class="apt apt-${apt[troop]}"><i>${aptLabel(troop)}</i>${apt[troop]}</span>`).join('');
 }
 
 function ownedControls(general, owned) {
@@ -599,7 +603,6 @@ function memberCard(team, member, slot, current) {
   const general = member ? generalsById().get(member.generalId) : null;
   const books = ui.catalog.branches;
   const label = member?.bingshu ? bingshuLabel(member.bingshu, books) : '';
-  const innate = general ? usefulInnate(general) : '';
   return `
     <article class="member">
       <div class="member-top">
@@ -608,8 +611,7 @@ function memberCard(team, member, slot, current) {
           ${general ? `
             <h3>${esc(plainName(general))}${duweiMark(general)}</h3>
             <span class="member-meta">${esc(general.camp)} · C${general.cost}${isDuwei(general) ? '（天賦可 +1）' : ''} · ${esc(general.role)}</span>
-            ${aptHtml(general.apt)}
-            ${innate ? `<span class="member-innate">主戰法 ${esc(innate)}</span>` : ''}
+            <div class="apt-row">${aptHtml(general.apt)}</div>
           ` : ''}
         </div>
         <span class="member-move">
