@@ -355,8 +355,19 @@ button.grow-name { cursor: pointer; }
 .member-move { display: inline-flex; gap: 4px; flex: 0 0 auto; }
 .member-top h3 { margin: 0; font-size: 18px; }
 .member-meta { color: var(--muted); font-size: 13px; }
-.member-innate { color: var(--gold-2); font-size: 13px; }
-.member .apt-row { margin: 0; }
+.member .apt-row {
+  flex: 1 0 100%;
+  flex-wrap: nowrap;
+  margin: 0;
+  gap: 6px;
+}
+.member .apt {
+  background: transparent;
+  padding: 0;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.member .apt i { margin-right: 0; }
 .member-learn {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -481,6 +492,11 @@ button.grow-name { cursor: pointer; }
 }
 .fatal { margin: 24px; }
 .colophon { margin-top: 18px; color: var(--faint); font-size: 12px; }
+.colophon a { color: var(--gold-2); }
+a.help-card { color: inherit; text-decoration: none; display: block; }
+.release h3 { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.release .changes { margin: 8px 0 0; padding-left: 1.2em; }
+.release .changes li + li { margin-top: 4px; }
 .toast {
   position: fixed;
   left: 50%;
