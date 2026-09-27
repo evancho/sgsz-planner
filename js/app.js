@@ -378,8 +378,8 @@ function generalCard(general, current, usage) {
   const duwei = isDuwei(general);
   const chipHtml = [
     duweiMark(general),
+    owned?.dynamic ? '<span class="mini">動態</span>' : '',
     ownsDiancang(owned) ? '<span class="mini">典藏</span>' : '',
-    owned?.awaken ? '<span class="mini">覺醒</span>' : '',
     owned && owned.red > 0 ? `<span class="mini">紅${owned.red}</span>` : '',
     where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : '',
   ].filter(Boolean).join('');
@@ -413,8 +413,8 @@ function ownedControls(general, owned) {
   const reds = [0, 1, 2, 3, 4, 5].map((red) => `<button type="button" class="pip ${owned.red === red ? 'on' : ''}" data-action="set-red" data-id="${esc(general.id)}" data-red="${red}" aria-label="紅度 ${red}">${red}</button>`).join('');
   return `
     <div class="reds" role="radiogroup" aria-label="紅度"><span class="faint">紅度</span>${reds}</div>
-    ${general.dynamic ? seg(general.id, 'dynamic', '動態形象', owned.dynamic) : ''}
-    ${general.awaken ? seg(general.id, 'awaken', '覺醒', owned.awaken) : ''}`;
+    ${general.dynamic ? seg(general.id, 'dynamic', '動態', owned.dynamic) : ''}
+    ${general.awaken ? seg(general.id, 'awaken', '典藏', owned.awaken) : ''}`;
 }
 
 function seg(id, flag, label, on) {

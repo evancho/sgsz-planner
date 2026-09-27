@@ -100,7 +100,11 @@ export function matchesGeneral(general, ownedRecord, filters, extras) {
   if (query) {
     const display = String(general.name || '').replace(/^典藏/, '');
     const tags = Array.isArray(general.tags) ? general.tags.join(' ') : '';
-    const hay = `${display} ${usefulInnate(general)} ${general.camp} ${tags} ${ownsDiancang(ownedRecord) ? '典藏' : ''}`.toLowerCase();
+    const marks = [
+      ownedRecord?.dynamic ? '動態' : '',
+      ownsDiancang(ownedRecord) ? '典藏' : '',
+    ].filter(Boolean).join(' ');
+    const hay = `${display} ${usefulInnate(general)} ${general.camp} ${tags} ${marks}`.toLowerCase();
     if (!hay.includes(query)) return false;
   }
   const quality = activeChoice(filters.quality, QUALITIES);
@@ -134,8 +138,9 @@ export function matchesGeneral(general, ownedRecord, filters, extras) {
   return true;
 }
 
+/** 畫面上的「典藏」對應備份欄位 awaken，不是 dynamic。 */
 export function ownsDiancang(ownedRecord) {
-  return Boolean(ownedRecord?.dynamic);
+  return Boolean(ownedRecord?.awaken);
 }
 
 export function usefulInnate(general) {

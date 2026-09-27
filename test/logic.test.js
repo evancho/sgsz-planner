@@ -151,14 +151,35 @@ test('aptitude, camp, collection and dynamic filters combine', () => {
   );
   assert.equal(
     matchesGeneral(generals[1], { red: 0, dynamic: true, awaken: false }, blankFilters({ collection: ['典藏'] }), {}),
+    false,
+  );
+  assert.equal(
+    matchesGeneral(generals[1], { red: 0, dynamic: true, awaken: false }, blankFilters({ collection: ['非典藏'] }), {}),
     true,
   );
   assert.equal(
     matchesGeneral(guanyu, { red: 5, dynamic: false, awaken: true }, blankFilters({ collection: ['典藏'] }), {}),
+    true,
+  );
+  assert.equal(
+    matchesGeneral(guanyu, { red: 5, dynamic: true, awaken: false }, blankFilters({ dynamic: ['已解鎖'], collection: ['非典藏'] }), {}),
+    true,
+  );
+  assert.equal(ownsDiancang({ dynamic: true, awaken: false }), false);
+  assert.equal(ownsDiancang({ red: 5, dynamic: false, awaken: true }), true);
+  assert.equal(ownsDiancang({ red: 5, dynamic: false }), false);
+  assert.equal(
+    matchesGeneral(guanyu, { dynamic: true, awaken: false }, blankFilters({ query: '動態' }), {}),
+    true,
+  );
+  assert.equal(
+    matchesGeneral(guanyu, { dynamic: true, awaken: false }, blankFilters({ query: '典藏' }), {}),
     false,
   );
-  assert.equal(ownsDiancang({ dynamic: true }), true);
-  assert.equal(ownsDiancang({ red: 5, dynamic: false }), false);
+  assert.equal(
+    matchesGeneral(guanyu, { dynamic: false, awaken: true }, blankFilters({ query: '典藏' }), {}),
+    true,
+  );
   assert.equal(usefulInnate({ innate: '梟姬' }), '梟姬');
   assert.equal(usefulInnate({ innate: '自帶戰法' }), '');
   assert.equal(usefulInnate({ innate: '' }), '');
