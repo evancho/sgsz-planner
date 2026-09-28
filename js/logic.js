@@ -653,14 +653,6 @@ export function addAccountFile(state, account, options = {}) {
   };
 }
 
-export function clearAccountTeams(state, accountId) {
-  const index = state?.accounts?.findIndex((item) => item.id === accountId) ?? -1;
-  if (index < 0) return { ok: false, error: '找不到帳號' };
-  const accounts = state.accounts.slice();
-  accounts[index] = { ...accounts[index], teams: [] };
-  return { ok: true, state: { ...state, accounts } };
-}
-
 export function replaceAccountFile(state, targetId, account) {
   const index = state?.accounts?.findIndex((item) => item.id === targetId) ?? -1;
   if (index < 0) return { ok: false, error: '找不到要覆寫的帳號' };

@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import {
   ACCOUNT_FILE_VERSION,
   addAccountFile,
-  clearAccountTeams,
   demoFill,
   moveAccount,
   emptyAccount,
@@ -128,14 +128,18 @@ test('a new season can keep generals and tactics without teams', () => {
 
   const kept = addAccountFile(state, normalizeAccountFile(exportAccountPayload(source, '1.2.3')).account);
   assert.equal(kept.state.accounts[2].teams[0].name, '桃園盾');
+});
 
-  const cleared = clearAccountTeams(state, 'acct-a');
-  assert.equal(cleared.ok, true);
-  assert.equal(cleared.state.accounts[0].teams.length, 0);
-  assert.equal(cleared.state.accounts[0].owned.guanyu.red, 5);
-  assert.equal(cleared.state.accounts[0].tacticsOwned.bamen, true);
-  assert.equal(cleared.state.accounts[1].teams[0].name, '旁隊');
-  assert.equal(clearAccountTeams(state, 'missing').ok, false);
+test('account cards keep season import without a clear-teams button', () => {
+  const app = readFileSync(new URL('../js/app.js', import.meta.url), 'utf8');
+  const logic = readFileSync(new URL('../js/logic.js', import.meta.url), 'utf8');
+  assert.equal(app.includes('清空隊伍'), false);
+  assert.equal(app.includes('ask-clear-teams'), false);
+  assert.equal(logic.includes('clearAccountTeams'), false);
+  assert.equal(app.includes('新增為新帳號，不含隊伍'), true);
+  assert.equal(app.includes('不含隊伍'), true);
+  assert.match(app, /class="account-side"/);
+  assert.match(app, /account-side[\s\S]*member-move[\s\S]*active-pill/);
 });
 
 test('account list order moves with the arrows and survives a backup', () => {
