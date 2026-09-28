@@ -668,3 +668,143 @@ export function demoFill(account) {
     ],
   };
 }
+
+export const SHARE_VERSION = 1;
+export const SHARE_MAX_LENGTH = 4000;
+
+function bytesToBase64Url(bytes) {
+  let binary = '';
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/g, '');
+}
+
+function base64UrlToBytes(text) {
+  const pad = text.length % 4 === 0 ? '' : '='.repeat(4 - (text.length % 4));
+  const binary = atob(text.replaceAll('-', '+').replaceAll('_', '/') + pad);
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+  return bytes;
+}
+
+function shareError(error) {
+  return { ok: false, error };
+}
+
+/** 一支隊伍壓成 URL token。只含三人、傳承、兵書，以及這三人的紅度／動態／典藏。 */
+export function encodeTeamShare(team, owned = {}) {
+  const members = [0, 1, 2].map((index) => {
+    const member = team?.members?.[index];
+    const generalId = cleanId(member?.generalId);
+    if (!generalId) return null;
+    const record = owned?.[generalId] || {};
+    let book = null;
+    const branch = cleanId(member.bingshu?.branch);
+    if (branch) {
+      book = [branch, cleanId(member.bingshu.primary) || '', cleanId(member.bingshu.secondary) || ''];
+    }
+    return {
+      g: generalId,
+      r: clampRed(record.red),
+      d: record.dynamic ? 1 : 0,
+      a: record.awaken ? 1 : 0,
+      t: [0, 1].map((slot) => cleanId(member.learned?.[slot]) || ''),
+      b: book,
+    };
+  });
+  const payload = {
+    v: SHARE_VERSION,
+    name: clip(team?.name, 24) || '分享隊伍',
+    members,
+  };
+  const token = `1.${bytesToBase64Url(new TextEncoder().encode(JSON.stringify(payload)))}`;
+  if (token.length > SHARE_MAX_LENGTH) return shareError('這支隊伍的分享連結太長');
+  return { ok: true, token };
+}
+
+/** 還原分享 token。不執行內容，只接受固定欄位。 */
+export function decodeTeamShare(token) {
+  if (typeof token !== 'string' || token.length === 0 || token.length > SHARE_MAX_LENGTH) {
+    return shareError('分享連結無法讀取');
+  }
+  const match = /^(\d+)\.([A-Za-z0-9_-]+)$/.exec(token);
+  if (!match) return shareError('分享連結無法讀取');
+  if (match[1] !== String(SHARE_VERSION)) return shareError('這份分享的版本不相容');
+  let parsed;
+  try {
+    parsed = JSON.parse(new TextDecoder().decode(base64UrlToBytes(match[2])));
+  } catch {
+    return shareError('分享連結無法讀取');
+  }
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return shareError('分享連結無法讀取');
+  if (parsed.v !== SHARE_VERSION) return shareError('這份分享的版本不相容');
+  if (!Array.isArray(parsed.members) || parsed.members.length !== 3) return shareError('分享連結無法讀取');
+  const members = [];
+  for (const raw of parsed.members) {
+    if (raw == null) {
+      members.push(null);
+      continue;
+    }
+    if (typeof raw !== 'object' || Array.isArray(raw)) return shareError('分享連結無法讀取');
+    const generalId = cleanId(raw.g);
+    if (!generalId) return shareError('分享連結無法讀取');
+    if (raw.t != null && !Array.isArray(raw.t)) return shareError('分享連結無法讀取');
+    if (raw.b != null && (!Array.isArray(raw.b) || raw.b.length > 3)) return shareError('分享連結無法讀取');
+    const learned = [0, 1].map((index) => cleanId(raw.t?.[index]) || null);
+    let bingshu = null;
+    if (raw.b != null) {
+      const branch = cleanId(raw.b[0]);
+      if (!branch) return shareError('分享連結無法讀取');
+      bingshu = {
+        branch,
+        primary: cleanId(raw.b[1]) || null,
+        secondary: cleanId(raw.b[2]) || null,
+      };
+    }
+    members.push({
+      generalId,
+      learned,
+      bingshu,
+      red: clampRed(raw.r),
+      dynamic: raw.d === 1 || raw.d === true,
+      awaken: raw.a === 1 || raw.a === true,
+    });
+  }
+  return {
+    ok: true,
+    share: { name: clip(parsed.name, 24) || '分享隊伍', members },
+  };
+}
+
+/** 把分享加進這個帳號的隊伍，並更新這三位的紅度／動態／典藏。不刪其他資料。 */
+export function applyTeamShare(account, share, teamId, knownTacticIds = new Set()) {
+  const id = cleanId(teamId);
+  if (!id || account.teams.some((team) => team.id === id)) return shareError('分享連結無法讀取');
+  if (account.teams.length >= 40) return shareError('隊伍已滿，無法再載入');
+  const owned = { ...account.owned };
+  const tacticsOwned = { ...account.tacticsOwned };
+  const members = share.members.map((member) => {
+    if (!member) return null;
+    owned[member.generalId] = {
+      red: member.red,
+      dynamic: member.dynamic,
+      awaken: member.awaken,
+    };
+    for (const tacticId of member.learned) {
+      if (tacticId && knownTacticIds.has(tacticId)) tacticsOwned[tacticId] = true;
+    }
+    return {
+      generalId: member.generalId,
+      learned: member.learned.slice(),
+      bingshu: member.bingshu ? { ...member.bingshu } : null,
+    };
+  });
+  return {
+    ok: true,
+    account: {
+      ...account,
+      owned,
+      tacticsOwned,
+      teams: [...account.teams, { id, name: share.name, notes: '', members }],
+    },
+  };
+}

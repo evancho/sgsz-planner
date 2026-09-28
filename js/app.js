@@ -16,9 +16,12 @@ import {
   bingshuStep,
   buildUsage,
   compareTactics,
+  applyTeamShare,
+  decodeTeamShare,
   deleteTeamPrompt,
   demoFill,
   emptyAccount,
+  encodeTeamShare,
   exportPayload,
   generalBlockReason,
   indexNameUse,
@@ -55,6 +58,7 @@ const ui = {
   filterOpen: false,
   picker: null,
   bingshu: null,
+  shareLink: '',
   dialog: null,
   pendingImport: null,
   draft: { name: '', type: '主動', desc: '' },
@@ -156,6 +160,11 @@ function route() {
   if (parts[0] === 'tactics') return { name: 'tactics', mode: 'all' };
   if (parts[0] === 'teams' && parts[1]) return { name: 'team', id: teamId };
   if (parts[0] === 'teams') return { name: 'teams' };
+  if (parts[0] === 'share' && parts[1]) {
+    let token = '';
+    try { token = decodeURIComponent(parts[1]); } catch { token = ''; }
+    return { name: 'share', token };
+  }
   if (parts[0] === 'backup') return { name: 'backup' };
   if (parts[0] === 'changelog') return { name: 'changelog' };
   return { name: 'generals' };
@@ -174,7 +183,8 @@ function icon(name) {
 
 function shell(body) {
   const current = account();
-  const here = route().name === 'team' ? 'teams' : route().name === 'inherit' ? 'tactics' : route().name;
+  const routeName = route().name;
+  const here = routeName === 'team' || routeName === 'share' ? 'teams' : routeName === 'inherit' ? 'tactics' : routeName;
   const tabs = [
     ['accounts', '帳號'],
     ['generals', '武將'],
@@ -221,7 +231,7 @@ function installBanner() {
 }
 
 function overlay() {
-  return `${pickerHtml()}${bingshuSheet()}${dialogHtml()}`;
+  return `${pickerHtml()}${bingshuSheet()}${shareSheet()}${dialogHtml()}`;
 }
 
 function colophon() {
@@ -588,7 +598,10 @@ function teamView(id) {
           <a class="faint" href="#/teams">隊伍</a>
           <h2><label class="sr" for="team-name">隊伍名稱</label><input id="team-name" class="field" data-model="team-name" data-id="${esc(team.id)}" value="${esc(team.name)}" maxlength="24" autocomplete="off"></h2>
         </div>
-        <button type="button" class="btn-ghost" data-action="ask-delete-team" data-id="${esc(team.id)}">刪除隊伍</button>
+        <div class="btn-row">
+          <button type="button" class="btn" data-action="share-team" data-id="${esc(team.id)}">分享</button>
+          <button type="button" class="btn-ghost" data-action="ask-delete-team" data-id="${esc(team.id)}">刪除隊伍</button>
+        </div>
       </div>
       <label>備註
         <textarea id="team-notes" class="notes" data-model="team-notes" data-id="${esc(team.id)}" maxlength="500">${esc(team.notes)}</textarea>
@@ -599,6 +612,81 @@ function teamView(id) {
       </div>
       ${colophon()}
     </section>`;
+}
+
+function shareUrl(token) {
+  const url = new URL(location.href);
+  url.hash = `#/share/${token}`;
+  return url.toString();
+}
+
+function shareMarks(member) {
+  return ownedStatusLabels({
+    red: member.red,
+    dynamic: member.dynamic,
+    awaken: member.awaken,
+  }).join(' · ');
+}
+
+function shareView(token) {
+  const decoded = decodeTeamShare(token);
+  if (!decoded.ok) {
+    return `<section><div class="empty"><p>${esc(decoded.error)}</p><a href="#/teams">回隊伍</a></div></section>`;
+  }
+  const current = account();
+  const generals = generalsById();
+  const tactics = tacticsById(current);
+  const warnings = [];
+  const seen = new Set();
+  const cards = decoded.share.members.map((member, index) => {
+    if (!member) return `<li><span class="tag">${TEAM_POSITIONS[index]}</span> 這個位置是空的。</li>`;
+    if (seen.has(member.generalId)) warnings.push('同一武將出現超過一次。');
+    seen.add(member.generalId);
+    const general = generals.get(member.generalId);
+    if (!general) warnings.push(`圖鑑沒有武將 ${member.generalId}。`);
+    const tacticNames = member.learned.map((id) => {
+      if (!id) return '';
+      const tactic = tactics.get(id);
+      if (!tactic) warnings.push(`圖鑑沒有戰法 ${id}。`);
+      return tactic ? tactic.name : id;
+    }).filter(Boolean);
+    let book = '';
+    if (member.bingshu) {
+      const known = ui.catalog.branches.some((item) => item.id === member.bingshu.branch);
+      book = known ? bingshuLabel(member.bingshu, ui.catalog.branches) : '';
+      if (!known) warnings.push('圖鑑沒有這個兵書體系。');
+    }
+    const marks = shareMarks(member);
+    const name = general ? plainName(general) : member.generalId;
+    return `<li><span class="tag">${TEAM_POSITIONS[index]}</span> <strong>${esc(name)}</strong>${marks ? ` · ${esc(marks)}` : ''}${tacticNames.length ? `<br>傳承 ${esc(tacticNames.join('、'))}` : ''}${book ? `<br>兵書 ${esc(book)}` : ''}</li>`;
+  }).join('');
+  const uniqueWarnings = [...new Set(warnings)];
+  return `
+    <section>
+      <div class="page-head">
+        <div>
+          <a class="faint" href="#/teams">隊伍</a>
+          <h2>${esc(decoded.share.name)}</h2>
+        </div>
+      </div>
+      <p>這會加進帳號「${esc(current.name)}」。上方可以先換帳號。按下之後才會寫入，不會取代其他隊伍，也不會還原整份備份。</p>
+      <p class="sub">這三位的紅度、動態、典藏會改成這份分享的內容。</p>
+      <ol class="share-preview">${cards}</ol>
+      ${uniqueWarnings.length ? `<p class="warn">${uniqueWarnings.map((line) => esc(line)).join('<br>')}</p>` : ''}
+      <button type="button" class="btn primary" data-action="load-share">載入此隊伍</button>
+      ${colophon()}
+    </section>`;
+}
+
+function shareSheet() {
+  if (!ui.shareLink) return '';
+  return sheet('分享隊伍', `
+    <p>把連結交給對方。對方打開後，還要再按「載入此隊伍」，才會加進他自己選中的帳號。</p>
+    <label>分享連結
+      <input id="share-link" class="field" readonly value="${esc(ui.shareLink)}">
+    </label>
+    <button type="button" class="btn primary" data-action="copy-share" data-autofocus>複製連結</button>
+  `);
 }
 
 function memberCard(team, member, slot, current) {
@@ -910,6 +998,7 @@ function view() {
   if (here.name === 'inherit') return inheritView();
   if (here.name === 'teams') return teamsView();
   if (here.name === 'team') return teamView(here.id);
+  if (here.name === 'share') return shareView(here.token);
   if (here.name === 'backup') return backupView();
   if (here.name === 'changelog') return changelogView();
   return generalsView();
@@ -933,6 +1022,7 @@ function render() {
     inherit: '戰法傳承',
     teams: '隊伍',
     team: '編隊',
+    share: '分享隊伍',
     backup: '備份',
   };
   document.title = `${titles[here.name] || '配將簿'} · 配將簿`;
@@ -972,6 +1062,7 @@ function onClick(event) {
     ui.pendingImport = null;
     ui.picker = null;
     ui.bingshu = null;
+    ui.shareLink = '';
     render();
     return;
   }
@@ -1194,8 +1285,58 @@ function onClick(event) {
       break;
     case 'close-picker':
       ui.picker = null;
+      ui.shareLink = '';
       render();
       break;
+    case 'share-team': {
+      const team = current.teams.find((item) => item.id === el.dataset.id);
+      if (!team) break;
+      const encoded = encodeTeamShare(team, current.owned);
+      if (!encoded.ok) {
+        toast(encoded.error);
+        break;
+      }
+      ui.picker = null;
+      ui.bingshu = null;
+      ui.shareLink = shareUrl(encoded.token);
+      ui.justOpened = true;
+      render();
+      break;
+    }
+    case 'copy-share': {
+      const link = ui.shareLink;
+      const input = document.getElementById('share-link');
+      navigator.clipboard?.writeText(link).then(() => {
+        toast('已複製連結');
+      }).catch(() => {
+        input?.focus();
+        input?.select();
+        toast('請手動複製連結');
+      });
+      break;
+    }
+    case 'load-share': {
+      const decoded = decodeTeamShare(route().token || '');
+      if (!decoded.ok) {
+        toast(decoded.error);
+        break;
+      }
+      const teamId = newId('team');
+      const known = new Set(tacticsById(current).keys());
+      const applied = applyTeamShare(current, decoded.share, teamId, known);
+      if (!applied.ok) {
+        toast(applied.error);
+        break;
+      }
+      commit({
+        ...ui.state,
+        accounts: ui.state.accounts.map((item) => (item.id === current.id ? applied.account : item)),
+      });
+      ui.shareLink = '';
+      location.hash = `#/teams/${teamId}`;
+      toast('已載入隊伍');
+      break;
+    }
     case 'pick-general':
       assignGeneral(current, ui.picker.teamId, ui.picker.slot, el.dataset.id);
       break;
@@ -1595,7 +1736,8 @@ function bind() {
     if (ui.dialog) {
       ui.dialog = null;
       ui.pendingImport = null;
-    } else if (ui.picker) ui.picker = null;
+    } else if (ui.shareLink) ui.shareLink = '';
+    else if (ui.picker) ui.picker = null;
     else if (ui.bingshu) ui.bingshu = null;
     else if (ui.filterOpen) ui.filterOpen = false;
     else return;
@@ -1604,6 +1746,7 @@ function bind() {
   window.addEventListener('hashchange', () => {
     ui.picker = null;
     ui.bingshu = null;
+    ui.shareLink = '';
     ui.dialog = null;
     ui.pendingImport = null;
     render();
