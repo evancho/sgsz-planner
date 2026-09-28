@@ -7,6 +7,7 @@ export const TROOP_ORDER = ['騎', '弓', '槍', '盾', '器械'];
 export const QUALITIES = ['名將', '良將', '裨將', '偏將', '軍士'];
 export const TACTIC_TYPES = ['指揮', '主動', '突擊', '被動', '兵種', '陣法', '內政'];
 export const COST_BUCKETS = ['7+', '6', '5', '4', '3-'];
+export const RED_FILTERS = ['0', '1', '2', '3', '4', '5'];
 export const DYNAMIC_FILTERS = ['已解鎖', '可解鎖', '無動態'];
 export const COLLECTION_FILTERS = ['典藏', '非典藏'];
 export const ROLE_FILTERS = ['軍事', '內政'];
@@ -141,6 +142,36 @@ export function matchesGeneral(general, ownedRecord, filters, extras) {
 /** 畫面上的「典藏」對應備份欄位 awaken，不是 dynamic。 */
 export function ownsDiancang(ownedRecord) {
   return Boolean(ownedRecord?.awaken);
+}
+
+/** 選擇武將的紅度排序：紅度，加上已開動態、已標典藏各 1 分。 */
+export function redSortScore(ownedRecord) {
+  if (!ownedRecord) return 0;
+  return clampRed(ownedRecord.red) + (ownedRecord.dynamic ? 1 : 0) + (ownsDiancang(ownedRecord) ? 1 : 0);
+}
+
+/** 高分在前。同分保持原來的順序。 */
+export function sortByRedScore(list, ownedOf) {
+  return list
+    .map((general, index) => ({ general, index, score: redSortScore(ownedOf(general)) }))
+    .sort((a, b) => (b.score - a.score) || (a.index - b.index))
+    .map((item) => item.general);
+}
+
+export function matchesOwnedRed(ownedRecord, selected) {
+  const choice = activeChoice(selected, RED_FILTERS);
+  if (!choice) return true;
+  return choice.has(String(clampRed(ownedRecord?.red)));
+}
+
+/** 武將列表與隊伍卡片共用：紅 0、未開動態、未標典藏都不顯示。 */
+export function ownedStatusLabels(ownedRecord) {
+  if (!ownedRecord) return [];
+  const labels = [];
+  if (ownedRecord.dynamic) labels.push('動態');
+  if (ownsDiancang(ownedRecord)) labels.push('典藏');
+  if (ownedRecord.red > 0) labels.push(`紅${ownedRecord.red}`);
+  return labels;
 }
 
 export function usefulInnate(general) {
@@ -363,11 +394,34 @@ export function teamCost(team, generalsById) {
   }, 0);
 }
 
-/** Next 兵書 step: 體系, then 主兵書, then 副兵書. A finished book returns to 體系. */
+/** 兩個副兵書。舊備份的 secondary 是單一字串，讀成第一格。 */
+export function secondarySlots(book) {
+  if (!book) return [null, null];
+  const raw = book.secondary;
+  if (Array.isArray(raw)) return [0, 1].map((index) => cleanId(raw[index]) || null);
+  return [cleanId(raw) || null, null];
+}
+
+/** 點選或取消一個副兵書。已滿兩個時，新的選項不會再加進去。 */
+export function toggleSecondary(slots, id) {
+  const next = [slots?.[0] || null, slots?.[1] || null];
+  const index = next.indexOf(id);
+  if (index >= 0) {
+    next[index] = null;
+    const kept = next.filter(Boolean);
+    return [kept[0] || null, kept[1] || null];
+  }
+  if (!next[0]) return [id, next[1]];
+  if (!next[1]) return [next[0], id];
+  return next;
+}
+
+/** Next 兵書 step: 體系, then 主兵書, then 副兵書. Both secondaries finish the book. */
 export function bingshuStep(book) {
   if (!book?.branch) return 'branch';
   if (!book.primary) return 'primary';
-  if (!book.secondary) return 'secondary';
+  const [first, second] = secondarySlots(book);
+  if (!first || !second) return 'secondary';
   return 'branch';
 }
 
@@ -376,8 +430,10 @@ export function bingshuLabel(book, branches) {
   const branch = branches.find((item) => item.id === book.branch);
   if (!branch) return '未知兵書';
   const primary = branch.primary.find((item) => item.id === book.primary);
-  const secondary = branch.secondary.find((item) => item.id === book.secondary);
-  return [branch.name, primary?.name, secondary?.name].filter(Boolean).join(' · ');
+  const names = secondarySlots(book)
+    .map((id) => branch.secondary.find((item) => item.id === id)?.name)
+    .filter(Boolean);
+  return [branch.name, primary?.name, ...names].filter(Boolean).join(' · ');
 }
 
 function normalizeMember(raw) {
@@ -393,7 +449,7 @@ function normalizeMember(raw) {
     bingshu = {
       branch: cleanId(raw.bingshu.branch),
       primary: cleanId(raw.bingshu.primary) || null,
-      secondary: cleanId(raw.bingshu.secondary) || null,
+      secondary: secondarySlots(raw.bingshu),
     };
   }
   return { generalId, learned, bingshu };
@@ -656,5 +712,169 @@ export function demoFill(account) {
         ],
       },
     ],
+  };
+}
+
+export const SHARE_VERSION = 1;
+export const SHARE_MAX_LENGTH = 4000;
+
+function bytesToBase64Url(bytes) {
+  let binary = '';
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/g, '');
+}
+
+function base64UrlToBytes(text) {
+  const pad = text.length % 4 === 0 ? '' : '='.repeat(4 - (text.length % 4));
+  const binary = atob(text.replaceAll('-', '+').replaceAll('_', '/') + pad);
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+  return bytes;
+}
+
+function shareError(error) {
+  return { ok: false, error };
+}
+
+/** 一支隊伍壓成 URL token。只含三人、傳承、兵書，以及這三人的紅度／動態／典藏。 */
+export function encodeTeamShare(team, owned = {}) {
+  const members = [0, 1, 2].map((index) => {
+    const member = team?.members?.[index];
+    const generalId = cleanId(member?.generalId);
+    if (!generalId) return null;
+    const record = owned?.[generalId] || {};
+    let book = null;
+    const branch = cleanId(member.bingshu?.branch);
+    if (branch) {
+      const [first, second] = secondarySlots(member.bingshu);
+      book = [branch, cleanId(member.bingshu.primary) || '', first || ''];
+      if (second) book.push(second);
+    }
+    return {
+      g: generalId,
+      r: clampRed(record.red),
+      d: record.dynamic ? 1 : 0,
+      a: record.awaken ? 1 : 0,
+      t: [0, 1].map((slot) => cleanId(member.learned?.[slot]) || ''),
+      b: book,
+    };
+  });
+  const payload = {
+    v: SHARE_VERSION,
+    name: clip(team?.name, 24) || '分享隊伍',
+    members,
+  };
+  const token = `1.${bytesToBase64Url(new TextEncoder().encode(JSON.stringify(payload)))}`;
+  if (token.length > SHARE_MAX_LENGTH) return shareError('這支隊伍的分享連結太長');
+  return { ok: true, token };
+}
+
+/** 還原分享 token。不執行內容，只接受固定欄位。 */
+export function decodeTeamShare(token) {
+  if (typeof token !== 'string' || token.length === 0 || token.length > SHARE_MAX_LENGTH) {
+    return shareError('分享連結無法讀取');
+  }
+  const match = /^(\d+)\.([A-Za-z0-9_-]+)$/.exec(token);
+  if (!match) return shareError('分享連結無法讀取');
+  if (match[1] !== String(SHARE_VERSION)) return shareError('這份分享的版本不相容');
+  let parsed;
+  try {
+    parsed = JSON.parse(new TextDecoder().decode(base64UrlToBytes(match[2])));
+  } catch {
+    return shareError('分享連結無法讀取');
+  }
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return shareError('分享連結無法讀取');
+  if (parsed.v !== SHARE_VERSION) return shareError('這份分享的版本不相容');
+  if (!Array.isArray(parsed.members) || parsed.members.length !== 3) return shareError('分享連結無法讀取');
+  const members = [];
+  for (const raw of parsed.members) {
+    if (raw == null) {
+      members.push(null);
+      continue;
+    }
+    if (typeof raw !== 'object' || Array.isArray(raw)) return shareError('分享連結無法讀取');
+    const generalId = cleanId(raw.g);
+    if (!generalId) return shareError('分享連結無法讀取');
+    if (raw.t != null && !Array.isArray(raw.t)) return shareError('分享連結無法讀取');
+    if (raw.b != null && (!Array.isArray(raw.b) || raw.b.length > 4)) return shareError('分享連結無法讀取');
+    const learned = [0, 1].map((index) => cleanId(raw.t?.[index]) || null);
+    let bingshu = null;
+    if (raw.b != null) {
+      const branch = cleanId(raw.b[0]);
+      if (!branch) return shareError('分享連結無法讀取');
+      bingshu = {
+        branch,
+        primary: cleanId(raw.b[1]) || null,
+        secondary: [cleanId(raw.b[2]) || null, cleanId(raw.b[3]) || null],
+      };
+    }
+    members.push({
+      generalId,
+      learned,
+      bingshu,
+      red: clampRed(raw.r),
+      dynamic: raw.d === 1 || raw.d === true,
+      awaken: raw.a === 1 || raw.a === true,
+    });
+  }
+  return {
+    ok: true,
+    share: { name: clip(parsed.name, 24) || '分享隊伍', members },
+  };
+}
+
+function mergeShareOwned(existing, member) {
+  if (!existing) {
+    return { red: member.red, dynamic: member.dynamic, awaken: member.awaken };
+  }
+  return {
+    red: Math.max(clampRed(existing.red), member.red),
+    dynamic: Boolean(existing.dynamic) || member.dynamic,
+    awaken: Boolean(existing.awaken) || member.awaken,
+  };
+}
+
+/** 缺少清單只列戰法：尚未擁有，或圖鑑沒有。武將、兵書、紅度、動態、典藏都不在這裡。 */
+export function shareGaps(share, account, lookup) {
+  const missing = [];
+  const seen = new Set();
+  for (const member of share.members) {
+    if (!member) continue;
+    for (const tacticId of member.learned) {
+      if (!tacticId) continue;
+      const name = lookup.tacticName(tacticId);
+      const reason = !name ? '圖鑑沒有' : account.tacticsOwned?.[tacticId] ? '' : '未擁有';
+      if (!reason) continue;
+      const key = `${tacticId}:${reason}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      missing.push(name ? { kind: 'tactic', id: tacticId, name, reason } : { kind: 'tactic', id: tacticId, reason });
+    }
+  }
+  return missing;
+}
+
+/** 把這一隊加進帳號。紅度、動態、典藏只補不足，不調低。戰法照配置放上，不因此擋下。 */
+export function applyTeamShare(account, share, teamId) {
+  const id = cleanId(teamId);
+  if (!id || account.teams.some((team) => team.id === id)) return shareError('分享連結無法讀取');
+  if (account.teams.length >= 40) return shareError('隊伍已滿，無法再載入');
+  const owned = { ...account.owned };
+  const members = share.members.map((member) => {
+    if (!member) return null;
+    owned[member.generalId] = mergeShareOwned(owned[member.generalId], member);
+    return {
+      generalId: member.generalId,
+      learned: member.learned.slice(),
+      bingshu: member.bingshu ? { ...member.bingshu } : null,
+    };
+  });
+  return {
+    ok: true,
+    account: {
+      ...account,
+      owned,
+      teams: [...account.teams, { id, name: share.name, notes: '', members }],
+    },
   };
 }

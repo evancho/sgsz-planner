@@ -140,6 +140,8 @@ main { padding: 16px 16px var(--nav-h); max-width: 1180px; margin: 0 auto; }
 textarea { min-height: 180px; resize: vertical; }
 textarea.notes { min-height: 84px; }
 .team-card { display: block; color: inherit; }
+.team-card-main { display: block; color: inherit; text-decoration: none; }
+.team-card > .btn { margin-top: 10px; }
 .backup-grid { display: grid; gap: 12px; }
 
 .layout { display: block; }
@@ -354,6 +356,27 @@ button.grow-name { cursor: pointer; }
 }
 .member-move { display: inline-flex; gap: 4px; flex: 0 0 auto; }
 .member-top h3 { margin: 0; font-size: 18px; }
+button.member-name {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  min-height: 0;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+button.member-name:hover,
+button.member-name:focus-visible { color: var(--gold); }
+.picker-replacing { margin: 2px 0 0; color: var(--gold); font-weight: 700; }
 .member-meta { color: var(--muted); font-size: 13px; }
 .member .apt-row {
   flex: 1 0 100%;
@@ -368,6 +391,17 @@ button.grow-name { cursor: pointer; }
   white-space: nowrap;
 }
 .member .apt i { margin-right: 0; }
+.member-marks {
+  flex: 1 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.share-preview, .share-missing { margin: 8px 0 12px; padding-left: 1.2em; }
+.share-preview li + li, .share-missing li + li { margin-top: 8px; }
+.share-missing-label { margin-bottom: 0; font-weight: 700; }
+.share-applied { margin-bottom: 12px; }
+.share-applied h3 { margin-top: 0; }
 .member-learn {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -440,6 +474,8 @@ button.grow-name { cursor: pointer; }
 .picker-head, .bingshu-head { padding: 14px 16px 8px; align-items: center; flex: 0 0 auto; }
 .picker-head h3, .bingshu-head h3 { margin: 0; font-size: 22px; }
 .picker-filters { display: flex; flex-direction: column; gap: 8px; padding: 0 16px 8px; flex: 0 0 auto; }
+.picker-filters .filter-row { padding: 2px 0; border-bottom: 0; }
+.picker-filters .filter-row span { padding-top: 6px; }
 .bingshu-steps, .bingshu-hint, .sheet-foot { flex: 0 0 auto; }
 .picker-count { margin: 0; }
 .picker-list, .bingshu-body {

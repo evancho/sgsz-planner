@@ -4,6 +4,7 @@ import {
   COST_BUCKETS,
   DYNAMIC_FILTERS,
   QUALITIES,
+  RED_FILTERS,
   ROLE_FILTERS,
   SORTS,
   TAG_FILTERS,
@@ -14,24 +15,32 @@ import {
   allTactics,
   bingshuLabel,
   bingshuStep,
+  secondarySlots,
+  toggleSecondary,
   buildUsage,
   compareTactics,
+  applyTeamShare,
+  decodeTeamShare,
+  shareGaps,
   deleteTeamPrompt,
   demoFill,
   emptyAccount,
+  encodeTeamShare,
   exportPayload,
   generalBlockReason,
   indexNameUse,
   isDuwei,
   isInventoryTactic,
   matchesGeneral,
+  matchesOwnedRed,
   matchesTacticPick,
   newId,
   normalizeState,
+  ownedStatusLabels,
   removeFromTeamPrompt,
-  ownsDiancang,
   setGeneralOwned,
   setTacticOwned,
+  sortByRedScore,
   sortGenerals,
   tacticBlockReason,
   tacticOwned,
@@ -55,6 +64,9 @@ const ui = {
   filterOpen: false,
   picker: null,
   bingshu: null,
+  shareLink: '',
+  shareName: '',
+  shareApplied: null,
   dialog: null,
   pendingImport: null,
   draft: { name: '', type: '主動', desc: '' },
@@ -156,6 +168,11 @@ function route() {
   if (parts[0] === 'tactics') return { name: 'tactics', mode: 'all' };
   if (parts[0] === 'teams' && parts[1]) return { name: 'team', id: teamId };
   if (parts[0] === 'teams') return { name: 'teams' };
+  if (parts[0] === 'share' && parts[1]) {
+    let token = '';
+    try { token = decodeURIComponent(parts[1]); } catch { token = ''; }
+    return { name: 'share', token };
+  }
   if (parts[0] === 'backup') return { name: 'backup' };
   if (parts[0] === 'changelog') return { name: 'changelog' };
   return { name: 'generals' };
@@ -174,7 +191,8 @@ function icon(name) {
 
 function shell(body) {
   const current = account();
-  const here = route().name === 'team' ? 'teams' : route().name === 'inherit' ? 'tactics' : route().name;
+  const routeName = route().name;
+  const here = routeName === 'team' || routeName === 'share' ? 'teams' : routeName === 'inherit' ? 'tactics' : routeName;
   const tabs = [
     ['accounts', '帳號'],
     ['generals', '武將'],
@@ -221,7 +239,7 @@ function installBanner() {
 }
 
 function overlay() {
-  return `${pickerHtml()}${bingshuSheet()}${dialogHtml()}`;
+  return `${pickerHtml()}${bingshuSheet()}${shareSheet()}${dialogHtml()}`;
 }
 
 function colophon() {
@@ -378,9 +396,7 @@ function generalCard(general, current, usage) {
   const duwei = isDuwei(general);
   const chipHtml = [
     duweiMark(general),
-    owned?.dynamic ? '<span class="mini">動態</span>' : '',
-    ownsDiancang(owned) ? '<span class="mini">典藏</span>' : '',
-    owned && owned.red > 0 ? `<span class="mini">紅${owned.red}</span>` : '',
+    ownedMarkHtml(owned),
     where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : '',
   ].filter(Boolean).join('');
   const nameEl = owned
@@ -399,6 +415,10 @@ function generalCard(general, current, usage) {
       </div>
       ${open ? `<div class="grow-more">${ownedControls(general, owned)}${innate ? `<p class="faint innate">自帶 · ${esc(innate)}</p>` : ''}${duwei ? '<p class="faint">統御以 7 計；天賦身經百戰可 +1。</p>' : ''}</div>` : ''}
     </article>`;
+}
+
+function ownedMarkHtml(owned) {
+  return ownedStatusLabels(owned).map((label) => `<span class="mini">${esc(label)}</span>`).join('');
 }
 
 function aptLabel(troop) {
@@ -567,11 +587,14 @@ function teamsView() {
 function teamCard(team, map) {
   const names = team.members.map((member) => map.get(member?.generalId)?.name || '空').join(' / ');
   return `
-    <a class="team-card" href="#/teams/${esc(team.id)}">
-      <div class="row-between"><h3>${esc(team.name)}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
-      <p>${esc(names)}</p>
-      ${team.notes ? `<p class="muted">${esc(team.notes)}</p>` : ''}
-    </a>`;
+    <article class="team-card">
+      <a class="team-card-main" href="#/teams/${esc(team.id)}">
+        <div class="row-between"><h3>${esc(team.name)}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
+        <p>${esc(names)}</p>
+        ${team.notes ? `<p class="muted">${esc(team.notes)}</p>` : ''}
+      </a>
+      <button type="button" class="btn" data-action="share-team" data-id="${esc(team.id)}">分享</button>
+    </article>`;
 }
 
 function teamView(id) {
@@ -581,12 +604,16 @@ function teamView(id) {
   const map = generalsById();
   return `
     <section>
+      ${shareAppliedNote(id)}
       <div class="page-head">
         <div>
           <a class="faint" href="#/teams">隊伍</a>
           <h2><label class="sr" for="team-name">隊伍名稱</label><input id="team-name" class="field" data-model="team-name" data-id="${esc(team.id)}" value="${esc(team.name)}" maxlength="24" autocomplete="off"></h2>
         </div>
-        <button type="button" class="btn-ghost" data-action="ask-delete-team" data-id="${esc(team.id)}">刪除隊伍</button>
+        <div class="btn-row">
+          <button type="button" class="btn" data-action="share-team" data-id="${esc(team.id)}">分享</button>
+          <button type="button" class="btn-ghost" data-action="ask-delete-team" data-id="${esc(team.id)}">刪除隊伍</button>
+        </div>
       </div>
       <label>備註
         <textarea id="team-notes" class="notes" data-model="team-notes" data-id="${esc(team.id)}" maxlength="500">${esc(team.notes)}</textarea>
@@ -599,19 +626,119 @@ function teamView(id) {
     </section>`;
 }
 
+function shareUrl(token) {
+  const url = new URL(location.href);
+  url.hash = `#/share/${token}`;
+  return url.toString();
+}
+
+function shareGapLines(share, current) {
+  return shareGaps(share, current, {
+    tacticName: (id) => tacticsById(current).get(id)?.name || '',
+  }).map((gap) => (gap.reason === '圖鑑沒有' ? `戰法 ${gap.id}（圖鑑沒有）` : `戰法 ${gap.name}（未擁有）`));
+}
+
+function shareMissingHtml(lines) {
+  const items = lines.length ? lines.map((line) => `<li>${esc(line)}</li>`).join('') : '<li>無</li>';
+  return `<p class="share-missing-label">缺少：</p><ul class="share-missing">${items}</ul>`;
+}
+
+function shareAppliedNote(teamId) {
+  const note = ui.shareApplied;
+  if (!note || note.teamId !== teamId) return '';
+  return `
+    <div class="help-card share-applied">
+      <h3>已套用</h3>
+      <p>「${esc(note.name)}」已加進這個帳號。其他隊伍沒有被取代。</p>
+      ${shareMissingHtml(note.missing)}
+      <button type="button" class="btn" data-action="dismiss-share-applied">知道了</button>
+    </div>`;
+}
+
+function shareMarks(member) {
+  return ownedStatusLabels({
+    red: member.red,
+    dynamic: member.dynamic,
+    awaken: member.awaken,
+  }).join(' · ');
+}
+
+function shareView(token) {
+  const decoded = decodeTeamShare(token);
+  if (!decoded.ok) {
+    return `<section><div class="empty"><p>${esc(decoded.error)}</p><a href="#/teams">回隊伍</a></div></section>`;
+  }
+  const current = account();
+  const generals = generalsById();
+  const tactics = tacticsById(current);
+  const seen = new Set();
+  const cards = decoded.share.members.map((member, index) => {
+    if (!member) return `<li><span class="tag">${TEAM_POSITIONS[index]}</span> 這個位置是空的。</li>`;
+    if (seen.has(member.generalId)) seen.add(`dup:${member.generalId}`);
+    seen.add(member.generalId);
+    const general = generals.get(member.generalId);
+    const tacticNames = member.learned.map((id) => {
+      if (!id) return '';
+      const tactic = tactics.get(id);
+      return tactic ? tactic.name : id;
+    }).filter(Boolean);
+    let book = '';
+    if (member.bingshu) {
+      const known = ui.catalog.branches.some((item) => item.id === member.bingshu.branch);
+      book = known ? bingshuLabel(member.bingshu, ui.catalog.branches) : member.bingshu.branch;
+    }
+    const marks = shareMarks(member);
+    const name = general ? plainName(general) : member.generalId;
+    return `<li><span class="tag">${TEAM_POSITIONS[index]}</span> <strong>${esc(name)}</strong>${marks ? ` · ${esc(marks)}` : ''}${tacticNames.length ? `<br>傳承 ${esc(tacticNames.join('、'))}` : ''}${book ? `<br>兵書 ${esc(book)}` : ''}</li>`;
+  }).join('');
+  const missing = shareGapLines(decoded.share, current);
+  return `
+    <section>
+      <div class="page-head">
+        <div>
+          <a class="faint" href="#/teams">隊伍</a>
+          <h2>${esc(decoded.share.name)}</h2>
+        </div>
+      </div>
+      <p>只會把「${esc(decoded.share.name)}」這一隊加進帳號「${esc(current.name)}」。上方可以先換帳號。按下之後才會寫入，不會改動已經有的隊伍，也不會還原整份備份。</p>
+      <p class="sub">缺少的戰法仍會留在配置裡，不會擋下整隊。</p>
+      <div class="help-card share-applied">
+        <h3>已套用</h3>
+        <p>下面是即將寫入的配置。</p>
+        <ol class="share-preview">${cards}</ol>
+        ${shareMissingHtml(missing)}
+      </div>
+      <button type="button" class="btn primary" data-action="load-share">載入此隊伍</button>
+      ${colophon()}
+    </section>`;
+}
+
+function shareSheet() {
+  if (!ui.shareLink) return '';
+  return sheet('分享隊伍', `
+    <p>這條連結只含「${esc(ui.shareName)}」這一隊，不會帶出其他隊伍。對方打開後，還要再按「載入此隊伍」，才會把這一隊加進他當時選中的帳號。</p>
+    <label>分享連結
+      <input id="share-link" class="field" readonly value="${esc(ui.shareLink)}">
+    </label>
+    <button type="button" class="btn primary" data-action="copy-share" data-autofocus>複製連結</button>
+  `);
+}
+
 function memberCard(team, member, slot, current) {
   const general = member ? generalsById().get(member.generalId) : null;
   const books = ui.catalog.branches;
   const label = member?.bingshu ? bingshuLabel(member.bingshu, books) : '';
+  const marks = general ? ownedMarkHtml(current.owned[general.id]) : '';
   return `
     <article class="member">
       <div class="member-top">
         <div class="member-id">
           <span class="tag">${TEAM_POSITIONS[slot]}</span>
           ${general ? `
-            <h3>${esc(plainName(general))}${duweiMark(general)}</h3>
+            <button type="button" class="member-name" data-action="open-general" data-team="${esc(team.id)}" data-slot="${slot}" aria-label="替換${esc(plainName(general))}">${esc(plainName(general))}${duweiMark(general)}</button>
             <span class="member-meta">${esc(general.camp)} · C${general.cost}${isDuwei(general) ? '（天賦可 +1）' : ''} · ${esc(general.role)}</span>
             <div class="apt-row">${aptHtml(general.apt)}</div>
+            ${marks ? `<div class="member-marks">${marks}</div>` : ''}
           ` : ''}
         </div>
         <span class="member-move">
@@ -631,6 +758,7 @@ function memberCard(team, member, slot, current) {
           <button type="button" class="btn-ghost" data-action="ask-clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出隊伍</button>
         </div>
       ` : member ? `
+        <button type="button" class="member-name" data-action="open-general" data-team="${esc(team.id)}" data-slot="${slot}" aria-label="替換${esc(member.generalId)}">${esc(member.generalId)}</button>
         <p class="warn">圖鑑沒有 ${esc(member.generalId)}</p>
         <button type="button" class="btn-ghost" data-action="ask-clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出隊伍</button>
       ` : `
@@ -644,7 +772,8 @@ function learnedButton(team, member, slot, index) {
   const tacticId = member.learned[index];
   const tactic = tacticId ? tacticsById().get(tacticId) : null;
   const text = tactic ? tactic.name : tacticId ? `未知戰法 ${tacticId}` : '選擇傳承戰法';
-  return `<button type="button" class="slot-btn" data-action="open-tactic" data-team="${esc(team.id)}" data-slot="${slot}" data-learned="${index}"><span class="faint">傳承 ${index + 1}</span><strong>${esc(text)}</strong></button>`;
+  const label = tactic ? `替換${tactic.name}` : tacticId ? `替換未知戰法 ${tacticId}` : '選擇傳承戰法';
+  return `<button type="button" class="slot-btn" data-action="open-tactic" data-team="${esc(team.id)}" data-slot="${slot}" data-learned="${index}" aria-label="${esc(label)}"><span class="faint">傳承 ${index + 1}</span><strong>${esc(text)}</strong></button>`;
 }
 
 function nodeButton(node, on, layer) {
@@ -680,13 +809,14 @@ function bingshuSheet() {
   const hints = {
     branch: '先選體系。選完會進到主兵書。',
     primary: `體系是${branch?.name || ''}。再選主兵書，點同一項可取消。`,
-    secondary: '最後選副兵書。點同一項可取消。',
+    secondary: '可選兩個副兵書，再點一次可取消。選滿兩個就關閉。',
   };
   let body = '';
   if (step === 'primary' && branch) {
     body = `<div class="nodes">${branch.primary.map((node) => nodeButton(node, selected?.primary === node.id, 'primary')).join('')}</div>`;
   } else if (step === 'secondary' && branch) {
-    body = `<div class="nodes">${branch.secondary.map((node) => nodeButton(node, selected?.secondary === node.id, 'secondary')).join('')}</div>`;
+    const slots = secondarySlots(selected);
+    body = `<div class="nodes">${branch.secondary.map((node) => nodeButton(node, slots.includes(node.id), 'secondary')).join('')}</div>`;
   } else {
     body = `<div class="branches">${ui.catalog.branches.map((item) => `<button type="button" class="branch ${selected?.branch === item.id ? 'on' : ''}" data-action="pick-branch" data-branch="${esc(item.id)}">${esc(item.name)}<small>${esc(item.blurb)}</small></button>`).join('')}</div>`;
   }
@@ -779,28 +909,90 @@ function pickerHtml() {
   return '';
 }
 
+function emptyPickerFilters() {
+  return { camp: [], cost: [], red: [], dynamic: [], collection: [] };
+}
+
+function pickerFilterRow(label, key, values, labelOf = (value) => value) {
+  const selected = ui.picker.filters?.[key] || [];
+  return `
+    <div class="filter-row">
+      <span>${label}</span>
+      <div class="chips">
+        ${values.map((value) => `<button type="button" class="chip" data-action="toggle-picker-filter" data-group="${esc(key)}" data-value="${esc(value)}" aria-checked="${selected.includes(value)}">${esc(labelOf(value))}</button>`).join('')}
+      </div>
+    </div>`;
+}
+
 function generalPicker() {
   const current = account();
   const team = current.teams.find((item) => item.id === ui.picker.teamId);
   if (!team) return '';
   const usage = usageFor(current);
-  const query = ui.picker.query.trim();
-  const options = ui.catalog.generals.filter((general) => current.owned[general.id] && (!query || plainName(general).includes(query) || general.name.includes(query) || (isDuwei(general) && '都尉'.includes(query))));
-  return sheet('選擇武將', `
-    <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋已擁有武將" autocomplete="off">
-    <button type="button" class="choice" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${ui.picker.slot}">這個位置留空</button>
-    ${options.map((general) => {
-      const reason = generalBlockReason({
-        account: current,
-        team,
-        slot: ui.picker.slot,
-        general,
-        generalsById: generalsById(),
-        usage,
-      });
-      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${esc(general.camp)} C${general.cost} ${esc(plainName(general))}${isDuwei(general) ? ' · 都尉' : ''}${reason ? ` · ${esc(reason)}` : ''}</button>`;
-    }).join('') || '<p class="muted">還沒有勾選擁有的武將。</p>'}
-  `);
+  const filters = ui.picker.filters || emptyPickerFilters();
+  const ownedCount = ui.catalog.generals.filter((general) => current.owned[general.id]).length;
+  let options = ui.catalog.generals.filter((general) => {
+    const owned = current.owned[general.id];
+    return matchesGeneral(general, owned, {
+      ...emptyFilters(),
+      query: ui.picker.query,
+      quick: 'owned',
+      camp: filters.camp,
+      cost: filters.cost,
+      dynamic: filters.dynamic,
+      collection: filters.collection,
+    }, {}) && matchesOwnedRed(owned, filters.red);
+  });
+  if (ui.picker.sort === 'red') options = sortByRedScore(options, (general) => current.owned[general.id]);
+  const empty = ownedCount === 0 ? '還沒有勾選擁有的武將。' : '沒有符合的武將。';
+  const sort = ui.picker.sort || 'default';
+  const occupied = team.members[ui.picker.slot];
+  const occupiedGeneral = occupied ? generalsById().get(occupied.generalId) : null;
+  const replacingName = occupied ? (occupiedGeneral ? plainName(occupiedGeneral) : occupied.generalId) : '';
+  return `
+    <div class="backdrop" data-action="backdrop-close">
+      <section class="sheet picker-sheet" role="dialog" aria-modal="true" aria-label="${replacingName ? `選擇武將，即將替換${esc(replacingName)}` : '選擇武將'}" tabindex="-1">
+        <div class="picker-head row-between">
+          <div>
+            <h3>選擇武將</h3>
+            ${replacingName ? `<p class="picker-replacing">即將替換：${esc(replacingName)}</p>` : ''}
+          </div>
+          <button type="button" class="btn-ghost" data-action="close-picker">關閉</button>
+        </div>
+        <div class="picker-filters">
+          <label class="sr" for="picker-search">搜尋已擁有武將</label>
+          <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋已擁有武將" autocomplete="off">
+          <div class="filter-row">
+            <span>排序</span>
+            <div class="chips" role="radiogroup" aria-label="排序">
+              <button type="button" class="chip" data-action="set-picker-sort" data-value="default" aria-checked="${sort === 'default'}">預設</button>
+              <button type="button" class="chip" data-action="set-picker-sort" data-value="red" aria-checked="${sort === 'red'}">紅度</button>
+            </div>
+          </div>
+          ${pickerFilterRow('陣營', 'camp', CAMP_ORDER)}
+          ${pickerFilterRow('費用', 'cost', COST_BUCKETS)}
+          ${pickerFilterRow('紅度', 'red', RED_FILTERS, (value) => `紅${value}`)}
+          ${pickerFilterRow('動態形象', 'dynamic', DYNAMIC_FILTERS)}
+          ${pickerFilterRow('典藏', 'collection', COLLECTION_FILTERS)}
+          <p class="faint picker-count">${options.length} 位武將</p>
+        </div>
+        <div class="picker-list" data-scroll="picker">
+          <button type="button" class="choice" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${ui.picker.slot}">這個位置留空</button>
+          ${options.map((general) => {
+            const reason = generalBlockReason({
+              account: current,
+              team,
+              slot: ui.picker.slot,
+              general,
+              generalsById: generalsById(),
+              usage,
+            });
+            const marks = ownedStatusLabels(current.owned[general.id]);
+            return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${esc(general.camp)} C${general.cost} ${esc(plainName(general))}${isDuwei(general) ? ' · 都尉' : ''}${marks.length ? ` · ${esc(marks.join(' · '))}` : ''}${reason ? ` · ${esc(reason)}` : ''}</button>`;
+          }).join('') || `<p class="muted">${empty}</p>`}
+        </div>
+      </section>
+    </div>`;
 }
 
 function tacticPicker() {
@@ -824,11 +1016,17 @@ function tacticPicker() {
   const empty = owned === 'owned'
     ? '沒有已擁有的戰法。可以改看「全部」。'
     : '沒有符合的戰法。';
+  const currentId = member.learned?.[ui.picker.learned] || '';
+  const currentTactic = currentId ? map.get(currentId) : null;
+  const replacingName = currentTactic ? currentTactic.name : currentId ? `未知戰法 ${currentId}` : '';
   return `
     <div class="backdrop" data-action="backdrop-close">
-      <section class="sheet picker-sheet" role="dialog" aria-modal="true" aria-label="選擇傳承戰法" tabindex="-1">
+      <section class="sheet picker-sheet" role="dialog" aria-modal="true" aria-label="${replacingName ? `選擇傳承戰法，即將替換${esc(replacingName)}` : '選擇傳承戰法'}" tabindex="-1">
         <div class="picker-head row-between">
-          <h3>選擇傳承戰法</h3>
+          <div>
+            <h3>選擇傳承戰法</h3>
+            ${replacingName ? `<p class="picker-replacing">即將替換：${esc(replacingName)}</p>` : ''}
+          </div>
           <button type="button" class="btn-ghost" data-action="close-picker">關閉</button>
         </div>
         <div class="picker-filters">
@@ -906,6 +1104,7 @@ function view() {
   if (here.name === 'inherit') return inheritView();
   if (here.name === 'teams') return teamsView();
   if (here.name === 'team') return teamView(here.id);
+  if (here.name === 'share') return shareView(here.token);
   if (here.name === 'backup') return backupView();
   if (here.name === 'changelog') return changelogView();
   return generalsView();
@@ -929,6 +1128,7 @@ function render() {
     inherit: '戰法傳承',
     teams: '隊伍',
     team: '編隊',
+    share: '分享隊伍',
     backup: '備份',
   };
   document.title = `${titles[here.name] || '配將簿'} · 配將簿`;
@@ -968,6 +1168,8 @@ function onClick(event) {
     ui.pendingImport = null;
     ui.picker = null;
     ui.bingshu = null;
+    ui.shareLink = '';
+    ui.shareName = '';
     render();
     return;
   }
@@ -1162,7 +1364,14 @@ function onClick(event) {
       break;
     }
     case 'open-general':
-      ui.picker = { kind: 'general', teamId: el.dataset.team, slot: Number(el.dataset.slot), query: '' };
+      ui.picker = {
+        kind: 'general',
+        teamId: el.dataset.team,
+        slot: Number(el.dataset.slot),
+        query: '',
+        sort: 'default',
+        filters: emptyPickerFilters(),
+      };
       ui.justOpened = true;
       render();
       break;
@@ -1180,6 +1389,25 @@ function onClick(event) {
       ui.justOpened = true;
       render();
       break;
+    case 'set-picker-sort':
+      if (ui.picker?.kind === 'general') ui.picker = { ...ui.picker, sort: el.dataset.value };
+      render();
+      break;
+    case 'toggle-picker-filter': {
+      if (ui.picker?.kind !== 'general') break;
+      const filters = ui.picker.filters || emptyPickerFilters();
+      const group = filters[el.dataset.group] || [];
+      const value = el.dataset.value;
+      ui.picker = {
+        ...ui.picker,
+        filters: {
+          ...filters,
+          [el.dataset.group]: group.includes(value) ? group.filter((item) => item !== value) : [...group, value],
+        },
+      };
+      render();
+      break;
+    }
     case 'set-picker-owned':
       if (ui.picker?.kind === 'tactic') ui.picker = { ...ui.picker, owned: el.dataset.value };
       render();
@@ -1190,6 +1418,63 @@ function onClick(event) {
       break;
     case 'close-picker':
       ui.picker = null;
+      ui.shareLink = '';
+      ui.shareName = '';
+      render();
+      break;
+    case 'share-team': {
+      const team = current.teams.find((item) => item.id === el.dataset.id);
+      if (!team) break;
+      const encoded = encodeTeamShare(team, current.owned);
+      if (!encoded.ok) {
+        toast(encoded.error);
+        break;
+      }
+      ui.picker = null;
+      ui.bingshu = null;
+      ui.shareName = team.name;
+      ui.shareLink = shareUrl(encoded.token);
+      ui.justOpened = true;
+      render();
+      break;
+    }
+    case 'copy-share': {
+      const link = ui.shareLink;
+      const input = document.getElementById('share-link');
+      navigator.clipboard?.writeText(link).then(() => {
+        toast('已複製連結');
+      }).catch(() => {
+        input?.focus();
+        input?.select();
+        toast('請手動複製連結');
+      });
+      break;
+    }
+    case 'load-share': {
+      const decoded = decodeTeamShare(route().token || '');
+      if (!decoded.ok) {
+        toast(decoded.error);
+        break;
+      }
+      const teamId = newId('team');
+      const missing = shareGapLines(decoded.share, current);
+      const applied = applyTeamShare(current, decoded.share, teamId);
+      if (!applied.ok) {
+        toast(applied.error);
+        break;
+      }
+      ui.shareApplied = { teamId, name: decoded.share.name, missing };
+      commit({
+        ...ui.state,
+        accounts: ui.state.accounts.map((item) => (item.id === current.id ? applied.account : item)),
+      });
+      ui.shareLink = '';
+      ui.shareName = '';
+      location.hash = `#/teams/${teamId}`;
+      break;
+    }
+    case 'dismiss-share-applied':
+      ui.shareApplied = null;
       render();
       break;
     case 'pick-general':
@@ -1249,17 +1534,32 @@ function onClick(event) {
       ui.bingshu = { ...ui.bingshu, step: 'primary' };
       setBingshu(current, (book) => (book?.branch === el.dataset.branch
         ? book
-        : { branch: el.dataset.branch, primary: null, secondary: null }));
+        : { branch: el.dataset.branch, primary: null, secondary: [null, null] }));
       break;
     case 'pick-node': {
       const layer = el.dataset.layer;
       const next = el.dataset.node;
-      const turningOff = bingshuContext(current)?.book?.[layer] === next;
-      if (layer === 'primary') ui.bingshu = { ...ui.bingshu, step: turningOff ? 'primary' : 'secondary' };
-      setBingshu(current, (book) => {
-        if (!book?.branch) return book;
-        return { ...book, [layer]: book[layer] === next ? null : next };
-      });
+      const book = bingshuContext(current)?.book;
+      if (layer === 'primary') {
+        const turningOff = book?.primary === next;
+        ui.bingshu = { ...ui.bingshu, step: turningOff ? 'primary' : 'secondary' };
+        setBingshu(current, (currentBook) => {
+          if (!currentBook?.branch) return currentBook;
+          return { ...currentBook, primary: currentBook.primary === next ? null : next };
+        });
+        break;
+      }
+      const before = secondarySlots(book);
+      if (before[0] && before[1] && !before.includes(next)) {
+        toast('副兵書最多兩個');
+        break;
+      }
+      const after = toggleSecondary(before, next);
+      const done = Boolean(after[0] && after[1] && !before.includes(next));
+      setBingshu(current, (currentBook) => {
+        if (!currentBook?.branch) return currentBook;
+        return { ...currentBook, secondary: after };
+      }, { close: done });
       break;
     }
     case 'clear-bingshu':
@@ -1373,6 +1673,7 @@ function saveCustom(current) {
 }
 
 function mapMembers(current, teamId, slot, recipe) {
+  ui.picker = null;
   commit(updateAccount(ui.state, current.id, (item) => ({
     ...item,
     teams: item.teams.map((team) => {
@@ -1382,7 +1683,6 @@ function mapMembers(current, teamId, slot, recipe) {
       return { ...team, members };
     }),
   })));
-  ui.picker = null;
 }
 
 function assignGeneral(current, teamId, slot, generalId) {
@@ -1463,9 +1763,10 @@ function moveMember(current, teamId, slot, dir) {
   }
 }
 
-function setBingshu(current, recipe) {
+function setBingshu(current, recipe, { close = false } = {}) {
   if (!ui.bingshu) return;
   const { teamId, slot } = ui.bingshu;
+  if (close) ui.bingshu = null;
   commit(updateAccount(ui.state, current.id, (item) => ({
     ...item,
     teams: item.teams.map((team) => {
@@ -1591,7 +1892,11 @@ function bind() {
     if (ui.dialog) {
       ui.dialog = null;
       ui.pendingImport = null;
-    } else if (ui.picker) ui.picker = null;
+    } else if (ui.shareLink) {
+      ui.shareLink = '';
+      ui.shareName = '';
+    }
+    else if (ui.picker) ui.picker = null;
     else if (ui.bingshu) ui.bingshu = null;
     else if (ui.filterOpen) ui.filterOpen = false;
     else return;
@@ -1600,6 +1905,8 @@ function bind() {
   window.addEventListener('hashchange', () => {
     ui.picker = null;
     ui.bingshu = null;
+    ui.shareLink = '';
+    ui.shareName = '';
     ui.dialog = null;
     ui.pendingImport = null;
     render();

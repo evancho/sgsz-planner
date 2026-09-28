@@ -14,15 +14,21 @@ import {
   generalBlockReason,
   indexNameUse,
   bingshuStep,
+  secondarySlots,
+  toggleSecondary,
   isDuwei,
   isInventoryTactic,
   matchesGeneral,
+  matchesOwnedRed,
   matchesTacticPick,
   normalizeState,
+  ownedStatusLabels,
   ownsDiancang,
   removeFromTeamPrompt,
   setGeneralOwned,
+  redSortScore,
   setTacticOwned,
+  sortByRedScore,
   sortGenerals,
   TEAM_POSITIONS,
   tacticBlockReason,
@@ -165,6 +171,11 @@ test('aptitude, camp, collection and dynamic filters combine', () => {
     matchesGeneral(guanyu, { red: 5, dynamic: true, awaken: false }, blankFilters({ dynamic: ['已解鎖'], collection: ['非典藏'] }), {}),
     true,
   );
+  assert.deepEqual(ownedStatusLabels(null), []);
+  assert.deepEqual(ownedStatusLabels({ red: 0, dynamic: false, awaken: false }), []);
+  assert.deepEqual(ownedStatusLabels({ red: 0, dynamic: true, awaken: false }), ['動態']);
+  assert.deepEqual(ownedStatusLabels({ red: 0, dynamic: false, awaken: true }), ['典藏']);
+  assert.deepEqual(ownedStatusLabels({ red: 5, dynamic: true, awaken: true }), ['動態', '典藏', '紅5']);
   assert.equal(ownsDiancang({ dynamic: true, awaken: false }), false);
   assert.equal(ownsDiancang({ red: 5, dynamic: false, awaken: true }), true);
   assert.equal(ownsDiancang({ red: 5, dynamic: false }), false);
@@ -216,6 +227,33 @@ test('sort by cost then camp', () => {
     '群7呂布',
     '魏6荀彧',
   ]);
+});
+
+test('red sort score counts red, dynamic, and collection', () => {
+  assert.equal(redSortScore(null), 0);
+  assert.equal(redSortScore({ red: 0, dynamic: false, awaken: false }), 0);
+  assert.equal(redSortScore({ red: 5, dynamic: false, awaken: false }), 5);
+  assert.equal(redSortScore({ red: 0, dynamic: true, awaken: false }), 1);
+  assert.equal(redSortScore({ red: 0, dynamic: false, awaken: true }), 1);
+  assert.equal(redSortScore({ red: 3, dynamic: true, awaken: true }), 5);
+  assert.equal(redSortScore({ red: 9, dynamic: true, awaken: true }), 7);
+  const list = [
+    { id: 'a', name: '甲' },
+    { id: 'b', name: '乙' },
+    { id: 'c', name: '丙' },
+    { id: 'd', name: '丁' },
+  ];
+  const owned = {
+    a: { red: 4, dynamic: false, awaken: false },
+    b: { red: 3, dynamic: true, awaken: false },
+    c: { red: 5, dynamic: true, awaken: true },
+    d: { red: 1, dynamic: false, awaken: true },
+  };
+  assert.deepEqual(sortByRedScore(list, (general) => owned[general.id]).map((general) => general.id), ['c', 'a', 'b', 'd']);
+  assert.equal(matchesOwnedRed({ red: 5 }, []), true);
+  assert.equal(matchesOwnedRed({ red: 5 }, ['5']), true);
+  assert.equal(matchesOwnedRed({ red: 5 }, ['0', '3']), false);
+  assert.equal(matchesOwnedRed({ red: 0 }, ['0']), true);
 });
 
 test('a new account owns no generals or tactics', () => {
@@ -481,11 +519,47 @@ test('deleting a team names it and says the delete cannot be undone', () => {
   assert.equal(deleteTeamPrompt('  '), '確定刪除隊伍「這支隊伍」？此操作無法復原');
 });
 
-test('bingshu steps go from system to primary book to secondary book', () => {
+test('bingshu keeps two secondaries and still reads a single legacy one', () => {
   assert.equal(bingshuStep(null), 'branch');
   assert.equal(bingshuStep({ branch: 'jiubian' }), 'primary');
   assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi' }), 'secondary');
-  assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi', secondary: 'suzhan' }), 'branch');
+  assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi', secondary: 'suzhan' }), 'secondary');
+  assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi', secondary: ['suzhan', 'zhirui'] }), 'branch');
+  assert.deepEqual(secondarySlots({ secondary: 'suzhan' }), ['suzhan', null]);
+  assert.deepEqual(secondarySlots({ secondary: ['suzhan', 'zhirui'] }), ['suzhan', 'zhirui']);
+  assert.deepEqual(toggleSecondary(['suzhan', null], 'zhirui'), ['suzhan', 'zhirui']);
+  assert.deepEqual(toggleSecondary(['suzhan', 'zhirui'], 'suzhan'), ['zhirui', null]);
+  assert.deepEqual(toggleSecondary(['suzhan', 'zhirui'], 'wulue'), ['suzhan', 'zhirui']);
+  const legacy = normalizeState({
+    app: 'sgsz-planner',
+    backupVersion: 2,
+    activeAccountId: 'acct-1',
+    accounts: [{
+      id: 'acct-1',
+      name: '主帳',
+      teams: [{
+        id: 'team-1',
+        name: '舊兵書',
+        members: [{ generalId: 'guanyu', learned: [null, null], bingshu: { branch: 'xushi', primary: 'houfa', secondary: 'guimou' } }, null, null],
+      }],
+    }],
+  });
+  assert.deepEqual(legacy.state.accounts[0].teams[0].members[0].bingshu.secondary, ['guimou', null]);
+  const newer = normalizeState({
+    app: 'sgsz-planner',
+    backupVersion: 2,
+    activeAccountId: 'acct-1',
+    accounts: [{
+      id: 'acct-1',
+      name: '主帳',
+      teams: [{
+        id: 'team-1',
+        name: '新兵書',
+        members: [{ generalId: 'guanyu', learned: [null, null], bingshu: { branch: 'xushi', primary: 'houfa', secondary: ['guimou', 'miaosuan'] } }, null, null],
+      }],
+    }],
+  });
+  assert.deepEqual(newer.state.accounts[0].teams[0].members[0].bingshu.secondary, ['guimou', 'miaosuan']);
 });
 
 test('inventory list drops innate tactics and keeps custom ones', () => {
