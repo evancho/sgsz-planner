@@ -1641,6 +1641,7 @@ function saveCustom(current) {
 }
 
 function mapMembers(current, teamId, slot, recipe) {
+  ui.picker = null;
   commit(updateAccount(ui.state, current.id, (item) => ({
     ...item,
     teams: item.teams.map((team) => {
@@ -1650,7 +1651,6 @@ function mapMembers(current, teamId, slot, recipe) {
       return { ...team, members };
     }),
   })));
-  ui.picker = null;
 }
 
 function assignGeneral(current, teamId, slot, generalId) {
