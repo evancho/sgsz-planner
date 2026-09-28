@@ -35,6 +35,7 @@ import {
   isInventoryTactic,
   matchesGeneral,
   matchesTacticPick,
+  moveAccount,
   moveTeam,
   newId,
   normalizeAccountFile,
@@ -273,7 +274,7 @@ function accountsView() {
         <button type="button" class="btn primary" data-action="add-account">新增帳號</button>
       </div>
       <div class="account-list">
-        ${ui.state.accounts.map((item) => accountCard(item, item.id === current.id)).join('')}
+        ${ui.state.accounts.map((item, index) => accountCard(item, item.id === current.id, index, ui.state.accounts.length)).join('')}
       </div>
       <div class="help-grid">
         ${help('加入主畫面', '用 iPhone Safari 打開這個網站，點分享，再點「加入主畫面」。圖示會像 App 一樣留在桌面，並在第一次載入後離線可用。')}
@@ -296,23 +297,31 @@ function help(title, text) {
   return `<article class="help-card"><h3>${title}</h3><p class="help">${text}</p></article>`;
 }
 
-function accountCard(item, active) {
+function accountCard(item, active, index, count) {
   const owned = Object.keys(item.owned).length;
   const tactics = Object.keys(item.tacticsOwned).length;
   return `
     <article class="account-card">
-      <header>
-        <label for="nickname-${esc(item.id)}">名稱
-          <input class="field" type="text" id="nickname-${esc(item.id)}" name="nickname" data-model="account-name" data-id="${esc(item.id)}" value="${esc(accountNameValue(item))}" maxlength="24" autocomplete="nickname" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="done">
-        </label>
-        ${active ? '<span class="active-pill">使用中</span>' : `<button type="button" class="btn" data-action="use-account" data-id="${esc(item.id)}">切換</button>`}
-      </header>
-      <p class="counts"><span>武將 ${owned}</span><span>戰法 ${tactics}</span><span>隊伍 ${item.teams.length}</span></p>
-      <div class="btn-row">
-        <button type="button" class="btn" data-action="export-account" data-id="${esc(item.id)}">匯出</button>
-        <button type="button" class="btn" data-action="open-account-file" data-id="${esc(item.id)}">載入</button>
-        ${item.teams.length ? `<button type="button" class="btn-ghost" data-action="ask-clear-teams" data-id="${esc(item.id)}">清空隊伍</button>` : ''}
-        <button type="button" class="btn-ghost" data-action="ask-delete-account" data-id="${esc(item.id)}">刪除</button>
+      <div class="account-card-top">
+        <div class="account-card-main">
+          <header>
+            <label for="nickname-${esc(item.id)}">名稱
+              <input class="field" type="text" id="nickname-${esc(item.id)}" name="nickname" data-model="account-name" data-id="${esc(item.id)}" value="${esc(accountNameValue(item))}" maxlength="24" autocomplete="nickname" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="done">
+            </label>
+            ${active ? '<span class="active-pill">使用中</span>' : `<button type="button" class="btn" data-action="use-account" data-id="${esc(item.id)}">切換</button>`}
+          </header>
+          <p class="counts"><span>武將 ${owned}</span><span>戰法 ${tactics}</span><span>隊伍 ${item.teams.length}</span></p>
+          <div class="btn-row">
+            <button type="button" class="btn" data-action="export-account" data-id="${esc(item.id)}">匯出</button>
+            <button type="button" class="btn" data-action="open-account-file" data-id="${esc(item.id)}">載入</button>
+            ${item.teams.length ? `<button type="button" class="btn-ghost" data-action="ask-clear-teams" data-id="${esc(item.id)}">清空隊伍</button>` : ''}
+            <button type="button" class="btn-ghost" data-action="ask-delete-account" data-id="${esc(item.id)}">刪除</button>
+          </div>
+        </div>
+        <span class="member-move">
+          <button type="button" class="icon-btn" data-action="move-account" data-id="${esc(item.id)}" data-dir="-1" ${index === 0 ? 'disabled' : ''} aria-label="左移">←</button>
+          <button type="button" class="icon-btn" data-action="move-account" data-id="${esc(item.id)}" data-dir="1" ${index === count - 1 ? 'disabled' : ''} aria-label="右移">→</button>
+        </span>
       </div>
     </article>`;
 }
@@ -1726,6 +1735,9 @@ function onClick(event) {
     case 'move-team':
       moveTeamOrder(current, el.dataset.id, Number(el.dataset.dir));
       break;
+    case 'move-account':
+      moveAccountOrder(el.dataset.id, Number(el.dataset.dir));
+      break;
     case 'open-bingshu': {
       ui.picker = null;
       const slot = Number(el.dataset.slot);
@@ -1990,6 +2002,12 @@ function assignTactic(current, teamId, slot, learnedIndex, tacticId) {
     learned[learnedIndex] = tacticId;
     return { ...existing, learned };
   });
+}
+
+function moveAccountOrder(accountId, dir) {
+  const accounts = moveAccount(ui.state.accounts, accountId, dir);
+  if (accounts === ui.state.accounts) return;
+  commit({ ...ui.state, accounts });
 }
 
 function moveTeamOrder(current, teamId, dir) {

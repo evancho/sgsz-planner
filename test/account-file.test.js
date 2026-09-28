@@ -5,6 +5,7 @@ import {
   addAccountFile,
   clearAccountTeams,
   demoFill,
+  moveAccount,
   emptyAccount,
   exportAccountPayload,
   exportPayload,
@@ -135,6 +136,27 @@ test('a new season can keep generals and tactics without teams', () => {
   assert.equal(cleared.state.accounts[0].tacticsOwned.bamen, true);
   assert.equal(cleared.state.accounts[1].teams[0].name, '旁隊');
   assert.equal(clearAccountTeams(state, 'missing').ok, false);
+});
+
+test('account list order moves with the arrows and survives a backup', () => {
+  const accounts = [
+    emptyAccount('acct-a', '甲'),
+    emptyAccount('acct-b', '乙'),
+    emptyAccount('acct-c', '丙'),
+  ];
+  const state = stateOf(accounts, 'acct-b');
+  assert.equal(moveAccount(accounts, 'acct-a', -1), accounts);
+  assert.equal(moveAccount(accounts, 'acct-c', 1), accounts);
+  const moved = moveAccount(accounts, 'acct-a', 1);
+  assert.deepEqual(moved.map((item) => item.id), ['acct-b', 'acct-a', 'acct-c']);
+  const payload = exportPayload({ ...state, accounts: moved }, '1.2.3');
+  const restored = normalizeState(payload);
+  assert.equal(restored.ok, true);
+  assert.deepEqual(restored.state.accounts.map((item) => item.name), ['乙', '甲', '丙']);
+  assert.equal(restored.state.activeAccountId, 'acct-b');
+  const single = exportAccountPayload(moved[1], '1.2.3');
+  assert.equal(single.account.name, '甲');
+  assert.equal(single.accounts, undefined);
 });
 
 test('hostile account json is data and does not run', () => {

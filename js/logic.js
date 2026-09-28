@@ -388,7 +388,7 @@ export function deleteTeamPrompt(name) {
   return `確定刪除隊伍「${title}」？此操作無法復原`;
 }
 
-/** 隊伍列表的左右箭頭：-1 往前，+1 往後。到邊界就不動。 */
+/** 列表的左右箭頭：-1 往前，+1 往後。到邊界就不動。 */
 export function moveTeam(teams, teamId, dir) {
   if (!Array.isArray(teams)) return teams;
   const index = teams.findIndex((team) => team?.id === teamId);
@@ -399,6 +399,11 @@ export function moveTeam(teams, teamId, dir) {
   copy[index] = copy[next];
   copy[next] = hold;
   return copy;
+}
+
+/** 帳號列表的左右箭頭，語意與隊伍列表相同。 */
+export function moveAccount(accounts, accountId, dir) {
+  return moveTeam(accounts, accountId, dir);
 }
 
 export function teamCost(team, generalsById) {
