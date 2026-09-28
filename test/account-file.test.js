@@ -3,6 +3,7 @@ import test from 'node:test';
 import {
   ACCOUNT_FILE_VERSION,
   addAccountFile,
+  clearAccountTeams,
   demoFill,
   emptyAccount,
   exportAccountPayload,
@@ -101,6 +102,39 @@ test('adding a single account keeps the others and overwrite keeps the card id',
   const blocked = addAccountFile(stateOf(full), incoming.account);
   assert.equal(blocked.ok, false);
   assert.match(blocked.error, /帳號數量過多/);
+});
+
+test('a new season can keep generals and tactics without teams', () => {
+  const source = demoFill(emptyAccount('acct-a', '上季'));
+  const other = emptyAccount('acct-b', '旁帳');
+  other.teams = [{ id: 'team-b', name: '旁隊', notes: '', members: [null, null, null] }];
+  const state = stateOf([source, other]);
+  const file = exportAccountPayload(source, '1.2.3', { omitTeams: true });
+  assert.equal(file.kind, 'account');
+  assert.equal(file.account.teams.length, 0);
+  assert.equal(file.account.owned.guanyu.red, 5);
+  assert.equal(file.account.tacticsOwned.bamen, true);
+  assert.equal(exportPayload(state, '1.2.3').accounts[0].teams[0].name, '桃園盾');
+
+  const parsed = normalizeAccountFile(file);
+  assert.equal(parsed.ok, true);
+  const added = addAccountFile(state, parsed.account, { omitTeams: true });
+  assert.equal(added.state.accounts[2].owned.guanyu.red, 5);
+  assert.equal(added.state.accounts[2].tacticsOwned.bamen, true);
+  assert.equal(added.state.accounts[2].teams.length, 0);
+  assert.equal(added.state.accounts[0].teams[0].name, '桃園盾');
+  assert.equal(added.state.accounts[1].teams[0].name, '旁隊');
+
+  const kept = addAccountFile(state, normalizeAccountFile(exportAccountPayload(source, '1.2.3')).account);
+  assert.equal(kept.state.accounts[2].teams[0].name, '桃園盾');
+
+  const cleared = clearAccountTeams(state, 'acct-a');
+  assert.equal(cleared.ok, true);
+  assert.equal(cleared.state.accounts[0].teams.length, 0);
+  assert.equal(cleared.state.accounts[0].owned.guanyu.red, 5);
+  assert.equal(cleared.state.accounts[0].tacticsOwned.bamen, true);
+  assert.equal(cleared.state.accounts[1].teams[0].name, '旁隊');
+  assert.equal(clearAccountTeams(state, 'missing').ok, false);
 });
 
 test('hostile account json is data and does not run', () => {

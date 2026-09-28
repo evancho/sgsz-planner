@@ -592,7 +592,7 @@ export function exportPayload(state, catalogVersion) {
   };
 }
 
-export function exportAccountPayload(account, catalogVersion) {
+export function exportAccountPayload(account, catalogVersion, options = {}) {
   return {
     app: APP_ID,
     kind: 'account',
@@ -605,7 +605,7 @@ export function exportAccountPayload(account, catalogVersion) {
       owned: account.owned,
       tacticsOwned: account.tacticsOwned,
       customTactics: account.customTactics,
-      teams: account.teams,
+      teams: options.omitTeams ? [] : account.teams,
     },
   };
 }
@@ -632,19 +632,28 @@ export function normalizeAccountFile(input) {
   return { ok: true, account };
 }
 
-export function addAccountFile(state, account) {
+export function addAccountFile(state, account, options = {}) {
   if (!state || !Array.isArray(state.accounts) || state.accounts.length >= 30) {
     return { ok: false, error: '帳號數量過多' };
   }
   const id = newId('acct');
+  const next = { ...account, id, teams: options.omitTeams ? [] : account.teams };
   return {
     ok: true,
     state: {
       ...state,
       activeAccountId: id,
-      accounts: [...state.accounts, { ...account, id }],
+      accounts: [...state.accounts, next],
     },
   };
+}
+
+export function clearAccountTeams(state, accountId) {
+  const index = state?.accounts?.findIndex((item) => item.id === accountId) ?? -1;
+  if (index < 0) return { ok: false, error: '找不到帳號' };
+  const accounts = state.accounts.slice();
+  accounts[index] = { ...accounts[index], teams: [] };
+  return { ok: true, state: { ...state, accounts } };
 }
 
 export function replaceAccountFile(state, targetId, account) {

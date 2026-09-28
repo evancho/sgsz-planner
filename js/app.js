@@ -19,6 +19,7 @@ import {
   buildUsage,
   compareTactics,
   applyTeamShare,
+  clearAccountTeams,
   decodeTeamShare,
   shareGaps,
   shareTokenFromText,
@@ -276,7 +277,7 @@ function accountsView() {
       </div>
       <div class="help-grid">
         ${help('加入主畫面', '用 iPhone Safari 打開這個網站，點分享，再點「加入主畫面」。圖示會像 App 一樣留在桌面，並在第一次載入後離線可用。')}
-        ${help('多帳號', '上方選單可直接切換。武將紅度、戰法有無、隊伍都跟著帳號走，不會混在一起。每張卡可以單獨匯出或載入。')}
+        ${help('多帳號', '上方選單可直接切換。武將紅度、戰法有無、隊伍都跟著帳號走，不會混在一起。每張卡可以單獨匯出或載入。新賽季可新增且不含隊伍，只繼承武將與戰法。')}
         ${help('備份', '到備份頁下載 JSON，包含全部帳號。換手機時用「匯入」整包還原。單一帳號請用帳號卡上的匯出與載入。')}
         <a class="help-card" href="#/changelog">
           <h3>更新紀錄</h3>
@@ -310,6 +311,7 @@ function accountCard(item, active) {
       <div class="btn-row">
         <button type="button" class="btn" data-action="export-account" data-id="${esc(item.id)}">匯出</button>
         <button type="button" class="btn" data-action="open-account-file" data-id="${esc(item.id)}">載入</button>
+        ${item.teams.length ? `<button type="button" class="btn-ghost" data-action="ask-clear-teams" data-id="${esc(item.id)}">清空隊伍</button>` : ''}
         <button type="button" class="btn-ghost" data-action="ask-delete-account" data-id="${esc(item.id)}">刪除</button>
       </div>
     </article>`;
@@ -775,8 +777,15 @@ function shareSheet() {
 
 function accountExportSheet() {
   if (!ui.accountExport) return '';
+  const note = ui.accountExport.omitTeams
+    ? `這份只含「${esc(ui.accountExport.name)}」的武將與戰法，隊伍已略過，也不含其他帳號。`
+    : `這份只含「${esc(ui.accountExport.name)}」的武將、戰法與隊伍，不含其他帳號。`;
   return sheet('匯出帳號', `
-    <p>這份只含「${esc(ui.accountExport.name)}」的武將、戰法與隊伍，不含其他帳號。可以下載，也可以複製。</p>
+    <p>${note}可以下載，也可以複製。</p>
+    <label class="season-opt">
+      <input id="omit-teams" type="checkbox" data-action="toggle-export-teams" ${ui.accountExport.omitTeams ? 'checked' : ''}>
+      不含隊伍
+    </label>
     <textarea id="account-export" readonly>${esc(ui.accountExport.text)}</textarea>
     <div class="btn-row" style="margin-top:10px">
       <button type="button" class="btn primary" data-action="download-account">下載 JSON</button>
@@ -806,9 +815,10 @@ function accountFileSheet() {
   const tactics = Object.keys(incoming.tacticsOwned).length;
   return sheet('載入帳號', `
     <p>「${esc(incoming.name)}」 · 武將 ${owned} · 戰法 ${tactics} · 隊伍 ${incoming.teams.length}</p>
-    <p class="sub">新增會多一個帳號並切換過去。覆寫會取代「${esc(targetName)}」的武將、戰法與隊伍，其他帳號不動。</p>
+    <p class="sub">新賽季按「不含隊伍」：武將與戰法進新帳號，這 ${incoming.teams.length} 支隊伍不帶過去。含隊伍的新增與覆寫仍會帶上隊伍。</p>
     <div class="btn-row">
-      <button type="button" class="btn primary" data-action="add-account-file">新增為新帳號</button>
+      <button type="button" class="btn primary" data-action="add-account-file" data-teams="omit">新增為新帳號，不含隊伍</button>
+      <button type="button" class="btn" data-action="add-account-file">新增為新帳號</button>
       <button type="button" class="btn" data-action="ask-replace-account-file">覆寫此帳號</button>
       <button type="button" class="btn-ghost" data-action="reset-account-file">重貼</button>
     </div>
@@ -1312,6 +1322,7 @@ function onClick(event) {
       ui.accountExport = {
         id: item.id,
         name: item.name,
+        omitTeams: false,
         text: JSON.stringify(exportAccountPayload(item, ui.catalog.version), null, 2),
       };
       ui.justOpened = true;
@@ -1323,6 +1334,21 @@ function onClick(event) {
       ui.accountFile = { targetId: el.dataset.id, text: '', account: null };
       render();
       break;
+    case 'ask-clear-teams': {
+      const item = ui.state.accounts.find((account) => account.id === el.dataset.id);
+      if (!item || item.teams.length === 0) {
+        toast('這個帳號沒有隊伍');
+        break;
+      }
+      openDialog({
+        kind: 'clear-teams',
+        id: item.id,
+        title: '清空隊伍',
+        text: `「${item.name}」的 ${item.teams.length} 支隊伍會全部刪掉。武將與戰法保留，不能還原。`,
+        confirm: '清空隊伍',
+      });
+      break;
+    }
     case 'ask-delete-account':
       if (ui.state.accounts.length <= 1) {
         toast('至少要留一個帳號');
@@ -1628,14 +1654,15 @@ function onClick(event) {
       break;
     case 'add-account-file': {
       if (!ui.accountFile?.account) break;
-      const added = addAccountFile(ui.state, ui.accountFile.account);
+      const omitTeams = el.dataset.teams === 'omit';
+      const added = addAccountFile(ui.state, ui.accountFile.account, { omitTeams });
       if (!added.ok) {
         toast(added.error);
         break;
       }
       ui.accountFile = null;
       commit(added.state);
-      toast('已新增帳號');
+      toast(omitTeams ? '已新增帳號，不含隊伍' : '已新增帳號');
       break;
     }
     case 'ask-replace-account-file': {
@@ -1821,6 +1848,18 @@ function onChange(event) {
     el.value = '';
     if (!file) return;
     file.text().then((text) => stageImport(text)).catch(() => toast('檔案讀取失敗'));
+  } else if (el.dataset.action === 'toggle-export-teams') {
+    if (!ui.accountExport) return;
+    const item = ui.state.accounts.find((account) => account.id === ui.accountExport.id);
+    if (!item) return;
+    const omitTeams = el.checked;
+    ui.accountExport = {
+      ...ui.accountExport,
+      name: item.name,
+      omitTeams,
+      text: JSON.stringify(exportAccountPayload(item, ui.catalog.version, { omitTeams }), null, 2),
+    };
+    render();
   } else if (el.dataset.action === 'account-file') {
     const file = el.files?.[0];
     el.value = '';
@@ -2073,6 +2112,17 @@ function confirmDialog() {
   const dialog = ui.dialog;
   ui.dialog = null;
   if (!dialog) return;
+  if (dialog.kind === 'clear-teams') {
+    const cleared = clearAccountTeams(ui.state, dialog.id);
+    if (!cleared.ok) {
+      toast(cleared.error);
+      render();
+      return;
+    }
+    commit(cleared.state);
+    toast('已清空隊伍');
+    return;
+  }
   if (dialog.kind === 'delete-account') {
     const accounts = ui.state.accounts.filter((item) => item.id !== dialog.id);
     const activeAccountId = ui.state.activeAccountId === dialog.id ? accounts[0].id : ui.state.activeAccountId;
