@@ -23,7 +23,6 @@ import {
   shareGaps,
   shareTokenFromText,
   deleteTeamPrompt,
-  demoFill,
   emptyAccount,
   encodeTeamShare,
   exportPayload,
@@ -303,7 +302,6 @@ function accountCard(item, active) {
       </header>
       <p class="counts"><span>武將 ${owned}</span><span>戰法 ${tactics}</span><span>隊伍 ${item.teams.length}</span></p>
       <div class="btn-row">
-        <button type="button" class="btn" data-action="ask-demo" data-id="${esc(item.id)}">載入範例配隊</button>
         <button type="button" class="btn-ghost" data-action="ask-delete-account" data-id="${esc(item.id)}">刪除</button>
       </div>
     </article>`;
@@ -587,7 +585,7 @@ function teamsView() {
         </div>
       </div>
       <div class="stack">
-        ${current.teams.map((team, index) => teamCard(team, map, index, current.teams.length)).join('') || '<div class="empty"><p>還沒有隊伍。</p><p class="faint">可以先載入範例，或自己新增。</p></div>'}
+        ${current.teams.map((team, index) => teamCard(team, map, index, current.teams.length)).join('') || '<div class="empty"><p>還沒有隊伍。</p><p class="faint">可以自己新增。</p></div>'}
       </div>
       ${colophon()}
     </section>`;
@@ -1269,15 +1267,6 @@ function onClick(event) {
         confirm: '刪除',
       });
       break;
-    case 'ask-demo':
-      openDialog({
-        kind: 'demo',
-        id: el.dataset.id,
-        title: '載入範例配隊',
-        text: '會改寫這個帳號的擁有狀態與隊伍。自訂戰法會留著。',
-        confirm: '載入',
-      });
-      break;
     case 'open-filter':
       ui.filterOpen = true;
       ui.justOpened = true;
@@ -1921,11 +1910,6 @@ function confirmDialog() {
     const activeAccountId = ui.state.activeAccountId === dialog.id ? accounts[0].id : ui.state.activeAccountId;
     commit({ ...ui.state, accounts, activeAccountId });
     toast('已刪除帳號');
-    return;
-  }
-  if (dialog.kind === 'demo') {
-    commit(updateAccount(ui.state, dialog.id, (item) => demoFill(item)));
-    toast('已載入範例');
     return;
   }
   if (dialog.kind === 'clear-general') {
