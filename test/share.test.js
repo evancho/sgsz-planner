@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { applyTeamShare, decodeTeamShare, emptyAccount, encodeTeamShare } from '../js/logic.js';
+import { applyTeamShare, decodeTeamShare, emptyAccount, encodeTeamShare, shareGaps } from '../js/logic.js';
 
 const team = {
   id: 'team-shu',
@@ -74,7 +74,8 @@ test('loading a share adds one team and does not replace the rest of the account
   account.teams = [{ id: 'team-old', name: '舊隊', notes: '', members: [null, null, null] }];
   account.tacticsOwned = { qianli: true };
   const decoded = decodeTeamShare(encodeTeamShare(team, owned).token);
-  const applied = applyTeamShare(account, decoded.share, 'team-new', new Set(['qianli', 'jifeng']));
+  account.owned.guanyu = { red: 1, dynamic: false, awaken: false };
+  const applied = applyTeamShare(account, decoded.share, 'team-new');
   assert.equal(applied.ok, true);
   assert.equal(applied.account.teams.length, 2);
   assert.equal(applied.account.teams[0].id, 'team-old');
@@ -82,9 +83,78 @@ test('loading a share adds one team and does not replace the rest of the account
   assert.deepEqual(applied.account.owned.luxun, { red: 2, dynamic: true, awaken: false });
   assert.deepEqual(applied.account.owned.guanyu, { red: 5, dynamic: true, awaken: true });
   assert.deepEqual(applied.account.owned.zhangfei, { red: 0, dynamic: false, awaken: false });
-  assert.equal(applied.account.tacticsOwned.jifeng, true);
-  assert.equal(applied.account.tacticsOwned['not-a-tactic'], undefined);
+  assert.equal(applied.account.tacticsOwned.qianli, true);
+  assert.equal(applied.account.tacticsOwned.jifeng, undefined);
   assert.equal(applied.account.teams[1].members[0].learned[1], 'jifeng');
+});
+
+test('loading does not lower a higher red or clear dynamic and collection', () => {
+  const weaker = {
+    id: 'team-low',
+    name: '低配',
+    notes: '',
+    members: [
+      { generalId: 'guanyu', learned: ['qianli', null], bingshu: null },
+      null,
+      null,
+    ],
+  };
+  const account = emptyAccount('acct-a', '主帳');
+  account.owned = { guanyu: { red: 5, dynamic: true, awaken: true } };
+  account.tacticsOwned = { qianli: true };
+  const share = decodeTeamShare(encodeTeamShare(weaker, {
+    guanyu: { red: 0, dynamic: false, awaken: false },
+  }).token).share;
+  const applied = applyTeamShare(account, share, 'team-low');
+  assert.equal(applied.ok, true);
+  assert.deepEqual(applied.account.owned.guanyu, { red: 5, dynamic: true, awaken: true });
+  assert.equal(applied.account.teams.length, 1);
+});
+
+test('missing tactics and generals are listed and do not block the team', () => {
+  const gapped = {
+    id: 'team-gap',
+    name: '缺卡',
+    notes: '',
+    members: [
+      {
+        generalId: 'guanyu',
+        learned: ['qianli', 'jifeng'],
+        bingshu: { branch: 'xushi', primary: 'houfa', secondary: 'guimou' },
+      },
+      {
+        generalId: 'no-such-general',
+        learned: ['no-such-tactic', null],
+        bingshu: { branch: 'no-book', primary: null, secondary: null },
+      },
+      null,
+    ],
+  };
+  const account = emptyAccount('acct-a', '主帳');
+  account.tacticsOwned = { qianli: true };
+  account.teams = [{ id: 'team-old', name: '舊隊', notes: '', members: [null, null, null] }];
+  const share = decodeTeamShare(encodeTeamShare(gapped, {
+    guanyu: { red: 1, dynamic: false, awaken: false },
+    'no-such-general': { red: 3, dynamic: true, awaken: false },
+  }).token).share;
+  const gaps = shareGaps(share, account, {
+    hasGeneral: (id) => id === 'guanyu',
+    tacticName: (id) => (id === 'qianli' ? '千里走單騎' : id === 'jifeng' ? '疾風驟雨' : ''),
+    hasBranch: (id) => id === 'xushi',
+  });
+  assert.deepEqual(gaps.map((gap) => `${gap.kind}:${gap.id}:${gap.reason}`), [
+    'tactic:jifeng:未擁有',
+    'general:no-such-general:圖鑑沒有',
+    'tactic:no-such-tactic:圖鑑沒有',
+    'book:no-book:圖鑑沒有',
+  ]);
+  const applied = applyTeamShare(account, share, 'team-gap');
+  assert.equal(applied.ok, true);
+  assert.equal(applied.account.teams[0].name, '舊隊');
+  assert.equal(applied.account.teams[1].members[0].learned[1], 'jifeng');
+  assert.equal(applied.account.teams[1].members[1].learned[0], 'no-such-tactic');
+  assert.equal(applied.account.tacticsOwned.jifeng, undefined);
+  assert.deepEqual(applied.account.owned['no-such-general'], { red: 3, dynamic: true, awaken: false });
 });
 
 test('share tokens reject bad versions, scripts, and overlong text', () => {

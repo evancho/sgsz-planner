@@ -775,23 +775,52 @@ export function decodeTeamShare(token) {
   };
 }
 
-/** 把分享加進這個帳號的隊伍，並更新這三位的紅度／動態／典藏。不刪其他資料。 */
-export function applyTeamShare(account, share, teamId, knownTacticIds = new Set()) {
+function mergeShareOwned(existing, member) {
+  if (!existing) {
+    return { red: member.red, dynamic: member.dynamic, awaken: member.awaken };
+  }
+  return {
+    red: Math.max(clampRed(existing.red), member.red),
+    dynamic: Boolean(existing.dynamic) || member.dynamic,
+    awaken: Boolean(existing.awaken) || member.awaken,
+  };
+}
+
+/** 圖鑑沒有或尚未擁有的戰法、以及圖鑑沒有的武將。不影響能否載入。 */
+export function shareGaps(share, account, lookup) {
+  const missing = [];
+  const seen = new Set();
+  const add = (item) => {
+    const key = `${item.kind}:${item.id}:${item.reason || ''}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    missing.push(item);
+  };
+  for (const member of share.members) {
+    if (!member) continue;
+    if (!lookup.hasGeneral(member.generalId)) add({ kind: 'general', id: member.generalId, reason: '圖鑑沒有' });
+    for (const tacticId of member.learned) {
+      if (!tacticId) continue;
+      const name = lookup.tacticName(tacticId);
+      if (!name) add({ kind: 'tactic', id: tacticId, reason: '圖鑑沒有' });
+      else if (!account.tacticsOwned?.[tacticId]) add({ kind: 'tactic', id: tacticId, name, reason: '未擁有' });
+    }
+    if (member.bingshu?.branch && !lookup.hasBranch(member.bingshu.branch)) {
+      add({ kind: 'book', id: member.bingshu.branch, reason: '圖鑑沒有' });
+    }
+  }
+  return missing;
+}
+
+/** 把這一隊加進帳號。紅度、動態、典藏只補不足，不調低。戰法照配置放上，不因此擋下。 */
+export function applyTeamShare(account, share, teamId) {
   const id = cleanId(teamId);
   if (!id || account.teams.some((team) => team.id === id)) return shareError('分享連結無法讀取');
   if (account.teams.length >= 40) return shareError('隊伍已滿，無法再載入');
   const owned = { ...account.owned };
-  const tacticsOwned = { ...account.tacticsOwned };
   const members = share.members.map((member) => {
     if (!member) return null;
-    owned[member.generalId] = {
-      red: member.red,
-      dynamic: member.dynamic,
-      awaken: member.awaken,
-    };
-    for (const tacticId of member.learned) {
-      if (tacticId && knownTacticIds.has(tacticId)) tacticsOwned[tacticId] = true;
-    }
+    owned[member.generalId] = mergeShareOwned(owned[member.generalId], member);
     return {
       generalId: member.generalId,
       learned: member.learned.slice(),
@@ -803,7 +832,6 @@ export function applyTeamShare(account, share, teamId, knownTacticIds = new Set(
     account: {
       ...account,
       owned,
-      tacticsOwned,
       teams: [...account.teams, { id, name: share.name, notes: '', members }],
     },
   };

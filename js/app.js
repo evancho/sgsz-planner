@@ -18,6 +18,7 @@ import {
   compareTactics,
   applyTeamShare,
   decodeTeamShare,
+  shareGaps,
   deleteTeamPrompt,
   demoFill,
   emptyAccount,
@@ -60,6 +61,7 @@ const ui = {
   bingshu: null,
   shareLink: '',
   shareName: '',
+  shareApplied: null,
   dialog: null,
   pendingImport: null,
   draft: { name: '', type: '主動', desc: '' },
@@ -597,6 +599,7 @@ function teamView(id) {
   const map = generalsById();
   return `
     <section>
+      ${shareAppliedNote(id)}
       <div class="page-head">
         <div>
           <a class="faint" href="#/teams">隊伍</a>
@@ -624,6 +627,36 @@ function shareUrl(token) {
   return url.toString();
 }
 
+function shareGapLines(share, current) {
+  return shareGaps(share, current, {
+    hasGeneral: (id) => generalsById().has(id),
+    tacticName: (id) => tacticsById(current).get(id)?.name || '',
+    hasBranch: (id) => ui.catalog.branches.some((item) => item.id === id),
+  }).map((gap) => {
+    if (gap.kind === 'general') return `武將 ${gap.id}（圖鑑沒有）`;
+    if (gap.kind === 'book') return `兵書 ${gap.id}（圖鑑沒有）`;
+    if (gap.reason === '圖鑑沒有') return `戰法 ${gap.id}（圖鑑沒有）`;
+    return `戰法 ${gap.name}（未擁有）`;
+  });
+}
+
+function shareMissingHtml(lines) {
+  const items = lines.length ? lines.map((line) => `<li>${esc(line)}</li>`).join('') : '<li>無</li>';
+  return `<p class="share-missing-label">缺少：</p><ul class="share-missing">${items}</ul>`;
+}
+
+function shareAppliedNote(teamId) {
+  const note = ui.shareApplied;
+  if (!note || note.teamId !== teamId) return '';
+  return `
+    <div class="help-card share-applied">
+      <h3>已套用</h3>
+      <p>「${esc(note.name)}」已加進這個帳號。其他隊伍沒有被取代。</p>
+      ${shareMissingHtml(note.missing)}
+      <button type="button" class="btn" data-action="dismiss-share-applied">知道了</button>
+    </div>`;
+}
+
 function shareMarks(member) {
   return ownedStatusLabels({
     red: member.red,
@@ -640,31 +673,27 @@ function shareView(token) {
   const current = account();
   const generals = generalsById();
   const tactics = tacticsById(current);
-  const warnings = [];
   const seen = new Set();
   const cards = decoded.share.members.map((member, index) => {
     if (!member) return `<li><span class="tag">${TEAM_POSITIONS[index]}</span> 這個位置是空的。</li>`;
-    if (seen.has(member.generalId)) warnings.push('同一武將出現超過一次。');
+    if (seen.has(member.generalId)) seen.add(`dup:${member.generalId}`);
     seen.add(member.generalId);
     const general = generals.get(member.generalId);
-    if (!general) warnings.push(`圖鑑沒有武將 ${member.generalId}。`);
     const tacticNames = member.learned.map((id) => {
       if (!id) return '';
       const tactic = tactics.get(id);
-      if (!tactic) warnings.push(`圖鑑沒有戰法 ${id}。`);
       return tactic ? tactic.name : id;
     }).filter(Boolean);
     let book = '';
     if (member.bingshu) {
       const known = ui.catalog.branches.some((item) => item.id === member.bingshu.branch);
-      book = known ? bingshuLabel(member.bingshu, ui.catalog.branches) : '';
-      if (!known) warnings.push('圖鑑沒有這個兵書體系。');
+      book = known ? bingshuLabel(member.bingshu, ui.catalog.branches) : member.bingshu.branch;
     }
     const marks = shareMarks(member);
     const name = general ? plainName(general) : member.generalId;
     return `<li><span class="tag">${TEAM_POSITIONS[index]}</span> <strong>${esc(name)}</strong>${marks ? ` · ${esc(marks)}` : ''}${tacticNames.length ? `<br>傳承 ${esc(tacticNames.join('、'))}` : ''}${book ? `<br>兵書 ${esc(book)}` : ''}</li>`;
   }).join('');
-  const uniqueWarnings = [...new Set(warnings)];
+  const missing = shareGapLines(decoded.share, current);
   return `
     <section>
       <div class="page-head">
@@ -674,9 +703,13 @@ function shareView(token) {
         </div>
       </div>
       <p>只會把「${esc(decoded.share.name)}」這一隊加進帳號「${esc(current.name)}」。上方可以先換帳號。按下之後才會寫入，不會改動已經有的隊伍，也不會還原整份備份。</p>
-      <p class="sub">這三位的紅度、動態、典藏會改成這份分享的內容。</p>
-      <ol class="share-preview">${cards}</ol>
-      ${uniqueWarnings.length ? `<p class="warn">${uniqueWarnings.map((line) => esc(line)).join('<br>')}</p>` : ''}
+      <p class="sub">還沒擁有的武將會標記擁有，並補上分享的紅度、動態、典藏。已經更高的不會被調低。缺少的戰法或武將仍會留在配置裡，不會擋下整隊。</p>
+      <div class="help-card share-applied">
+        <h3>已套用</h3>
+        <p>下面是即將寫入的配置。</p>
+        <ol class="share-preview">${cards}</ol>
+        ${shareMissingHtml(missing)}
+      </div>
       <button type="button" class="btn primary" data-action="load-share">載入此隊伍</button>
       ${colophon()}
     </section>`;
@@ -1329,12 +1362,13 @@ function onClick(event) {
         break;
       }
       const teamId = newId('team');
-      const known = new Set(tacticsById(current).keys());
-      const applied = applyTeamShare(current, decoded.share, teamId, known);
+      const missing = shareGapLines(decoded.share, current);
+      const applied = applyTeamShare(current, decoded.share, teamId);
       if (!applied.ok) {
         toast(applied.error);
         break;
       }
+      ui.shareApplied = { teamId, name: decoded.share.name, missing };
       commit({
         ...ui.state,
         accounts: ui.state.accounts.map((item) => (item.id === current.id ? applied.account : item)),
@@ -1342,9 +1376,12 @@ function onClick(event) {
       ui.shareLink = '';
       ui.shareName = '';
       location.hash = `#/teams/${teamId}`;
-      toast('已載入隊伍');
       break;
     }
+    case 'dismiss-share-applied':
+      ui.shareApplied = null;
+      render();
+      break;
     case 'pick-general':
       assignGeneral(current, ui.picker.teamId, ui.picker.slot, el.dataset.id);
       break;

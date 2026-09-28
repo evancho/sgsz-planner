@@ -376,8 +376,11 @@ button.grow-name { cursor: pointer; }
   flex-wrap: wrap;
   gap: 4px;
 }
-.share-preview { margin: 12px 0; padding-left: 1.2em; }
-.share-preview li + li { margin-top: 8px; }
+.share-preview, .share-missing { margin: 8px 0 12px; padding-left: 1.2em; }
+.share-preview li + li, .share-missing li + li { margin-top: 8px; }
+.share-missing-label { margin-bottom: 0; font-weight: 700; }
+.share-applied { margin-bottom: 12px; }
+.share-applied h3 { margin-top: 0; }
 .member-learn {
   display: grid;
   grid-template-columns: 1fr 1fr;
