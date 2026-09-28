@@ -1,5 +1,6 @@
 export const APP_ID = 'sgsz-planner';
 export const BACKUP_VERSION = 2;
+export const ACCOUNT_FILE_VERSION = 1;
 /** Index 0 is 主將. The following slots are 副將, in list order. */
 export const TEAM_POSITIONS = ['主將', '副將', '副將'];
 export const CAMP_ORDER = ['魏', '蜀', '吳', '群'];
@@ -387,7 +388,7 @@ export function deleteTeamPrompt(name) {
   return `確定刪除隊伍「${title}」？此操作無法復原`;
 }
 
-/** 隊伍列表的左右箭頭：-1 往前，+1 往後。到邊界就不動。 */
+/** 列表的左右箭頭：-1 往前，+1 往後。到邊界就不動。 */
 export function moveTeam(teams, teamId, dir) {
   if (!Array.isArray(teams)) return teams;
   const index = teams.findIndex((team) => team?.id === teamId);
@@ -398,6 +399,11 @@ export function moveTeam(teams, teamId, dir) {
   copy[index] = copy[next];
   copy[next] = hold;
   return copy;
+}
+
+/** 帳號列表的左右箭頭，語意與隊伍列表相同。 */
+export function moveAccount(accounts, accountId, dir) {
+  return moveTeam(accounts, accountId, dir);
 }
 
 export function teamCost(team, generalsById) {
@@ -545,6 +551,9 @@ export function normalizeState(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) {
     return { ok: false, error: '這不是本工具的備份檔' };
   }
+  if (input.kind === 'account') {
+    return { ok: false, error: '這是單帳號檔，請到帳號頁載入' };
+  }
   const backupVersion = input.backupVersion;
   if (input.app !== APP_ID || (backupVersion !== 1 && backupVersion !== BACKUP_VERSION)) {
     return { ok: false, error: '這不是本工具的備份檔' };
@@ -586,6 +595,78 @@ export function exportPayload(state, catalogVersion) {
     activeAccountId: state.activeAccountId,
     accounts: state.accounts,
   };
+}
+
+export function exportAccountPayload(account, catalogVersion, options = {}) {
+  return {
+    app: APP_ID,
+    kind: 'account',
+    accountVersion: ACCOUNT_FILE_VERSION,
+    exportedAt: new Date().toISOString(),
+    catalogVersion,
+    account: {
+      id: account.id,
+      name: account.name,
+      owned: account.owned,
+      tacticsOwned: account.tacticsOwned,
+      customTactics: account.customTactics,
+      teams: options.omitTeams ? [] : account.teams,
+    },
+  };
+}
+
+export function normalizeAccountFile(input) {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) {
+    return { ok: false, error: '這不是單帳號檔' };
+  }
+  const looksLikeBackup = Array.isArray(input.accounts) || input.backupVersion != null;
+  if (input.kind === 'account' && looksLikeBackup) {
+    return { ok: false, error: '這不是單帳號檔' };
+  }
+  if (looksLikeBackup) {
+    return { ok: false, error: '這是整包備份，請到備份頁匯入' };
+  }
+  if (input.app !== APP_ID || input.kind !== 'account') {
+    return { ok: false, error: '這不是單帳號檔' };
+  }
+  if (input.accountVersion !== ACCOUNT_FILE_VERSION) {
+    return { ok: false, error: '這份單帳號的版本不相容' };
+  }
+  const account = normalizeAccount(input.account, BACKUP_VERSION);
+  if (!account) return { ok: false, error: '單帳號資料不完整' };
+  return { ok: true, account };
+}
+
+export function addAccountFile(state, account, options = {}) {
+  if (!state || !Array.isArray(state.accounts) || state.accounts.length >= 30) {
+    return { ok: false, error: '帳號數量過多' };
+  }
+  const id = newId('acct');
+  const next = { ...account, id, teams: options.omitTeams ? [] : account.teams };
+  return {
+    ok: true,
+    state: {
+      ...state,
+      activeAccountId: id,
+      accounts: [...state.accounts, next],
+    },
+  };
+}
+
+export function clearAccountTeams(state, accountId) {
+  const index = state?.accounts?.findIndex((item) => item.id === accountId) ?? -1;
+  if (index < 0) return { ok: false, error: '找不到帳號' };
+  const accounts = state.accounts.slice();
+  accounts[index] = { ...accounts[index], teams: [] };
+  return { ok: true, state: { ...state, accounts } };
+}
+
+export function replaceAccountFile(state, targetId, account) {
+  const index = state?.accounts?.findIndex((item) => item.id === targetId) ?? -1;
+  if (index < 0) return { ok: false, error: '找不到要覆寫的帳號' };
+  const accounts = state.accounts.slice();
+  accounts[index] = { ...account, id: targetId };
+  return { ok: true, state: { ...state, accounts } };
 }
 
 export function updateAccount(state, accountId, recipe) {

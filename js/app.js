@@ -19,12 +19,15 @@ import {
   buildUsage,
   compareTactics,
   applyTeamShare,
+  clearAccountTeams,
   decodeTeamShare,
   shareGaps,
   shareTokenFromText,
   deleteTeamPrompt,
+  addAccountFile,
   emptyAccount,
   encodeTeamShare,
+  exportAccountPayload,
   exportPayload,
   generalBlockReason,
   indexNameUse,
@@ -32,11 +35,14 @@ import {
   isInventoryTactic,
   matchesGeneral,
   matchesTacticPick,
+  moveAccount,
   moveTeam,
   newId,
+  normalizeAccountFile,
   normalizeState,
   ownedStatusLabels,
   removeFromTeamPrompt,
+  replaceAccountFile,
   setGeneralOwned,
   setTacticOwned,
   sortByRedScore,
@@ -67,6 +73,8 @@ const ui = {
   shareName: '',
   shareApplied: null,
   shareImport: null,
+  accountExport: null,
+  accountFile: null,
   dialog: null,
   pendingImport: null,
   draft: { name: '', type: '主動', desc: '' },
@@ -245,7 +253,7 @@ function installBanner() {
 }
 
 function overlay() {
-  return `${pickerHtml()}${bingshuSheet()}${shareSheet()}${shareImportSheet()}${dialogHtml()}`;
+  return `${pickerHtml()}${bingshuSheet()}${shareSheet()}${shareImportSheet()}${accountExportSheet()}${accountFileSheet()}${dialogHtml()}`;
 }
 
 function colophon() {
@@ -266,12 +274,12 @@ function accountsView() {
         <button type="button" class="btn primary" data-action="add-account">新增帳號</button>
       </div>
       <div class="account-list">
-        ${ui.state.accounts.map((item) => accountCard(item, item.id === current.id)).join('')}
+        ${ui.state.accounts.map((item, index) => accountCard(item, item.id === current.id, index, ui.state.accounts.length)).join('')}
       </div>
       <div class="help-grid">
         ${help('加入主畫面', '用 iPhone Safari 打開這個網站，點分享，再點「加入主畫面」。圖示會像 App 一樣留在桌面，並在第一次載入後離線可用。')}
-        ${help('多帳號', '上方選單可直接切換。武將紅度、戰法有無、隊伍都跟著帳號走，不會混在一起。')}
-        ${help('備份', '到備份頁下載 JSON。換手機時用「匯入」整包還原，包含全部帳號。')}
+        ${help('多帳號', '上方選單可直接切換。武將紅度、戰法有無、隊伍都跟著帳號走，不會混在一起。每張卡可以單獨匯出或載入。新賽季可新增且不含隊伍，只繼承武將與戰法。')}
+        ${help('備份', '到備份頁下載 JSON，包含全部帳號。換手機時用「匯入」整包還原。單一帳號請用帳號卡上的匯出與載入。')}
         <a class="help-card" href="#/changelog">
           <h3>更新紀錄</h3>
           <p class="help">目前 ${esc(ui.catalog.release?.version || '')} · ${esc(ui.catalog.release?.date || '')}。查看每次更新改了什麼。</p>
@@ -289,20 +297,31 @@ function help(title, text) {
   return `<article class="help-card"><h3>${title}</h3><p class="help">${text}</p></article>`;
 }
 
-function accountCard(item, active) {
+function accountCard(item, active, index, count) {
   const owned = Object.keys(item.owned).length;
   const tactics = Object.keys(item.tacticsOwned).length;
   return `
     <article class="account-card">
-      <header>
-        <label for="nickname-${esc(item.id)}">名稱
-          <input class="field" type="text" id="nickname-${esc(item.id)}" name="nickname" data-model="account-name" data-id="${esc(item.id)}" value="${esc(accountNameValue(item))}" maxlength="24" autocomplete="nickname" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="done">
-        </label>
-        ${active ? '<span class="active-pill">使用中</span>' : `<button type="button" class="btn" data-action="use-account" data-id="${esc(item.id)}">切換</button>`}
-      </header>
-      <p class="counts"><span>武將 ${owned}</span><span>戰法 ${tactics}</span><span>隊伍 ${item.teams.length}</span></p>
-      <div class="btn-row">
-        <button type="button" class="btn-ghost" data-action="ask-delete-account" data-id="${esc(item.id)}">刪除</button>
+      <div class="account-card-top">
+        <div class="account-card-main">
+          <header>
+            <label for="nickname-${esc(item.id)}">名稱
+              <input class="field" type="text" id="nickname-${esc(item.id)}" name="nickname" data-model="account-name" data-id="${esc(item.id)}" value="${esc(accountNameValue(item))}" maxlength="24" autocomplete="nickname" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="done">
+            </label>
+            ${active ? '<span class="active-pill">使用中</span>' : `<button type="button" class="btn" data-action="use-account" data-id="${esc(item.id)}">切換</button>`}
+          </header>
+          <p class="counts"><span>武將 ${owned}</span><span>戰法 ${tactics}</span><span>隊伍 ${item.teams.length}</span></p>
+          <div class="btn-row">
+            <button type="button" class="btn" data-action="export-account" data-id="${esc(item.id)}">匯出</button>
+            <button type="button" class="btn" data-action="open-account-file" data-id="${esc(item.id)}">載入</button>
+            ${item.teams.length ? `<button type="button" class="btn-ghost" data-action="ask-clear-teams" data-id="${esc(item.id)}">清空隊伍</button>` : ''}
+            <button type="button" class="btn-ghost" data-action="ask-delete-account" data-id="${esc(item.id)}">刪除</button>
+          </div>
+        </div>
+        <span class="member-move">
+          <button type="button" class="icon-btn" data-action="move-account" data-id="${esc(item.id)}" data-dir="-1" ${index === 0 ? 'disabled' : ''} aria-label="左移">←</button>
+          <button type="button" class="icon-btn" data-action="move-account" data-id="${esc(item.id)}" data-dir="1" ${index === count - 1 ? 'disabled' : ''} aria-label="右移">→</button>
+        </span>
       </div>
     </article>`;
 }
@@ -765,6 +784,56 @@ function shareSheet() {
   `);
 }
 
+function accountExportSheet() {
+  if (!ui.accountExport) return '';
+  const note = ui.accountExport.omitTeams
+    ? `這份只含「${esc(ui.accountExport.name)}」的武將與戰法，隊伍已略過，也不含其他帳號。`
+    : `這份只含「${esc(ui.accountExport.name)}」的武將、戰法與隊伍，不含其他帳號。`;
+  return sheet('匯出帳號', `
+    <p>${note}可以下載，也可以複製。</p>
+    <label class="season-opt">
+      <input id="omit-teams" type="checkbox" data-action="toggle-export-teams" ${ui.accountExport.omitTeams ? 'checked' : ''}>
+      不含隊伍
+    </label>
+    <textarea id="account-export" readonly>${esc(ui.accountExport.text)}</textarea>
+    <div class="btn-row" style="margin-top:10px">
+      <button type="button" class="btn primary" data-action="download-account">下載 JSON</button>
+      <button type="button" class="btn" data-action="copy-account" data-autofocus>複製</button>
+    </div>
+  `);
+}
+
+function accountFileSheet() {
+  if (!ui.accountFile) return '';
+  const target = ui.state.accounts.find((item) => item.id === ui.accountFile.targetId);
+  const targetName = target?.name || '此帳號';
+  if (!ui.accountFile.account) {
+    return sheet('載入帳號', `
+      <p>貼上或選擇一份單帳號 JSON。確認後可以新增為新帳號，或覆寫「${esc(targetName)}」。這不會取代其他帳號。</p>
+      <label class="btn" style="display:inline-block">選擇檔案
+        <input class="sr" type="file" accept="application/json,.json" data-action="account-file">
+      </label>
+      <label style="display:block;margin-top:10px">或貼上 JSON
+        <textarea id="account-file-text" data-model="account-file" placeholder="把單帳號內容貼在這裡">${esc(ui.accountFile.text)}</textarea>
+      </label>
+      <button type="button" class="btn primary" data-action="preview-account-file" style="margin-top:10px">確認</button>
+    `);
+  }
+  const incoming = ui.accountFile.account;
+  const owned = Object.keys(incoming.owned).length;
+  const tactics = Object.keys(incoming.tacticsOwned).length;
+  return sheet('載入帳號', `
+    <p>「${esc(incoming.name)}」 · 武將 ${owned} · 戰法 ${tactics} · 隊伍 ${incoming.teams.length}</p>
+    <p class="sub">新賽季按「不含隊伍」：武將與戰法進新帳號，這 ${incoming.teams.length} 支隊伍不帶過去。含隊伍的新增與覆寫仍會帶上隊伍。</p>
+    <div class="btn-row">
+      <button type="button" class="btn primary" data-action="add-account-file" data-teams="omit">新增為新帳號，不含隊伍</button>
+      <button type="button" class="btn" data-action="add-account-file">新增為新帳號</button>
+      <button type="button" class="btn" data-action="ask-replace-account-file">覆寫此帳號</button>
+      <button type="button" class="btn-ghost" data-action="reset-account-file">重貼</button>
+    </div>
+  `);
+}
+
 function memberCard(team, member, slot, current) {
   const general = member ? generalsById().get(member.generalId) : null;
   const books = ui.catalog.branches;
@@ -915,7 +984,7 @@ function backupView() {
       <div class="page-head">
         <div>
           <h2>備份</h2>
-          <p class="sub">匯出包含全部帳號。匯入會取代這台裝置上的配將資料。</p>
+          <p class="sub">匯出包含全部帳號。匯入會取代這台裝置上的配將資料。單帳號檔請回帳號卡載入。</p>
         </div>
       </div>
       <div class="backup-grid">
@@ -1169,7 +1238,7 @@ function render() {
   };
   document.title = `${titles[here.name] || '配將簿'} · 配將簿`;
   document.getElementById('app').innerHTML = shell(view());
-  const lock = Boolean(ui.dialog || ui.picker || ui.bingshu || ui.shareLink || ui.shareImport || (ui.filterOpen && window.innerWidth < 980));
+  const lock = Boolean(ui.dialog || ui.picker || ui.bingshu || ui.shareLink || ui.shareImport || ui.accountExport || ui.accountFile || (ui.filterOpen && window.innerWidth < 980));
   document.body.classList.toggle('lock', lock);
   const nextSheet = sheetKey ? document.querySelector(`[data-scroll="${sheetKey}"]`) : null;
   if (nextSheet) nextSheet.scrollTop = sheetY;
@@ -1226,6 +1295,8 @@ function onClick(event) {
     ui.shareLink = '';
     ui.shareName = '';
     ui.shareImport = null;
+    ui.accountExport = null;
+    ui.accountFile = null;
     render();
     return;
   }
@@ -1253,6 +1324,40 @@ function onClick(event) {
     case 'use-account':
       commit({ ...ui.state, activeAccountId: el.dataset.id });
       break;
+    case 'export-account': {
+      const item = ui.state.accounts.find((account) => account.id === el.dataset.id);
+      if (!item) break;
+      ui.accountFile = null;
+      ui.accountExport = {
+        id: item.id,
+        name: item.name,
+        omitTeams: false,
+        text: JSON.stringify(exportAccountPayload(item, ui.catalog.version), null, 2),
+      };
+      ui.justOpened = true;
+      render();
+      break;
+    }
+    case 'open-account-file':
+      ui.accountExport = null;
+      ui.accountFile = { targetId: el.dataset.id, text: '', account: null };
+      render();
+      break;
+    case 'ask-clear-teams': {
+      const item = ui.state.accounts.find((account) => account.id === el.dataset.id);
+      if (!item || item.teams.length === 0) {
+        toast('這個帳號沒有隊伍');
+        break;
+      }
+      openDialog({
+        kind: 'clear-teams',
+        id: item.id,
+        title: '清空隊伍',
+        text: `「${item.name}」的 ${item.teams.length} 支隊伍會全部刪掉。武將與戰法保留，不能還原。`,
+        confirm: '清空隊伍',
+      });
+      break;
+    }
     case 'ask-delete-account':
       if (ui.state.accounts.length <= 1) {
         toast('至少要留一個帳號');
@@ -1468,6 +1573,8 @@ function onClick(event) {
       ui.shareLink = '';
       ui.shareName = '';
       ui.shareImport = null;
+      ui.accountExport = null;
+      ui.accountFile = null;
       render();
       break;
     case 'open-share-import':
@@ -1525,6 +1632,63 @@ function onClick(event) {
       });
       break;
     }
+    case 'download-account':
+      downloadText(ui.accountExport?.text || '', `sgsz-planner-account-${new Date().toISOString().slice(0, 10)}.json`, '已下載帳號');
+      break;
+    case 'copy-account': {
+      const text = ui.accountExport?.text || '';
+      const node = document.getElementById('account-export');
+      const write = navigator.clipboard?.writeText?.(text);
+      if (!write) {
+        node?.focus();
+        node?.select();
+        toast('請手動複製');
+        break;
+      }
+      write.then(() => {
+        toast('已複製帳號');
+      }).catch(() => {
+        node?.focus();
+        node?.select();
+        toast('請手動複製');
+      });
+      break;
+    }
+    case 'preview-account-file':
+      stageAccountFile(document.getElementById('account-file-text')?.value ?? ui.accountFile?.text ?? '');
+      break;
+    case 'reset-account-file':
+      if (ui.accountFile) ui.accountFile = { ...ui.accountFile, account: null };
+      render();
+      break;
+    case 'add-account-file': {
+      if (!ui.accountFile?.account) break;
+      const omitTeams = el.dataset.teams === 'omit';
+      const added = addAccountFile(ui.state, ui.accountFile.account, { omitTeams });
+      if (!added.ok) {
+        toast(added.error);
+        break;
+      }
+      ui.accountFile = null;
+      commit(added.state);
+      toast(omitTeams ? '已新增帳號，不含隊伍' : '已新增帳號');
+      break;
+    }
+    case 'ask-replace-account-file': {
+      if (!ui.accountFile?.account) break;
+      const target = ui.state.accounts.find((item) => item.id === ui.accountFile.targetId);
+      if (!target) {
+        toast('找不到要覆寫的帳號');
+        break;
+      }
+      openDialog({
+        kind: 'replace-account',
+        title: '覆寫帳號',
+        text: `這會用「${ui.accountFile.account.name}」取代「${target.name}」的武將、戰法與隊伍，不能還原。其他帳號不會動。`,
+        confirm: '覆寫',
+      });
+      break;
+    }
     case 'load-share': {
       const decoded = decodeTeamShare(route().token || '');
       if (!decoded.ok) {
@@ -1570,6 +1734,9 @@ function onClick(event) {
       break;
     case 'move-team':
       moveTeamOrder(current, el.dataset.id, Number(el.dataset.dir));
+      break;
+    case 'move-account':
+      moveAccountOrder(el.dataset.id, Number(el.dataset.dir));
       break;
     case 'open-bingshu': {
       ui.picker = null;
@@ -1661,6 +1828,10 @@ function onInput(event) {
     ui.shareImport = { ...ui.shareImport, text: el.value };
     return;
   }
+  else if (model === 'account-file' && ui.accountFile) {
+    ui.accountFile = { ...ui.accountFile, text: el.value, account: null };
+    return;
+  }
   else if (model === 'draft-name') ui.draft = { ...ui.draft, name: el.value };
   else if (model === 'draft-desc') ui.draft = { ...ui.draft, desc: el.value };
   else if (model === 'account-name') {
@@ -1689,6 +1860,28 @@ function onChange(event) {
     el.value = '';
     if (!file) return;
     file.text().then((text) => stageImport(text)).catch(() => toast('檔案讀取失敗'));
+  } else if (el.dataset.action === 'toggle-export-teams') {
+    if (!ui.accountExport) return;
+    const item = ui.state.accounts.find((account) => account.id === ui.accountExport.id);
+    if (!item) return;
+    const omitTeams = el.checked;
+    ui.accountExport = {
+      ...ui.accountExport,
+      name: item.name,
+      omitTeams,
+      text: JSON.stringify(exportAccountPayload(item, ui.catalog.version, { omitTeams }), null, 2),
+    };
+    render();
+  } else if (el.dataset.action === 'account-file') {
+    const file = el.files?.[0];
+    el.value = '';
+    if (!file || !ui.accountFile) return;
+    file.text().then((text) => {
+      if (!ui.accountFile) return;
+      ui.accountFile = { ...ui.accountFile, text, account: null };
+      render();
+      toast('已讀取檔案，請再按確認');
+    }).catch(() => toast('檔案讀取失敗'));
   }
 }
 
@@ -1811,6 +2004,12 @@ function assignTactic(current, teamId, slot, learnedIndex, tacticId) {
   });
 }
 
+function moveAccountOrder(accountId, dir) {
+  const accounts = moveAccount(ui.state.accounts, accountId, dir);
+  if (accounts === ui.state.accounts) return;
+  commit({ ...ui.state, accounts });
+}
+
 function moveTeamOrder(current, teamId, dir) {
   const teams = moveTeam(current.teams, teamId, dir);
   if (teams === current.teams) return;
@@ -1854,18 +2053,44 @@ function setBingshu(current, recipe, { close = false } = {}) {
   })));
 }
 
-function downloadBackup() {
-  const payload = exportPayload(ui.state, ui.catalog.version);
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+function downloadText(text, filename, message) {
+  const blob = new Blob([text], { type: 'application/json' });
   const link = document.createElement('a');
-  const stamp = new Date().toISOString().slice(0, 10);
   link.href = URL.createObjectURL(blob);
-  link.download = `sgsz-planner-${stamp}.json`;
+  link.download = filename;
   document.body.append(link);
   link.click();
   link.remove();
   setTimeout(() => URL.revokeObjectURL(link.href), 1500);
-  toast('已下載備份');
+  toast(message);
+}
+
+function downloadBackup() {
+  const payload = exportPayload(ui.state, ui.catalog.version);
+  const stamp = new Date().toISOString().slice(0, 10);
+  downloadText(JSON.stringify(payload, null, 2), `sgsz-planner-${stamp}.json`, '已下載備份');
+}
+
+function stageAccountFile(text) {
+  if (!ui.accountFile) return;
+  if (text.length > 2_000_000) {
+    toast('檔案太大');
+    return;
+  }
+  let parsed;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    toast('JSON 無法讀取');
+    return;
+  }
+  const result = normalizeAccountFile(parsed);
+  if (!result.ok) {
+    toast(result.error);
+    return;
+  }
+  ui.accountFile = { ...ui.accountFile, text, account: result.account };
+  render();
 }
 
 function stageImport(text) {
@@ -1905,6 +2130,17 @@ function confirmDialog() {
   const dialog = ui.dialog;
   ui.dialog = null;
   if (!dialog) return;
+  if (dialog.kind === 'clear-teams') {
+    const cleared = clearAccountTeams(ui.state, dialog.id);
+    if (!cleared.ok) {
+      toast(cleared.error);
+      render();
+      return;
+    }
+    commit(cleared.state);
+    toast('已清空隊伍');
+    return;
+  }
   if (dialog.kind === 'delete-account') {
     const accounts = ui.state.accounts.filter((item) => item.id !== dialog.id);
     const activeAccountId = ui.state.activeAccountId === dialog.id ? accounts[0].id : ui.state.activeAccountId;
@@ -1943,6 +2179,18 @@ function confirmDialog() {
     saveState(ui.state);
     toast('已還原備份');
     render();
+    return;
+  }
+  if (dialog.kind === 'replace-account' && ui.accountFile?.account) {
+    const replaced = replaceAccountFile(ui.state, ui.accountFile.targetId, ui.accountFile.account);
+    ui.accountFile = null;
+    if (!replaced.ok) {
+      toast(replaced.error);
+      render();
+      return;
+    }
+    commit(replaced.state);
+    toast('已覆寫帳號');
   }
 }
 
@@ -1965,6 +2213,8 @@ function bind() {
       ui.shareLink = '';
       ui.shareName = '';
     } else if (ui.shareImport) ui.shareImport = null;
+    else if (ui.accountExport) ui.accountExport = null;
+    else if (ui.accountFile) ui.accountFile = null;
     else if (ui.picker) ui.picker = null;
     else if (ui.bingshu) ui.bingshu = null;
     else if (ui.filterOpen) ui.filterOpen = false;
@@ -1977,6 +2227,8 @@ function bind() {
     ui.shareLink = '';
     ui.shareName = '';
     ui.shareImport = null;
+    ui.accountExport = null;
+    ui.accountFile = null;
     ui.dialog = null;
     ui.pendingImport = null;
     render();
