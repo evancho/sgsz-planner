@@ -21,6 +21,7 @@ import {
   matchesGeneral,
   matchesOwnedRed,
   matchesTacticPick,
+  moveTeam,
   normalizeState,
   ownedStatusLabels,
   ownsDiancang,
@@ -512,6 +513,33 @@ test('tactic picker hides unowned tactics until the filter is opened up', () => 
 test('removing a general asks for that general by name', () => {
   assert.equal(removeFromTeamPrompt('SP皇甫嵩'), '確定要把SP皇甫嵩移出隊伍？');
   assert.equal(removeFromTeamPrompt('  '), '確定要把這名武將移出隊伍？');
+});
+
+test('team list order moves with the arrows and survives a backup', () => {
+  const teams = [
+    { id: 'a', name: '甲' },
+    { id: 'b', name: '乙' },
+    { id: 'c', name: '丙' },
+  ];
+  assert.equal(moveTeam(teams, 'a', -1), teams);
+  assert.equal(moveTeam(teams, 'c', 1), teams);
+  assert.deepEqual(moveTeam(teams, 'a', 1).map((team) => team.id), ['b', 'a', 'c']);
+  assert.deepEqual(moveTeam(teams, 'b', -1).map((team) => team.id), ['b', 'a', 'c']);
+  const account = emptyAccount('acct-1', '主帳');
+  account.teams = moveTeam(teams, 'c', -1).map((team) => ({
+    ...team,
+    notes: '',
+    members: [null, null, null],
+  }));
+  const payload = exportPayload({
+    app: 'sgsz-planner',
+    backupVersion: 2,
+    activeAccountId: 'acct-1',
+    accounts: [account],
+  }, '1.2.3');
+  const restored = normalizeState(payload);
+  assert.equal(restored.ok, true);
+  assert.deepEqual(restored.state.accounts[0].teams.map((team) => team.id), ['a', 'c', 'b']);
 });
 
 test('deleting a team names it and says the delete cannot be undone', () => {

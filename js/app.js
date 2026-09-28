@@ -23,7 +23,6 @@ import {
   shareGaps,
   shareTokenFromText,
   deleteTeamPrompt,
-  demoFill,
   emptyAccount,
   encodeTeamShare,
   exportPayload,
@@ -33,6 +32,7 @@ import {
   isInventoryTactic,
   matchesGeneral,
   matchesTacticPick,
+  moveTeam,
   newId,
   normalizeState,
   ownedStatusLabels,
@@ -302,7 +302,6 @@ function accountCard(item, active) {
       </header>
       <p class="counts"><span>武將 ${owned}</span><span>戰法 ${tactics}</span><span>隊伍 ${item.teams.length}</span></p>
       <div class="btn-row">
-        <button type="button" class="btn" data-action="ask-demo" data-id="${esc(item.id)}">載入範例配隊</button>
         <button type="button" class="btn-ghost" data-action="ask-delete-account" data-id="${esc(item.id)}">刪除</button>
       </div>
     </article>`;
@@ -579,7 +578,6 @@ function teamsView() {
       <div class="page-head team-head">
         <div class="team-title">
           <h2>隊伍</h2>
-          <p class="sub">一隊三名武將。第一位是主將，後面兩位是副將。主戰法固定為自帶，旁邊兩格是傳承。</p>
         </div>
         <div class="btn-row team-tools">
           <button type="button" class="btn" data-action="open-share-import">載入</button>
@@ -587,21 +585,27 @@ function teamsView() {
         </div>
       </div>
       <div class="stack">
-        ${current.teams.map((team) => teamCard(team, map)).join('') || '<div class="empty"><p>還沒有隊伍。</p><p class="faint">可以先載入範例，或自己新增。</p></div>'}
+        ${current.teams.map((team, index) => teamCard(team, map, index, current.teams.length)).join('') || '<div class="empty"><p>還沒有隊伍。</p><p class="faint">可以自己新增。</p></div>'}
       </div>
       ${colophon()}
     </section>`;
 }
 
-function teamCard(team, map) {
+function teamCard(team, map, index, count) {
   const names = team.members.map((member) => map.get(member?.generalId)?.name || '空').join(' / ');
   return `
     <article class="team-card">
-      <a class="team-card-main" href="#/teams/${esc(team.id)}">
-        <div class="row-between"><h3>${esc(team.name)}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
-        <p>${esc(names)}</p>
-        ${team.notes ? `<p class="muted">${esc(team.notes)}</p>` : ''}
-      </a>
+      <div class="team-card-top">
+        <a class="team-card-main" href="#/teams/${esc(team.id)}">
+          <div class="row-between"><h3>${esc(team.name)}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
+          <p>${esc(names)}</p>
+          ${team.notes ? `<p class="muted">${esc(team.notes)}</p>` : ''}
+        </a>
+        <span class="member-move">
+          <button type="button" class="icon-btn" data-action="move-team" data-id="${esc(team.id)}" data-dir="-1" ${index === 0 ? 'disabled' : ''} aria-label="左移">←</button>
+          <button type="button" class="icon-btn" data-action="move-team" data-id="${esc(team.id)}" data-dir="1" ${index === count - 1 ? 'disabled' : ''} aria-label="右移">→</button>
+        </span>
+      </div>
     </article>`;
 }
 
@@ -1263,15 +1267,6 @@ function onClick(event) {
         confirm: '刪除',
       });
       break;
-    case 'ask-demo':
-      openDialog({
-        kind: 'demo',
-        id: el.dataset.id,
-        title: '載入範例配隊',
-        text: '會改寫這個帳號的擁有狀態與隊伍。自訂戰法會留著。',
-        confirm: '載入',
-      });
-      break;
     case 'open-filter':
       ui.filterOpen = true;
       ui.justOpened = true;
@@ -1573,6 +1568,9 @@ function onClick(event) {
     case 'move-member':
       moveMember(current, el.dataset.team, Number(el.dataset.slot), Number(el.dataset.dir));
       break;
+    case 'move-team':
+      moveTeamOrder(current, el.dataset.id, Number(el.dataset.dir));
+      break;
     case 'open-bingshu': {
       ui.picker = null;
       const slot = Number(el.dataset.slot);
@@ -1813,6 +1811,12 @@ function assignTactic(current, teamId, slot, learnedIndex, tacticId) {
   });
 }
 
+function moveTeamOrder(current, teamId, dir) {
+  const teams = moveTeam(current.teams, teamId, dir);
+  if (teams === current.teams) return;
+  commit(updateAccount(ui.state, current.id, (item) => ({ ...item, teams })));
+}
+
 function moveMember(current, teamId, slot, dir) {
   const next = slot + dir;
   if (next < 0 || next > 2) return;
@@ -1906,11 +1910,6 @@ function confirmDialog() {
     const activeAccountId = ui.state.activeAccountId === dialog.id ? accounts[0].id : ui.state.activeAccountId;
     commit({ ...ui.state, accounts, activeAccountId });
     toast('已刪除帳號');
-    return;
-  }
-  if (dialog.kind === 'demo') {
-    commit(updateAccount(ui.state, dialog.id, (item) => demoFill(item)));
-    toast('已載入範例');
     return;
   }
   if (dialog.kind === 'clear-general') {
