@@ -19,7 +19,6 @@ import {
   buildUsage,
   compareTactics,
   applyTeamShare,
-  clearAccountTeams,
   decodeTeamShare,
   shareGaps,
   shareTokenFromText,
@@ -308,20 +307,21 @@ function accountCard(item, active, index, count) {
             <label for="nickname-${esc(item.id)}">名稱
               <input class="field" type="text" id="nickname-${esc(item.id)}" name="nickname" data-model="account-name" data-id="${esc(item.id)}" value="${esc(accountNameValue(item))}" maxlength="24" autocomplete="nickname" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="done">
             </label>
-            ${active ? '<span class="active-pill">使用中</span>' : `<button type="button" class="btn" data-action="use-account" data-id="${esc(item.id)}">切換</button>`}
           </header>
           <p class="counts"><span>武將 ${owned}</span><span>戰法 ${tactics}</span><span>隊伍 ${item.teams.length}</span></p>
           <div class="btn-row">
             <button type="button" class="btn" data-action="export-account" data-id="${esc(item.id)}">匯出</button>
             <button type="button" class="btn" data-action="open-account-file" data-id="${esc(item.id)}">載入</button>
-            ${item.teams.length ? `<button type="button" class="btn-ghost" data-action="ask-clear-teams" data-id="${esc(item.id)}">清空隊伍</button>` : ''}
             <button type="button" class="btn-ghost" data-action="ask-delete-account" data-id="${esc(item.id)}">刪除</button>
           </div>
         </div>
-        <span class="member-move">
-          <button type="button" class="icon-btn" data-action="move-account" data-id="${esc(item.id)}" data-dir="-1" ${index === 0 ? 'disabled' : ''} aria-label="左移">←</button>
-          <button type="button" class="icon-btn" data-action="move-account" data-id="${esc(item.id)}" data-dir="1" ${index === count - 1 ? 'disabled' : ''} aria-label="右移">→</button>
-        </span>
+        <div class="account-side">
+          <span class="member-move">
+            <button type="button" class="icon-btn" data-action="move-account" data-id="${esc(item.id)}" data-dir="-1" ${index === 0 ? 'disabled' : ''} aria-label="左移">←</button>
+            <button type="button" class="icon-btn" data-action="move-account" data-id="${esc(item.id)}" data-dir="1" ${index === count - 1 ? 'disabled' : ''} aria-label="右移">→</button>
+          </span>
+          ${active ? '<span class="active-pill">使用中</span>' : `<button type="button" class="btn" data-action="use-account" data-id="${esc(item.id)}">切換</button>`}
+        </div>
       </div>
     </article>`;
 }
@@ -1343,21 +1343,6 @@ function onClick(event) {
       ui.accountFile = { targetId: el.dataset.id, text: '', account: null };
       render();
       break;
-    case 'ask-clear-teams': {
-      const item = ui.state.accounts.find((account) => account.id === el.dataset.id);
-      if (!item || item.teams.length === 0) {
-        toast('這個帳號沒有隊伍');
-        break;
-      }
-      openDialog({
-        kind: 'clear-teams',
-        id: item.id,
-        title: '清空隊伍',
-        text: `「${item.name}」的 ${item.teams.length} 支隊伍會全部刪掉。武將與戰法保留，不能還原。`,
-        confirm: '清空隊伍',
-      });
-      break;
-    }
     case 'ask-delete-account':
       if (ui.state.accounts.length <= 1) {
         toast('至少要留一個帳號');
@@ -2130,17 +2115,6 @@ function confirmDialog() {
   const dialog = ui.dialog;
   ui.dialog = null;
   if (!dialog) return;
-  if (dialog.kind === 'clear-teams') {
-    const cleared = clearAccountTeams(ui.state, dialog.id);
-    if (!cleared.ok) {
-      toast(cleared.error);
-      render();
-      return;
-    }
-    commit(cleared.state);
-    toast('已清空隊伍');
-    return;
-  }
   if (dialog.kind === 'delete-account') {
     const accounts = ui.state.accounts.filter((item) => item.id !== dialog.id);
     const activeAccountId = ui.state.activeAccountId === dialog.id ? accounts[0].id : ui.state.activeAccountId;
