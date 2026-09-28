@@ -7,6 +7,7 @@ export const TROOP_ORDER = ['騎', '弓', '槍', '盾', '器械'];
 export const QUALITIES = ['名將', '良將', '裨將', '偏將', '軍士'];
 export const TACTIC_TYPES = ['指揮', '主動', '突擊', '被動', '兵種', '陣法', '內政'];
 export const COST_BUCKETS = ['7+', '6', '5', '4', '3-'];
+export const RED_FILTERS = ['0', '1', '2', '3', '4', '5'];
 export const DYNAMIC_FILTERS = ['已解鎖', '可解鎖', '無動態'];
 export const COLLECTION_FILTERS = ['典藏', '非典藏'];
 export const ROLE_FILTERS = ['軍事', '內政'];
@@ -141,6 +142,26 @@ export function matchesGeneral(general, ownedRecord, filters, extras) {
 /** 畫面上的「典藏」對應備份欄位 awaken，不是 dynamic。 */
 export function ownsDiancang(ownedRecord) {
   return Boolean(ownedRecord?.awaken);
+}
+
+/** 選擇武將的紅度排序：紅度，加上已開動態、已標典藏各 1 分。 */
+export function redSortScore(ownedRecord) {
+  if (!ownedRecord) return 0;
+  return clampRed(ownedRecord.red) + (ownedRecord.dynamic ? 1 : 0) + (ownsDiancang(ownedRecord) ? 1 : 0);
+}
+
+/** 高分在前。同分保持原來的順序。 */
+export function sortByRedScore(list, ownedOf) {
+  return list
+    .map((general, index) => ({ general, index, score: redSortScore(ownedOf(general)) }))
+    .sort((a, b) => (b.score - a.score) || (a.index - b.index))
+    .map((item) => item.general);
+}
+
+export function matchesOwnedRed(ownedRecord, selected) {
+  const choice = activeChoice(selected, RED_FILTERS);
+  if (!choice) return true;
+  return choice.has(String(clampRed(ownedRecord?.red)));
 }
 
 /** 武將列表與隊伍卡片共用：紅 0、未開動態、未標典藏都不顯示。 */

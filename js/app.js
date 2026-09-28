@@ -4,6 +4,7 @@ import {
   COST_BUCKETS,
   DYNAMIC_FILTERS,
   QUALITIES,
+  RED_FILTERS,
   ROLE_FILTERS,
   SORTS,
   TAG_FILTERS,
@@ -29,6 +30,7 @@ import {
   isDuwei,
   isInventoryTactic,
   matchesGeneral,
+  matchesOwnedRed,
   matchesTacticPick,
   newId,
   normalizeState,
@@ -36,6 +38,7 @@ import {
   removeFromTeamPrompt,
   setGeneralOwned,
   setTacticOwned,
+  sortByRedScore,
   sortGenerals,
   tacticBlockReason,
   tacticOwned,
@@ -901,28 +904,84 @@ function pickerHtml() {
   return '';
 }
 
+function emptyPickerFilters() {
+  return { camp: [], cost: [], red: [], dynamic: [], collection: [] };
+}
+
+function pickerFilterRow(label, key, values, labelOf = (value) => value) {
+  const selected = ui.picker.filters?.[key] || [];
+  return `
+    <div class="filter-row">
+      <span>${label}</span>
+      <div class="chips">
+        ${values.map((value) => `<button type="button" class="chip" data-action="toggle-picker-filter" data-group="${esc(key)}" data-value="${esc(value)}" aria-checked="${selected.includes(value)}">${esc(labelOf(value))}</button>`).join('')}
+      </div>
+    </div>`;
+}
+
 function generalPicker() {
   const current = account();
   const team = current.teams.find((item) => item.id === ui.picker.teamId);
   if (!team) return '';
   const usage = usageFor(current);
-  const query = ui.picker.query.trim();
-  const options = ui.catalog.generals.filter((general) => current.owned[general.id] && (!query || plainName(general).includes(query) || general.name.includes(query) || (isDuwei(general) && '都尉'.includes(query))));
-  return sheet('選擇武將', `
-    <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋已擁有武將" autocomplete="off">
-    <button type="button" class="choice" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${ui.picker.slot}">這個位置留空</button>
-    ${options.map((general) => {
-      const reason = generalBlockReason({
-        account: current,
-        team,
-        slot: ui.picker.slot,
-        general,
-        generalsById: generalsById(),
-        usage,
-      });
-      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${esc(general.camp)} C${general.cost} ${esc(plainName(general))}${isDuwei(general) ? ' · 都尉' : ''}${reason ? ` · ${esc(reason)}` : ''}</button>`;
-    }).join('') || '<p class="muted">還沒有勾選擁有的武將。</p>'}
-  `);
+  const filters = ui.picker.filters || emptyPickerFilters();
+  const ownedCount = ui.catalog.generals.filter((general) => current.owned[general.id]).length;
+  let options = ui.catalog.generals.filter((general) => {
+    const owned = current.owned[general.id];
+    return matchesGeneral(general, owned, {
+      ...emptyFilters(),
+      query: ui.picker.query,
+      quick: 'owned',
+      camp: filters.camp,
+      cost: filters.cost,
+      dynamic: filters.dynamic,
+      collection: filters.collection,
+    }, {}) && matchesOwnedRed(owned, filters.red);
+  });
+  if (ui.picker.sort === 'red') options = sortByRedScore(options, (general) => current.owned[general.id]);
+  const empty = ownedCount === 0 ? '還沒有勾選擁有的武將。' : '沒有符合的武將。';
+  const sort = ui.picker.sort || 'default';
+  return `
+    <div class="backdrop" data-action="backdrop-close">
+      <section class="sheet picker-sheet" role="dialog" aria-modal="true" aria-label="選擇武將" tabindex="-1">
+        <div class="picker-head row-between">
+          <h3>選擇武將</h3>
+          <button type="button" class="btn-ghost" data-action="close-picker">關閉</button>
+        </div>
+        <div class="picker-filters">
+          <label class="sr" for="picker-search">搜尋已擁有武將</label>
+          <input id="picker-search" data-autofocus data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋已擁有武將" autocomplete="off">
+          <div class="filter-row">
+            <span>排序</span>
+            <div class="chips" role="radiogroup" aria-label="排序">
+              <button type="button" class="chip" data-action="set-picker-sort" data-value="default" aria-checked="${sort === 'default'}">預設</button>
+              <button type="button" class="chip" data-action="set-picker-sort" data-value="red" aria-checked="${sort === 'red'}">紅度</button>
+            </div>
+          </div>
+          ${pickerFilterRow('陣營', 'camp', CAMP_ORDER)}
+          ${pickerFilterRow('費用', 'cost', COST_BUCKETS)}
+          ${pickerFilterRow('紅度', 'red', RED_FILTERS, (value) => `紅${value}`)}
+          ${pickerFilterRow('動態形象', 'dynamic', DYNAMIC_FILTERS)}
+          ${pickerFilterRow('典藏', 'collection', COLLECTION_FILTERS)}
+          <p class="faint picker-count">${options.length} 位武將</p>
+        </div>
+        <div class="picker-list" data-scroll="picker">
+          <button type="button" class="choice" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${ui.picker.slot}">這個位置留空</button>
+          ${options.map((general) => {
+            const reason = generalBlockReason({
+              account: current,
+              team,
+              slot: ui.picker.slot,
+              general,
+              generalsById: generalsById(),
+              usage,
+            });
+            const marks = ownedStatusLabels(current.owned[general.id]);
+            return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${esc(general.camp)} C${general.cost} ${esc(plainName(general))}${isDuwei(general) ? ' · 都尉' : ''}${marks.length ? ` · ${esc(marks.join(' · '))}` : ''}${reason ? ` · ${esc(reason)}` : ''}</button>`;
+          }).join('') || `<p class="muted">${empty}</p>`}
+        </div>
+      </section>
+    </div>`;
 }
 
 function tacticPicker() {
@@ -1288,7 +1347,14 @@ function onClick(event) {
       break;
     }
     case 'open-general':
-      ui.picker = { kind: 'general', teamId: el.dataset.team, slot: Number(el.dataset.slot), query: '' };
+      ui.picker = {
+        kind: 'general',
+        teamId: el.dataset.team,
+        slot: Number(el.dataset.slot),
+        query: '',
+        sort: 'default',
+        filters: emptyPickerFilters(),
+      };
       ui.justOpened = true;
       render();
       break;
@@ -1306,6 +1372,25 @@ function onClick(event) {
       ui.justOpened = true;
       render();
       break;
+    case 'set-picker-sort':
+      if (ui.picker?.kind === 'general') ui.picker = { ...ui.picker, sort: el.dataset.value };
+      render();
+      break;
+    case 'toggle-picker-filter': {
+      if (ui.picker?.kind !== 'general') break;
+      const filters = ui.picker.filters || emptyPickerFilters();
+      const group = filters[el.dataset.group] || [];
+      const value = el.dataset.value;
+      ui.picker = {
+        ...ui.picker,
+        filters: {
+          ...filters,
+          [el.dataset.group]: group.includes(value) ? group.filter((item) => item !== value) : [...group, value],
+        },
+      };
+      render();
+      break;
+    }
     case 'set-picker-owned':
       if (ui.picker?.kind === 'tactic') ui.picker = { ...ui.picker, owned: el.dataset.value };
       render();

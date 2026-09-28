@@ -17,13 +17,16 @@ import {
   isDuwei,
   isInventoryTactic,
   matchesGeneral,
+  matchesOwnedRed,
   matchesTacticPick,
   normalizeState,
   ownedStatusLabels,
   ownsDiancang,
   removeFromTeamPrompt,
   setGeneralOwned,
+  redSortScore,
   setTacticOwned,
+  sortByRedScore,
   sortGenerals,
   TEAM_POSITIONS,
   tacticBlockReason,
@@ -222,6 +225,33 @@ test('sort by cost then camp', () => {
     '群7呂布',
     '魏6荀彧',
   ]);
+});
+
+test('red sort score counts red, dynamic, and collection', () => {
+  assert.equal(redSortScore(null), 0);
+  assert.equal(redSortScore({ red: 0, dynamic: false, awaken: false }), 0);
+  assert.equal(redSortScore({ red: 5, dynamic: false, awaken: false }), 5);
+  assert.equal(redSortScore({ red: 0, dynamic: true, awaken: false }), 1);
+  assert.equal(redSortScore({ red: 0, dynamic: false, awaken: true }), 1);
+  assert.equal(redSortScore({ red: 3, dynamic: true, awaken: true }), 5);
+  assert.equal(redSortScore({ red: 9, dynamic: true, awaken: true }), 7);
+  const list = [
+    { id: 'a', name: '甲' },
+    { id: 'b', name: '乙' },
+    { id: 'c', name: '丙' },
+    { id: 'd', name: '丁' },
+  ];
+  const owned = {
+    a: { red: 4, dynamic: false, awaken: false },
+    b: { red: 3, dynamic: true, awaken: false },
+    c: { red: 5, dynamic: true, awaken: true },
+    d: { red: 1, dynamic: false, awaken: true },
+  };
+  assert.deepEqual(sortByRedScore(list, (general) => owned[general.id]).map((general) => general.id), ['c', 'a', 'b', 'd']);
+  assert.equal(matchesOwnedRed({ red: 5 }, []), true);
+  assert.equal(matchesOwnedRed({ red: 5 }, ['5']), true);
+  assert.equal(matchesOwnedRed({ red: 5 }, ['0', '3']), false);
+  assert.equal(matchesOwnedRed({ red: 0 }, ['0']), true);
 });
 
 test('a new account owns no generals or tactics', () => {

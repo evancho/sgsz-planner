@@ -453,6 +453,8 @@ button.grow-name { cursor: pointer; }
 .picker-head, .bingshu-head { padding: 14px 16px 8px; align-items: center; flex: 0 0 auto; }
 .picker-head h3, .bingshu-head h3 { margin: 0; font-size: 22px; }
 .picker-filters { display: flex; flex-direction: column; gap: 8px; padding: 0 16px 8px; flex: 0 0 auto; }
+.picker-filters .filter-row { padding: 2px 0; border-bottom: 0; }
+.picker-filters .filter-row span { padding-top: 6px; }
 .bingshu-steps, .bingshu-hint, .sheet-foot { flex: 0 0 auto; }
 .picker-count { margin: 0; }
 .picker-list, .bingshu-body {
