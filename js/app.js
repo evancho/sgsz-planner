@@ -487,7 +487,7 @@ function tacticsView(mode) {
       <div class="page-head">
         <div>
           <h2>${mode === 'event' ? '事件戰法' : '戰法'}</h2>
-          <p class="sub">${mode === 'event' ? '賽季事件兌換的戰法。先排 S 級，再排 A 級。勾選代表這個帳號已經有了。' : '這裡列出可勾選的傳承、事件、賽季商店，以及自己新增的戰法。列表先排 S 級，再排 A 級。已裝進隊伍的會變成灰色已佔用，不能再裝第二次。'}</p>
+          ${mode === 'event' ? '<p class="sub">賽季事件兌換的戰法。先排 S 級，再排 A 級。勾選代表這個帳號已經有了。</p>' : ''}
         </div>
       </div>
       <div class="entry-row">
