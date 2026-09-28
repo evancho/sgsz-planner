@@ -7,7 +7,7 @@
 import { writeFileSync } from 'node:fs';
 import { tacticRows } from './tactic-catalog.mjs';
 
-const VERSION = '1.2.3';
+const VERSION = '1.2.4';
 
 const APT_ORDER = ['騎', '盾', '弓', '槍', '器械'];
 
@@ -259,6 +259,10 @@ const extraTactics = [
   extra('tuo-jifeng', '拓·疾風驟雨', '主動', '賽季', [], null, '英雄命示賽季商店的疾風驟雨拓本，每輪最多可購兩項。與原戰法分開登記，具體係數以遊戲內為準。'),
   extra('jing-yulin', '精·魚鱗陣', '陣法', '賽季', [], null, '英雄命示賽季商店的魚鱗陣精進版，每輪最多可購兩項。提升統率，並有機會獲得抵御或治療。具體係數以遊戲內為準。'),
   extra('jing-fengshi', '精·鋒矢陣', '陣法', '賽季', [], ['騎', '盾', '槍'], '英雄命示賽季商店的鋒矢陣精進版，每輪最多可購兩項。沿用原戰法：主將傷害提高也更易受傷，副將傷害下降但更耐打。'),
+  extra('tuo-xushi', '拓·蓄勢待發', '指揮', '賽季', [], ['盾', '器械'], '兵演春秋賽季商店的蓄勢待發拓本，每輪最多可購兩項。沿用原戰法：限盾、器械。自身提高智力與統率並獲得先攻，但無法造成傷害；每回合有機率使我軍群體獲得規避。'),
+  extra('tuo-caochuan', '拓·草船借箭', '主動', '賽季', [], null, '兵演春秋賽季商店的草船借箭拓本，每輪最多可購兩項。沿用原戰法：移除我軍群體負面，並給予急救，受傷時有機率依統率回復。'),
+  extra('tuo-guagu', '拓·刮骨療毒', '主動', '賽季', [], null, '兵演春秋賽季商店的刮骨療毒拓本，每輪最多可購兩項。沿用原戰法：為損失兵力最多的我軍單體清除負面狀態，並依智力治療。'),
+  extra('jing-lingji', '精·靈機一動', '主動', '賽季', [], null, '兵演春秋賽季商店的靈機一動精進版，每輪最多可購兩項。全兵種可用，屬性提升低於原戰法。'),
 ];
 
 const tactics = [...tacticRows.map(t), ...extraTactics.map(t)];
@@ -409,8 +413,8 @@ const bingshu = {
 
 const meta = {
   catalogVersion: VERSION,
-  updated: '2026-09-26',
-  scope: '戰鬥類 S 級收到兗州之戰的公開清冊，並補上已核對的後續事件戰法；A 級只收已核對類型的常用戰法。另收英雄命示都尉自帶，以及賽季商店的拓本與精進陣法。直接編輯 scripts/tactic-catalog.mjs 或本腳本的增補列後重跑建置即可擴充。',
+  updated: '2026-09-28',
+  scope: '戰鬥類 S 級收到兗州之戰的公開清冊，並補上已核對的後續事件戰法；A 級只收已核對類型的常用戰法。另收英雄命示都尉自帶，以及賽季商店的拓本與精進陣法（含兵演春秋）。直接編輯 scripts/tactic-catalog.mjs 或本腳本的增補列後重跑建置即可擴充。',
 };
 
 writeFileSync('data/meta.json', `${JSON.stringify(meta, null, 2)}\n`);
