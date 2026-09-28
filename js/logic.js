@@ -1,5 +1,6 @@
 export const APP_ID = 'sgsz-planner';
 export const BACKUP_VERSION = 2;
+export const ACCOUNT_FILE_VERSION = 1;
 /** Index 0 is 主將. The following slots are 副將, in list order. */
 export const TEAM_POSITIONS = ['主將', '副將', '副將'];
 export const CAMP_ORDER = ['魏', '蜀', '吳', '群'];
@@ -545,6 +546,9 @@ export function normalizeState(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) {
     return { ok: false, error: '這不是本工具的備份檔' };
   }
+  if (input.kind === 'account') {
+    return { ok: false, error: '這是單帳號檔，請到帳號頁載入' };
+  }
   const backupVersion = input.backupVersion;
   if (input.app !== APP_ID || (backupVersion !== 1 && backupVersion !== BACKUP_VERSION)) {
     return { ok: false, error: '這不是本工具的備份檔' };
@@ -586,6 +590,69 @@ export function exportPayload(state, catalogVersion) {
     activeAccountId: state.activeAccountId,
     accounts: state.accounts,
   };
+}
+
+export function exportAccountPayload(account, catalogVersion) {
+  return {
+    app: APP_ID,
+    kind: 'account',
+    accountVersion: ACCOUNT_FILE_VERSION,
+    exportedAt: new Date().toISOString(),
+    catalogVersion,
+    account: {
+      id: account.id,
+      name: account.name,
+      owned: account.owned,
+      tacticsOwned: account.tacticsOwned,
+      customTactics: account.customTactics,
+      teams: account.teams,
+    },
+  };
+}
+
+export function normalizeAccountFile(input) {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) {
+    return { ok: false, error: '這不是單帳號檔' };
+  }
+  const looksLikeBackup = Array.isArray(input.accounts) || input.backupVersion != null;
+  if (input.kind === 'account' && looksLikeBackup) {
+    return { ok: false, error: '這不是單帳號檔' };
+  }
+  if (looksLikeBackup) {
+    return { ok: false, error: '這是整包備份，請到備份頁匯入' };
+  }
+  if (input.app !== APP_ID || input.kind !== 'account') {
+    return { ok: false, error: '這不是單帳號檔' };
+  }
+  if (input.accountVersion !== ACCOUNT_FILE_VERSION) {
+    return { ok: false, error: '這份單帳號的版本不相容' };
+  }
+  const account = normalizeAccount(input.account, BACKUP_VERSION);
+  if (!account) return { ok: false, error: '單帳號資料不完整' };
+  return { ok: true, account };
+}
+
+export function addAccountFile(state, account) {
+  if (!state || !Array.isArray(state.accounts) || state.accounts.length >= 30) {
+    return { ok: false, error: '帳號數量過多' };
+  }
+  const id = newId('acct');
+  return {
+    ok: true,
+    state: {
+      ...state,
+      activeAccountId: id,
+      accounts: [...state.accounts, { ...account, id }],
+    },
+  };
+}
+
+export function replaceAccountFile(state, targetId, account) {
+  const index = state?.accounts?.findIndex((item) => item.id === targetId) ?? -1;
+  if (index < 0) return { ok: false, error: '找不到要覆寫的帳號' };
+  const accounts = state.accounts.slice();
+  accounts[index] = { ...account, id: targetId };
+  return { ok: true, state: { ...state, accounts } };
 }
 
 export function updateAccount(state, accountId, recipe) {
