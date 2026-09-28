@@ -356,6 +356,27 @@ button.grow-name { cursor: pointer; }
 }
 .member-move { display: inline-flex; gap: 4px; flex: 0 0 auto; }
 .member-top h3 { margin: 0; font-size: 18px; }
+button.member-name {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  min-height: 0;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+button.member-name:hover,
+button.member-name:focus-visible { color: var(--gold); }
+.picker-replacing { margin: 2px 0 0; color: var(--gold); font-weight: 700; }
 .member-meta { color: var(--muted); font-size: 13px; }
 .member .apt-row {
   flex: 1 0 100%;

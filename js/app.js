@@ -733,7 +733,7 @@ function memberCard(team, member, slot, current) {
         <div class="member-id">
           <span class="tag">${TEAM_POSITIONS[slot]}</span>
           ${general ? `
-            <h3>${esc(plainName(general))}${duweiMark(general)}</h3>
+            <button type="button" class="member-name" data-action="open-general" data-team="${esc(team.id)}" data-slot="${slot}" aria-label="替換${esc(plainName(general))}">${esc(plainName(general))}${duweiMark(general)}</button>
             <span class="member-meta">${esc(general.camp)} · C${general.cost}${isDuwei(general) ? '（天賦可 +1）' : ''} · ${esc(general.role)}</span>
             <div class="apt-row">${aptHtml(general.apt)}</div>
             ${marks ? `<div class="member-marks">${marks}</div>` : ''}
@@ -756,6 +756,7 @@ function memberCard(team, member, slot, current) {
           <button type="button" class="btn-ghost" data-action="ask-clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出隊伍</button>
         </div>
       ` : member ? `
+        <button type="button" class="member-name" data-action="open-general" data-team="${esc(team.id)}" data-slot="${slot}" aria-label="替換${esc(member.generalId)}">${esc(member.generalId)}</button>
         <p class="warn">圖鑑沒有 ${esc(member.generalId)}</p>
         <button type="button" class="btn-ghost" data-action="ask-clear-general" data-team="${esc(team.id)}" data-slot="${slot}">移出隊伍</button>
       ` : `
@@ -941,11 +942,17 @@ function generalPicker() {
   if (ui.picker.sort === 'red') options = sortByRedScore(options, (general) => current.owned[general.id]);
   const empty = ownedCount === 0 ? '還沒有勾選擁有的武將。' : '沒有符合的武將。';
   const sort = ui.picker.sort || 'default';
+  const occupied = team.members[ui.picker.slot];
+  const occupiedGeneral = occupied ? generalsById().get(occupied.generalId) : null;
+  const replacingName = occupied ? (occupiedGeneral ? plainName(occupiedGeneral) : occupied.generalId) : '';
   return `
     <div class="backdrop" data-action="backdrop-close">
-      <section class="sheet picker-sheet" role="dialog" aria-modal="true" aria-label="選擇武將" tabindex="-1">
+      <section class="sheet picker-sheet" role="dialog" aria-modal="true" aria-label="${replacingName ? `選擇武將，即將替換${esc(replacingName)}` : '選擇武將'}" tabindex="-1">
         <div class="picker-head row-between">
-          <h3>選擇武將</h3>
+          <div>
+            <h3>選擇武將</h3>
+            ${replacingName ? `<p class="picker-replacing">即將替換：${esc(replacingName)}</p>` : ''}
+          </div>
           <button type="button" class="btn-ghost" data-action="close-picker">關閉</button>
         </div>
         <div class="picker-filters">
