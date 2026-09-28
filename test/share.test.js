@@ -155,6 +155,23 @@ test('missing tactics and generals are listed and do not block the team', () => 
   assert.equal(applied.account.teams[1].members[1].learned[0], 'no-such-tactic');
   assert.equal(applied.account.tacticsOwned.jifeng, undefined);
   assert.deepEqual(applied.account.owned['no-such-general'], { red: 3, dynamic: true, awaken: false });
+  assert.equal(gaps.some((gap) => ['red', 'dynamic', 'awaken'].includes(gap.kind)), false);
+});
+
+test('missing red, dynamic, and collection are written and not listed as gaps', () => {
+  const account = emptyAccount('acct-a', '主帳');
+  account.tacticsOwned = { qianli: true, jifeng: true, jushui: true };
+  const share = decodeTeamShare(encodeTeamShare(team, owned).token).share;
+  const gaps = shareGaps(share, account, {
+    hasGeneral: () => true,
+    tacticName: (id) => id,
+    hasBranch: () => true,
+  });
+  assert.deepEqual(gaps, []);
+  const applied = applyTeamShare(account, share, 'team-quiet');
+  assert.equal(applied.ok, true);
+  assert.deepEqual(applied.account.owned.guanyu, { red: 5, dynamic: true, awaken: true });
+  assert.deepEqual(applied.account.owned.zhangfei, { red: 0, dynamic: false, awaken: false });
 });
 
 test('share tokens reject bad versions, scripts, and overlong text', () => {

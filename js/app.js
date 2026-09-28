@@ -703,7 +703,7 @@ function shareView(token) {
         </div>
       </div>
       <p>只會把「${esc(decoded.share.name)}」這一隊加進帳號「${esc(current.name)}」。上方可以先換帳號。按下之後才會寫入，不會改動已經有的隊伍，也不會還原整份備份。</p>
-      <p class="sub">還沒擁有的武將會標記擁有，並補上分享的紅度、動態、典藏。已經更高的不會被調低。缺少的戰法或武將仍會留在配置裡，不會擋下整隊。</p>
+      <p class="sub">缺少的戰法，以及圖鑑沒有的武將，仍會留在配置裡，不會擋下整隊。</p>
       <div class="help-card share-applied">
         <h3>已套用</h3>
         <p>下面是即將寫入的配置。</p>

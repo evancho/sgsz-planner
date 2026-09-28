@@ -786,7 +786,7 @@ function mergeShareOwned(existing, member) {
   };
 }
 
-/** 圖鑑沒有或尚未擁有的戰法、以及圖鑑沒有的武將。不影響能否載入。 */
+/** 尚未擁有或圖鑑沒有的戰法，以及圖鑑沒有的武將、兵書。紅度、動態、典藏不在這裡。 */
 export function shareGaps(share, account, lookup) {
   const missing = [];
   const seen = new Set();
