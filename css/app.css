@@ -274,6 +274,15 @@ button.grow-name { cursor: pointer; }
 .gcard.qun { --camp: var(--qun); }
 .gcard header, .trow, .member-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
 .camp { font-weight: 700; }
+.camp-ink.wei { color: var(--wei); }
+.camp-ink.shu { color: var(--shu); }
+.camp-ink.wu { color: var(--wu); }
+.camp-ink.qun { color: var(--qun); }
+.team-head { align-items: center; flex-wrap: wrap; }
+.team-head .team-title { flex: 1 1 160px; min-width: 0; }
+.team-tools { flex: 0 0 auto; flex-wrap: nowrap; }
+.team-tools .btn,
+.team-tools .btn-ghost { white-space: nowrap; }
 .cost {
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -429,7 +438,16 @@ button.member-name:focus-visible { color: var(--gold); }
 .member .muted { margin: 0; }
 .member .muted,
 .member .warn { margin-top: 6px; }
-.member-book { flex: 1; text-align: left; min-height: 36px; padding: 6px 10px; }
+.member-book {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  min-height: 36px;
+  padding: 6px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .member-actions .btn-ghost { flex: 0 0 auto; min-height: 36px; padding: 6px 10px; }
 .chip:disabled { opacity: 0.4; cursor: not-allowed; }
 .account-list, .help-grid, .stack { display: grid; gap: 12px; }
