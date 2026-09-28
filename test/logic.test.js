@@ -14,6 +14,8 @@ import {
   generalBlockReason,
   indexNameUse,
   bingshuStep,
+  secondarySlots,
+  toggleSecondary,
   isDuwei,
   isInventoryTactic,
   matchesGeneral,
@@ -517,11 +519,47 @@ test('deleting a team names it and says the delete cannot be undone', () => {
   assert.equal(deleteTeamPrompt('  '), '確定刪除隊伍「這支隊伍」？此操作無法復原');
 });
 
-test('bingshu steps go from system to primary book to secondary book', () => {
+test('bingshu keeps two secondaries and still reads a single legacy one', () => {
   assert.equal(bingshuStep(null), 'branch');
   assert.equal(bingshuStep({ branch: 'jiubian' }), 'primary');
   assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi' }), 'secondary');
-  assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi', secondary: 'suzhan' }), 'branch');
+  assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi', secondary: 'suzhan' }), 'secondary');
+  assert.equal(bingshuStep({ branch: 'jiubian', primary: 'yuanqi', secondary: ['suzhan', 'zhirui'] }), 'branch');
+  assert.deepEqual(secondarySlots({ secondary: 'suzhan' }), ['suzhan', null]);
+  assert.deepEqual(secondarySlots({ secondary: ['suzhan', 'zhirui'] }), ['suzhan', 'zhirui']);
+  assert.deepEqual(toggleSecondary(['suzhan', null], 'zhirui'), ['suzhan', 'zhirui']);
+  assert.deepEqual(toggleSecondary(['suzhan', 'zhirui'], 'suzhan'), ['zhirui', null]);
+  assert.deepEqual(toggleSecondary(['suzhan', 'zhirui'], 'wulue'), ['suzhan', 'zhirui']);
+  const legacy = normalizeState({
+    app: 'sgsz-planner',
+    backupVersion: 2,
+    activeAccountId: 'acct-1',
+    accounts: [{
+      id: 'acct-1',
+      name: '主帳',
+      teams: [{
+        id: 'team-1',
+        name: '舊兵書',
+        members: [{ generalId: 'guanyu', learned: [null, null], bingshu: { branch: 'xushi', primary: 'houfa', secondary: 'guimou' } }, null, null],
+      }],
+    }],
+  });
+  assert.deepEqual(legacy.state.accounts[0].teams[0].members[0].bingshu.secondary, ['guimou', null]);
+  const newer = normalizeState({
+    app: 'sgsz-planner',
+    backupVersion: 2,
+    activeAccountId: 'acct-1',
+    accounts: [{
+      id: 'acct-1',
+      name: '主帳',
+      teams: [{
+        id: 'team-1',
+        name: '新兵書',
+        members: [{ generalId: 'guanyu', learned: [null, null], bingshu: { branch: 'xushi', primary: 'houfa', secondary: ['guimou', 'miaosuan'] } }, null, null],
+      }],
+    }],
+  });
+  assert.deepEqual(newer.state.accounts[0].teams[0].members[0].bingshu.secondary, ['guimou', 'miaosuan']);
 });
 
 test('inventory list drops innate tactics and keeps custom ones', () => {

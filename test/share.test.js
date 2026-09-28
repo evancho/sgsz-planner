@@ -44,7 +44,7 @@ test('team share round-trips generals, tactics, books, and ownership', () => {
   assert.equal(decoded.share.name, '蜀槍');
   assert.equal(decoded.share.members[0].generalId, 'guanyu');
   assert.deepEqual(decoded.share.members[0].learned, ['qianli', 'jifeng']);
-  assert.deepEqual(decoded.share.members[0].bingshu, { branch: 'xushi', primary: 'houfa', secondary: 'guimou' });
+  assert.deepEqual(decoded.share.members[0].bingshu, { branch: 'xushi', primary: 'houfa', secondary: ['guimou', null] });
   assert.equal(decoded.share.members[0].red, 5);
   assert.equal(decoded.share.members[0].dynamic, true);
   assert.equal(decoded.share.members[0].awaken, true);
@@ -66,6 +66,16 @@ test('team share round-trips generals, tactics, books, and ownership', () => {
   assert.equal(JSON.stringify(onlyShu.share).includes('luxun'), false);
   assert.equal(JSON.stringify(onlyWu.share).includes('guanyu'), false);
   assert.equal(onlyWu.share.members.filter(Boolean).length, 1);
+  const twoBooks = {
+    ...team,
+    members: [{
+      generalId: 'guanyu',
+      learned: ['qianli', null],
+      bingshu: { branch: 'xushi', primary: 'houfa', secondary: ['guimou', 'miaosuan'] },
+    }, null, null],
+  };
+  const both = decodeTeamShare(encodeTeamShare(twoBooks, owned).token);
+  assert.deepEqual(both.share.members[0].bingshu.secondary, ['guimou', 'miaosuan']);
 });
 
 test('loading a share adds one team and does not replace the rest of the account', () => {

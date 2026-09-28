@@ -15,6 +15,8 @@ import {
   allTactics,
   bingshuLabel,
   bingshuStep,
+  secondarySlots,
+  toggleSecondary,
   buildUsage,
   compareTactics,
   applyTeamShare,
@@ -807,13 +809,14 @@ function bingshuSheet() {
   const hints = {
     branch: '先選體系。選完會進到主兵書。',
     primary: `體系是${branch?.name || ''}。再選主兵書，點同一項可取消。`,
-    secondary: '最後選副兵書。點同一項可取消。',
+    secondary: '可選兩個副兵書，再點一次可取消。選滿兩個就關閉。',
   };
   let body = '';
   if (step === 'primary' && branch) {
     body = `<div class="nodes">${branch.primary.map((node) => nodeButton(node, selected?.primary === node.id, 'primary')).join('')}</div>`;
   } else if (step === 'secondary' && branch) {
-    body = `<div class="nodes">${branch.secondary.map((node) => nodeButton(node, selected?.secondary === node.id, 'secondary')).join('')}</div>`;
+    const slots = secondarySlots(selected);
+    body = `<div class="nodes">${branch.secondary.map((node) => nodeButton(node, slots.includes(node.id), 'secondary')).join('')}</div>`;
   } else {
     body = `<div class="branches">${ui.catalog.branches.map((item) => `<button type="button" class="branch ${selected?.branch === item.id ? 'on' : ''}" data-action="pick-branch" data-branch="${esc(item.id)}">${esc(item.name)}<small>${esc(item.blurb)}</small></button>`).join('')}</div>`;
   }
@@ -1531,17 +1534,31 @@ function onClick(event) {
       ui.bingshu = { ...ui.bingshu, step: 'primary' };
       setBingshu(current, (book) => (book?.branch === el.dataset.branch
         ? book
-        : { branch: el.dataset.branch, primary: null, secondary: null }));
+        : { branch: el.dataset.branch, primary: null, secondary: [null, null] }));
       break;
     case 'pick-node': {
       const layer = el.dataset.layer;
       const next = el.dataset.node;
-      const turningOff = bingshuContext(current)?.book?.[layer] === next;
-      const done = layer === 'secondary' && !turningOff;
-      if (layer === 'primary') ui.bingshu = { ...ui.bingshu, step: turningOff ? 'primary' : 'secondary' };
-      setBingshu(current, (book) => {
-        if (!book?.branch) return book;
-        return { ...book, [layer]: book[layer] === next ? null : next };
+      const book = bingshuContext(current)?.book;
+      if (layer === 'primary') {
+        const turningOff = book?.primary === next;
+        ui.bingshu = { ...ui.bingshu, step: turningOff ? 'primary' : 'secondary' };
+        setBingshu(current, (currentBook) => {
+          if (!currentBook?.branch) return currentBook;
+          return { ...currentBook, primary: currentBook.primary === next ? null : next };
+        });
+        break;
+      }
+      const before = secondarySlots(book);
+      if (before[0] && before[1] && !before.includes(next)) {
+        toast('副兵書最多兩個');
+        break;
+      }
+      const after = toggleSecondary(before, next);
+      const done = Boolean(after[0] && after[1] && !before.includes(next));
+      setBingshu(current, (currentBook) => {
+        if (!currentBook?.branch) return currentBook;
+        return { ...currentBook, secondary: after };
       }, { close: done });
       break;
     }

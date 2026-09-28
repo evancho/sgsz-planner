@@ -394,11 +394,34 @@ export function teamCost(team, generalsById) {
   }, 0);
 }
 
-/** Next 兵書 step: 體系, then 主兵書, then 副兵書. A finished book returns to 體系. */
+/** 兩個副兵書。舊備份的 secondary 是單一字串，讀成第一格。 */
+export function secondarySlots(book) {
+  if (!book) return [null, null];
+  const raw = book.secondary;
+  if (Array.isArray(raw)) return [0, 1].map((index) => cleanId(raw[index]) || null);
+  return [cleanId(raw) || null, null];
+}
+
+/** 點選或取消一個副兵書。已滿兩個時，新的選項不會再加進去。 */
+export function toggleSecondary(slots, id) {
+  const next = [slots?.[0] || null, slots?.[1] || null];
+  const index = next.indexOf(id);
+  if (index >= 0) {
+    next[index] = null;
+    const kept = next.filter(Boolean);
+    return [kept[0] || null, kept[1] || null];
+  }
+  if (!next[0]) return [id, next[1]];
+  if (!next[1]) return [next[0], id];
+  return next;
+}
+
+/** Next 兵書 step: 體系, then 主兵書, then 副兵書. Both secondaries finish the book. */
 export function bingshuStep(book) {
   if (!book?.branch) return 'branch';
   if (!book.primary) return 'primary';
-  if (!book.secondary) return 'secondary';
+  const [first, second] = secondarySlots(book);
+  if (!first || !second) return 'secondary';
   return 'branch';
 }
 
@@ -407,8 +430,10 @@ export function bingshuLabel(book, branches) {
   const branch = branches.find((item) => item.id === book.branch);
   if (!branch) return '未知兵書';
   const primary = branch.primary.find((item) => item.id === book.primary);
-  const secondary = branch.secondary.find((item) => item.id === book.secondary);
-  return [branch.name, primary?.name, secondary?.name].filter(Boolean).join(' · ');
+  const names = secondarySlots(book)
+    .map((id) => branch.secondary.find((item) => item.id === id)?.name)
+    .filter(Boolean);
+  return [branch.name, primary?.name, ...names].filter(Boolean).join(' · ');
 }
 
 function normalizeMember(raw) {
@@ -424,7 +449,7 @@ function normalizeMember(raw) {
     bingshu = {
       branch: cleanId(raw.bingshu.branch),
       primary: cleanId(raw.bingshu.primary) || null,
-      secondary: cleanId(raw.bingshu.secondary) || null,
+      secondary: secondarySlots(raw.bingshu),
     };
   }
   return { generalId, learned, bingshu };
@@ -721,7 +746,9 @@ export function encodeTeamShare(team, owned = {}) {
     let book = null;
     const branch = cleanId(member.bingshu?.branch);
     if (branch) {
-      book = [branch, cleanId(member.bingshu.primary) || '', cleanId(member.bingshu.secondary) || ''];
+      const [first, second] = secondarySlots(member.bingshu);
+      book = [branch, cleanId(member.bingshu.primary) || '', first || ''];
+      if (second) book.push(second);
     }
     return {
       g: generalId,
@@ -769,7 +796,7 @@ export function decodeTeamShare(token) {
     const generalId = cleanId(raw.g);
     if (!generalId) return shareError('分享連結無法讀取');
     if (raw.t != null && !Array.isArray(raw.t)) return shareError('分享連結無法讀取');
-    if (raw.b != null && (!Array.isArray(raw.b) || raw.b.length > 3)) return shareError('分享連結無法讀取');
+    if (raw.b != null && (!Array.isArray(raw.b) || raw.b.length > 4)) return shareError('分享連結無法讀取');
     const learned = [0, 1].map((index) => cleanId(raw.t?.[index]) || null);
     let bingshu = null;
     if (raw.b != null) {
@@ -778,7 +805,7 @@ export function decodeTeamShare(token) {
       bingshu = {
         branch,
         primary: cleanId(raw.b[1]) || null,
-        secondary: cleanId(raw.b[2]) || null,
+        secondary: [cleanId(raw.b[2]) || null, cleanId(raw.b[3]) || null],
       };
     }
     members.push({
