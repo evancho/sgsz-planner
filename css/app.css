@@ -140,6 +140,8 @@ main { padding: 16px 16px var(--nav-h); max-width: 1180px; margin: 0 auto; }
 textarea { min-height: 180px; resize: vertical; }
 textarea.notes { min-height: 84px; }
 .team-card { display: block; color: inherit; }
+.team-card-main { display: block; color: inherit; text-decoration: none; }
+.team-card > .btn { margin-top: 10px; }
 .backup-grid { display: grid; gap: 12px; }
 
 .layout { display: block; }

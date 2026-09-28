@@ -59,6 +59,7 @@ const ui = {
   picker: null,
   bingshu: null,
   shareLink: '',
+  shareName: '',
   dialog: null,
   pendingImport: null,
   draft: { name: '', type: '主動', desc: '' },
@@ -579,11 +580,14 @@ function teamsView() {
 function teamCard(team, map) {
   const names = team.members.map((member) => map.get(member?.generalId)?.name || '空').join(' / ');
   return `
-    <a class="team-card" href="#/teams/${esc(team.id)}">
-      <div class="row-between"><h3>${esc(team.name)}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
-      <p>${esc(names)}</p>
-      ${team.notes ? `<p class="muted">${esc(team.notes)}</p>` : ''}
-    </a>`;
+    <article class="team-card">
+      <a class="team-card-main" href="#/teams/${esc(team.id)}">
+        <div class="row-between"><h3>${esc(team.name)}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
+        <p>${esc(names)}</p>
+        ${team.notes ? `<p class="muted">${esc(team.notes)}</p>` : ''}
+      </a>
+      <button type="button" class="btn" data-action="share-team" data-id="${esc(team.id)}">分享</button>
+    </article>`;
 }
 
 function teamView(id) {
@@ -669,7 +673,7 @@ function shareView(token) {
           <h2>${esc(decoded.share.name)}</h2>
         </div>
       </div>
-      <p>這會加進帳號「${esc(current.name)}」。上方可以先換帳號。按下之後才會寫入，不會取代其他隊伍，也不會還原整份備份。</p>
+      <p>只會把「${esc(decoded.share.name)}」這一隊加進帳號「${esc(current.name)}」。上方可以先換帳號。按下之後才會寫入，不會改動已經有的隊伍，也不會還原整份備份。</p>
       <p class="sub">這三位的紅度、動態、典藏會改成這份分享的內容。</p>
       <ol class="share-preview">${cards}</ol>
       ${uniqueWarnings.length ? `<p class="warn">${uniqueWarnings.map((line) => esc(line)).join('<br>')}</p>` : ''}
@@ -681,7 +685,7 @@ function shareView(token) {
 function shareSheet() {
   if (!ui.shareLink) return '';
   return sheet('分享隊伍', `
-    <p>把連結交給對方。對方打開後，還要再按「載入此隊伍」，才會加進他自己選中的帳號。</p>
+    <p>這條連結只含「${esc(ui.shareName)}」這一隊，不會帶出其他隊伍。對方打開後，還要再按「載入此隊伍」，才會把這一隊加進他當時選中的帳號。</p>
     <label>分享連結
       <input id="share-link" class="field" readonly value="${esc(ui.shareLink)}">
     </label>
@@ -1063,6 +1067,7 @@ function onClick(event) {
     ui.picker = null;
     ui.bingshu = null;
     ui.shareLink = '';
+    ui.shareName = '';
     render();
     return;
   }
@@ -1286,6 +1291,7 @@ function onClick(event) {
     case 'close-picker':
       ui.picker = null;
       ui.shareLink = '';
+      ui.shareName = '';
       render();
       break;
     case 'share-team': {
@@ -1298,6 +1304,7 @@ function onClick(event) {
       }
       ui.picker = null;
       ui.bingshu = null;
+      ui.shareName = team.name;
       ui.shareLink = shareUrl(encoded.token);
       ui.justOpened = true;
       render();
@@ -1333,6 +1340,7 @@ function onClick(event) {
         accounts: ui.state.accounts.map((item) => (item.id === current.id ? applied.account : item)),
       });
       ui.shareLink = '';
+      ui.shareName = '';
       location.hash = `#/teams/${teamId}`;
       toast('已載入隊伍');
       break;
@@ -1736,7 +1744,10 @@ function bind() {
     if (ui.dialog) {
       ui.dialog = null;
       ui.pendingImport = null;
-    } else if (ui.shareLink) ui.shareLink = '';
+    } else if (ui.shareLink) {
+      ui.shareLink = '';
+      ui.shareName = '';
+    }
     else if (ui.picker) ui.picker = null;
     else if (ui.bingshu) ui.bingshu = null;
     else if (ui.filterOpen) ui.filterOpen = false;
@@ -1747,6 +1758,7 @@ function bind() {
     ui.picker = null;
     ui.bingshu = null;
     ui.shareLink = '';
+    ui.shareName = '';
     ui.dialog = null;
     ui.pendingImport = null;
     render();

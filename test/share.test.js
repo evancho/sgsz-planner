@@ -55,6 +55,17 @@ test('team share round-trips generals, tactics, books, and ownership', () => {
   assert.equal(decoded.share.members[2], null);
   assert.equal(JSON.stringify(decoded.share).includes('備註'), false);
   assert.equal(JSON.stringify(decoded.share).includes('luxun'), false);
+  const other = {
+    id: 'team-wu',
+    name: '吳弓',
+    notes: '',
+    members: [{ generalId: 'luxun', learned: ['taiping', null], bingshu: null }, null, null],
+  };
+  const onlyShu = decodeTeamShare(encodeTeamShare(team, owned).token);
+  const onlyWu = decodeTeamShare(encodeTeamShare(other, { luxun: { red: 2, dynamic: true, awaken: false } }).token);
+  assert.equal(JSON.stringify(onlyShu.share).includes('luxun'), false);
+  assert.equal(JSON.stringify(onlyWu.share).includes('guanyu'), false);
+  assert.equal(onlyWu.share.members.filter(Boolean).length, 1);
 });
 
 test('loading a share adds one team and does not replace the rest of the account', () => {
