@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { applyTeamShare, decodeTeamShare, emptyAccount, encodeTeamShare, shareGaps } from '../js/logic.js';
+import { applyTeamShare, decodeTeamShare, emptyAccount, encodeTeamShare, shareGaps, shareTokenFromText } from '../js/logic.js';
 
 const team = {
   id: 'team-shu',
@@ -207,4 +207,15 @@ test('share tokens reject bad versions, scripts, and overlong text', () => {
   }));
   const share = decodeTeamShare(encodeTeamShare(team, owned).token).share;
   assert.equal(applyTeamShare(full, share, 'team-extra').ok, false);
+});
+
+test('share text accepts a link, a hash, or the token itself', () => {
+  const encoded = encodeTeamShare(team, owned);
+  const token = encoded.token;
+  assert.equal(shareTokenFromText(`https://evancho.github.io/sgsz-planner/#/share/${token}`), token);
+  assert.equal(shareTokenFromText(`#/share/${token}`), token);
+  assert.equal(shareTokenFromText(token), token);
+  assert.equal(shareTokenFromText('  '), '');
+  assert.equal(decodeTeamShare(shareTokenFromText(`#/share/${token}`)).ok, true);
+  assert.equal(decodeTeamShare(shareTokenFromText('{"v":1}')).ok, false);
 });

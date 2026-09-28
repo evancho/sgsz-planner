@@ -769,6 +769,20 @@ export function encodeTeamShare(team, owned = {}) {
   return { ok: true, token };
 }
 
+/** 從整段網址、#/share/… 或 token 取出分享碼。不執行內容。 */
+export function shareTokenFromText(text) {
+  const raw = String(text ?? '').trim();
+  if (!raw) return '';
+  const hash = raw.match(/#\/share\/([^?#\s]+)/);
+  const path = hash || raw.match(/(?:^|\/)share\/([^?#\s]+)/);
+  if (!path) return raw;
+  try {
+    return decodeURIComponent(path[1]);
+  } catch {
+    return path[1];
+  }
+}
+
 /** 還原分享 token。不執行內容，只接受固定欄位。 */
 export function decodeTeamShare(token) {
   if (typeof token !== 'string' || token.length === 0 || token.length > SHARE_MAX_LENGTH) {
