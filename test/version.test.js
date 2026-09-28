@@ -13,11 +13,11 @@ function semver(value) {
 }
 
 test('app version is the release shown first', () => {
-  assert.equal(release.version, '1.2.14');
+  assert.equal(release.version, '1.2.15');
   assert.match(release.date, /^\d{8}$/);
   assert.equal(release.releases[0].version, release.version);
   assert.equal(release.releases[0].date, release.date);
-  assert.deepEqual(release.releases.map((item) => item.version).slice(0, 3), ['1.2.14', '1.2.13', '1.2.12']);
+  assert.deepEqual(release.releases.map((item) => item.version).slice(0, 3), ['1.2.15', '1.2.14', '1.2.13']);
 });
 
 test('each release has a date code and a changelist', () => {

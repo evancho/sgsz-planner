@@ -64,7 +64,6 @@ const ui = {
   quick: 'all',
   query: '',
   tacticQuery: '',
-  inheritQuery: '',
   filterOpen: false,
   picker: null,
   bingshu: null,
@@ -177,7 +176,7 @@ function route() {
   }
   if (parts[0] === 'accounts') return { name: 'accounts' };
   if (parts[0] === 'tactics' && parts[1] === 'event') return { name: 'tactics', mode: 'event' };
-  if (parts[0] === 'tactics' && parts[1] === 'inherit') return { name: 'inherit' };
+  if (parts[0] === 'tactics' && parts[1] === 'inherit') return { name: 'tactics', mode: 'inherit' };
   if (parts[0] === 'tactics') return { name: 'tactics', mode: 'all' };
   if (parts[0] === 'teams' && parts[1]) return { name: 'team', id: teamId };
   if (parts[0] === 'teams') return { name: 'teams' };
@@ -205,7 +204,7 @@ function icon(name) {
 function shell(body) {
   const current = account();
   const routeName = route().name;
-  const here = routeName === 'team' || routeName === 'share' ? 'teams' : routeName === 'inherit' ? 'tactics' : routeName;
+  const here = routeName === 'team' || routeName === 'share' ? 'teams' : routeName;
   const tabs = [
     ['accounts', '帳號'],
     ['generals', '武將'],
@@ -473,10 +472,11 @@ function seg(id, flag, label, on) {
 function tacticsView(mode) {
   const current = account();
   const usage = usageFor(current);
-    const query = ui.tacticQuery.trim().toLowerCase();
+  const query = ui.tacticQuery.trim().toLowerCase();
+  const source = mode === 'event' ? '事件' : mode === 'inherit' ? '傳承' : '';
   const list = tacticsFor(current).filter((tactic) => {
     if (!isInventoryTactic(tactic)) return false;
-    if (mode === 'event' && tactic.source !== '事件') return false;
+    if (source && tactic.source !== source) return false;
     if (ui.tacticTab && ui.tacticTab !== '全部' && tactic.type !== ui.tacticTab) return false;
     if (!query) return true;
     return `${tactic.name} ${tactic.desc} ${tactic.type}`.toLowerCase().includes(query);
@@ -486,14 +486,13 @@ function tacticsView(mode) {
     <section>
       <div class="page-head">
         <div>
-          <h2>${mode === 'event' ? '事件戰法' : '戰法'}</h2>
-          ${mode === 'event' ? '<p class="sub">賽季事件兌換的戰法。先排 S 級，再排 A 級。勾選代表這個帳號已經有了。</p>' : ''}
+          <h2>戰法</h2>
         </div>
       </div>
       <div class="entry-row">
         <a class="btn ${mode === 'all' ? 'primary' : ''}" href="#/tactics">全部戰法</a>
         <a class="btn ${mode === 'event' ? 'primary' : ''}" href="#/tactics/event">事件</a>
-        <a class="btn" href="#/tactics/inherit">戰法傳承</a>
+        <a class="btn ${mode === 'inherit' ? 'primary' : ''}" href="#/tactics/inherit">戰法傳承</a>
         <button type="button" class="btn" data-action="open-add-tactic">新增非橙戰法</button>
       </div>
       <div class="chips" role="tablist" aria-label="戰法類型">
@@ -549,44 +548,6 @@ function rankTag(tactic) {
   if (tactic.rank !== 'S' && tactic.rank !== 'A') return '';
   const grade = tactic.rank === 'S' ? 's' : 'a';
   return `<span class="tag grade-${grade}" aria-label="等級 ${tactic.rank}">${tactic.rank}</span>`;
-}
-
-function inheritView() {
-  const current = account();
-  const query = ui.inheritQuery.trim();
-  const list = ui.catalog.tactics.filter((tactic) => tactic.source === '傳承' && (!query || `${tactic.name}${tactic.desc}`.includes(query))).sort(compareTactics);
-  return `
-    <section>
-      <div class="page-head">
-        <div>
-          <h2>戰法傳承</h2>
-          <p class="sub">對照常見傳承來源。這裡只幫這個帳號做記號，不會消耗武將。</p>
-        </div>
-        <a class="btn" href="#/tactics">返回戰法</a>
-      </div>
-      <input id="inherit-search" class="search" data-model="inherit-query" value="${esc(ui.inheritQuery)}" placeholder="搜尋傳承戰法" autocomplete="off">
-      <div class="list" style="margin-top:12px">
-        ${list.map((tactic) => inheritRow(tactic, current)).join('')}
-      </div>
-      ${colophon()}
-    </section>`;
-}
-
-function inheritRow(tactic, current) {
-  const sources = tactic.from.map((id) => generalsById().get(id)).filter(Boolean);
-  const sourceText = sources.length
-    ? sources.map((general) => `${plainName(general)}${current.owned[general.id] ? '（已擁有）' : ''}`).join('、')
-    : '來源待補，可直接標記';
-  const owned = tacticOwned(current, tactic.id);
-  return `
-    <article class="trow">
-      <div class="body">
-        <h3>${esc(tactic.name)} ${rankTag(tactic)} <span class="tag">${esc(tactic.type)}</span></h3>
-        <p class="muted">${esc(tactic.desc)}</p>
-        <p class="faint">常見來源：${esc(sourceText)}</p>
-      </div>
-      ${owned ? '<span class="mini">已擁有</span>' : `<button type="button" class="btn" data-action="mark-tactic" data-id="${esc(tactic.id)}">標記已擁有</button>`}
-    </article>`;
 }
 
 function teamsView() {
@@ -1206,7 +1167,6 @@ function view() {
   if (here.name === 'accounts') return accountsView();
   if (here.name === 'generals') return generalsView();
   if (here.name === 'tactics') return tacticsView(here.mode);
-  if (here.name === 'inherit') return inheritView();
   if (here.name === 'teams') return teamsView();
   if (here.name === 'team') return teamView(here.id);
   if (here.name === 'share') return shareView(here.token);
@@ -1230,7 +1190,6 @@ function render() {
     accounts: '帳號',
     generals: '武將',
     tactics: '戰法',
-    inherit: '戰法傳承',
     teams: '隊伍',
     team: '編隊',
     share: '分享隊伍',
@@ -1456,10 +1415,6 @@ function onClick(event) {
       if (!owned) toast('已取消擁有，並從隊伍卸下');
       break;
     }
-    case 'mark-tactic':
-      commit(updateAccount(ui.state, current.id, (item) => setTacticOwned(item, el.dataset.id, true)));
-      toast('已標記擁有');
-      break;
     case 'open-add-tactic':
       ui.draft = { name: '', type: '主動', desc: '' };
       ui.picker = { kind: 'custom' };
@@ -1807,7 +1762,6 @@ function onInput(event) {
   if (!model) return;
   if (model === 'query') ui.query = el.value;
   else if (model === 'tactic-query') ui.tacticQuery = el.value;
-  else if (model === 'inherit-query') ui.inheritQuery = el.value;
   else if (model === 'picker-query' && ui.picker) ui.picker = { ...ui.picker, query: el.value };
   else if (model === 'share-import' && ui.shareImport) {
     ui.shareImport = { ...ui.shareImport, text: el.value };
