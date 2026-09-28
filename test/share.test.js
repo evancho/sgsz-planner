@@ -111,7 +111,7 @@ test('loading does not lower a higher red or clear dynamic and collection', () =
   assert.equal(applied.account.teams.length, 1);
 });
 
-test('missing tactics and generals are listed and do not block the team', () => {
+test('the missing list contains only tactics and does not block the team', () => {
   const gapped = {
     id: 'team-gap',
     name: '缺卡',
@@ -138,21 +138,19 @@ test('missing tactics and generals are listed and do not block the team', () => 
     'no-such-general': { red: 3, dynamic: true, awaken: false },
   }).token).share;
   const gaps = shareGaps(share, account, {
-    hasGeneral: (id) => id === 'guanyu',
     tacticName: (id) => (id === 'qianli' ? '千里走單騎' : id === 'jifeng' ? '疾風驟雨' : ''),
-    hasBranch: (id) => id === 'xushi',
   });
   assert.deepEqual(gaps.map((gap) => `${gap.kind}:${gap.id}:${gap.reason}`), [
     'tactic:jifeng:未擁有',
-    'general:no-such-general:圖鑑沒有',
     'tactic:no-such-tactic:圖鑑沒有',
-    'book:no-book:圖鑑沒有',
   ]);
   const applied = applyTeamShare(account, share, 'team-gap');
   assert.equal(applied.ok, true);
   assert.equal(applied.account.teams[0].name, '舊隊');
   assert.equal(applied.account.teams[1].members[0].learned[1], 'jifeng');
+  assert.equal(applied.account.teams[1].members[1].generalId, 'no-such-general');
   assert.equal(applied.account.teams[1].members[1].learned[0], 'no-such-tactic');
+  assert.equal(applied.account.teams[1].members[1].bingshu.branch, 'no-book');
   assert.equal(applied.account.tacticsOwned.jifeng, undefined);
   assert.deepEqual(applied.account.owned['no-such-general'], { red: 3, dynamic: true, awaken: false });
   assert.equal(gaps.some((gap) => ['red', 'dynamic', 'awaken'].includes(gap.kind)), false);
@@ -163,9 +161,7 @@ test('missing red, dynamic, and collection are written and not listed as gaps', 
   account.tacticsOwned = { qianli: true, jifeng: true, jushui: true };
   const share = decodeTeamShare(encodeTeamShare(team, owned).token).share;
   const gaps = shareGaps(share, account, {
-    hasGeneral: () => true,
     tacticName: (id) => id,
-    hasBranch: () => true,
   });
   assert.deepEqual(gaps, []);
   const applied = applyTeamShare(account, share, 'team-quiet');

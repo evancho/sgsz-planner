@@ -786,27 +786,21 @@ function mergeShareOwned(existing, member) {
   };
 }
 
-/** 尚未擁有或圖鑑沒有的戰法，以及圖鑑沒有的武將、兵書。紅度、動態、典藏不在這裡。 */
+/** 缺少清單只列戰法：尚未擁有，或圖鑑沒有。武將、兵書、紅度、動態、典藏都不在這裡。 */
 export function shareGaps(share, account, lookup) {
   const missing = [];
   const seen = new Set();
-  const add = (item) => {
-    const key = `${item.kind}:${item.id}:${item.reason || ''}`;
-    if (seen.has(key)) return;
-    seen.add(key);
-    missing.push(item);
-  };
   for (const member of share.members) {
     if (!member) continue;
-    if (!lookup.hasGeneral(member.generalId)) add({ kind: 'general', id: member.generalId, reason: '圖鑑沒有' });
     for (const tacticId of member.learned) {
       if (!tacticId) continue;
       const name = lookup.tacticName(tacticId);
-      if (!name) add({ kind: 'tactic', id: tacticId, reason: '圖鑑沒有' });
-      else if (!account.tacticsOwned?.[tacticId]) add({ kind: 'tactic', id: tacticId, name, reason: '未擁有' });
-    }
-    if (member.bingshu?.branch && !lookup.hasBranch(member.bingshu.branch)) {
-      add({ kind: 'book', id: member.bingshu.branch, reason: '圖鑑沒有' });
+      const reason = !name ? '圖鑑沒有' : account.tacticsOwned?.[tacticId] ? '' : '未擁有';
+      if (!reason) continue;
+      const key = `${tacticId}:${reason}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      missing.push(name ? { kind: 'tactic', id: tacticId, name, reason } : { kind: 'tactic', id: tacticId, reason });
     }
   }
   return missing;

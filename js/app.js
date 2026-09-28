@@ -629,15 +629,8 @@ function shareUrl(token) {
 
 function shareGapLines(share, current) {
   return shareGaps(share, current, {
-    hasGeneral: (id) => generalsById().has(id),
     tacticName: (id) => tacticsById(current).get(id)?.name || '',
-    hasBranch: (id) => ui.catalog.branches.some((item) => item.id === id),
-  }).map((gap) => {
-    if (gap.kind === 'general') return `武將 ${gap.id}（圖鑑沒有）`;
-    if (gap.kind === 'book') return `兵書 ${gap.id}（圖鑑沒有）`;
-    if (gap.reason === '圖鑑沒有') return `戰法 ${gap.id}（圖鑑沒有）`;
-    return `戰法 ${gap.name}（未擁有）`;
-  });
+  }).map((gap) => (gap.reason === '圖鑑沒有' ? `戰法 ${gap.id}（圖鑑沒有）` : `戰法 ${gap.name}（未擁有）`));
 }
 
 function shareMissingHtml(lines) {
@@ -703,7 +696,7 @@ function shareView(token) {
         </div>
       </div>
       <p>只會把「${esc(decoded.share.name)}」這一隊加進帳號「${esc(current.name)}」。上方可以先換帳號。按下之後才會寫入，不會改動已經有的隊伍，也不會還原整份備份。</p>
-      <p class="sub">缺少的戰法，以及圖鑑沒有的武將，仍會留在配置裡，不會擋下整隊。</p>
+      <p class="sub">缺少的戰法仍會留在配置裡，不會擋下整隊。</p>
       <div class="help-card share-applied">
         <h3>已套用</h3>
         <p>下面是即將寫入的配置。</p>
