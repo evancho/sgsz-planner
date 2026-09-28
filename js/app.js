@@ -770,7 +770,8 @@ function learnedButton(team, member, slot, index) {
   const tacticId = member.learned[index];
   const tactic = tacticId ? tacticsById().get(tacticId) : null;
   const text = tactic ? tactic.name : tacticId ? `未知戰法 ${tacticId}` : '選擇傳承戰法';
-  return `<button type="button" class="slot-btn" data-action="open-tactic" data-team="${esc(team.id)}" data-slot="${slot}" data-learned="${index}"><span class="faint">傳承 ${index + 1}</span><strong>${esc(text)}</strong></button>`;
+  const label = tactic ? `替換${tactic.name}` : tacticId ? `替換未知戰法 ${tacticId}` : '選擇傳承戰法';
+  return `<button type="button" class="slot-btn" data-action="open-tactic" data-team="${esc(team.id)}" data-slot="${slot}" data-learned="${index}" aria-label="${esc(label)}"><span class="faint">傳承 ${index + 1}</span><strong>${esc(text)}</strong></button>`;
 }
 
 function nodeButton(node, on, layer) {
@@ -1012,11 +1013,17 @@ function tacticPicker() {
   const empty = owned === 'owned'
     ? '沒有已擁有的戰法。可以改看「全部」。'
     : '沒有符合的戰法。';
+  const currentId = member.learned?.[ui.picker.learned] || '';
+  const currentTactic = currentId ? map.get(currentId) : null;
+  const replacingName = currentTactic ? currentTactic.name : currentId ? `未知戰法 ${currentId}` : '';
   return `
     <div class="backdrop" data-action="backdrop-close">
-      <section class="sheet picker-sheet" role="dialog" aria-modal="true" aria-label="選擇傳承戰法" tabindex="-1">
+      <section class="sheet picker-sheet" role="dialog" aria-modal="true" aria-label="${replacingName ? `選擇傳承戰法，即將替換${esc(replacingName)}` : '選擇傳承戰法'}" tabindex="-1">
         <div class="picker-head row-between">
-          <h3>選擇傳承戰法</h3>
+          <div>
+            <h3>選擇傳承戰法</h3>
+            ${replacingName ? `<p class="picker-replacing">即將替換：${esc(replacingName)}</p>` : ''}
+          </div>
           <button type="button" class="btn-ghost" data-action="close-picker">關閉</button>
         </div>
         <div class="picker-filters">
@@ -1530,11 +1537,12 @@ function onClick(event) {
       const layer = el.dataset.layer;
       const next = el.dataset.node;
       const turningOff = bingshuContext(current)?.book?.[layer] === next;
+      const done = layer === 'secondary' && !turningOff;
       if (layer === 'primary') ui.bingshu = { ...ui.bingshu, step: turningOff ? 'primary' : 'secondary' };
       setBingshu(current, (book) => {
         if (!book?.branch) return book;
         return { ...book, [layer]: book[layer] === next ? null : next };
-      });
+      }, { close: done });
       break;
     }
     case 'clear-bingshu':
@@ -1738,9 +1746,10 @@ function moveMember(current, teamId, slot, dir) {
   }
 }
 
-function setBingshu(current, recipe) {
+function setBingshu(current, recipe, { close = false } = {}) {
   if (!ui.bingshu) return;
   const { teamId, slot } = ui.bingshu;
+  if (close) ui.bingshu = null;
   commit(updateAccount(ui.state, current.id, (item) => ({
     ...item,
     teams: item.teams.map((team) => {
