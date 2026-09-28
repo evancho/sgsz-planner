@@ -143,6 +143,16 @@ export function ownsDiancang(ownedRecord) {
   return Boolean(ownedRecord?.awaken);
 }
 
+/** 武將列表與隊伍卡片共用：紅 0、未開動態、未標典藏都不顯示。 */
+export function ownedStatusLabels(ownedRecord) {
+  if (!ownedRecord) return [];
+  const labels = [];
+  if (ownedRecord.dynamic) labels.push('動態');
+  if (ownsDiancang(ownedRecord)) labels.push('典藏');
+  if (ownedRecord.red > 0) labels.push(`紅${ownedRecord.red}`);
+  return labels;
+}
+
 export function usefulInnate(general) {
   const name = String(general?.innate || '').trim();
   if (!name || name === '自帶戰法') return '';

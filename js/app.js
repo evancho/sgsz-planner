@@ -28,8 +28,8 @@ import {
   matchesTacticPick,
   newId,
   normalizeState,
+  ownedStatusLabels,
   removeFromTeamPrompt,
-  ownsDiancang,
   setGeneralOwned,
   setTacticOwned,
   sortGenerals,
@@ -378,9 +378,7 @@ function generalCard(general, current, usage) {
   const duwei = isDuwei(general);
   const chipHtml = [
     duweiMark(general),
-    owned?.dynamic ? '<span class="mini">動態</span>' : '',
-    ownsDiancang(owned) ? '<span class="mini">典藏</span>' : '',
-    owned && owned.red > 0 ? `<span class="mini">紅${owned.red}</span>` : '',
+    ownedMarkHtml(owned),
     where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : '',
   ].filter(Boolean).join('');
   const nameEl = owned
@@ -399,6 +397,10 @@ function generalCard(general, current, usage) {
       </div>
       ${open ? `<div class="grow-more">${ownedControls(general, owned)}${innate ? `<p class="faint innate">自帶 · ${esc(innate)}</p>` : ''}${duwei ? '<p class="faint">統御以 7 計；天賦身經百戰可 +1。</p>' : ''}</div>` : ''}
     </article>`;
+}
+
+function ownedMarkHtml(owned) {
+  return ownedStatusLabels(owned).map((label) => `<span class="mini">${esc(label)}</span>`).join('');
 }
 
 function aptLabel(troop) {
@@ -603,6 +605,7 @@ function memberCard(team, member, slot, current) {
   const general = member ? generalsById().get(member.generalId) : null;
   const books = ui.catalog.branches;
   const label = member?.bingshu ? bingshuLabel(member.bingshu, books) : '';
+  const marks = general ? ownedMarkHtml(current.owned[general.id]) : '';
   return `
     <article class="member">
       <div class="member-top">
@@ -612,6 +615,7 @@ function memberCard(team, member, slot, current) {
             <h3>${esc(plainName(general))}${duweiMark(general)}</h3>
             <span class="member-meta">${esc(general.camp)} · C${general.cost}${isDuwei(general) ? '（天賦可 +1）' : ''} · ${esc(general.role)}</span>
             <div class="apt-row">${aptHtml(general.apt)}</div>
+            ${marks ? `<div class="member-marks">${marks}</div>` : ''}
           ` : ''}
         </div>
         <span class="member-move">

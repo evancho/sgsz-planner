@@ -19,6 +19,7 @@ import {
   matchesGeneral,
   matchesTacticPick,
   normalizeState,
+  ownedStatusLabels,
   ownsDiancang,
   removeFromTeamPrompt,
   setGeneralOwned,
@@ -165,6 +166,11 @@ test('aptitude, camp, collection and dynamic filters combine', () => {
     matchesGeneral(guanyu, { red: 5, dynamic: true, awaken: false }, blankFilters({ dynamic: ['已解鎖'], collection: ['非典藏'] }), {}),
     true,
   );
+  assert.deepEqual(ownedStatusLabels(null), []);
+  assert.deepEqual(ownedStatusLabels({ red: 0, dynamic: false, awaken: false }), []);
+  assert.deepEqual(ownedStatusLabels({ red: 0, dynamic: true, awaken: false }), ['動態']);
+  assert.deepEqual(ownedStatusLabels({ red: 0, dynamic: false, awaken: true }), ['典藏']);
+  assert.deepEqual(ownedStatusLabels({ red: 5, dynamic: true, awaken: true }), ['動態', '典藏', '紅5']);
   assert.equal(ownsDiancang({ dynamic: true, awaken: false }), false);
   assert.equal(ownsDiancang({ red: 5, dynamic: false, awaken: true }), true);
   assert.equal(ownsDiancang({ red: 5, dynamic: false }), false);
