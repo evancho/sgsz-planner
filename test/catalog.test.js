@@ -10,7 +10,7 @@ const bingshu = JSON.parse(readFileSync(new URL('../data/bingshu.json', import.m
 const appRelease = JSON.parse(readFileSync(new URL('../data/version.json', import.meta.url)));
 
 test('catalog files share one version', () => {
-  assert.equal(meta.catalogVersion, '1.2.3');
+  assert.equal(meta.catalogVersion, '1.2.4');
   assert.equal(generalsFile.catalogVersion, meta.catalogVersion);
   assert.equal(tacticsFile.catalogVersion, meta.catalogVersion);
   assert.equal(bingshu.catalogVersion, meta.catalogVersion);
@@ -160,6 +160,27 @@ test('generals and tactics are internally consistent', () => {
       assert.notEqual(base.source, '賽季');
     }
   }
+  const bingyan = [
+    ['xushidai', '蓄勢待發', '指揮', '事件', ['盾', '器械']],
+    ['tuo-xushi', '拓·蓄勢待發', '指揮', '賽季', ['盾', '器械']],
+    ['tuo-caochuan', '拓·草船借箭', '主動', '賽季', null],
+    ['tuo-guagu', '拓·刮骨療毒', '主動', '賽季', null],
+    ['jing-lingji', '精·靈機一動', '主動', '賽季', null],
+  ];
+  for (const [id, name, type, source, troops] of bingyan) {
+    const tactic = tacticsFile.tactics.find((item) => item.id === id);
+    assert.ok(tactic, id);
+    assert.equal(tactic.name, name);
+    assert.equal(tactic.type, type);
+    assert.equal(tactic.source, source);
+    assert.equal(tactic.rank, 'S');
+    assert.deepEqual(tactic.troops, troops);
+    if (source === '賽季') assert.match(tactic.desc, /兵演春秋賽季商店/);
+  }
+  assert.deepEqual(byName.get('靈機一動').troops, ['騎', '器械']);
+  assert.equal(byName.get('精·靈機一動').troops, null);
+  assert.notEqual(byName.get('拓·草船借箭').id, byName.get('草船借箭').id);
+  assert.notEqual(byName.get('拓·刮骨療毒').id, byName.get('刮骨療毒').id);
   assert.equal(tacticsFile.tactics.some((tactic) => tactic.name.includes('以暴制暴') || tactic.id === 'tuo-yibao'), false);
   assert.equal(byName.get('以寡敵眾').id, 'yigua');
   assert.equal(byName.get('以寡敵眾').type, '被動');

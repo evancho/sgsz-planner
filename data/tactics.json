@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "1.2.3",
+  "catalogVersion": "1.2.4",
   "tactics": [
     {
       "id": "zanbi",
@@ -248,6 +248,21 @@
       "orange": true,
       "rank": "S",
       "desc": "有機率提高友軍造成的傷害，攜帶者速度要快才吃得到。"
+    },
+    {
+      "id": "xushidai",
+      "name": "蓄勢待發",
+      "type": "指揮",
+      "source": "事件",
+      "from": [],
+      "troops": [
+        "盾",
+        "器械"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "定軍山之戰事件戰法。限盾、器械。自身提高智力與統率並獲得先攻，但無法造成傷害；每回合有機率使我軍群體獲得規避。"
     },
     {
       "id": "yudi",
@@ -1019,11 +1034,14 @@
       "type": "主動",
       "source": "事件",
       "from": [],
-      "troops": null,
+      "troops": [
+        "騎",
+        "器械"
+      ],
       "copies": 1,
       "orange": true,
       "rank": "S",
-      "desc": "事件兌換的主動戰法。"
+      "desc": "事件兌換的主動戰法。限騎、器械。"
     },
     {
       "id": "zhanjiang",
@@ -2470,6 +2488,57 @@
       "orange": true,
       "rank": "S",
       "desc": "英雄命示賽季商店的鋒矢陣精進版，每輪最多可購兩項。沿用原戰法：主將傷害提高也更易受傷，副將傷害下降但更耐打。"
+    },
+    {
+      "id": "tuo-xushi",
+      "name": "拓·蓄勢待發",
+      "type": "指揮",
+      "source": "賽季",
+      "from": [],
+      "troops": [
+        "盾",
+        "器械"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "兵演春秋賽季商店的蓄勢待發拓本，每輪最多可購兩項。沿用原戰法：限盾、器械。自身提高智力與統率並獲得先攻，但無法造成傷害；每回合有機率使我軍群體獲得規避。"
+    },
+    {
+      "id": "tuo-caochuan",
+      "name": "拓·草船借箭",
+      "type": "主動",
+      "source": "賽季",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "兵演春秋賽季商店的草船借箭拓本，每輪最多可購兩項。沿用原戰法：移除我軍群體負面，並給予急救，受傷時有機率依統率回復。"
+    },
+    {
+      "id": "tuo-guagu",
+      "name": "拓·刮骨療毒",
+      "type": "主動",
+      "source": "賽季",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "兵演春秋賽季商店的刮骨療毒拓本，每輪最多可購兩項。沿用原戰法：為損失兵力最多的我軍單體清除負面狀態，並依智力治療。"
+    },
+    {
+      "id": "jing-lingji",
+      "name": "精·靈機一動",
+      "type": "主動",
+      "source": "賽季",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "兵演春秋賽季商店的靈機一動精進版，每輪最多可購兩項。全兵種可用，屬性提升低於原戰法。"
     }
   ]
 }
