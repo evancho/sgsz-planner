@@ -1110,7 +1110,7 @@ function templateRankOrder(rank) {
   return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
 }
 
-/** 已擁有武將的紅度加總。還沒擁有的武將不算。 */
+/** 已擁有武將的紅度加總。動態、典藏各再加 1。還沒擁有的武將不算。 */
 export function templateOwnedRed(template, account) {
   let total = 0;
   const seen = new Set();
@@ -1120,9 +1120,7 @@ export function templateOwnedRed(template, account) {
     seen.add(id);
     const owned = account?.owned?.[id];
     if (!owned) continue;
-    const red = Number(owned.red);
-    if (!Number.isFinite(red)) continue;
-    total += Math.min(5, Math.max(0, red));
+    total += redSortScore(owned);
   }
   return total;
 }

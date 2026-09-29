@@ -114,17 +114,20 @@ test('範本依強度再依已有紅度，不依國家', () => {
   ];
   const account = {
     owned: {
-      a: { red: 1 },
+      a: { red: 1, dynamic: true, awaken: true },
       b: { red: 5 },
-      c: { red: 4 },
-      d: { red: 9 },
+      c: { red: 4, dynamic: true },
+      d: { red: 9, awaken: true },
     },
   };
   const ordered = orderTeamTemplates(samples, (team) => templateOwnedRed(team, account));
   assert.deepEqual(ordered.map((team) => team.id), ['shu-t0', 'wu-t0', 'wei-t0', 'wei-t1', 'tech']);
-  assert.equal(templateOwnedRed(samples[1], account), 9);
-  assert.equal(templateOwnedRed(samples[3], account), 5);
-  assert.equal(templateOwnedRed({ members: [{ generalId: 'a' }, { generalId: 'missing' }] }, account), 1);
+  assert.equal(templateOwnedRed(samples[1], account), 10);
+  assert.equal(templateOwnedRed(samples[2], account), 3);
+  assert.equal(templateOwnedRed(samples[3], account), 6);
+  assert.equal(templateOwnedRed({ members: [{ generalId: 'a' }, { generalId: 'missing' }] }, account), 3);
+  assert.equal(templateOwnedRed({ members: [{ generalId: 'plain' }] }, { owned: { plain: { red: 0, dynamic: true } } }), 1);
+  assert.equal(templateOwnedRed({ members: [{ generalId: 'plain' }] }, { owned: { plain: { red: 0, awaken: true } } }), 1);
   const ranked = orderTeamTemplates(filterTeamTemplates(templates, {}), () => 0);
   assert.equal(ranked[0].rank, 'T0');
   const firstOtherT0 = ranked.findIndex((team) => team.rank === 'T0' && team.country !== '魏');
