@@ -148,14 +148,14 @@ function collapseGeneral(id) {
   ui.openGenerals = next;
 }
 
-function commit(next) {
+function commit(next, options = {}) {
   ui.state = next;
   try {
     saveState(ui.state);
   } catch {
     toast('儲存空間不足，這次變更可能沒寫入。');
   }
-  render();
+  if (!options.quiet) render();
 }
 
 function account() {
@@ -336,7 +336,7 @@ function accountCard(item, active, index, count) {
     </article>`;
 }
 
-function generalsView() {
+function matchedGenerals() {
   const current = account();
   const usage = usageFor(current);
   const filters = { ...ui.filters, query: ui.query, quick: ui.quick };
@@ -346,12 +346,25 @@ function generalsView() {
     })),
     ui.sort,
   );
+  return { current, usage, matched };
+}
+
+function generalSummaryText(pack = matchedGenerals()) {
+  return `名將 ${ui.catalog.generals.length} · 已擁有 ${Object.keys(pack.current.owned).length} · 顯示 ${pack.matched.length}`;
+}
+
+function generalRosterMarkup(pack = matchedGenerals()) {
+  return pack.matched.map((general) => generalCard(general, pack.current, pack.usage)).join('')
+    || '<div class="empty"><p>沒有符合的武將。</p><p class="faint">圖鑑目前只收名將。把品質改回名將，或清空篩選。</p></div>';
+}
+
+function generalsView() {
   return `
     <section class="generals-page ${ui.filterOpen ? 'filter-open' : ''}">
       <div class="page-head">
         <div>
           <h2>武將</h2>
-          <p class="sub">名將 ${ui.catalog.generals.length} · 已擁有 ${Object.keys(current.owned).length} · 顯示 ${matched.length}</p>
+          <p class="sub" id="general-summary">${esc(generalSummaryText())}</p>
         </div>
         <button type="button" class="btn only-mobile" data-action="open-filter">篩選</button>
       </div>
@@ -368,8 +381,8 @@ function generalsView() {
               ${quickChip('team', '部隊中')}
             </div>
           </div>
-          <div class="roster">
-            ${matched.map((general) => generalCard(general, current, usage)).join('') || '<div class="empty"><p>沒有符合的武將。</p><p class="faint">圖鑑目前只收名將。把品質改回名將，或清空篩選。</p></div>'}
+          <div class="roster" id="general-roster">
+            ${generalRosterMarkup()}
           </div>
           ${colophon()}
         </div>
@@ -480,7 +493,7 @@ function seg(id, flag, label, on) {
     </div>`;
 }
 
-function tacticsView(mode) {
+function visibleTactics(mode) {
   const current = account();
   const usage = usageFor(current);
   const query = ui.tacticQuery.trim().toLowerCase();
@@ -492,6 +505,16 @@ function tacticsView(mode) {
     if (!query) return true;
     return `${tactic.name} ${tactic.desc} ${tactic.type}`.toLowerCase().includes(query);
   }).sort(compareTactics);
+  return { current, usage, list };
+}
+
+function tacticListMarkup(mode) {
+  const pack = visibleTactics(mode);
+  return pack.list.map((tactic) => tacticRow(tactic, pack.current, pack.usage)).join('')
+    || '<div class="empty">沒有符合的戰法。</div>';
+}
+
+function tacticsView(mode) {
   const tabs = ['全部', ...TACTIC_TYPES];
   return `
     <section>
@@ -511,8 +534,8 @@ function tacticsView(mode) {
       </div>
       <label class="sr" for="tactic-search">搜尋戰法</label>
       <input id="tactic-search" class="search" style="margin:12px 0" data-model="tactic-query" value="${esc(ui.tacticQuery)}" placeholder="搜尋戰法名稱或說明" autocomplete="off">
-      <div class="list">
-        ${list.map((tactic) => tacticRow(tactic, current, usage)).join('') || '<div class="empty">沒有符合的戰法。</div>'}
+      <div class="list" id="tactic-list">
+        ${tacticListMarkup(mode)}
       </div>
       ${colophon()}
     </section>`;
@@ -1087,10 +1110,10 @@ function pickerFilterRow(label, key, values) {
     </div>`;
 }
 
-function generalPicker() {
+function generalPickerResults() {
   const current = account();
   const team = current.teams.find((item) => item.id === ui.picker.teamId);
-  if (!team) return '';
+  if (!team) return null;
   const usage = usageFor(current);
   const filters = ui.picker.filters || emptyPickerFilters();
   const ownedCount = ui.catalog.generals.filter((general) => current.owned[general.id]).length;
@@ -1106,6 +1129,29 @@ function generalPicker() {
   });
   if ((ui.picker.sort || 'red') === 'red') options = sortByRedScore(options, (general) => current.owned[general.id]);
   const empty = ownedCount === 0 ? '還沒有勾選擁有的武將。' : '沒有符合的武將。';
+  const list = `
+    <button type="button" class="choice" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${ui.picker.slot}">這個位置留空</button>
+    ${options.map((general) => {
+      const reason = generalBlockReason({
+        account: current,
+        team,
+        slot: ui.picker.slot,
+        general,
+        generalsById: generalsById(),
+        usage,
+      });
+      const marks = ownedStatusLabels(current.owned[general.id]);
+      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${campInk(general.camp)} C${general.cost} ${esc(plainName(general))}${isDuwei(general) ? ' · 都尉' : ''}${marks.length ? ` · ${esc(marks.join(' · '))}` : ''}${reason ? ` · ${esc(reason)}` : ''}</button>`;
+    }).join('') || `<p class="muted">${empty}</p>`}
+  `;
+  return { count: `${options.length} 位武將`, list };
+}
+
+function generalPicker() {
+  const current = account();
+  const team = current.teams.find((item) => item.id === ui.picker.teamId);
+  if (!team) return '';
+  const results = generalPickerResults();
   const sort = ui.picker.sort || 'red';
   const occupied = team.members[ui.picker.slot];
   const occupiedGeneral = occupied ? generalsById().get(occupied.generalId) : null;
@@ -1132,33 +1178,21 @@ function generalPicker() {
           </div>
           ${pickerFilterRow('陣營', 'camp', CAMP_ORDER)}
           ${pickerFilterRow('費用', 'cost', COST_BUCKETS)}
-          <p class="faint picker-count">${options.length} 位武將</p>
+          <p class="faint picker-count" id="picker-count">${esc(results.count)}</p>
         </div>
-        <div class="picker-list" data-scroll="picker">
-          <button type="button" class="choice" data-action="clear-general" data-team="${esc(team.id)}" data-slot="${ui.picker.slot}">這個位置留空</button>
-          ${options.map((general) => {
-            const reason = generalBlockReason({
-              account: current,
-              team,
-              slot: ui.picker.slot,
-              general,
-              generalsById: generalsById(),
-              usage,
-            });
-            const marks = ownedStatusLabels(current.owned[general.id]);
-            return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${campInk(general.camp)} C${general.cost} ${esc(plainName(general))}${isDuwei(general) ? ' · 都尉' : ''}${marks.length ? ` · ${esc(marks.join(' · '))}` : ''}${reason ? ` · ${esc(reason)}` : ''}</button>`;
-          }).join('') || `<p class="muted">${empty}</p>`}
+        <div class="picker-list" id="picker-list" data-scroll="picker">
+          ${results.list}
         </div>
       </section>
     </div>`;
 }
 
-function tacticPicker() {
+function tacticPickerResults() {
   const current = account();
   const team = current.teams.find((item) => item.id === ui.picker.teamId);
   const member = team?.members[ui.picker.slot];
   const general = member ? generalsById().get(member.generalId) : null;
-  if (!team || !member) return '';
+  if (!team || !member) return null;
   const usage = usageFor(current);
   const map = tacticsById(current);
   const owned = ui.picker.owned || 'owned';
@@ -1169,11 +1203,39 @@ function tacticPicker() {
     owned,
     isOwned: tacticOwned(current, tactic.id),
   })).sort(compareTactics);
-  const ownTabs = [['owned', '已擁有'], ['all', '全部']];
-  const typeTabs = ['全部', ...TACTIC_TYPES];
   const empty = owned === 'owned'
     ? '沒有已擁有的戰法。可以改看「全部」。'
     : '沒有符合的戰法。';
+  const list = `
+    <button type="button" class="choice" data-action="pick-tactic" data-id="">卸下這個戰法</button>
+    ${options.map((tactic) => {
+      const reason = tacticBlockReason({
+        account: current,
+        team,
+        slot: ui.picker.slot,
+        learnedIndex: ui.picker.learned,
+        tactic,
+        general,
+        tacticsById: map,
+        usage,
+      });
+      const warning = reason ? '' : tacticTroopWarning(general, tactic);
+      return `<button type="button" class="choice" data-action="pick-tactic" data-id="${esc(tactic.id)}" ${reason ? 'disabled' : ''}><strong>${esc(tactic.name)}</strong> ${seasonChip(tactic)} ${rankTag(tactic)} <span class="tag">${esc(tactic.type)}</span>${reason ? ` <span class="faint">${esc(reason)}</span>` : ''}${warning ? `<br><span class="warn">${esc(warning)}</span>` : ''}</button>`;
+    }).join('') || `<p class="muted">${empty}</p>`}
+  `;
+  return { count: `${options.length} 個戰法`, list };
+}
+
+function tacticPicker() {
+  const team = account().teams.find((item) => item.id === ui.picker.teamId);
+  const member = team?.members[ui.picker.slot];
+  if (!team || !member) return '';
+  const results = tacticPickerResults();
+  const map = tacticsById();
+  const owned = ui.picker.owned || 'owned';
+  const type = ui.picker.type || '全部';
+  const ownTabs = [['owned', '已擁有'], ['all', '全部']];
+  const typeTabs = ['全部', ...TACTIC_TYPES];
   const currentId = member.learned?.[ui.picker.learned] || '';
   const currentTactic = currentId ? map.get(currentId) : null;
   const replacingName = currentTactic ? currentTactic.name : currentId ? `未知戰法 ${currentId}` : '';
@@ -1196,24 +1258,10 @@ function tacticPicker() {
           </div>
           <label class="sr" for="picker-search">搜尋戰法</label>
           <input id="picker-search" data-model="picker-query" class="search" value="${esc(ui.picker.query)}" placeholder="搜尋戰法名稱或說明" autocomplete="off">
-          <p class="faint picker-count">${options.length} 個戰法</p>
+          <p class="faint picker-count" id="picker-count">${esc(results.count)}</p>
         </div>
-        <div class="picker-list">
-          <button type="button" class="choice" data-action="pick-tactic" data-id="">卸下這個戰法</button>
-          ${options.map((tactic) => {
-            const reason = tacticBlockReason({
-              account: current,
-              team,
-              slot: ui.picker.slot,
-              learnedIndex: ui.picker.learned,
-              tactic,
-              general,
-              tacticsById: map,
-              usage,
-            });
-            const warning = reason ? '' : tacticTroopWarning(general, tactic);
-            return `<button type="button" class="choice" data-action="pick-tactic" data-id="${esc(tactic.id)}" ${reason ? 'disabled' : ''}><strong>${esc(tactic.name)}</strong> ${seasonChip(tactic)} ${rankTag(tactic)} <span class="tag">${esc(tactic.type)}</span>${reason ? ` <span class="faint">${esc(reason)}</span>` : ''}${warning ? `<br><span class="warn">${esc(warning)}</span>` : ''}</button>`;
-          }).join('') || `<p class="muted">${empty}</p>`}
+        <div class="picker-list" id="picker-list">
+          ${results.list}
         </div>
       </section>
     </div>`;
@@ -1908,18 +1956,50 @@ function onClick(event) {
   }
 }
 
+function patchPickerResults() {
+  const built = ui.picker?.kind === 'general'
+    ? generalPickerResults()
+    : ui.picker?.kind === 'tactic'
+      ? tacticPickerResults()
+      : null;
+  const list = document.getElementById('picker-list');
+  const count = document.getElementById('picker-count');
+  if (!built || !list || !count) return false;
+  count.textContent = built.count;
+  list.innerHTML = built.list;
+  list.scrollTop = 0;
+  return true;
+}
+
 function onInput(event) {
   const el = event.target;
   const model = el.dataset.model;
   if (!model) return;
-  if (model === 'query') ui.query = el.value;
-  else if (model === 'tactic-query') ui.tacticQuery = el.value;
-  else if (model === 'picker-query' && ui.picker) ui.picker = { ...ui.picker, query: el.value };
-  else if (model === 'share-import' && ui.shareImport) {
+  // 打字時不重繪整頁，否則輸入框被拆掉，手機會收起鍵盤。
+  if (model === 'query') {
+    ui.query = el.value;
+    const roster = document.getElementById('general-roster');
+    const summary = document.getElementById('general-summary');
+    if (roster && summary) {
+      const pack = matchedGenerals();
+      summary.textContent = generalSummaryText(pack);
+      roster.innerHTML = generalRosterMarkup(pack);
+      return;
+    }
+  } else if (model === 'tactic-query') {
+    ui.tacticQuery = el.value;
+    const list = document.getElementById('tactic-list');
+    if (list) {
+      list.innerHTML = tacticListMarkup(route().mode || 'all');
+      return;
+    }
+  } else if (model === 'picker-query' && ui.picker) {
+    ui.picker = { ...ui.picker, query: el.value };
+    if (patchPickerResults()) return;
+  } else if (model === 'share-import' && ui.shareImport) {
     ui.shareImport = { ...ui.shareImport, text: el.value };
     return;
-  }
-  else if (model === 'template-query' && ui.templates) {
+  } else if (model === 'template-query' && ui.templates) {
     ui.templates = { ...ui.templates, query: el.value };
     const results = document.getElementById('template-results');
     if (results) {
@@ -1927,14 +2007,16 @@ function onInput(event) {
       results.scrollTop = 0;
       return;
     }
-  }
-  else if (model === 'account-file' && ui.accountFile) {
+  } else if (model === 'account-file' && ui.accountFile) {
     ui.accountFile = { ...ui.accountFile, text: el.value, account: null };
     return;
-  }
-  else if (model === 'draft-name') ui.draft = { ...ui.draft, name: el.value };
-  else if (model === 'draft-desc') ui.draft = { ...ui.draft, desc: el.value };
-  else if (model === 'account-name') {
+  } else if (model === 'draft-name') {
+    ui.draft = { ...ui.draft, name: el.value };
+    return;
+  } else if (model === 'draft-desc') {
+    ui.draft = { ...ui.draft, desc: el.value };
+    return;
+  } else if (model === 'account-name') {
     ui.nameDraft[el.dataset.id] = el.value;
     return;
   } else if (model === 'team-name' || model === 'team-notes') {
@@ -1943,7 +2025,7 @@ function onInput(event) {
     commit(updateAccount(ui.state, account().id, (item) => ({
       ...item,
       teams: item.teams.map((team) => (team.id === el.dataset.id ? { ...team, [field]: value } : team)),
-    })));
+    })), { quiet: true });
     return;
   } else return;
   render();
