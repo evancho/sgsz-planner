@@ -51,6 +51,11 @@ import {
   tacticTroopWarning,
   tacticUseCount,
   teamCost,
+  teamFromTemplate,
+  templateDisplayName,
+  templateScenarios,
+  TEMPLATE_COUNTRIES,
+  filterTeamTemplates,
   updateAccount,
   usefulInnate,
 } from './logic.js';
@@ -71,6 +76,7 @@ const ui = {
   shareName: '',
   shareApplied: null,
   shareImport: null,
+  templates: null,
   accountExport: null,
   accountFile: null,
   dialog: null,
@@ -251,7 +257,7 @@ function installBanner() {
 }
 
 function overlay() {
-  return `${pickerHtml()}${bingshuSheet()}${shareSheet()}${shareImportSheet()}${accountExportSheet()}${accountFileSheet()}${dialogHtml()}`;
+  return `${pickerHtml()}${bingshuSheet()}${shareSheet()}${shareImportSheet()}${templateSheet()}${accountExportSheet()}${accountFileSheet()}${dialogHtml()}`;
 }
 
 function colophon() {
@@ -561,6 +567,7 @@ function teamsView() {
         </div>
         <div class="btn-row team-tools">
           <button type="button" class="btn" data-action="open-share-import">載入</button>
+          <button type="button" class="btn" data-action="open-templates">範本</button>
           <button type="button" class="btn primary" data-action="add-team">新增隊伍</button>
         </div>
       </div>
@@ -579,7 +586,7 @@ function teamCard(team, map, index, count) {
         <a class="team-card-main" href="#/teams/${esc(team.id)}">
           <div class="row-between"><h3>${esc(team.name)}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
           <p>${esc(names)}</p>
-          ${team.notes ? `<p class="muted">${esc(team.notes)}</p>` : ''}
+          ${team.notes ? `<p class="muted team-notes">${esc(team.notes)}</p>` : ''}
         </a>
         <span class="member-move">
           <button type="button" class="icon-btn" data-action="move-team" data-id="${esc(team.id)}" data-dir="-1" ${index === 0 ? 'disabled' : ''} aria-label="左移">←</button>
@@ -731,6 +738,52 @@ function shareImportSheet() {
       <button type="button" class="btn primary" data-action="apply-share-import">載入此隊伍</button>
       <button type="button" class="btn-ghost" data-action="reset-share-import">重貼</button>
     </div>
+  `);
+}
+
+function templateSheet() {
+  if (!ui.templates) return '';
+  const current = account();
+  const all = ui.catalog.templates || [];
+  const scenarios = templateScenarios(all);
+  const matched = filterTeamTemplates(all, ui.templates);
+  const scenarioOptions = ['', ...scenarios].map((value) => {
+    const label = value || '全部';
+    const selected = ui.templates.scenario === value ? 'selected' : '';
+    return `<option value="${esc(value)}" ${selected}>${esc(label)}</option>`;
+  }).join('');
+  const countryOptions = ['', ...TEMPLATE_COUNTRIES].map((value) => {
+    const label = value || '全部';
+    const selected = ui.templates.country === value ? 'selected' : '';
+    return `<option value="${esc(value)}" ${selected}>${esc(label)}</option>`;
+  }).join('');
+  const items = matched.map((team) => {
+    const names = (team.members || []).map((member) => member.generalName).filter(Boolean).join(' / ');
+    return `
+      <li class="template-item">
+        <div>
+          <strong>${esc(templateDisplayName(team))}</strong>
+          <span class="tag">${campInk(team.country)}</span>
+          <p>${esc(names)}</p>
+        </div>
+        <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}">加入</button>
+      </li>`;
+  }).join('');
+  return sheet('載入範本隊伍', `
+    <p>從範本新增一隊到帳號「${esc(current.name)}」。不會改動已經有的隊伍。強度會寫進隊伍名稱，加點會寫進備註。</p>
+    <div class="template-filters">
+      <label>劇本
+        <select id="template-scenario" class="field" data-action="set-template-scenario">${scenarioOptions}</select>
+      </label>
+      <label>國家
+        <select id="template-country" class="field" data-action="set-template-country">${countryOptions}</select>
+      </label>
+    </div>
+    <label>隊伍或武將
+      <input id="template-query" class="search" data-model="template-query" value="${esc(ui.templates.query)}" placeholder="隊伍名稱或武將名稱" autocomplete="off">
+    </label>
+    <p class="sub">顯示 ${matched.length} / ${all.length}</p>
+    ${items ? `<ul class="template-list">${items}</ul>` : '<div class="empty"><p>沒有符合的範本。</p></div>'}
   `);
 }
 
@@ -1197,7 +1250,7 @@ function render() {
   };
   document.title = `${titles[here.name] || '配將簿'} · 配將簿`;
   document.getElementById('app').innerHTML = shell(view());
-  const lock = Boolean(ui.dialog || ui.picker || ui.bingshu || ui.shareLink || ui.shareImport || ui.accountExport || ui.accountFile || (ui.filterOpen && window.innerWidth < 980));
+  const lock = Boolean(ui.dialog || ui.picker || ui.bingshu || ui.shareLink || ui.shareImport || ui.templates || ui.accountExport || ui.accountFile || (ui.filterOpen && window.innerWidth < 980));
   document.body.classList.toggle('lock', lock);
   const nextSheet = sheetKey ? document.querySelector(`[data-scroll="${sheetKey}"]`) : null;
   if (nextSheet) nextSheet.scrollTop = sheetY;
@@ -1254,6 +1307,7 @@ function onClick(event) {
     ui.shareLink = '';
     ui.shareName = '';
     ui.shareImport = null;
+    ui.templates = null;
     ui.accountExport = null;
     ui.accountFile = null;
     render();
@@ -1513,6 +1567,7 @@ function onClick(event) {
       ui.shareLink = '';
       ui.shareName = '';
       ui.shareImport = null;
+      ui.templates = null;
       ui.accountExport = null;
       ui.accountFile = null;
       render();
@@ -1522,9 +1577,37 @@ function onClick(event) {
       ui.bingshu = null;
       ui.shareLink = '';
       ui.shareName = '';
+      ui.templates = null;
       ui.shareImport = { text: '', share: null };
       render();
       break;
+    case 'open-templates':
+      ui.picker = null;
+      ui.bingshu = null;
+      ui.shareLink = '';
+      ui.shareName = '';
+      ui.shareImport = null;
+      ui.accountExport = null;
+      ui.accountFile = null;
+      ui.templates = { scenario: '', country: '', query: '' };
+      render();
+      break;
+    case 'add-template': {
+      const template = (ui.catalog.templates || []).find((item) => item.id === el.dataset.id);
+      if (!template || !ui.templates) break;
+      if (current.teams.length >= 40) {
+        toast('隊伍已滿，無法再載入');
+        break;
+      }
+      const id = newId('team');
+      const team = teamFromTemplate(template, id);
+      commit(updateAccount(ui.state, current.id, (item) => ({
+        ...item,
+        teams: [...item.teams, team],
+      })));
+      toast(`已加入${team.name}`);
+      break;
+    }
     case 'preview-share-import': {
       const token = shareTokenFromText(document.getElementById('share-import')?.value || ui.shareImport?.text || '');
       const decoded = token ? decodeTeamShare(token) : { ok: false, error: '請貼上分享連結' };
@@ -1767,6 +1850,7 @@ function onInput(event) {
     ui.shareImport = { ...ui.shareImport, text: el.value };
     return;
   }
+  else if (model === 'template-query' && ui.templates) ui.templates = { ...ui.templates, query: el.value };
   else if (model === 'account-file' && ui.accountFile) {
     ui.accountFile = { ...ui.accountFile, text: el.value, account: null };
     return;
@@ -1790,7 +1874,13 @@ function onInput(event) {
 
 function onChange(event) {
   const el = event.target;
-  if (el.dataset.action === 'switch-account') {
+  if (el.dataset.action === 'set-template-scenario' && ui.templates) {
+    ui.templates = { ...ui.templates, scenario: el.value };
+    render();
+  } else if (el.dataset.action === 'set-template-country' && ui.templates) {
+    ui.templates = { ...ui.templates, country: el.value };
+    render();
+  } else if (el.dataset.action === 'switch-account') {
     commit({ ...ui.state, activeAccountId: el.value });
   } else if (el.dataset.action === 'draft-type') {
     ui.draft = { ...ui.draft, type: el.value };
@@ -2141,6 +2231,7 @@ function bind() {
       ui.shareLink = '';
       ui.shareName = '';
     } else if (ui.shareImport) ui.shareImport = null;
+    else if (ui.templates) ui.templates = null;
     else if (ui.accountExport) ui.accountExport = null;
     else if (ui.accountFile) ui.accountFile = null;
     else if (ui.picker) ui.picker = null;
@@ -2155,6 +2246,7 @@ function bind() {
     ui.shareLink = '';
     ui.shareName = '';
     ui.shareImport = null;
+    ui.templates = null;
     ui.accountExport = null;
     ui.accountFile = null;
     ui.dialog = null;
@@ -2164,12 +2256,13 @@ function bind() {
 }
 
 async function loadCatalog() {
-  const [meta, generals, tactics, bingshu, release] = await Promise.all([
+  const [meta, generals, tactics, bingshu, release, templates] = await Promise.all([
     fetch('./data/meta.json').then((response) => response.json()),
     fetch('./data/generals.json').then((response) => response.json()),
     fetch('./data/tactics.json').then((response) => response.json()),
     fetch('./data/bingshu.json').then((response) => response.json()),
     fetch('./data/version.json').then((response) => response.json()),
+    fetch('./data/team-templates.json').then((response) => response.json()),
   ]);
   return {
     version: meta.catalogVersion,
@@ -2177,6 +2270,7 @@ async function loadCatalog() {
     generals: generals.generals,
     tactics: tactics.tactics,
     branches: bingshu.branches,
+    templates: templates.teams,
     generalsById: new Map(generals.generals.map((general) => [general.id, general])),
   };
 }

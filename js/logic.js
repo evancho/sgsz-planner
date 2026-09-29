@@ -978,3 +978,73 @@ export function applyTeamShare(account, share, teamId) {
     },
   };
 }
+
+export const TEMPLATE_COUNTRIES = ['魏', '蜀', '吳', '群', '混合'];
+
+export function templateScenarios(teams) {
+  const seen = [];
+  for (const team of teams || []) {
+    if (team?.scenario && !seen.includes(team.scenario)) seen.push(team.scenario);
+  }
+  return seen;
+}
+
+/** 劇本、國家用下拉篩選。文字比對隊伍名稱或武將名稱。 */
+export function filterTeamTemplates(teams, filters = {}) {
+  const scenario = String(filters.scenario || '');
+  const country = String(filters.country || '');
+  const query = String(filters.query || '').trim();
+  return (teams || []).filter((team) => {
+    if (scenario && team.scenario !== scenario) return false;
+    if (country && team.country !== country) return false;
+    if (!query) return true;
+    if (String(team.title || '').includes(query)) return true;
+    return (team.members || []).some((member) => String(member.generalName || '').includes(query));
+  });
+}
+
+/** 載入後強度接在隊伍名稱前面。 */
+export function templateDisplayName(template) {
+  return clip([template?.rank, template?.title].filter(Boolean).join(' '), 24) || '未命名隊伍';
+}
+
+/** 載入後加點併進備註。圖鑑沒有的戰法、兵書也留在備註。 */
+export function templateNotes(template) {
+  const lines = (template?.members || []).map((member) => {
+    const main = [member?.points, member?.remark].map((part) => String(part || '').trim()).filter(Boolean).join('、');
+    const missing = Array.isArray(member?.unlisted)
+      ? member.unlisted.map((part) => String(part || '').trim()).filter(Boolean)
+      : [];
+    const extra = missing.length ? `未收錄 ${missing.join('、')}` : '';
+    const body = [main, extra].filter(Boolean).join('；');
+    if (!body) return '';
+    const who = String(member?.generalName || '').trim();
+    return who ? `${who} ${body}` : body;
+  }).filter(Boolean);
+  return clip(lines.join('；'), 500);
+}
+
+function templateMember(member) {
+  if (!member || typeof member !== 'object') return null;
+  const generalId = cleanId(member.generalId);
+  if (!generalId) return null;
+  const learned = [0, 1].map((index) => cleanId(member.learned?.[index]) || null);
+  let bingshu = null;
+  if (member.bingshu && typeof member.bingshu === 'object' && cleanId(member.bingshu.branch)) {
+    bingshu = {
+      branch: cleanId(member.bingshu.branch),
+      primary: cleanId(member.bingshu.primary) || null,
+      secondary: [cleanId(member.bingshu.secondary?.[0]) || null, cleanId(member.bingshu.secondary?.[1]) || null],
+    };
+  }
+  return { generalId, learned, bingshu };
+}
+
+export function teamFromTemplate(template, id) {
+  return {
+    id,
+    name: templateDisplayName(template),
+    notes: templateNotes(template),
+    members: [0, 1, 2].map((index) => templateMember(template?.members?.[index])),
+  };
+}
