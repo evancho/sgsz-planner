@@ -281,7 +281,22 @@ button.grow-name { cursor: pointer; }
 .camp-ink.qun { color: var(--qun); }
 .team-head { align-items: center; flex-wrap: wrap; }
 .team-head .team-title { flex: 1 1 160px; min-width: 0; }
-.team-tools { flex: 0 0 auto; flex-wrap: nowrap; }
+.team-tools { flex: 0 0 auto; flex-wrap: wrap; justify-content: flex-end; }
+.template-filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+.template-list { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.template-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #16130f;
+}
+.template-item p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+.template-item .btn { flex: 0 0 auto; }
+.team-notes { white-space: pre-wrap; }
 .team-tools .btn,
 .team-tools .btn-ghost { white-space: nowrap; }
 .cost {

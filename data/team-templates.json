@@ -1,0 +1,8476 @@
+{
+  "teams": [
+    {
+      "id": "tpl-001",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "荀攸五謀弓",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "第1速+智",
+          "remark": "出奇、弓寶物",
+          "learned": [
+            "zanbi",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xunyou",
+          "generalName": "荀攸",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "luli",
+            "weishu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-002",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "紫金弓",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "第1速+智",
+          "remark": "出奇、弓寶物",
+          "learned": [
+            "guagu",
+            "chengdi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-pangde",
+          "generalName": "SP龐德",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "powei",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "xiandeng",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-003",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "王佐騎",
+      "members": [
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "統",
+          "remark": "妖氣、援助",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "chiyuan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "damou",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "lingji",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-004",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "王佐騎",
+      "members": [
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "統",
+          "remark": "妖氣、援助",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "chiyuan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "damou",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "30速+智",
+          "remark": "妖氣、長健",
+          "learned": [
+            "lingji",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-005",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1.5",
+      "title": "郝昭太尉盾",
+      "members": [
+        {
+          "generalId": "haozhao",
+          "generalName": "郝昭",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "shibie",
+            "zhongzhi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "智",
+          "remark": "援助",
+          "learned": [
+            "meihuo",
+            "xianzhen"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "chiyuan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "xushidai",
+            "fengshi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-006",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1.5",
+      "title": "旭輝弓",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "30速+智",
+          "remark": "出奇、弓寶物",
+          "learned": [
+            "lingji",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhonghui",
+          "generalName": "鍾會",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "taiping",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "jiangwei-book",
+              "guimou"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智最高",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "ruili"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-007",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1.5",
+      "title": "淵騎",
+      "members": [
+        {
+          "generalId": "xiahouyuan",
+          "generalName": "夏侯淵",
+          "points": "162速+武",
+          "remark": "",
+          "learned": [
+            "luoyi",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "hubao",
+            "fengshi"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "yanzhen",
+            "secondary": [
+              "fangbei",
+              "shoushi"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guojia",
+          "generalName": "郭嘉",
+          "points": "速",
+          "remark": "",
+          "learned": [
+            "dangfeng",
+            "tieqi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-008",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1.5",
+      "title": "曹仁太尉盾",
+      "members": [
+        {
+          "generalId": "simayi",
+          "generalName": "司馬懿",
+          "points": "智",
+          "remark": "長慮/擐甲",
+          "learned": [
+            "shibie",
+            "hantian"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "guixin"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caoren",
+          "generalName": "曹仁",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "meihuo",
+            "fuji"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "wuzhan",
+            "secondary": [
+              "tiejia",
+              "gangrou"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "points": "智",
+          "remark": "妖氣、雍雅/沉重",
+          "learned": [
+            "fengshi",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-009",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "司馬太尉盾",
+      "members": [
+        {
+          "generalId": "simayi",
+          "generalName": "司馬懿",
+          "points": "智",
+          "remark": "長慮/擐甲",
+          "learned": [
+            "shibie",
+            "zhongzhi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "jiuzhan",
+              "chuilian"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "meihuo",
+            "tengjia"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "points": "智",
+          "remark": "妖氣、雍雅/沉重",
+          "learned": [
+            "guagu",
+            "fengshi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-010",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "程昱五謀騎",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "30速+智",
+          "remark": "疾馳",
+          "learned": [
+            "lingji",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "chengyu",
+          "generalName": "程昱",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "taiping",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "yuanmou"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-011",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "惇惇盾",
+      "members": [
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "caochuan",
+            "tengjia"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "biqi",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xiahoudun",
+          "generalName": "夏侯惇",
+          "points": "武",
+          "remark": "援助、盾寶物",
+          "learned": [
+            "zhongdong",
+            "qiling"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "sanli",
+            "secondary": [
+              "shoushi",
+              "yongyi"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "feigong",
+            "yulin"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-012",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "榮光槍",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "一速+智",
+          "remark": "槍寶物",
+          "learned": [
+            "caochuan",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "fenxian",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangliao",
+          "generalName": "張遼",
+          "points": "武",
+          "remark": "無懼",
+          "learned": [
+            "cuifeng",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "wangyuanji",
+          "generalName": "王元姬",
+          "points": "二速+智",
+          "remark": "妖氣",
+          "learned": [
+            "zanbi",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-013",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "傳統女王盾",
+      "members": [
+        {
+          "generalId": "simayi",
+          "generalName": "司馬懿",
+          "points": "智",
+          "remark": "長慮/擐甲",
+          "learned": [
+            "shibie",
+            "zhongzhi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangchunhua",
+          "generalName": "張春華",
+          "points": "智",
+          "remark": "盾寶物",
+          "learned": [
+            "meihuo",
+            "fengshi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "zhenge",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "points": "智",
+          "remark": "雍雅/沉重",
+          "learned": [
+            "xianzhen",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-014",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "劉司馬飛熊騎",
+      "members": [
+        {
+          "generalId": "simayi",
+          "generalName": "司馬懿",
+          "points": "智",
+          "remark": "騎寶物",
+          "learned": [
+            "zhongzhi",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "jiuzhan",
+              "guixin"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "智",
+          "remark": "出奇",
+          "learned": [
+            "fengshi",
+            "feixiong"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-liuye",
+          "generalName": "SP劉曄",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-015",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "賈太尉",
+      "members": [
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智",
+          "remark": "盾寶物",
+          "learned": [
+            "weishu",
+            "zhongzhi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "meihuo",
+            "tengjia"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "xushidai",
+            "fengshi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-016",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "遼姬騎",
+      "members": [
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "智",
+          "remark": "奸雄、沉重",
+          "learned": [
+            "guagu",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangliao",
+          "generalName": "張遼",
+          "points": "武",
+          "remark": "無懼",
+          "learned": [
+            "sucheng",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "wangyuanji",
+          "generalName": "王元姬",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "hubao",
+            "tieqi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-017",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "奸雄騎",
+      "members": [
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "智",
+          "remark": "奸雄",
+          "learned": [
+            "hubao",
+            "tieqi"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "yanzhen",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xiahouyuan",
+          "generalName": "夏侯淵",
+          "points": "162速+武",
+          "remark": "",
+          "learned": [
+            "luoyi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangliao",
+          "generalName": "張遼",
+          "points": "武",
+          "remark": "無懼",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-018",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T1",
+      "title": "荀攸五謀騎",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "加20速+智",
+          "remark": "靈動",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xunyou",
+          "generalName": "荀攸",
+          "points": "智",
+          "remark": "疾馳",
+          "learned": [
+            "lingji",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "shiruo",
+            "secondary": [
+              "baizhan",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-019",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T0",
+      "title": "五謀騎",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "30速+智",
+          "remark": "疾馳",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "points": "智",
+          "remark": "出奇",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "damou",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智",
+          "remark": "出奇",
+          "learned": [
+            "lingji",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-020",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T0",
+      "title": "王異騎",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "30速+智",
+          "remark": "出奇",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "wangyi",
+          "generalName": "王異",
+          "points": "智",
+          "remark": "騎寶物",
+          "learned": [
+            "duohun",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智最高",
+          "remark": "援助",
+          "learned": [
+            "lingji",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-021",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T0",
+      "title": "五謀弓",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "30速+智",
+          "remark": "出奇、弓寶物",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "points": "智",
+          "remark": "弓寶物",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "damou",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "yinli",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-022",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T0.5",
+      "title": "蓄勢太尉盾",
+      "members": [
+        {
+          "generalId": "simayi",
+          "generalName": "司馬懿",
+          "points": "智",
+          "remark": "長慮/擐甲",
+          "learned": [
+            "hantian",
+            "zhongzhi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "jiuzhan",
+              "guixin"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "meihuo",
+            "tengjia"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "xushidai",
+            "xingyi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-023",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T0.5",
+      "title": "遼姬騎",
+      "members": [
+        {
+          "generalId": "zhangliao",
+          "generalName": "張遼",
+          "points": "武",
+          "remark": "無懼",
+          "learned": [
+            "sucheng",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guojia",
+          "generalName": "郭嘉",
+          "points": "一速+統",
+          "remark": "",
+          "learned": [
+            "fengshi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "wangyuanji",
+          "generalName": "王元姬",
+          "points": "二速+智",
+          "remark": "妖氣",
+          "learned": [
+            "hubao",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-024",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T0.5",
+      "title": "女王盾",
+      "members": [
+        {
+          "generalId": "simayi",
+          "generalName": "司馬懿",
+          "points": "智",
+          "remark": "長慮/擐甲",
+          "learned": [
+            "shibie",
+            "zhongzhi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangchunhua",
+          "generalName": "張春華",
+          "points": "智",
+          "remark": "盾寶物",
+          "learned": [
+            "meihuo",
+            "fengshi"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "tiejia"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "points": "智",
+          "remark": "雍雅/沉重",
+          "learned": [
+            "xushidai",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-025",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T0.5",
+      "title": "魏騎",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "30速+智",
+          "remark": "出奇、弓寶物",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "points": "智",
+          "remark": "弓寶物",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "damou",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "wushuang-zhenji",
+          "generalName": "無雙甄姬",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "lingji",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-026",
+      "scenario": "常規劇本",
+      "country": "魏",
+      "rank": "T0.5",
+      "title": "曹真飛熊軍",
+      "members": [
+        {
+          "generalId": "simayi",
+          "generalName": "司馬懿",
+          "points": "智",
+          "remark": "長慮/擐甲、騎寶物",
+          "learned": [
+            "shibie",
+            "zhongzhi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "jiuzhan",
+              "guixin"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-caozhen",
+          "generalName": "SP曹真",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "caochuan",
+            "feixiong"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "gangrou",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "智",
+          "remark": "妖氣、長健",
+          "learned": [
+            "fengshi",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-027",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T0",
+      "title": "法官盾",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "points": "武",
+          "remark": "武聖、雍雅、盾寶物",
+          "learned": [
+            "yigua",
+            "jiqi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "wushuang-xingcai",
+          "generalName": "無雙星彩",
+          "points": "一速+統",
+          "remark": "",
+          "learned": [
+            "tengjia",
+            "yulin"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "points": "智",
+          "remark": "奇算、出奇",
+          "learned": [
+            "feigong",
+            "xushidai"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-028",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "父女槍",
+      "members": [
+        {
+          "generalId": "guanyu",
+          "generalName": "關羽",
+          "points": "武",
+          "remark": "踩踏、武聖",
+          "learned": [
+            "weimou",
+            "jixing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "165速+武",
+          "remark": "踩踏",
+          "learned": [
+            "hengsao",
+            "shengqi"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "points": "武",
+          "remark": "雄烈超越、灼裂",
+          "learned": [
+            "qingzhou",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-029",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "桃園盾",
+      "members": [
+        {
+          "generalId": "liubei",
+          "generalName": "劉備",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "xianzhen",
+            "shengqi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "points": "武",
+          "remark": "雄烈超越、灼裂",
+          "learned": [
+            "gangyong",
+            "jiqi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "yingji",
+            "secondary": [
+              "jiuzhan",
+              "chuilian"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyu",
+          "generalName": "關羽",
+          "points": "武",
+          "remark": "武聖、盾寶物",
+          "learned": [
+            "qianli",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-030",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "北伐槍",
+      "members": [
+        {
+          "generalId": "sp-zhugeliang",
+          "generalName": "SP諸葛亮",
+          "points": "一速+智",
+          "remark": "妖氣",
+          "learned": [
+            "zanbi",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanxing",
+          "generalName": "關興",
+          "points": "武",
+          "remark": "龍驤",
+          "learned": [
+            "qianli",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangbao",
+          "generalName": "張苞",
+          "points": "二速+武",
+          "remark": "虎峙",
+          "learned": [
+            "qingzhou",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-031",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "漢中盾",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "智",
+          "remark": "盾寶物",
+          "learned": [
+            "duohun",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "zhirui",
+              "wentao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "liubei",
+          "generalName": "劉備",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "xianzhen",
+            "zanbi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "weiyan",
+          "generalName": "魏延",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "pozhen",
+            "jueqi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "yingji",
+            "secondary": [
+              "jiuzhan",
+              "guixin"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-032",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T2",
+      "title": "魏延洞察槍",
+      "members": [
+        {
+          "generalId": "zhaoyun",
+          "generalName": "趙雲",
+          "points": "武",
+          "remark": "膽略",
+          "learned": [
+            "caochuan",
+            "woxin"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "gongqi",
+            "secondary": [
+              "jiangwei-book",
+              "guimou"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "165速+武",
+          "remark": "",
+          "learned": [
+            "jixing",
+            "jushui"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "weiyan",
+          "generalName": "魏延",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "jueqi",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "yingji",
+            "secondary": [
+              "jiuzhan",
+              "guixin"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-033",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T2",
+      "title": "蜀槍",
+      "members": [
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "points": "智",
+          "remark": "神算、天機",
+          "learned": [
+            "shengqi",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "biqi",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhaoyun",
+          "generalName": "趙雲",
+          "points": "武",
+          "remark": "膽略",
+          "learned": [
+            "jifeng",
+            "jueqi"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "gongqi",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "165速+武",
+          "remark": "",
+          "learned": [
+            "jixing",
+            "jushui"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "gongqi",
+            "secondary": [
+              "guimou",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-034",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T2",
+      "title": "蜀騎",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "zhirui",
+              "wentao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhaoyun",
+          "generalName": "趙雲",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "chiyuan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "165速+武",
+          "remark": "",
+          "learned": [
+            "jushui",
+            "jixing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "gongqi",
+            "secondary": [
+              "guimou",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-035",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "演義盾",
+      "members": [
+        {
+          "generalId": "liubei",
+          "generalName": "劉備",
+          "points": "智",
+          "remark": "昭烈",
+          "learned": [
+            "xianzhen",
+            "shengqi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "points": "武",
+          "remark": "雄烈",
+          "learned": [
+            "jiqi",
+            "hengsao"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yizhi-bao",
+            "secondary": [
+              "jingzhun",
+              "shanzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "huangzhong",
+          "generalName": "黃忠",
+          "points": "武",
+          "remark": "弓神",
+          "learned": [
+            "qianli",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-036",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "蜀槍",
+      "members": [
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "points": "智",
+          "remark": "神算、踩踏",
+          "learned": [
+            "feigong",
+            "fuji"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "yanxu",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "points": "武",
+          "remark": "踩踏、武聖",
+          "learned": [
+            "yigua",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "第1速+武",
+          "remark": "踩踏",
+          "learned": [
+            "caochuan",
+            "qingzhou"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-037",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "蜀騎",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "points": "武",
+          "remark": "武聖",
+          "learned": [
+            "yigua",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "liubei",
+          "generalName": "劉備",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "fengshi",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhaoyun",
+          "generalName": "趙雲",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "bingxing",
+            "secondary": [
+              "chizhong",
+              "fenli"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-038",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "SP關羽洞察槍",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "points": "第3速+武",
+          "remark": "踩踏、武聖",
+          "learned": [
+            "zhongyong",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "第2速+武",
+          "remark": "踩踏",
+          "learned": [
+            "feigong",
+            "qingzhou"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhaoyun",
+          "generalName": "趙雲",
+          "points": "第1速+統",
+          "remark": "援助、妖氣",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "bingxing",
+            "secondary": [
+              "chizhong",
+              "fenli"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-039",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "奇門連環槍",
+      "members": [
+        {
+          "generalId": "sp-zhugeliang",
+          "generalName": "SP諸葛亮",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "zhiji",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "pangtong",
+          "generalName": "龐統",
+          "points": "智",
+          "remark": "槍散記",
+          "learned": [
+            "chengdi",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyu",
+          "generalName": "關羽",
+          "points": "武",
+          "remark": "武聖",
+          "learned": [
+            "qianli",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-040",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "關羽洞察槍",
+      "members": [
+        {
+          "generalId": "zhaoyun",
+          "generalName": "趙雲",
+          "points": "統",
+          "remark": "援助、妖氣",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "chiyuan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "165速+武",
+          "remark": "踩踏",
+          "learned": [
+            "jushui",
+            "qingzhou"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyu",
+          "generalName": "關羽",
+          "points": "武",
+          "remark": "踩踏、武聖",
+          "learned": [
+            "qianli",
+            "jixing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-041",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1.5",
+      "title": "蜀槍",
+      "members": [
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "shengqi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "shengzhan",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "points": "加20速+武",
+          "remark": "雄烈超越、灼裂",
+          "learned": [
+            "gangyong",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yizhi-bao",
+            "secondary": [
+              "jingzhun",
+              "shanzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "一速+武",
+          "remark": "踩踏",
+          "learned": [
+            "hengsao",
+            "qingzhou"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-042",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1",
+      "title": "武鋒北伐盾",
+      "members": [
+        {
+          "generalId": "sp-zhugeliang",
+          "generalName": "SP諸葛亮",
+          "points": "一速+智",
+          "remark": "妖氣",
+          "learned": [
+            "xushidai",
+            "shencang"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanxing",
+          "generalName": "關興",
+          "points": "武",
+          "remark": "龍驤",
+          "learned": [
+            "qianli",
+            "wenwu"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangbao",
+          "generalName": "張苞",
+          "points": "二速+武",
+          "remark": "虎峙",
+          "learned": [
+            "wufeng",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "jingxin",
+              "tiejia"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-043",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1",
+      "title": "北伐槍",
+      "members": [
+        {
+          "generalId": "sp-zhugeliang",
+          "generalName": "SP諸葛亮",
+          "points": "一速+智",
+          "remark": "妖氣",
+          "learned": [
+            "zhiji",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanxing",
+          "generalName": "關興",
+          "points": "武",
+          "remark": "龍驤",
+          "learned": [
+            "qianli",
+            "wenwu"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangbao",
+          "generalName": "張苞",
+          "points": "二速+武",
+          "remark": "虎峙",
+          "learned": [
+            "feigong",
+            "yinli"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-044",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1",
+      "title": "暫避麒麟弓",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "zhirui",
+              "wentao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "points": "智",
+          "remark": "神算、天機",
+          "learned": [
+            "zanbi",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "pangtong",
+          "generalName": "龐統",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "taiping",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "jiangwei-book",
+              "guimou"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-045",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1",
+      "title": "網紅槍",
+      "members": [
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "points": "+20速+武",
+          "remark": "雄烈超越、灼裂",
+          "learned": [
+            "luoyi",
+            "yiqi"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yizhi-bao",
+            "secondary": [
+              "jingzhun",
+              "shanzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "165速+武",
+          "remark": "踩踏",
+          "learned": [
+            "jifeng",
+            "hengsao"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "huangyueying",
+          "generalName": "黃月英",
+          "points": "速",
+          "remark": "踩踏、S槍寶物",
+          "learned": [
+            "shengqi",
+            "daji"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "youdi",
+            "secondary": [
+              "lijun",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-046",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1",
+      "title": "等風熊",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "shangbing",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "zhirui",
+              "wentao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "liubei",
+          "generalName": "劉備",
+          "points": "二速智",
+          "remark": "踩踏、妖氣",
+          "learned": [
+            "guagu",
+            "feixiong"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "一速統",
+          "remark": "踩踏",
+          "learned": [
+            "fengshi",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-047",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1",
+      "title": "西風騎",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "shangbing",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "zhirui",
+              "wentao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "liubei",
+          "generalName": "劉備",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "fengshi",
+            "feixiong"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhaoyun",
+          "generalName": "趙雲",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "weimou",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "dongruo",
+            "secondary": [
+              "guixin",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-048",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T1",
+      "title": "天水弓",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "shengzhan",
+              "wentao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhaoyun",
+          "generalName": "趙雲",
+          "points": "統",
+          "remark": "公孫瓚",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "dongruo",
+            "secondary": [
+              "guixin",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "points": "統",
+          "remark": "神算、天機",
+          "learned": [
+            "shengqi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-049",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T0",
+      "title": "法官盾",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "points": "武",
+          "remark": "武聖、雍雅、盾寶物",
+          "learned": [
+            "yigua",
+            "jiqi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "madai",
+          "generalName": "馬岱",
+          "points": "一速+統",
+          "remark": "",
+          "learned": [
+            "tengjia",
+            "yulin"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "points": "智",
+          "remark": "奇算、出奇",
+          "learned": [
+            "feigong",
+            "xushidai"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-050",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T0",
+      "title": "法官盾",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "points": "武",
+          "remark": "武聖、雍雅、盾寶物",
+          "learned": [
+            "yigua",
+            "jiqi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "liubei",
+          "generalName": "劉備",
+          "points": "250統+智",
+          "remark": "昭烈",
+          "learned": [
+            "tengjia",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "jiuzhu",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "points": "智",
+          "remark": "奇算、出奇",
+          "learned": [
+            "yulin",
+            "xushidai"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-051",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T0.5",
+      "title": "龍忠盾",
+      "members": [
+        {
+          "generalId": "sp-zhugeliang",
+          "generalName": "SP諸葛亮",
+          "points": "統智",
+          "remark": "",
+          "learned": [
+            "xushidai",
+            "xianzhen"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "huangzhong",
+          "generalName": "黃忠",
+          "points": "武",
+          "remark": "弓神",
+          "learned": [
+            "qianli",
+            "yigua"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "yingji",
+            "secondary": [
+              "guixin",
+              "jiuzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangbao",
+          "generalName": "張苞",
+          "points": "速武",
+          "remark": "",
+          "learned": [
+            "wufeng",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "baizhan",
+              "jiuzhu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-052",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T0.5",
+      "title": "太白麒麟弓",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "guagu",
+            "shengqi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "zhirui",
+              "wentao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "points": "智",
+          "remark": "神算、天機",
+          "learned": [
+            "dangfeng",
+            "chengdi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "pangtong",
+          "generalName": "龐統",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "taiping",
+            "fenzui"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "jiangwei-book",
+              "guimou"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-053",
+      "scenario": "常規劇本",
+      "country": "蜀",
+      "rank": "T0.5",
+      "title": "當鋒盛氣麒麟弓",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "zhongzhi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "zhirui",
+              "wentao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "points": "智",
+          "remark": "神算、天機",
+          "learned": [
+            "shengqi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "pangtong",
+          "generalName": "龐統",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "taiping",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "jiangwei-book",
+              "guimou"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-054",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T0",
+      "title": "江東嬌弓",
+      "members": [
+        {
+          "generalId": "wushuang-daqiao",
+          "generalName": "無雙大喬",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "meihuo",
+            "duxing"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sunshangxiang",
+          "generalName": "孫尚香",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "dangfeng",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "shenji",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "wushuang-xiaoqiao",
+          "generalName": "無雙小喬",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "xiandeng",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-055",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T0.5",
+      "title": "殺馬槍",
+      "members": [
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "points": "智",
+          "remark": "槍寶物、樂奏",
+          "learned": [
+            "duohun",
+            "fengzhuo"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "shengzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lvmeng",
+          "generalName": "呂蒙",
+          "points": "二速智",
+          "remark": "喬裝、踩踏",
+          "learned": [
+            "zhongzhi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "points": "一速統",
+          "remark": "",
+          "learned": [
+            "caochuan",
+            "baimao"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "wuzhan",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-056",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T0.5",
+      "title": "點火弓",
+      "members": [
+        {
+          "generalId": "sp-zhouyu",
+          "generalName": "SP周瑜",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "zhongzhi",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "biqi",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-lvmeng",
+          "generalName": "SP呂蒙",
+          "points": "一速+統",
+          "remark": "援助、踩踏",
+          "learned": [
+            "caochuan",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "points": "智",
+          "remark": "雍雅",
+          "learned": [
+            "luli",
+            "wanjun"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "jingzhun",
+              "kaihe"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-057",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T0.5",
+      "title": "神火弓",
+      "members": [
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "points": "智最高",
+          "remark": "樂奏",
+          "learned": [
+            "duohun",
+            "fengzhuo"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "wentao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-lvmeng",
+          "generalName": "SP呂蒙",
+          "points": "速最高+統",
+          "remark": "援助、踩踏",
+          "learned": [
+            "caochuan",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "gongbu",
+            "wanjun"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "damou",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-058",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T0.5",
+      "title": "神火弓",
+      "members": [
+        {
+          "generalId": "sp-zhouyu",
+          "generalName": "SP周瑜",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "zhongzhi",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "biqi",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "points": "智",
+          "remark": "雍雅",
+          "learned": [
+            "luli",
+            "chengdi"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "jingzhun",
+              "kaihe"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lvmeng",
+          "generalName": "呂蒙",
+          "points": "一速+智",
+          "remark": "喬裝、踩踏",
+          "learned": [
+            "dangfeng",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-059",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T0.5",
+      "title": "老周瑜神火弓",
+      "members": [
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "points": "智",
+          "remark": "樂奏",
+          "learned": [
+            "duohun",
+            "fengzhuo"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "yuanmou"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "gongbu",
+            "wanjun"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "chuilian"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lvmeng",
+          "generalName": "呂蒙",
+          "points": "智",
+          "remark": "喬裝、踩踏",
+          "learned": [
+            "zhongzhi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-060",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T0.5",
+      "title": "老周瑜肉弓",
+      "members": [
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "points": "智",
+          "remark": "樂奏",
+          "learned": [
+            "duohun",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "shengzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "points": "速最高+統",
+          "remark": "弓寶",
+          "learned": [
+            "caochuan",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-061",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T0.5",
+      "title": "殺馬弓",
+      "members": [
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "points": "智",
+          "remark": "樂奏",
+          "learned": [
+            "duohun",
+            "fengzhuo"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "wentao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lvmeng",
+          "generalName": "呂蒙",
+          "points": "智",
+          "remark": "喬裝、踩踏",
+          "learned": [
+            "zhongzhi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "points": "統",
+          "remark": "弓寶物",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "wuzhan",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-062",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1",
+      "title": "孫權吳騎",
+      "members": [
+        {
+          "generalId": "sunquan",
+          "generalName": "孫權",
+          "points": "武",
+          "remark": "雄才",
+          "learned": [
+            "yiqi",
+            "baiqi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lingtong",
+          "generalName": "凌統",
+          "points": "速",
+          "remark": "疾馳",
+          "learned": [
+            "luoyi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "fengshi",
+            "hubao"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-063",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1",
+      "title": "孫權吳槍",
+      "members": [
+        {
+          "generalId": "sunquan",
+          "generalName": "孫權",
+          "points": "智",
+          "remark": "槍寶物",
+          "learned": [
+            "dangfeng",
+            "bingwu"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lvmeng",
+          "generalName": "呂蒙",
+          "points": "智",
+          "remark": "喬裝、踩踏",
+          "learned": [
+            "zhongzhi",
+            "baimao"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "caochuan",
+            "fengshi"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "wuzhan",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-064",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1",
+      "title": "碰瓷香香吳騎",
+      "members": [
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "shengqi",
+            "xiliang"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "fangbei",
+              "shoushi"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lingtong",
+          "generalName": "凌統",
+          "points": "174速+武",
+          "remark": "疾馳",
+          "learned": [
+            "powei",
+            "hengsao"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sunshangxiang",
+          "generalName": "孫尚香",
+          "points": "175速+武",
+          "remark": "驚鴻梟姬",
+          "learned": [
+            "baiqi",
+            "luoyi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-065",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1",
+      "title": "碰瓷當鋒騎",
+      "members": [
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "tieqi",
+            "hubao"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "fangbei",
+              "shoushi"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "161速+武",
+          "remark": "疾馳",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lingtong",
+          "generalName": "凌統",
+          "points": "186速+武",
+          "remark": "疾馳",
+          "learned": [
+            "dangfeng",
+            "luoyi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "wugong",
+            "secondary": [
+              "suzhan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-066",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1",
+      "title": "法刀",
+      "members": [
+        {
+          "generalId": "sunquan",
+          "generalName": "孫權",
+          "points": "智最高",
+          "remark": "雄才",
+          "learned": [
+            "dangfeng",
+            "bingwu"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "175速+武",
+          "remark": "",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lusu",
+          "generalName": "魯肅",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "jinfan",
+            "bamen"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "gangrou",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-067",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1",
+      "title": "天王弓",
+      "members": [
+        {
+          "generalId": "sunquan",
+          "generalName": "孫權",
+          "points": "智",
+          "remark": "雄才",
+          "learned": [
+            "dangfeng",
+            "bingwu"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "taiping",
+            "zhongzhi"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "damou",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "wuzhan",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-068",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1",
+      "title": "抵禦弓",
+      "members": [
+        {
+          "generalId": "sunquan",
+          "generalName": "孫權",
+          "points": "武",
+          "remark": "雄才",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sunshangxiang",
+          "generalName": "孫尚香",
+          "points": "武",
+          "remark": "驚鴻梟姬",
+          "learned": [
+            "jiemeng",
+            "zhechong"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "zhenge",
+            "secondary": [
+              "chuilian",
+              "jiuzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-sunjian",
+          "generalName": "SP孫堅",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "futang",
+            "zhongwang"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "zhenge",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-069",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1.5",
+      "title": "慷慨弓",
+      "members": [
+        {
+          "generalId": "ganning",
+          "generalName": "甘寧",
+          "points": "武",
+          "remark": "華服",
+          "learned": [
+            "jinfan",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "zhirui",
+              "shengzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "points": "統",
+          "remark": "援助、弓寶物",
+          "learned": [
+            "linwei",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "zhanbu",
+              "miaosuan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-070",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1.5",
+      "title": "虎臣弓",
+      "members": [
+        {
+          "generalId": "ganning",
+          "generalName": "甘寧",
+          "points": "武",
+          "remark": "華服",
+          "learned": [
+            "hengsao",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "175速+武",
+          "remark": "疾馳",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "jiangwei-book",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "援助、弓寶物",
+          "learned": [
+            "shengqi",
+            "jinfan"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "fangbei",
+              "shoushi"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-071",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1.5",
+      "title": "虎臣弓",
+      "members": [
+        {
+          "generalId": "ganning",
+          "generalName": "甘寧",
+          "points": "武",
+          "remark": "華服",
+          "learned": [
+            "hengsao",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "175速+武",
+          "remark": "疾馳",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "jiangwei-book",
+              "miaosuan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "援助、弓寶物",
+          "learned": [
+            "shengqi",
+            "baima"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "fangbei",
+              "shoushi"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-072",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1.5",
+      "title": "虎臣騎",
+      "members": [
+        {
+          "generalId": "ganning",
+          "generalName": "甘寧",
+          "points": "武",
+          "remark": "華服、騎寶物",
+          "learned": [
+            "hengsao",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "175速+武",
+          "remark": "疾馳",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "jiangwei-book",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "shengqi",
+            "xiliang"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "fangbei",
+              "shoushi"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-073",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1.5",
+      "title": "陸遜肉弓",
+      "members": [
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "guagu",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "biqi",
+            "secondary": [
+              "fangbei",
+              "shoushi"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-lvmeng",
+          "generalName": "SP呂蒙",
+          "points": "速最高+智",
+          "remark": "援助、踩踏",
+          "learned": [
+            "caochuan",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-074",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T1.5",
+      "title": "吳騎",
+      "members": [
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "tieqi",
+            "hubao"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yitui",
+            "secondary": [
+              "chizhong",
+              "fenli"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "165速+武",
+          "remark": "疾馳",
+          "learned": [
+            "dangfeng",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sunshangxiang",
+          "generalName": "孫尚香",
+          "points": "161速+武",
+          "remark": "疾馳",
+          "learned": [
+            "baiqi",
+            "luoyi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-075",
+      "scenario": "常規劇本",
+      "country": "吳",
+      "rank": "T2",
+      "title": "陸太魯",
+      "members": [
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "points": "智最高",
+          "remark": "援助",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "biqi",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "175速+武",
+          "remark": "疾馳",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "jiangwei-book",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lusu",
+          "generalName": "魯肅",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "jinfan",
+            "zanbi"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "gangrou",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-076",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T0",
+      "title": "通用皇馬槍",
+      "members": [
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "全武",
+          "remark": "神威踩踏",
+          "learned": [
+            "huju",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-huangfusong",
+          "generalName": "SP皇甫嵩",
+          "points": "統",
+          "remark": "雍雅沉勢",
+          "learned": [
+            "caochuan",
+            "chengdi"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "miaosuan",
+              "zhanbu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "points": "智",
+          "remark": "援助、槍寶物",
+          "learned": [
+            "jiefan",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "gangrou",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-077",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T0",
+      "title": "內戰皇馬槍",
+      "members": [
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "全武",
+          "remark": "神威踩踏",
+          "learned": [
+            "huju",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-huangfusong",
+          "generalName": "SP皇甫嵩",
+          "points": "統",
+          "remark": "雍雅沉勢",
+          "learned": [
+            "caochuan",
+            "wanjun"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "shenshi",
+            "secondary": [
+              "kaihe",
+              "fenli"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "points": "智",
+          "remark": "援助、槍寶物",
+          "learned": [
+            "jiefan",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-078",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T0",
+      "title": "打地皇馬槍",
+      "members": [
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "全武",
+          "remark": "神威踩踏",
+          "learned": [
+            "sucheng",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-huangfusong",
+          "generalName": "SP皇甫嵩",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "caochuan",
+            "fengshi"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "shenshi",
+            "secondary": [
+              "kaihe",
+              "fenli"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "points": "統",
+          "remark": "槍寶物",
+          "learned": [
+            "jiefan",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-079",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T0.5",
+      "title": "SP朱儁群肉弓",
+      "members": [
+        {
+          "generalId": "sp-dongzhuo",
+          "generalName": "SP董卓",
+          "points": "統",
+          "remark": "妖氣踩踏",
+          "learned": [
+            "hantian",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-zhujun",
+          "generalName": "SP朱儁",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "xingyi",
+            "gangrou-ji"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "yuanmou"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "points": "智",
+          "remark": "妖氣踩踏、佳人長健",
+          "learned": [
+            "hejun",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-080",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T0.5",
+      "title": "美人連環弓",
+      "members": [
+        {
+          "generalId": "sp-dongzhuo",
+          "generalName": "SP董卓",
+          "points": "統",
+          "remark": "踩踏",
+          "learned": [
+            "gangrou-ji",
+            "xiandeng"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "points": "智",
+          "remark": "妖氣踩踏、佳人長健",
+          "learned": [
+            "hejun",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "points": "武",
+          "remark": "無雙踩踏",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "jingzhun",
+              "shanzhan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-081",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "武峰袁馬槍",
+      "members": [
+        {
+          "generalId": "sp-yuanshao",
+          "generalName": "SP袁紹",
+          "points": "統",
+          "remark": "號令",
+          "learned": [
+            "caochuan",
+            "wufeng"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "武",
+          "remark": "神威踩踏",
+          "learned": [
+            "huju",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "jiefan",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "lijun",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-082",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "五雷閉月弓",
+      "members": [
+        {
+          "generalId": "diaochan",
+          "generalName": "貂蟬",
+          "points": "智",
+          "remark": "弓寶物",
+          "learned": [
+            "meihuo",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "tiejia"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "points": "智",
+          "remark": "天公道網",
+          "learned": [
+            "taiping",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "wufeng",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 散仙"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tpl-083",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "溫侯弓",
+      "members": [
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "linwei",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "points": "武",
+          "remark": "無雙踩踏、貂蟬",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "jingzhun",
+              "shanzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "智最高",
+          "remark": "",
+          "learned": [
+            "xiandeng",
+            "wufeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 散仙"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tpl-084",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "張角群肉弓",
+      "members": [
+        {
+          "generalId": "sp-dongzhuo",
+          "generalName": "SP董卓",
+          "points": "統",
+          "remark": "妖氣踩踏",
+          "learned": [
+            "xiandeng",
+            "gangrou-ji"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "points": "智",
+          "remark": "天公道網",
+          "learned": [
+            "taiping",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "points": "智",
+          "remark": "妖氣踩踏、佳人長健",
+          "learned": [
+            "hejun",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-085",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "張讓群肉弓",
+      "members": [
+        {
+          "generalId": "sp-dongzhuo",
+          "generalName": "SP董卓",
+          "points": "統",
+          "remark": "妖氣踩踏",
+          "learned": [
+            "xiandeng",
+            "gangrou-ji"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangrang",
+          "generalName": "張讓",
+          "points": "智",
+          "remark": "妖氣、弓散記",
+          "learned": [
+            "wenwu",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "yuanmou"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "points": "智",
+          "remark": "妖氣踩踏、佳人長健",
+          "learned": [
+            "hejun",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-086",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "SP袁紹群肉弓",
+      "members": [
+        {
+          "generalId": "sp-dongzhuo",
+          "generalName": "SP董卓",
+          "points": "統",
+          "remark": "妖氣踩踏",
+          "learned": [
+            "xiandeng",
+            "gangrou-ji"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-yuanshao",
+          "generalName": "SP袁紹",
+          "points": "武",
+          "remark": "號令、踩踏",
+          "learned": [
+            "chediao",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "points": "智",
+          "remark": "妖氣踩踏、佳人長健",
+          "learned": [
+            "hejun",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-087",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "毒馬槍",
+      "members": [
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "武",
+          "remark": "神威踩踏",
+          "learned": [
+            "huju",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-huangfusong",
+          "generalName": "SP皇甫嵩",
+          "points": "統",
+          "remark": "沉勢、雍雅",
+          "learned": [
+            "caochuan",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "shenshi",
+            "secondary": [
+              "kaihe",
+              "fenli"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "duosi",
+          "generalName": "朵思大王",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "weimou",
+            "jiefan"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "baizhan",
+              "suzhan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-088",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "武鋒SP馬超槍",
+      "members": [
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "points": "智最高",
+          "remark": "",
+          "learned": [
+            "wufeng",
+            "jiefan"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "武",
+          "remark": "神威踩踏",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "zanbi",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "jiuzhu",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 散仙"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tpl-089",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "低配馬超",
+      "members": [
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "武",
+          "remark": "神威踩踏",
+          "learned": [
+            "huju",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "points": "速+統",
+          "remark": "槍寶物",
+          "learned": [
+            "jiefan",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "suzhan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "10速+智",
+          "remark": "",
+          "learned": [
+            "weimou",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "zhanbu",
+              "miaosuan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-090",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "袁術爆發弓",
+      "members": [
+        {
+          "generalId": "yuanshu",
+          "generalName": "袁術",
+          "points": "智",
+          "remark": "魏延軍師、出奇",
+          "learned": [
+            "yanzhu",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-yuanshao",
+          "generalName": "SP袁紹",
+          "points": "200速+武",
+          "remark": "號令",
+          "learned": [
+            "hengsao",
+            "chediao"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "gongsunzan",
+          "generalName": "公孫瓚",
+          "points": "速",
+          "remark": "",
+          "learned": [
+            "wanjun",
+            "fenzui"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "suzhan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-091",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1",
+      "title": "鋒矢三仙盾",
+      "members": [
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "points": "智",
+          "remark": "天公道網",
+          "learned": [
+            "taiping",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "二速+智",
+          "remark": "奇門青懶衣",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 散仙"
+          ]
+        },
+        {
+          "generalId": "yuji",
+          "generalName": "于吉",
+          "points": "一速+統",
+          "remark": "行雨",
+          "learned": [
+            "fengshi",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "gangrou",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-092",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1.5",
+      "title": "控制型溫侯弓",
+      "members": [
+        {
+          "generalId": "sp-yuanshao",
+          "generalName": "SP袁紹",
+          "points": "武",
+          "remark": "號令",
+          "learned": [
+            "luoyi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "buyong",
+            "secondary": [
+              "cangdao",
+              "fenxian"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "points": "武",
+          "remark": "無雙踩踏、貂蟬",
+          "learned": [
+            "sucheng",
+            "cuifeng"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "jingzhun",
+              "shanzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "points": "智",
+          "remark": "弓寶物",
+          "learned": [
+            "jinfan",
+            "bamen"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "yanxu",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-093",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T1.5",
+      "title": "張角飛熊",
+      "members": [
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "points": "智",
+          "remark": "天公道網、騎寶物",
+          "learned": [
+            "taiping",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "一速+智",
+          "remark": "奇門青懶衣",
+          "learned": [
+            "zhongzhi",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 散仙"
+          ]
+        },
+        {
+          "generalId": "yuji",
+          "generalName": "于吉",
+          "points": "智",
+          "remark": "行雨",
+          "learned": [
+            "fengshi",
+            "feixiong"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "gangrou",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-094",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T2",
+      "title": "張角骨頭盾",
+      "members": [
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "points": "智",
+          "remark": "天公道網",
+          "learned": [
+            "taiping",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "一速智",
+          "remark": "妖氣",
+          "learned": [
+            "fengshi",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 散仙"
+          ]
+        },
+        {
+          "generalId": "wutugu",
+          "generalName": "兀突骨",
+          "points": "二速統",
+          "remark": "",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "miaosuan",
+              "zhanbu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-095",
+      "scenario": "常規劇本",
+      "country": "群",
+      "rank": "T2",
+      "title": "鋒矢張角盾",
+      "members": [
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "points": "智",
+          "remark": "天公道網",
+          "learned": [
+            "taiping",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "速+智",
+          "remark": "妖氣",
+          "learned": [
+            "fengshi",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 散仙"
+          ]
+        },
+        {
+          "generalId": "sp-huangfusong",
+          "generalName": "SP皇甫嵩",
+          "points": "速+統",
+          "remark": "援助",
+          "learned": [
+            "tengjia",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "suzhan",
+              "jiuzhu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-096",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T0",
+      "title": "圓夢弓",
+      "members": [
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "points": "智",
+          "remark": "妖氣踩踏、佳人回元",
+          "learned": [
+            "hejun",
+            "gangrou-ji"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-zhouyu",
+          "generalName": "SP周瑜",
+          "points": "智",
+          "remark": "妖氣踩踏、樂奏、長健",
+          "learned": [
+            "wenwu",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "yingji",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "智",
+          "remark": "妖氣踩踏、援助、弓寶物",
+          "learned": [
+            "qianlong",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "dongruo",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-097",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T0",
+      "title": "圓夢弓",
+      "members": [
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "points": "智",
+          "remark": "妖氣踩踏、佳人回元",
+          "learned": [
+            "hejun",
+            "gangrou-ji"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "points": "智",
+          "remark": "妖氣踩踏、樂奏、長健",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "zhenge",
+            "secondary": [
+              "jiuzhan",
+              "yuanmou"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "智",
+          "remark": "妖氣踩踏、援助、弓寶",
+          "learned": [
+            "qianlong",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "dongruo",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-098",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T0.5",
+      "title": "離火弓",
+      "members": [
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "points": "智",
+          "remark": "妖氣踩踏、佳人回元",
+          "learned": [
+            "hejun",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "points": "智",
+          "remark": "妖氣踩踏、長健",
+          "learned": [
+            "gongbu",
+            "chengdi"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "jingzhun",
+              "shanzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "智",
+          "remark": "妖氣踩踏、援助、弓寶",
+          "learned": [
+            "qianlong",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "dongruo",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-099",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T0.5",
+      "title": "關馬槍",
+      "members": [
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "武",
+          "remark": "踩踏",
+          "learned": [
+            "caochuan",
+            "qianlong"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "suzhan",
+              "baizhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "武",
+          "remark": "神威踩踏",
+          "learned": [
+            "huju",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "智",
+          "remark": "槍寶物",
+          "learned": [
+            "jiefan",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-100",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T0.5",
+      "title": "狗馬槍",
+      "members": [
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "qianlong",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "chiyuan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "武",
+          "remark": "神威踩踏",
+          "learned": [
+            "huju",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "智",
+          "remark": "槍寶物",
+          "learned": [
+            "jiefan",
+            "linwei"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-101",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T0.5",
+      "title": "兗州三勢關",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "points": "武",
+          "remark": "武聖、盾寶物",
+          "learned": [
+            "yigua",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "meihuo",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "lijun",
+              "chiyuan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "points": "智",
+          "remark": "妖氣、雍雅、沉重",
+          "learned": [
+            "sanshi",
+            "xushidai"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-102",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1",
+      "title": "三勢張角法正",
+      "members": [
+        {
+          "generalId": "fazheng",
+          "generalName": "法正",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "guagu",
+            "sanshi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "baizhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "points": "智",
+          "remark": "天公道網",
+          "learned": [
+            "taiping",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "points": "統",
+          "remark": "盾寶物",
+          "learned": [
+            "weimou",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "wuzhan",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-103",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1",
+      "title": "詩詩盾",
+      "members": [
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "points": "智最高",
+          "remark": "天公道網",
+          "learned": [
+            "taiping",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "liubei",
+          "generalName": "劉備",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "guagu",
+            "fuji"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lusu",
+          "generalName": "魯肅",
+          "points": "智",
+          "remark": "盾寶物",
+          "learned": [
+            "fengshi",
+            "zanbi"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "gangrou",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-104",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1.5",
+      "title": "太史慈鼠標弓",
+      "members": [
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "zanbi",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "biqi",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "jinfan",
+            "sanshi"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-105",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1.5",
+      "title": "孫權鼠標弓",
+      "members": [
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "zanbi",
+            "qianlong"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "guagu",
+            "zhongzhi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "baizhan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sunquan",
+          "generalName": "孫權",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-106",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1.5",
+      "title": "潛龍象",
+      "members": [
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "qianlong",
+            "xiangbing"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 散仙"
+          ]
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "weishu",
+            "gongbu"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhaoyun",
+          "generalName": "趙雲",
+          "points": "武",
+          "remark": "膽略",
+          "learned": [
+            "jushui",
+            "jueqi"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-107",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1.5",
+      "title": "三勢張角飛熊騎",
+      "members": [
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "points": "智",
+          "remark": "天公道網、騎寶物",
+          "learned": [
+            "taiping",
+            "shibie"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "liubei",
+          "generalName": "劉備",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "feixiong",
+            "zanbi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "caochuan",
+            "sanshi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "chiyuan",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 統軍"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tpl-108",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1.5",
+      "title": "碰瓷馬",
+      "members": [
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "武",
+          "remark": "神威踩踏",
+          "learned": [
+            "yiqi",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guojia",
+          "generalName": "郭嘉",
+          "points": "速+智",
+          "remark": "",
+          "learned": [
+            "dangfeng",
+            "tieqi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "huangyueying",
+          "generalName": "黃月英",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "hubao",
+            "fengshi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "youdi",
+            "secondary": [
+              "lijun",
+              "jiuzhu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-109",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1.5",
+      "title": "碰瓷呂",
+      "members": [
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "points": "武",
+          "remark": "無雙踩踏",
+          "learned": [
+            "yiqi",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guojia",
+          "generalName": "郭嘉",
+          "points": "速+智",
+          "remark": "",
+          "learned": [
+            "dangfeng",
+            "tieqi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "huangyueying",
+          "generalName": "黃月英",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "hubao",
+            "sanshi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "youdi",
+            "secondary": [
+              "lijun",
+              "jiuzhu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-110",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T2",
+      "title": "霸王弓",
+      "members": [
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "points": "武",
+          "remark": "援助",
+          "learned": [
+            "shibie",
+            "sanshi"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "biqi",
+            "secondary": [
+              "shoushi",
+              "tiejia"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "速智",
+          "remark": "",
+          "learned": [
+            "duohun",
+            "weishu"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "統",
+          "remark": "妖氣",
+          "learned": [
+            "zanbi",
+            "guagu"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 散仙"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tpl-111",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T2",
+      "title": "三勢呂呂太黃",
+      "members": [
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "points": "武",
+          "remark": "無雙踩踏",
+          "learned": [
+            "yiqi",
+            "baiqi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "dangfeng",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "huangyueying",
+          "generalName": "黃月英",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "hubao",
+            "sanshi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "youdi",
+            "secondary": [
+              "lijun",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-112",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T2",
+      "title": "三勢張角魏延",
+      "members": [
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "points": "智",
+          "remark": "援助",
+          "learned": [
+            "yanzhu",
+            "xianzhen"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "hebian",
+              "zhanbu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "weiyan",
+          "generalName": "魏延",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "weimou",
+            "jueqi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "yingji",
+            "secondary": [
+              "jiuzhan",
+              "guixin"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "lusu",
+          "generalName": "魯肅",
+          "points": "智",
+          "remark": "盾寶物",
+          "learned": [
+            "zanbi",
+            "sanshi"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "gangrou",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-113",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T2",
+      "title": "關夏太",
+      "members": [
+        {
+          "generalId": "xiahouyuan",
+          "generalName": "夏侯淵",
+          "points": "162速+武",
+          "remark": "",
+          "learned": [
+            "yiqi",
+            "luoyi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "points": "165速+武",
+          "remark": "",
+          "learned": [
+            "hubao",
+            "tieqi"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "jiangwei-book",
+              "shenji"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-114",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T2",
+      "title": "三勢呂張周",
+      "members": [
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "points": "武",
+          "remark": "無雙踩踏",
+          "learned": [
+            "yiqi",
+            "baiqi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangliao",
+          "generalName": "張遼",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "hubao",
+            "sanshi"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yitui",
+            "secondary": [
+              "chizhong",
+              "fenli"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-115",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T2",
+      "title": "三勢呂郭周",
+      "members": [
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "points": "武",
+          "remark": "無雙踩踏",
+          "learned": [
+            "yiqi",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "guojia",
+          "generalName": "郭嘉",
+          "points": "一速+智",
+          "remark": "",
+          "learned": [
+            "dangfeng",
+            "tieqi"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "援助",
+          "learned": [
+            "hubao",
+            "sanshi"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yitui",
+            "secondary": [
+              "chizhong",
+              "fenli"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-116",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "黑科技",
+      "title": "固傷弓",
+      "members": [
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "弓寶物",
+          "learned": [
+            "qianlong",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-zhujun",
+          "generalName": "SP朱儁",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "zanbi",
+            "dangfeng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "shangbing",
+            "wudang"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "wentao",
+              "shengzhan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-117",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "黑科技",
+      "title": "降維弓",
+      "members": [
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "qianlong",
+            "zanbi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              null
+            ]
+          },
+          "unlisted": [
+            "兵書 散仙"
+          ]
+        },
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "points": "智",
+          "remark": "樂奏",
+          "learned": [
+            "duohun",
+            "fengzhuo"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "shunying",
+            "secondary": [
+              "jiangwei-book",
+              "zhanbu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "jieli",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-118",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "黑科技",
+      "title": "三勢呂郭喬",
+      "members": [
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "points": "武",
+          "remark": "無雙踩踏",
+          "learned": [
+            "wangong",
+            null
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "jingzhun",
+              "chizhong"
+            ]
+          },
+          "unlisted": [
+            "戰法 破甲"
+          ]
+        },
+        {
+          "generalId": "guojia",
+          "generalName": "郭嘉",
+          "points": "一速+智",
+          "remark": "弓寶物",
+          "learned": [
+            "sanshi",
+            "huochi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "lijun",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "wushuang-xiaoqiao",
+          "generalName": "無雙小喬",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "wenwu",
+            "baima"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-119",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "黑科技",
+      "title": "武鋒太史慈",
+      "members": [
+        {
+          "generalId": "zhaoyun",
+          "generalName": "趙雲",
+          "points": "統",
+          "remark": "",
+          "learned": [
+            "caochuan",
+            "weimou"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "guixin",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "points": "武",
+          "remark": "",
+          "learned": [
+            "baoli",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "wufeng",
+            "jinfan"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "jiuzhu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-120",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T0.5",
+      "title": "超姬槍",
+      "members": [
+        {
+          "generalId": "wangyuanji",
+          "generalName": "王元姬",
+          "points": "智",
+          "remark": "妖氣",
+          "learned": [
+            "linwei",
+            "qianlong"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "points": "武",
+          "remark": "神威踩踏",
+          "learned": [
+            "huju",
+            "sucheng"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-lvmeng",
+          "generalName": "SP呂蒙",
+          "points": "智",
+          "remark": "踩踏",
+          "learned": [
+            "jiefan",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-121",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T0.5",
+      "title": "皇冠槍",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "points": "武",
+          "remark": "武聖、沉重",
+          "learned": [
+            "yigua",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-huangfusong",
+          "generalName": "SP皇甫嵩",
+          "points": "速+統",
+          "remark": "幽影援助",
+          "learned": [
+            "sanshi",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "suzhan",
+              "jiuzhu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "智",
+          "remark": "槍寶物",
+          "learned": [
+            "weimou",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "zhanbu",
+              "miaosuan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-122",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T0.5",
+      "title": "渡江槍",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "points": "武",
+          "remark": "武聖、沉重",
+          "learned": [
+            "yigua",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-huangfusong",
+          "generalName": "SP皇甫嵩",
+          "points": "速+統",
+          "remark": "",
+          "learned": [
+            "sanshi",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "suzhan",
+              "jiuzhu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-lvmeng",
+          "generalName": "SP呂蒙",
+          "points": "10速+智",
+          "remark": "援助、踩踏",
+          "learned": [
+            "weimou",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "miaosuan",
+              "zhanbu"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-123",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T0.5",
+      "title": "狗官槍",
+      "members": [
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "points": "速+統",
+          "remark": "援助",
+          "learned": [
+            "qianlong",
+            "caochuan"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "lindi",
+            "secondary": [
+              "suzhan",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "points": "武",
+          "remark": "武聖、沉重",
+          "learned": [
+            "yigua",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "30速+智",
+          "remark": "槍寶物",
+          "learned": [
+            "weimou",
+            "feigong"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "zhanbu",
+              "miaosuan"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-124",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1",
+      "title": "瑜亮弓",
+      "members": [
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "qianlong",
+            "xiandeng"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "points": "智",
+          "remark": "樂奏",
+          "learned": [
+            "duohun",
+            "fengzhuo"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "zhongzhi",
+            "shengqi"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-125",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1",
+      "title": "瑜亮弓",
+      "members": [
+        {
+          "generalId": "wangyi",
+          "generalName": "王異",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "zhongzhi",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "points": "智",
+          "remark": "樂奏",
+          "learned": [
+            "duohun",
+            "fengzhuo"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "points": "智最高",
+          "remark": "",
+          "learned": [
+            "xiandeng",
+            "qianlong"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-126",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1",
+      "title": "瑜亮弓",
+      "members": [
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "points": "智",
+          "remark": "妖氣踩踏、佳人回元",
+          "learned": [
+            "hejun",
+            "luli"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "points": "30速+智",
+          "remark": "妖氣踩踏",
+          "learned": [
+            "zhongzhi",
+            "qianlong"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "points": "智",
+          "remark": "妖氣踩踏、樂奏、長健",
+          "learned": [
+            "duohun",
+            "fengzhuo"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-127",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1",
+      "title": "核彈張",
+      "members": [
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "靈動",
+          "learned": [
+            "qianlong",
+            "fuji"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "points": "武",
+          "remark": "雄烈起蜺、灼裂",
+          "learned": [
+            "gangyong",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yizhi-bao",
+            "secondary": [
+              "jingzhun",
+              "shanzhan"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "sp-yuanshao",
+          "generalName": "SP袁紹",
+          "points": "一速+武",
+          "remark": "號令、盾寶物",
+          "learned": [
+            "xianzhen",
+            "hengsao"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    },
+    {
+      "id": "tpl-128",
+      "scenario": "常規劇本",
+      "country": "混合",
+      "rank": "T1",
+      "title": "核彈張曹操版",
+      "members": [
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "points": "統",
+          "remark": "精神",
+          "learned": [
+            "qianlong",
+            "fuji"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "points": "武",
+          "remark": "雄烈起蜺、灼裂",
+          "learned": [
+            "gangyong",
+            "jifeng"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "sanli",
+            "secondary": [
+              "jingxin",
+              "fangbei"
+            ]
+          },
+          "unlisted": []
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "points": "智",
+          "remark": "",
+          "learned": [
+            "xianzhen",
+            "shengqi"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "lijun"
+            ]
+          },
+          "unlisted": []
+        }
+      ]
+    }
+  ]
+}
