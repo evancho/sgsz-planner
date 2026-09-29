@@ -63,7 +63,9 @@ import {
   templateScenarios,
   TEMPLATE_COUNTRIES,
   filterTeamTemplates,
+  orderTeamTemplates,
   placeBlockedTemplatesLast,
+  templateOwnedRed,
   updateAccount,
   usefulInnate,
 } from './logic.js';
@@ -825,12 +827,14 @@ function templateResultsMarkup() {
   const all = ui.catalog.templates || [];
   const usage = buildUsage(current);
   const tactics = tacticsById(current);
-  const rows = filterTeamTemplates(all, ui.templates).map((team) => ({
-    team,
-    state: templateBlockState(team, current, usage, tactics),
-  }));
+  const rows = orderTeamTemplates(filterTeamTemplates(all, ui.templates), (team) => templateOwnedRed(team, current))
+    .map((team) => ({
+      team,
+      state: templateBlockState(team, current, usage, tactics),
+      red: templateOwnedRed(team, current),
+    }));
   const matched = placeBlockedTemplatesLast(rows, (row) => row.state.blocked);
-  const items = matched.map(({ team, state }) => {
+  const items = matched.map(({ team, state, red }) => {
     const names = (team.members || []).map((member) => member.generalName).filter(Boolean).join(' / ');
     const blocked = state.blocked;
     const notes = state.notes;
@@ -838,6 +842,7 @@ function templateResultsMarkup() {
       <li class="template-item${blocked ? ' blocked' : ''}">
         <div>
           <strong>${esc(templateDisplayName(team))}</strong>
+          <span class="tag red-total">總紅度 ${red}</span>
           <span class="tag">${campInk(team.country)}</span>
           <p>${esc(names)}</p>
           ${notes.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}

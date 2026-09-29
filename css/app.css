@@ -311,7 +311,8 @@ button.grow-name { cursor: pointer; }
 .template-item.blocked,
 .help-card.blocked { opacity: 0.45; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.tag.alt-team { margin-left: 6px; }
+.tag.alt-team,
+.template-item .tag { margin-left: 6px; }
 .team-notes { white-space: pre-wrap; }
 .team-tools .btn,
 .team-tools .btn-ghost { white-space: nowrap; }
