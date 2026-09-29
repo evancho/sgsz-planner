@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "1.2.6",
+  "catalogVersion": "1.2.7",
   "tactics": [
     {
       "id": "zanbi",
@@ -263,18 +263,6 @@
       "orange": true,
       "rank": "S",
       "desc": "定軍山之戰事件戰法。限盾、器械。自身提高智力與統率並獲得先攻，但無法造成傷害；每回合有機率使我軍群體獲得規避。"
-    },
-    {
-      "id": "shencang",
-      "name": "深藏若虛",
-      "type": "指揮",
-      "source": "事件",
-      "from": [],
-      "troops": null,
-      "copies": 1,
-      "orange": true,
-      "rank": "S",
-      "desc": "事件兌換的指揮戰法。每回合治療自己，並有機會降低自己受到的傷害。"
     },
     {
       "id": "yudi",
@@ -1750,6 +1738,18 @@
       "desc": "事件兌換的被動戰法。"
     },
     {
+      "id": "shencang",
+      "name": "深藏若虛",
+      "type": "被動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "每回合治療自身並降低受到的傷害。"
+    },
+    {
       "id": "baimei",
       "name": "白眉",
       "type": "被動",
@@ -1926,12 +1926,12 @@
         "quyi"
       ],
       "troops": [
-        "槍"
+        "弓"
       ],
       "copies": 1,
       "orange": true,
       "rank": "S",
-      "desc": "槍兵進階為先登死士，使我軍免疫遇襲。傳承自麴義。"
+      "desc": "弓兵進階為先登死士，使我軍免疫遇襲。傳承自麴義。"
     },
     {
       "id": "qingzhou",

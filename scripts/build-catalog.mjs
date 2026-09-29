@@ -7,7 +7,7 @@
 import { writeFileSync } from 'node:fs';
 import { tacticRows } from './tactic-catalog.mjs';
 
-const VERSION = '1.2.6';
+const VERSION = '1.2.7';
 
 const APT_ORDER = ['騎', '盾', '弓', '槍', '器械'];
 
@@ -413,7 +413,7 @@ const bingshu = {
 
 const meta = {
   catalogVersion: VERSION,
-  updated: '2026-09-28',
+  updated: '2026-09-30',
   scope: '戰鬥類 S 級收到兗州之戰的公開清冊，並補上已核對的後續事件戰法；A 級只收已核對類型的常用戰法。另收英雄命示都尉自帶，以及賽季商店的拓本與精進陣法（含兵演春秋）。直接編輯 scripts/tactic-catalog.mjs 或本腳本的增補列後重跑建置即可擴充。',
 };
 
