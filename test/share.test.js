@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { applyTeamShare, decodeTeamShare, emptyAccount, encodeTeamShare, shareGaps, shareTokenFromText } from '../js/logic.js';
+import { applyTeamShare, decodeTeamShare, emptyAccount, encodeTeamShare, ownershipGapLine, ownershipGaps, shareGaps, shareTokenFromText } from '../js/logic.js';
 
 const team = {
   id: 'team-shu',
@@ -119,6 +119,28 @@ test('loading does not lower a higher red or clear dynamic and collection', () =
   assert.equal(applied.ok, true);
   assert.deepEqual(applied.account.owned.guanyu, { red: 5, dynamic: true, awaken: true });
   assert.equal(applied.account.teams.length, 1);
+});
+
+test('missing generals or tactics are named and block a load', () => {
+  const members = [
+    { generalId: 'sp-guanyu', generalName: 'SP關羽', learned: ['feigong', 'xushidai'], unlisted: [] },
+    { generalId: 'wushuang-xingcai', generalName: '無雙星彩', learned: ['tengjia'], unlisted: ['戰法 破甲', '兵書 散仙'] },
+  ];
+  const account = emptyAccount('acct-a', '主帳');
+  account.owned = { 'sp-guanyu': { red: 0, dynamic: false, awaken: false } };
+  account.tacticsOwned = { feigong: true };
+  const gaps = ownershipGaps(members, account, {
+    tacticName: (id) => ({ xushidai: '蓄勢待發', tengjia: '藤甲兵' }[id] || id),
+  });
+  assert.deepEqual(gaps.generals, ['無雙星彩']);
+  assert.deepEqual(gaps.tactics, ['蓄勢待發', '藤甲兵', '破甲']);
+  assert.equal(ownershipGapLine(gaps), '缺少武將 無雙星彩；缺少戰法 蓄勢待發、藤甲兵、破甲');
+  account.owned['wushuang-xingcai'] = { red: 0, dynamic: false, awaken: false };
+  account.tacticsOwned = { feigong: true, xushidai: true, tengjia: true };
+  const still = ownershipGaps(members, account, { tacticName: (id) => id });
+  assert.deepEqual(still.generals, []);
+  assert.deepEqual(still.tactics, ['破甲']);
+  assert.equal(ownershipGapLine({ generals: [], tactics: [] }), '');
 });
 
 test('the missing list contains only tactics and does not block the team', () => {
