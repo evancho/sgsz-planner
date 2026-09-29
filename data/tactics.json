@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "1.2.7",
+  "catalogVersion": "1.2.8",
   "tactics": [
     {
       "id": "zanbi",
@@ -2082,6 +2082,22 @@
       "orange": true,
       "rank": "S",
       "desc": "戰鬥前三回合，壓低敵軍兩人造成的傷害，並讓我軍主將先攻。"
+    },
+    {
+      "id": "yanxing",
+      "name": "雁行陣",
+      "type": "陣法",
+      "source": "傳承",
+      "from": [
+        "sp-luzhi"
+      ],
+      "troops": [
+        "弓"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "弓兵專用。每回合有機率把敵軍的減傷轉到我軍、把友軍負面轉給敵軍，並讓我軍統率最低者偷取敵軍統率。傳承自SP盧植。"
     },
     {
       "id": "sanshi",
