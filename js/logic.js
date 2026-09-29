@@ -1058,7 +1058,18 @@ export function templateScenarios(teams) {
   return seen;
 }
 
-/** 劇本、國家用下拉篩選。文字比對隊伍名稱或武將名稱。 */
+function templateCountryOrder(country) {
+  const index = TEMPLATE_COUNTRIES.indexOf(country);
+  return index === -1 ? TEMPLATE_COUNTRIES.length : index;
+}
+
+/** T0、T0.5、T1… 由低到高。沒有 T 編號的強度（例如黑科技）排在後面。 */
+function templateRankOrder(rank) {
+  const match = /^T(\d+(?:\.\d+)?)$/.exec(String(rank || '').trim());
+  return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
+}
+
+/** 劇本、國家用下拉篩選。文字比對隊伍名稱或武將名稱。結果先依國家，再依強度。 */
 export function filterTeamTemplates(teams, filters = {}) {
   const scenario = String(filters.scenario || '');
   const country = String(filters.country || '');
@@ -1069,6 +1080,10 @@ export function filterTeamTemplates(teams, filters = {}) {
     if (!query) return true;
     if (String(team.title || '').includes(query)) return true;
     return (team.members || []).some((member) => String(member.generalName || '').includes(query));
+  }).sort((a, b) => {
+    const countryDiff = templateCountryOrder(a.country) - templateCountryOrder(b.country);
+    if (countryDiff) return countryDiff;
+    return templateRankOrder(a.rank) - templateRankOrder(b.rank);
   });
 }
 
