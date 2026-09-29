@@ -10,7 +10,7 @@ const bingshu = JSON.parse(readFileSync(new URL('../data/bingshu.json', import.m
 const appRelease = JSON.parse(readFileSync(new URL('../data/version.json', import.meta.url)));
 
 test('catalog files share one version', () => {
-  assert.equal(meta.catalogVersion, '1.2.5');
+  assert.equal(meta.catalogVersion, '1.2.6');
   assert.equal(generalsFile.catalogVersion, meta.catalogVersion);
   assert.equal(tacticsFile.catalogVersion, meta.catalogVersion);
   assert.equal(bingshu.catalogVersion, meta.catalogVersion);
@@ -203,4 +203,14 @@ test('generals and tactics are internally consistent', () => {
   assert.deepEqual(yulin.from, ['sp-fazheng', 'sp-huangzhong']);
   assert.notEqual(yulin.id, jingYulin.id);
   assert.equal(jingYulin.source, '賽季');
+
+  const shencang = byName.get('深藏若虛');
+  assert.equal(shencang.id, 'shencang');
+  assert.equal(shencang.type, '指揮');
+  assert.equal(shencang.source, '事件');
+  assert.equal(shencang.rank, 'S');
+  assert.equal(shencang.troops, null);
+  assert.deepEqual(shencang.from, []);
+  assert.equal(byName.get('千里走單騎').id, 'qianli');
+  assert.equal(byName.has('千里單騎'), false);
 });
