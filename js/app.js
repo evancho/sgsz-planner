@@ -129,7 +129,7 @@ function esc(value) {
   }[char]));
 }
 
-function toast(message) {
+function toast(message, duration = 2800) {
   ui.toast = message;
   const node = document.querySelector('.toast');
   if (node) node.textContent = message;
@@ -138,7 +138,7 @@ function toast(message) {
     ui.toast = '';
     const live = document.querySelector('.toast');
     if (live) live.textContent = '';
-  }, 2800);
+  }, duration);
 }
 
 function collapseGeneral(id) {
@@ -1655,12 +1655,15 @@ function onClick(event) {
         break;
       }
       const id = newId('team');
-      const team = { ...teamFromTemplate(template, id), substitute: ui.templates.substitute === true };
+      const built = teamFromTemplate(template, id);
+      const dropped = dropUsedTactics(built.members, buildUsage(current), tacticsById(current));
+      const team = { ...built, members: dropped.members, substitute: ui.templates.substitute === true };
       commit(updateAccount(ui.state, current.id, (item) => ({
         ...item,
         teams: [...item.teams, team],
       })));
-      toast(`已加入${team.name}`);
+      const note = tacticDropText(dropped.dropped);
+      toast(note ? `已加入${team.name}。${note}` : `已加入${team.name}`, note ? 5200 : 2800);
       break;
     }
     case 'preview-share-import': {
