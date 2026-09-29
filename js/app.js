@@ -29,6 +29,10 @@ import {
   exportAccountPayload,
   exportPayload,
   generalBlockReason,
+  generalOverlaps,
+  overlapBlockText,
+  dropUsedTactics,
+  tacticDropText,
   indexNameUse,
   isDuwei,
   isInventoryTactic,
@@ -76,6 +80,7 @@ const ui = {
   shareName: '',
   shareApplied: null,
   shareImport: null,
+  shareSubstitute: false,
   templates: null,
   accountExport: null,
   accountFile: null,
@@ -584,7 +589,7 @@ function teamCard(team, map, index, count) {
     <article class="team-card">
       <div class="team-card-top">
         <a class="team-card-main" href="#/teams/${esc(team.id)}">
-          <div class="row-between"><h3>${esc(team.name)}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
+          <div class="row-between"><h3>${esc(team.name)}${team.substitute ? '<span class="tag alt-team">替</span>' : ''}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
           <p>${esc(names)}</p>
           ${team.notes ? `<p class="muted team-notes">${esc(team.notes)}</p>` : ''}
         </a>
@@ -649,6 +654,7 @@ function shareAppliedNote(teamId) {
     <div class="help-card share-applied">
       <h3>已套用</h3>
       <p>「${esc(note.name)}」已加進這個帳號。其他隊伍沒有被取代。</p>
+      ${note.dropped ? `<p class="warn">${esc(note.dropped)}</p>` : ''}
       ${shareMissingHtml(note.missing)}
       <button type="button" class="btn" data-action="dismiss-share-applied">知道了</button>
     </div>`;
@@ -690,8 +696,10 @@ function shareView(token) {
     return `<section><div class="empty"><p>${esc(decoded.error)}</p><a href="#/teams">回隊伍</a></div></section>`;
   }
   const current = account();
-  const cards = sharePreviewItems(decoded.share, current);
-  const missing = shareGapLines(decoded.share, current);
+  const prepared = prepareIncomingTeam(current, decoded.share);
+  const cards = sharePreviewItems(prepared.share, current);
+  const missing = shareGapLines(prepared.share, current);
+  const blocked = prepared.overlaps.length > 0 && !ui.shareSubstitute;
   return `
     <section>
       <div class="page-head">
@@ -702,13 +710,19 @@ function shareView(token) {
       </div>
       <p>只會把「${esc(decoded.share.name)}」這一隊加進帳號「${esc(current.name)}」。上方可以先換帳號。按下之後才會寫入，不會改動已經有的隊伍，也不會還原整份備份。</p>
       <p class="sub">缺少的戰法仍會留在配置裡，不會擋下整隊。</p>
+      ${prepared.droppedText ? `<p class="warn">${esc(prepared.droppedText)}</p>` : ''}
+      ${prepared.overlaps.length ? `<p class="warn">${esc(overlapBlockText(prepared.overlaps))}</p>` : ''}
+      <label class="season-opt">
+        <input id="share-substitute" type="checkbox" data-action="toggle-share-substitute" ${ui.shareSubstitute ? 'checked' : ''}>
+        替代隊伍
+      </label>
       <div class="help-card share-applied">
         <h3>已套用</h3>
         <p>下面是即將寫入的配置。</p>
         <ol class="share-preview">${cards}</ol>
         ${shareMissingHtml(missing)}
       </div>
-      <button type="button" class="btn primary" data-action="load-share">載入此隊伍</button>
+      <button type="button" class="btn primary" data-action="load-share" ${blocked ? 'disabled' : ''}>載入此隊伍</button>
       ${colophon()}
     </section>`;
 }
@@ -725,17 +739,25 @@ function shareImportSheet() {
       <button type="button" class="btn primary" data-action="preview-share-import">確認</button>
     `);
   }
-  const missing = shareGapLines(ui.shareImport.share, current);
+  const prepared = prepareIncomingTeam(current, ui.shareImport.share);
+  const missing = shareGapLines(prepared.share, current);
+  const blocked = prepared.overlaps.length > 0 && !ui.shareImport.substitute;
   return sheet('載入隊伍', `
     <p>只會把「${esc(ui.shareImport.share.name)}」這一隊加進帳號「${esc(current.name)}」。按下之後才會寫入。</p>
+    ${prepared.droppedText ? `<p class="warn">${esc(prepared.droppedText)}</p>` : ''}
+    ${prepared.overlaps.length ? `<p class="warn">${esc(overlapBlockText(prepared.overlaps))}</p>` : ''}
+    <label class="season-opt">
+      <input id="share-substitute" type="checkbox" data-action="toggle-share-substitute" ${ui.shareImport.substitute ? 'checked' : ''}>
+      替代隊伍
+    </label>
     <div class="help-card share-applied">
       <h3>已套用</h3>
       <p>下面是即將寫入的配置。</p>
-      <ol class="share-preview">${sharePreviewItems(ui.shareImport.share, current)}</ol>
+      <ol class="share-preview">${sharePreviewItems(prepared.share, current)}</ol>
       ${shareMissingHtml(missing)}
     </div>
     <div class="btn-row">
-      <button type="button" class="btn primary" data-action="apply-share-import">載入此隊伍</button>
+      <button type="button" class="btn primary" data-action="apply-share-import" ${blocked ? 'disabled' : ''}>載入此隊伍</button>
       <button type="button" class="btn-ghost" data-action="reset-share-import">重貼</button>
     </div>
   `);
@@ -759,14 +781,17 @@ function templateSheet() {
   }).join('');
   const items = matched.map((team) => {
     const names = (team.members || []).map((member) => member.generalName).filter(Boolean).join(' / ');
+    const overlaps = generalOverlaps(current, team.members, generalsById());
+    const blocked = overlaps.length > 0 && !ui.templates.substitute;
     return `
-      <li class="template-item">
+      <li class="template-item${blocked ? ' blocked' : ''}">
         <div>
           <strong>${esc(templateDisplayName(team))}</strong>
           <span class="tag">${campInk(team.country)}</span>
           <p>${esc(names)}</p>
+          ${blocked ? '<p class="faint">武將已在其他隊伍</p>' : ''}
         </div>
-        <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}">加入</button>
+        <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入</button>
       </li>`;
   }).join('');
   return sheet('載入範本隊伍', `
@@ -781,6 +806,10 @@ function templateSheet() {
     </div>
     <label>隊伍或武將
       <input id="template-query" class="search" data-model="template-query" value="${esc(ui.templates.query)}" placeholder="隊伍名稱或武將名稱" autocomplete="off">
+    </label>
+    <label class="season-opt">
+      <input id="template-substitute" type="checkbox" data-action="toggle-template-substitute" ${ui.templates.substitute ? 'checked' : ''}>
+      替代隊伍
     </label>
     <p class="sub">顯示 ${matched.length} / ${all.length}</p>
     ${items ? `<ul class="template-list">${items}</ul>` : '<div class="empty"><p>沒有符合的範本。</p></div>'}
@@ -1275,22 +1304,41 @@ function openDialog(dialog) {
   render();
 }
 
-function commitTeamShare(current, share) {
+function prepareIncomingTeam(current, share) {
+  const overlaps = generalOverlaps(current, share.members, generalsById());
+  const dropped = dropUsedTactics(share.members, buildUsage(current), tacticsById(current));
+  return {
+    overlaps,
+    droppedText: tacticDropText(dropped.dropped),
+    share: { ...share, members: dropped.members },
+  };
+}
+
+function commitTeamShare(current, share, options = {}) {
+  const overlaps = generalOverlaps(current, share.members, generalsById());
+  if (overlaps.length && !options.substitute) {
+    toast(overlapBlockText(overlaps));
+    return;
+  }
+  const dropped = dropUsedTactics(share.members, buildUsage(current), tacticsById(current));
+  const nextShare = { ...share, members: dropped.members };
   const teamId = newId('team');
-  const missing = shareGapLines(share, current);
-  const applied = applyTeamShare(current, share, teamId);
+  const missing = shareGapLines(nextShare, current);
+  const applied = applyTeamShare(current, nextShare, teamId, { substitute: options.substitute === true });
   if (!applied.ok) {
     toast(applied.error);
     return;
   }
-  ui.shareApplied = { teamId, name: share.name, missing };
+  ui.shareApplied = { teamId, name: share.name, missing, dropped: tacticDropText(dropped.dropped) };
   ui.shareImport = null;
   ui.shareLink = '';
   ui.shareName = '';
+  ui.shareSubstitute = false;
   commit({
     ...ui.state,
     accounts: ui.state.accounts.map((item) => (item.id === current.id ? applied.account : item)),
   });
+  if (dropped.dropped.length) toast(tacticDropText(dropped.dropped));
   location.hash = `#/teams/${teamId}`;
 }
 
@@ -1307,6 +1355,7 @@ function onClick(event) {
     ui.shareLink = '';
     ui.shareName = '';
     ui.shareImport = null;
+    ui.shareSubstitute = false;
     ui.templates = null;
     ui.accountExport = null;
     ui.accountFile = null;
@@ -1567,6 +1616,7 @@ function onClick(event) {
       ui.shareLink = '';
       ui.shareName = '';
       ui.shareImport = null;
+      ui.shareSubstitute = false;
       ui.templates = null;
       ui.accountExport = null;
       ui.accountFile = null;
@@ -1578,7 +1628,7 @@ function onClick(event) {
       ui.shareLink = '';
       ui.shareName = '';
       ui.templates = null;
-      ui.shareImport = { text: '', share: null };
+      ui.shareImport = { text: '', share: null, substitute: false };
       render();
       break;
     case 'open-templates':
@@ -1589,7 +1639,7 @@ function onClick(event) {
       ui.shareImport = null;
       ui.accountExport = null;
       ui.accountFile = null;
-      ui.templates = { scenario: '', country: '', query: '' };
+      ui.templates = { scenario: '', country: '', query: '', substitute: false };
       render();
       break;
     case 'add-template': {
@@ -1599,8 +1649,13 @@ function onClick(event) {
         toast('隊伍已滿，無法再載入');
         break;
       }
+      const overlaps = generalOverlaps(current, template.members, generalsById());
+      if (overlaps.length && !ui.templates.substitute) {
+        toast(overlapBlockText(overlaps));
+        break;
+      }
       const id = newId('team');
-      const team = teamFromTemplate(template, id);
+      const team = { ...teamFromTemplate(template, id), substitute: ui.templates.substitute === true };
       commit(updateAccount(ui.state, current.id, (item) => ({
         ...item,
         teams: [...item.teams, team],
@@ -1620,12 +1675,12 @@ function onClick(event) {
       break;
     }
     case 'reset-share-import':
-      if (ui.shareImport) ui.shareImport = { text: ui.shareImport.text, share: null };
+      if (ui.shareImport) ui.shareImport = { text: ui.shareImport.text, share: null, substitute: ui.shareImport.substitute === true };
       render();
       break;
     case 'apply-share-import':
       if (!ui.shareImport?.share) break;
-      commitTeamShare(current, ui.shareImport.share);
+      commitTeamShare(current, ui.shareImport.share, { substitute: ui.shareImport.substitute === true });
       break;
     case 'share-team': {
       const team = current.teams.find((item) => item.id === el.dataset.id);
@@ -1718,7 +1773,7 @@ function onClick(event) {
         toast(decoded.error);
         break;
       }
-      commitTeamShare(current, decoded.share);
+      commitTeamShare(current, decoded.share, { substitute: ui.shareSubstitute === true });
       break;
     }
     case 'dismiss-share-applied':
@@ -1879,6 +1934,13 @@ function onChange(event) {
     render();
   } else if (el.dataset.action === 'set-template-country' && ui.templates) {
     ui.templates = { ...ui.templates, country: el.value };
+    render();
+  } else if (el.dataset.action === 'toggle-template-substitute' && ui.templates) {
+    ui.templates = { ...ui.templates, substitute: el.checked };
+    render();
+  } else if (el.dataset.action === 'toggle-share-substitute') {
+    if (ui.shareImport) ui.shareImport = { ...ui.shareImport, substitute: el.checked };
+    else ui.shareSubstitute = el.checked;
     render();
   } else if (el.dataset.action === 'switch-account') {
     commit({ ...ui.state, activeAccountId: el.value });
@@ -2246,6 +2308,7 @@ function bind() {
     ui.shareLink = '';
     ui.shareName = '';
     ui.shareImport = null;
+    ui.shareSubstitute = false;
     ui.templates = null;
     ui.accountExport = null;
     ui.accountFile = null;
