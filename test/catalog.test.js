@@ -10,7 +10,7 @@ const bingshu = JSON.parse(readFileSync(new URL('../data/bingshu.json', import.m
 const appRelease = JSON.parse(readFileSync(new URL('../data/version.json', import.meta.url)));
 
 test('catalog files share one version', () => {
-  assert.equal(meta.catalogVersion, '1.2.4');
+  assert.equal(meta.catalogVersion, '1.2.5');
   assert.equal(generalsFile.catalogVersion, meta.catalogVersion);
   assert.equal(tacticsFile.catalogVersion, meta.catalogVersion);
   assert.equal(bingshu.catalogVersion, meta.catalogVersion);
@@ -184,4 +184,23 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(tacticsFile.tactics.some((tactic) => tactic.name.includes('以暴制暴') || tactic.id === 'tuo-yibao'), false);
   assert.equal(byName.get('以寡敵眾').id, 'yigua');
   assert.equal(byName.get('以寡敵眾').type, '被動');
+
+  const luli = byName.get('戮力同心');
+  assert.equal(luli.id, 'luli');
+  assert.equal(luli.type, '主動');
+  assert.equal(luli.source, '事件');
+  assert.equal(luli.rank, 'S');
+  assert.equal(luli.troops, null);
+  assert.deepEqual(luli.from, []);
+
+  const yulin = byName.get('魚鱗陣');
+  const jingYulin = byName.get('精·魚鱗陣');
+  assert.equal(yulin.id, 'yulin');
+  assert.equal(yulin.type, '陣法');
+  assert.equal(yulin.source, '傳承');
+  assert.equal(yulin.rank, 'S');
+  assert.deepEqual(yulin.troops, ['盾', '器械']);
+  assert.deepEqual(yulin.from, ['sp-fazheng', 'sp-huangzhong']);
+  assert.notEqual(yulin.id, jingYulin.id);
+  assert.equal(jingYulin.source, '賽季');
 });

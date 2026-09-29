@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "1.2.4",
+  "catalogVersion": "1.2.5",
   "tactics": [
     {
       "id": "zanbi",
@@ -1044,6 +1044,18 @@
       "desc": "事件兌換的主動戰法。限騎、器械。"
     },
     {
+      "id": "luli",
+      "name": "戮力同心",
+      "type": "主動",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的主動戰法。依智力治療我軍單體並提高統率，可疊加。"
+    },
+    {
       "id": "zhanjiang",
       "name": "斬將搴旗",
       "type": "主動",
@@ -2011,6 +2023,24 @@
       "orange": true,
       "rank": "S",
       "desc": "騎、盾、槍可用。提高主將傷害也更易受傷；副將傷害下降，但更耐打。"
+    },
+    {
+      "id": "yulin",
+      "name": "魚鱗陣",
+      "type": "陣法",
+      "source": "傳承",
+      "from": [
+        "sp-fazheng",
+        "sp-huangzhong"
+      ],
+      "troops": [
+        "盾",
+        "器械"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "盾、器械可用。提高我軍統率，受擊時有機會獲得抵御或治療。傳承自SP法正、SP黃忠。"
     },
     {
       "id": "jixing",
