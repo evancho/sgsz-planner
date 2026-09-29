@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "1.2.5",
+  "catalogVersion": "1.2.6",
   "tactics": [
     {
       "id": "zanbi",
@@ -263,6 +263,18 @@
       "orange": true,
       "rank": "S",
       "desc": "定軍山之戰事件戰法。限盾、器械。自身提高智力與統率並獲得先攻，但無法造成傷害；每回合有機率使我軍群體獲得規避。"
+    },
+    {
+      "id": "shencang",
+      "name": "深藏若虛",
+      "type": "指揮",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "事件兌換的指揮戰法。每回合治療自己，並有機會降低自己受到的傷害。"
     },
     {
       "id": "yudi",
