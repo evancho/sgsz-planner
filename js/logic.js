@@ -1104,18 +1104,30 @@ export function templateScenarios(teams) {
   return seen;
 }
 
-function templateCountryOrder(country) {
-  const index = TEMPLATE_COUNTRIES.indexOf(country);
-  return index === -1 ? TEMPLATE_COUNTRIES.length : index;
-}
-
 /** T0、T0.5、T1… 由低到高。沒有 T 編號的強度（例如黑科技）排在後面。 */
 function templateRankOrder(rank) {
   const match = /^T(\d+(?:\.\d+)?)$/.exec(String(rank || '').trim());
   return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
 }
 
-/** 已依國家、強度排好的清單，把反灰的隊伍移到最後，組內順序不變。 */
+/** 已擁有武將的紅度加總。還沒擁有的武將不算。 */
+export function templateOwnedRed(template, account) {
+  let total = 0;
+  const seen = new Set();
+  for (const member of template?.members || []) {
+    const id = member?.generalId;
+    if (!id || seen.has(id)) continue;
+    seen.add(id);
+    const owned = account?.owned?.[id];
+    if (!owned) continue;
+    const red = Number(owned.red);
+    if (!Number.isFinite(red)) continue;
+    total += Math.min(5, Math.max(0, red));
+  }
+  return total;
+}
+
+/** 反灰的隊伍移到最後，前後兩段各自保持原順序。 */
 export function placeBlockedTemplatesLast(teams, isBlocked) {
   const open = [];
   const blocked = [];
@@ -1126,7 +1138,16 @@ export function placeBlockedTemplatesLast(teams, isBlocked) {
   return [...open, ...blocked];
 }
 
-/** 劇本、國家用下拉篩選。文字比對隊伍名稱或武將名稱。結果先依國家，再依強度。 */
+/** 先強度（T0 在前），同強度再依紅度總和，高的在前。 */
+export function orderTeamTemplates(teams, redOf = () => 0) {
+  return [...(teams || [])].sort((a, b) => {
+    const rankDiff = templateRankOrder(a.rank) - templateRankOrder(b.rank);
+    if (rankDiff) return rankDiff;
+    return (Number(redOf(b)) || 0) - (Number(redOf(a)) || 0);
+  });
+}
+
+/** 劇本、國家用下拉篩選。文字比對隊伍名稱或武將名稱。 */
 export function filterTeamTemplates(teams, filters = {}) {
   const scenario = String(filters.scenario || '');
   const country = String(filters.country || '');
@@ -1137,10 +1158,6 @@ export function filterTeamTemplates(teams, filters = {}) {
     if (!query) return true;
     if (String(team.title || '').includes(query)) return true;
     return (team.members || []).some((member) => String(member.generalName || '').includes(query));
-  }).sort((a, b) => {
-    const countryDiff = templateCountryOrder(a.country) - templateCountryOrder(b.country);
-    if (countryDiff) return countryDiff;
-    return templateRankOrder(a.rank) - templateRankOrder(b.rank);
   });
 }
 

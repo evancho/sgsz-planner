@@ -3,7 +3,9 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import {
   filterTeamTemplates,
+  orderTeamTemplates,
   placeBlockedTemplatesLast,
+  templateOwnedRed,
   teamFromTemplate,
   templateDisplayName,
   templateNotes,
@@ -102,47 +104,45 @@ test('篩選劇本、國家、隊伍名稱與武將名稱', () => {
   assert.ok(filterTeamTemplates(templates, { country: '蜀', query: '星彩' }).length > 0);
 });
 
-test('範本先依國家再依強度，T0 在前', () => {
-  const listed = filterTeamTemplates(templates, {});
-  const countries = ['魏', '蜀', '吳', '群', '混合'];
-  let lastCountry = -1;
-  for (const team of listed) {
-    const index = countries.indexOf(team.country);
-    assert.ok(index >= lastCountry, team.id);
-    lastCountry = index;
-  }
-  const rankOrder = (rank) => {
-    const match = /^T(\d+(?:\.\d+)?)$/.exec(rank);
-    return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
+test('範本依強度再依已有紅度，不依國家', () => {
+  const samples = [
+    { id: 'wei-t1', country: '魏', rank: 'T1', members: [{ generalId: 'a' }] },
+    { id: 'shu-t0', country: '蜀', rank: 'T0', members: [{ generalId: 'b' }, { generalId: 'c' }] },
+    { id: 'wei-t0', country: '魏', rank: 'T0', members: [{ generalId: 'a' }] },
+    { id: 'wu-t0', country: '吳', rank: 'T0', members: [{ generalId: 'd' }] },
+    { id: 'tech', country: '混合', rank: '黑科技', members: [] },
+  ];
+  const account = {
+    owned: {
+      a: { red: 1 },
+      b: { red: 5 },
+      c: { red: 4 },
+      d: { red: 9 },
+    },
   };
-  for (const country of countries) {
-    const ranks = listed.filter((team) => team.country === country).map((team) => team.rank);
-    assert.equal(ranks[0], 'T0');
-    for (let index = 1; index < ranks.length; index += 1) {
-      assert.ok(rankOrder(ranks[index - 1]) <= rankOrder(ranks[index]), `${country} ${ranks[index - 1]} ${ranks[index]}`);
-    }
-  }
-  const wei = listed.filter((team) => team.country === '魏');
-  const fiveHorse = wei.findIndex((team) => team.rank === 'T0' && team.title === '五謀騎');
-  const xunyou = wei.findIndex((team) => team.id === 'tpl-001');
-  assert.ok(fiveHorse >= 0 && fiveHorse < xunyou);
-  const mixed = listed.filter((team) => team.country === '混合').map((team) => team.rank);
-  assert.ok(mixed.indexOf('黑科技') > mixed.lastIndexOf('T2'));
+  const ordered = orderTeamTemplates(samples, (team) => templateOwnedRed(team, account));
+  assert.deepEqual(ordered.map((team) => team.id), ['shu-t0', 'wu-t0', 'wei-t0', 'wei-t1', 'tech']);
+  assert.equal(templateOwnedRed(samples[1], account), 9);
+  assert.equal(templateOwnedRed(samples[3], account), 5);
+  assert.equal(templateOwnedRed({ members: [{ generalId: 'a' }, { generalId: 'missing' }] }, account), 1);
+  const ranked = orderTeamTemplates(filterTeamTemplates(templates, {}), () => 0);
+  assert.equal(ranked[0].rank, 'T0');
+  const firstOtherT0 = ranked.findIndex((team) => team.rank === 'T0' && team.country !== '魏');
+  const firstT1 = ranked.findIndex((team) => team.rank === 'T1');
+  assert.ok(firstOtherT0 > 0 && firstOtherT0 < firstT1);
 });
 
-test('反灰的範本排在最後，其餘仍先國家再強度', () => {
-  const listed = filterTeamTemplates(templates, {});
+test('反灰的範本排在最後，其餘仍先強度再紅度', () => {
+  const listed = orderTeamTemplates(filterTeamTemplates(templates, {}), () => 0);
   const blockedIds = new Set(['tpl-027', 'tpl-001']);
   const ordered = placeBlockedTemplatesLast(listed, (team) => blockedIds.has(team.id));
   const split = ordered.findIndex((team) => blockedIds.has(team.id));
   assert.ok(split > 0);
   assert.equal(ordered.slice(split).every((team) => blockedIds.has(team.id)), true);
   assert.equal(ordered.slice(0, split).some((team) => blockedIds.has(team.id)), false);
-  assert.equal(ordered[0].country, '魏');
   assert.equal(ordered[0].rank, 'T0');
-  assert.notEqual(ordered[0].id, 'tpl-001');
   const gray = ordered.slice(split);
   const shu = gray.findIndex((team) => team.id === 'tpl-027');
   const wei = gray.findIndex((team) => team.id === 'tpl-001');
-  assert.ok(wei >= 0 && wei < shu);
+  assert.ok(shu >= 0 && shu < wei);
 });
