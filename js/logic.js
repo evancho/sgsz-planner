@@ -367,6 +367,68 @@ export function tacticTroopWarning(general, tactic) {
   return `常見兵種 ${tactic.troops.join('、')}，此武將適性未達 A`;
 }
 
+/** 新隊伍的武將是否已在其他隊伍，或同名卡已上陣。 */
+export function generalOverlaps(account, members, generalsById) {
+  const usage = indexNameUse(buildUsage(account), generalsById || new Map());
+  const hits = [];
+  const seen = new Set();
+  for (const member of members || []) {
+    const generalId = member?.generalId;
+    if (!generalId || seen.has(generalId)) continue;
+    const general = generalsById?.get(generalId);
+    const name = general?.name || member.generalName || generalId;
+    const where = usage.generalTeams.get(generalId);
+    if (where) {
+      seen.add(generalId);
+      hits.push({ generalId, name, teamName: where.teamName });
+      continue;
+    }
+    if (!general?.nameKey) continue;
+    const outside = (usage.nameTeams.get(general.nameKey) || []).filter((use) => use.generalId !== generalId);
+    if (!outside.length) continue;
+    seen.add(generalId);
+    hits.push({ generalId, name, teamName: outside[0].teamName });
+  }
+  return hits;
+}
+
+export function overlapBlockText(overlaps) {
+  if (!overlaps?.length) return '';
+  const who = overlaps.map((hit) => `${hit.name}已在「${hit.teamName}」`).join('、');
+  return `${who}，不能加入。勾選替代隊伍可略過。`;
+}
+
+/** 已有隊伍佔滿的戰法從新隊伍拿掉。同一支新隊伍裡的重複不在這裡處理。 */
+export function dropUsedTactics(members, usage, tacticsById) {
+  const counts = new Map();
+  for (const [id, uses] of usage?.tacticUses || []) counts.set(id, uses.length);
+  const dropped = [];
+  const seen = new Set();
+  const next = (members || []).map((member) => {
+    if (!member) return member;
+    const learned = [0, 1].map((index) => {
+      const id = member.learned?.[index] || null;
+      if (!id) return null;
+      const copies = tacticsById?.get(id)?.copies || 1;
+      if ((counts.get(id) || 0) >= copies) {
+        if (!seen.has(id)) {
+          seen.add(id);
+          dropped.push({ id, name: tacticsById?.get(id)?.name || id });
+        }
+        return null;
+      }
+      return id;
+    });
+    return { ...member, learned };
+  });
+  return { members: next, dropped };
+}
+
+export function tacticDropText(dropped) {
+  if (!dropped?.length) return '';
+  return `戰法 ${dropped.map((item) => item.name).join('、')} 已在其他隊伍，已從新隊伍移除。`;
+}
+
 export function generalBlockReason({ account, team, slot, general, generalsById, usage }) {
   if (!general) return '找不到武將';
   if (!account.owned?.[general.id]) return '未擁有';
@@ -533,6 +595,7 @@ function normalizeAccount(raw, backupVersion) {
         id: teamId,
         name: clip(item?.name, 24) || '未命名隊伍',
         notes: clip(item?.notes, 500),
+        substitute: item?.substitute === true,
         members,
       });
     }
@@ -955,7 +1018,7 @@ export function shareGaps(share, account, lookup) {
 }
 
 /** 把這一隊加進帳號。紅度、動態、典藏只補不足，不調低。戰法照配置放上，不因此擋下。 */
-export function applyTeamShare(account, share, teamId) {
+export function applyTeamShare(account, share, teamId, options = {}) {
   const id = cleanId(teamId);
   if (!id || account.teams.some((team) => team.id === id)) return shareError('分享連結無法讀取');
   if (account.teams.length >= 40) return shareError('隊伍已滿，無法再載入');
@@ -974,7 +1037,13 @@ export function applyTeamShare(account, share, teamId) {
     account: {
       ...account,
       owned,
-      teams: [...account.teams, { id, name: share.name, notes: '', members }],
+      teams: [...account.teams, {
+        id,
+        name: share.name,
+        notes: '',
+        substitute: options.substitute === true,
+        members,
+      }],
     },
   };
 }
