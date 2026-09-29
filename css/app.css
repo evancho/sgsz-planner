@@ -308,7 +308,8 @@ button.grow-name { cursor: pointer; }
 }
 .template-item p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
 .template-item .btn { flex: 0 0 auto; }
-.template-item.blocked { opacity: 0.45; }
+.template-item.blocked,
+.help-card.blocked { opacity: 0.45; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .tag.alt-team { margin-left: 6px; }
 .team-notes { white-space: pre-wrap; }

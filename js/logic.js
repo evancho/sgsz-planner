@@ -434,6 +434,47 @@ export function tacticConflictLine(dropped) {
   return `戰法 ${dropped.map((item) => item.name).join('、')} 已在其他隊伍`;
 }
 
+/** 帳號還沒有的武將、傳承戰法。圖鑑未收、寫在未收錄裡的戰法也算缺少。兵書不算。 */
+export function ownershipGaps(members, account, lookup = {}) {
+  const generals = [];
+  const tactics = [];
+  const seenGenerals = new Set();
+  const seenTactics = new Set();
+  const generalName = lookup.generalName || ((id) => id);
+  const tacticName = lookup.tacticName || ((id) => id);
+  for (const member of members || []) {
+    if (!member) continue;
+    const generalId = member.generalId;
+    if (generalId && !account?.owned?.[generalId] && !seenGenerals.has(generalId)) {
+      seenGenerals.add(generalId);
+      generals.push(member.generalName || generalName(generalId) || generalId);
+    }
+    for (const tacticId of member.learned || []) {
+      if (!tacticId || seenTactics.has(tacticId)) continue;
+      if (account?.tacticsOwned?.[tacticId]) continue;
+      seenTactics.add(tacticId);
+      tactics.push(tacticName(tacticId) || tacticId);
+    }
+    for (const line of member.unlisted || []) {
+      const text = String(line || '').trim();
+      if (!text.startsWith('戰法 ')) continue;
+      const name = text.slice(3).trim();
+      const key = `unlisted:${name}`;
+      if (!name || seenTactics.has(key)) continue;
+      seenTactics.add(key);
+      tactics.push(name);
+    }
+  }
+  return { generals, tactics };
+}
+
+export function ownershipGapLine(gaps) {
+  const parts = [];
+  if (gaps?.generals?.length) parts.push(`缺少武將 ${gaps.generals.join('、')}`);
+  if (gaps?.tactics?.length) parts.push(`缺少戰法 ${gaps.tactics.join('、')}`);
+  return parts.join('；');
+}
+
 export function generalBlockReason({ account, team, slot, general, generalsById, usage }) {
   if (!general) return '找不到武將';
   if (!account.owned?.[general.id]) return '未擁有';

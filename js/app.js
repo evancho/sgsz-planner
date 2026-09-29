@@ -31,6 +31,8 @@ import {
   generalBlockReason,
   generalOverlaps,
   overlapBlockText,
+  ownershipGapLine,
+  ownershipGaps,
   dropUsedTactics,
   tacticConflictLine,
   tacticDropText,
@@ -724,7 +726,7 @@ function shareView(token) {
   const prepared = prepareIncomingTeam(current, decoded.share);
   const cards = sharePreviewItems(prepared.share, current);
   const missing = shareGapLines(prepared.share, current);
-  const blocked = prepared.overlaps.length > 0 && !ui.shareSubstitute;
+  const blocked = (prepared.overlaps.length > 0 && !ui.shareSubstitute) || Boolean(prepared.gapLine);
   return `
     <section>
       <div class="page-head">
@@ -734,14 +736,14 @@ function shareView(token) {
         </div>
       </div>
       <p>只會把「${esc(decoded.share.name)}」這一隊加進帳號「${esc(current.name)}」。上方可以先換帳號。按下之後才會寫入，不會改動已經有的隊伍，也不會還原整份備份。</p>
-      <p class="sub">缺少的戰法仍會留在配置裡，不會擋下整隊。</p>
       ${prepared.droppedText ? `<p class="warn">${esc(prepared.droppedText)}</p>` : ''}
       ${prepared.overlaps.length ? `<p class="warn">${esc(overlapBlockText(prepared.overlaps))}</p>` : ''}
+      ${prepared.gapLine ? `<p class="warn">${esc(prepared.gapLine)}，不能加入。</p>` : ''}
       <label class="season-opt">
         <input id="share-substitute" type="checkbox" data-action="toggle-share-substitute" ${ui.shareSubstitute ? 'checked' : ''}>
         替代隊伍
       </label>
-      <div class="help-card share-applied">
+      <div class="help-card share-applied${prepared.gapLine ? ' blocked' : ''}">
         <h3>已套用</h3>
         <p>下面是即將寫入的配置。</p>
         <ol class="share-preview">${cards}</ol>
@@ -766,16 +768,17 @@ function shareImportSheet() {
   }
   const prepared = prepareIncomingTeam(current, ui.shareImport.share);
   const missing = shareGapLines(prepared.share, current);
-  const blocked = prepared.overlaps.length > 0 && !ui.shareImport.substitute;
+  const blocked = (prepared.overlaps.length > 0 && !ui.shareImport.substitute) || Boolean(prepared.gapLine);
   return sheet('載入隊伍', `
     <p>只會把「${esc(ui.shareImport.share.name)}」這一隊加進帳號「${esc(current.name)}」。按下之後才會寫入。</p>
     ${prepared.droppedText ? `<p class="warn">${esc(prepared.droppedText)}</p>` : ''}
     ${prepared.overlaps.length ? `<p class="warn">${esc(overlapBlockText(prepared.overlaps))}</p>` : ''}
+    ${prepared.gapLine ? `<p class="warn">${esc(prepared.gapLine)}，不能加入。</p>` : ''}
     <label class="season-opt">
       <input id="share-substitute" type="checkbox" data-action="toggle-share-substitute" ${ui.shareImport.substitute ? 'checked' : ''}>
       替代隊伍
     </label>
-    <div class="help-card share-applied">
+    <div class="help-card share-applied${prepared.gapLine ? ' blocked' : ''}">
       <h3>已套用</h3>
       <p>下面是即將寫入的配置。</p>
       <ol class="share-preview">${sharePreviewItems(prepared.share, current)}</ol>
@@ -793,27 +796,44 @@ function templateTacticHits(template, usage, tactics) {
   return dropUsedTactics(template.members, usage, tactics).dropped;
 }
 
+function templateOwnershipGaps(template, current) {
+  return ownershipGaps(template.members, current, {
+    generalName: (id) => generalsById().get(id)?.name || '',
+    tacticName: (id) => tacticsById(current).get(id)?.name || '',
+  });
+}
+
+function templateBlockState(team, current, usage, tactics) {
+  const overlaps = generalOverlaps(current, team.members, generalsById());
+  const gaps = templateOwnershipGaps(team, current);
+  const tacticHits = templateTacticHits(team, usage, tactics);
+  const generalBlocked = overlaps.length > 0 && !ui.templates.substitute;
+  const missingBlocked = Boolean(ownershipGapLine(gaps));
+  const tacticBlocked = tacticHits.length > 0;
+  return {
+    blocked: generalBlocked || missingBlocked || tacticBlocked,
+    notes: [
+      generalBlocked ? '武將已在其他隊伍' : '',
+      missingBlocked ? ownershipGapLine(gaps) : '',
+      tacticBlocked ? tacticConflictLine(tacticHits) : '',
+    ].filter(Boolean),
+  };
+}
+
 function templateResultsMarkup() {
   const current = account();
   const all = ui.catalog.templates || [];
   const usage = buildUsage(current);
   const tactics = tacticsById(current);
-  const matched = placeBlockedTemplatesLast(filterTeamTemplates(all, ui.templates), (team) => {
-    const overlaps = generalOverlaps(current, team.members, generalsById());
-    const generalBlocked = overlaps.length > 0 && !ui.templates.substitute;
-    return generalBlocked || templateTacticHits(team, usage, tactics).length > 0;
-  });
-  const items = matched.map((team) => {
+  const rows = filterTeamTemplates(all, ui.templates).map((team) => ({
+    team,
+    state: templateBlockState(team, current, usage, tactics),
+  }));
+  const matched = placeBlockedTemplatesLast(rows, (row) => row.state.blocked);
+  const items = matched.map(({ team, state }) => {
     const names = (team.members || []).map((member) => member.generalName).filter(Boolean).join(' / ');
-    const overlaps = generalOverlaps(current, team.members, generalsById());
-    const tacticHits = templateTacticHits(team, usage, tactics);
-    const generalBlocked = overlaps.length > 0 && !ui.templates.substitute;
-    const tacticBlocked = tacticHits.length > 0;
-    const blocked = generalBlocked || tacticBlocked;
-    const notes = [
-      generalBlocked ? '武將已在其他隊伍' : '',
-      tacticBlocked ? tacticConflictLine(tacticHits) : '',
-    ].filter(Boolean);
+    const blocked = state.blocked;
+    const notes = state.notes;
     return `
       <li class="template-item${blocked ? ' blocked' : ''}">
         <div>
@@ -848,7 +868,7 @@ function templateSheet() {
   }).join('');
   return sheet('載入範本隊伍', `
     <div class="template-body">
-      <p>從範本新增一隊到帳號「${esc(current.name)}」。不會改動已經有的隊伍。強度會寫進隊伍名稱，加點會寫進備註。</p>
+      <p>從範本新增一隊到帳號「${esc(current.name)}」。不會改動已經有的隊伍。強度會寫進隊伍名稱，加點會寫進備註。還沒擁有的武將或戰法不能加入。</p>
       <div class="template-filters">
         <label>劇本
           <select id="template-scenario" class="field" data-action="set-template-scenario">${scenarioOptions}</select>
@@ -1391,9 +1411,15 @@ function openDialog(dialog) {
 
 function prepareIncomingTeam(current, share) {
   const overlaps = generalOverlaps(current, share.members, generalsById());
+  const gaps = ownershipGaps(share.members, current, {
+    generalName: (id) => generalsById().get(id)?.name || '',
+    tacticName: (id) => tacticsById(current).get(id)?.name || '',
+  });
   const dropped = dropUsedTactics(share.members, buildUsage(current), tacticsById(current));
   return {
     overlaps,
+    gaps,
+    gapLine: ownershipGapLine(gaps),
     droppedText: tacticDropText(dropped.dropped),
     share: { ...share, members: dropped.members },
   };
@@ -1403,6 +1429,14 @@ function commitTeamShare(current, share, options = {}) {
   const overlaps = generalOverlaps(current, share.members, generalsById());
   if (overlaps.length && !options.substitute) {
     toast(overlapBlockText(overlaps));
+    return;
+  }
+  const gapLine = ownershipGapLine(ownershipGaps(share.members, current, {
+    generalName: (id) => generalsById().get(id)?.name || '',
+    tacticName: (id) => tacticsById(current).get(id)?.name || '',
+  }));
+  if (gapLine) {
+    toast(`${gapLine}，不能加入。`);
     return;
   }
   const dropped = dropUsedTactics(share.members, buildUsage(current), tacticsById(current));
@@ -1737,6 +1771,11 @@ function onClick(event) {
       const overlaps = generalOverlaps(current, template.members, generalsById());
       if (overlaps.length && !ui.templates.substitute) {
         toast(overlapBlockText(overlaps));
+        break;
+      }
+      const gapLine = ownershipGapLine(templateOwnershipGaps(template, current));
+      if (gapLine) {
+        toast(`${gapLine}，不能加入。`);
         break;
       }
       const usage = buildUsage(current);
