@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import {
   filterTeamTemplates,
+  placeBlockedTemplatesLast,
   teamFromTemplate,
   templateDisplayName,
   templateNotes,
@@ -127,4 +128,21 @@ test('範本先依國家再依強度，T0 在前', () => {
   assert.ok(fiveHorse >= 0 && fiveHorse < xunyou);
   const mixed = listed.filter((team) => team.country === '混合').map((team) => team.rank);
   assert.ok(mixed.indexOf('黑科技') > mixed.lastIndexOf('T2'));
+});
+
+test('反灰的範本排在最後，其餘仍先國家再強度', () => {
+  const listed = filterTeamTemplates(templates, {});
+  const blockedIds = new Set(['tpl-027', 'tpl-001']);
+  const ordered = placeBlockedTemplatesLast(listed, (team) => blockedIds.has(team.id));
+  const split = ordered.findIndex((team) => blockedIds.has(team.id));
+  assert.ok(split > 0);
+  assert.equal(ordered.slice(split).every((team) => blockedIds.has(team.id)), true);
+  assert.equal(ordered.slice(0, split).some((team) => blockedIds.has(team.id)), false);
+  assert.equal(ordered[0].country, '魏');
+  assert.equal(ordered[0].rank, 'T0');
+  assert.notEqual(ordered[0].id, 'tpl-001');
+  const gray = ordered.slice(split);
+  const shu = gray.findIndex((team) => team.id === 'tpl-027');
+  const wei = gray.findIndex((team) => team.id === 'tpl-001');
+  assert.ok(wei >= 0 && wei < shu);
 });

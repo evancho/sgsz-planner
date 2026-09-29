@@ -1074,6 +1074,17 @@ function templateRankOrder(rank) {
   return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
 }
 
+/** 已依國家、強度排好的清單，把反灰的隊伍移到最後，組內順序不變。 */
+export function placeBlockedTemplatesLast(teams, isBlocked) {
+  const open = [];
+  const blocked = [];
+  for (const team of teams || []) {
+    if (isBlocked?.(team)) blocked.push(team);
+    else open.push(team);
+  }
+  return [...open, ...blocked];
+}
+
 /** 劇本、國家用下拉篩選。文字比對隊伍名稱或武將名稱。結果先依國家，再依強度。 */
 export function filterTeamTemplates(teams, filters = {}) {
   const scenario = String(filters.scenario || '');

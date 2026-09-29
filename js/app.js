@@ -61,6 +61,7 @@ import {
   templateScenarios,
   TEMPLATE_COUNTRIES,
   filterTeamTemplates,
+  placeBlockedTemplatesLast,
   updateAccount,
   usefulInnate,
 } from './logic.js';
@@ -795,9 +796,13 @@ function templateTacticHits(template, usage, tactics) {
 function templateResultsMarkup() {
   const current = account();
   const all = ui.catalog.templates || [];
-  const matched = filterTeamTemplates(all, ui.templates);
   const usage = buildUsage(current);
   const tactics = tacticsById(current);
+  const matched = placeBlockedTemplatesLast(filterTeamTemplates(all, ui.templates), (team) => {
+    const overlaps = generalOverlaps(current, team.members, generalsById());
+    const generalBlocked = overlaps.length > 0 && !ui.templates.substitute;
+    return generalBlocked || templateTacticHits(team, usage, tactics).length > 0;
+  });
   const items = matched.map((team) => {
     const names = (team.members || []).map((member) => member.generalName).filter(Boolean).join(' / ');
     const overlaps = generalOverlaps(current, team.members, generalsById());
