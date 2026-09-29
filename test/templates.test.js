@@ -100,3 +100,31 @@ test('篩選劇本、國家、隊伍名稱與武將名稱', () => {
   assert.equal(filterTeamTemplates(templates, { country: '群', query: '星彩' }).length, 0);
   assert.ok(filterTeamTemplates(templates, { country: '蜀', query: '星彩' }).length > 0);
 });
+
+test('範本先依國家再依強度，T0 在前', () => {
+  const listed = filterTeamTemplates(templates, {});
+  const countries = ['魏', '蜀', '吳', '群', '混合'];
+  let lastCountry = -1;
+  for (const team of listed) {
+    const index = countries.indexOf(team.country);
+    assert.ok(index >= lastCountry, team.id);
+    lastCountry = index;
+  }
+  const rankOrder = (rank) => {
+    const match = /^T(\d+(?:\.\d+)?)$/.exec(rank);
+    return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
+  };
+  for (const country of countries) {
+    const ranks = listed.filter((team) => team.country === country).map((team) => team.rank);
+    assert.equal(ranks[0], 'T0');
+    for (let index = 1; index < ranks.length; index += 1) {
+      assert.ok(rankOrder(ranks[index - 1]) <= rankOrder(ranks[index]), `${country} ${ranks[index - 1]} ${ranks[index]}`);
+    }
+  }
+  const wei = listed.filter((team) => team.country === '魏');
+  const fiveHorse = wei.findIndex((team) => team.rank === 'T0' && team.title === '五謀騎');
+  const xunyou = wei.findIndex((team) => team.id === 'tpl-001');
+  assert.ok(fiveHorse >= 0 && fiveHorse < xunyou);
+  const mixed = listed.filter((team) => team.country === '混合').map((team) => team.rank);
+  assert.ok(mixed.indexOf('黑科技') > mixed.lastIndexOf('T2'));
+});
