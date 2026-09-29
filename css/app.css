@@ -525,6 +525,7 @@ button.member-name:focus-visible { color: var(--gold); }
   overflow: hidden;
   padding: 0;
 }
+.sheet.picker-sheet { height: min(86vh, 820px); }
 .picker-head, .bingshu-head { padding: 14px 16px 8px; align-items: center; flex: 0 0 auto; }
 .picker-head h3, .bingshu-head h3 { margin: 0; font-size: 22px; }
 .picker-filters { display: flex; flex-direction: column; gap: 8px; padding: 0 16px 8px; flex: 0 0 auto; }
