@@ -429,6 +429,11 @@ export function tacticDropText(dropped) {
   return `戰法 ${dropped.map((item) => item.name).join('、')} 已在其他隊伍，已從新隊伍移除。`;
 }
 
+export function tacticConflictLine(dropped) {
+  if (!dropped?.length) return '';
+  return `戰法 ${dropped.map((item) => item.name).join('、')} 已在其他隊伍`;
+}
+
 export function generalBlockReason({ account, team, slot, general, generalsById, usage }) {
   if (!general) return '找不到武將';
   if (!account.owned?.[general.id]) return '未擁有';

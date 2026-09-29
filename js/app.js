@@ -32,6 +32,7 @@ import {
   generalOverlaps,
   overlapBlockText,
   dropUsedTactics,
+  tacticConflictLine,
   tacticDropText,
   indexNameUse,
   isDuwei,
@@ -786,21 +787,35 @@ function shareImportSheet() {
   `);
 }
 
+function templateTacticHits(template, usage, tactics) {
+  if (!ui.templates?.grayTactics) return [];
+  return dropUsedTactics(template.members, usage, tactics).dropped;
+}
+
 function templateResultsMarkup() {
   const current = account();
   const all = ui.catalog.templates || [];
   const matched = filterTeamTemplates(all, ui.templates);
+  const usage = buildUsage(current);
+  const tactics = tacticsById(current);
   const items = matched.map((team) => {
     const names = (team.members || []).map((member) => member.generalName).filter(Boolean).join(' / ');
     const overlaps = generalOverlaps(current, team.members, generalsById());
-    const blocked = overlaps.length > 0 && !ui.templates.substitute;
+    const tacticHits = templateTacticHits(team, usage, tactics);
+    const generalBlocked = overlaps.length > 0 && !ui.templates.substitute;
+    const tacticBlocked = tacticHits.length > 0;
+    const blocked = generalBlocked || tacticBlocked;
+    const notes = [
+      generalBlocked ? '武將已在其他隊伍' : '',
+      tacticBlocked ? tacticConflictLine(tacticHits) : '',
+    ].filter(Boolean);
     return `
       <li class="template-item${blocked ? ' blocked' : ''}">
         <div>
           <strong>${esc(templateDisplayName(team))}</strong>
           <span class="tag">${campInk(team.country)}</span>
           <p>${esc(names)}</p>
-          ${blocked ? '<p class="faint">武將已在其他隊伍</p>' : ''}
+          ${notes.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
         </div>
         <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入</button>
       </li>`;
@@ -840,10 +855,16 @@ function templateSheet() {
       <label>隊伍或武將
         <input id="template-query" class="search" data-model="template-query" value="${esc(ui.templates.query)}" placeholder="隊伍名稱或武將名稱" autocomplete="off" enterkeyhint="search">
       </label>
-      <label class="season-opt">
-        <input id="template-substitute" type="checkbox" data-action="toggle-template-substitute" ${ui.templates.substitute ? 'checked' : ''}>
-        替代隊伍
-      </label>
+      <div class="template-options">
+        <label class="season-opt">
+          <input id="template-substitute" type="checkbox" data-action="toggle-template-substitute" ${ui.templates.substitute ? 'checked' : ''}>
+          替代隊伍
+        </label>
+        <label class="season-opt">
+          <input id="template-gray-tactics" type="checkbox" data-action="toggle-template-gray-tactics" ${ui.templates.grayTactics ? 'checked' : ''}>
+          反灰衝突戰法
+        </label>
+      </div>
     </div>
     <div id="template-results" class="template-results">${templateResultsMarkup()}</div>
   `, 'template-sheet');
@@ -1698,7 +1719,7 @@ function onClick(event) {
       ui.shareImport = null;
       ui.accountExport = null;
       ui.accountFile = null;
-      ui.templates = { scenario: '', country: '', query: '', substitute: false };
+      ui.templates = { scenario: '', country: '', query: '', substitute: false, grayTactics: false };
       render();
       break;
     case 'add-template': {
@@ -1713,9 +1734,16 @@ function onClick(event) {
         toast(overlapBlockText(overlaps));
         break;
       }
+      const usage = buildUsage(current);
+      const tactics = tacticsById(current);
+      const conflicts = templateTacticHits(template, usage, tactics);
+      if (conflicts.length) {
+        toast(`${tacticConflictLine(conflicts)}，不能加入。`);
+        break;
+      }
       const id = newId('team');
       const built = teamFromTemplate(template, id);
-      const dropped = dropUsedTactics(built.members, buildUsage(current), tacticsById(current));
+      const dropped = dropUsedTactics(built.members, usage, tactics);
       const team = { ...built, members: dropped.members, substitute: ui.templates.substitute === true };
       commit(updateAccount(ui.state, current.id, (item) => ({
         ...item,
@@ -2041,6 +2069,9 @@ function onChange(event) {
     render();
   } else if (el.dataset.action === 'toggle-template-substitute' && ui.templates) {
     ui.templates = { ...ui.templates, substitute: el.checked };
+    render();
+  } else if (el.dataset.action === 'toggle-template-gray-tactics' && ui.templates) {
+    ui.templates = { ...ui.templates, grayTactics: el.checked };
     render();
   } else if (el.dataset.action === 'toggle-share-substitute') {
     if (ui.shareImport) ui.shareImport = { ...ui.shareImport, substitute: el.checked };
