@@ -763,22 +763,10 @@ function shareImportSheet() {
   `);
 }
 
-function templateSheet() {
-  if (!ui.templates) return '';
+function templateResultsMarkup() {
   const current = account();
   const all = ui.catalog.templates || [];
-  const scenarios = templateScenarios(all);
   const matched = filterTeamTemplates(all, ui.templates);
-  const scenarioOptions = ['', ...scenarios].map((value) => {
-    const label = value || '全部';
-    const selected = ui.templates.scenario === value ? 'selected' : '';
-    return `<option value="${esc(value)}" ${selected}>${esc(label)}</option>`;
-  }).join('');
-  const countryOptions = ['', ...TEMPLATE_COUNTRIES].map((value) => {
-    const label = value || '全部';
-    const selected = ui.templates.country === value ? 'selected' : '';
-    return `<option value="${esc(value)}" ${selected}>${esc(label)}</option>`;
-  }).join('');
   const items = matched.map((team) => {
     const names = (team.members || []).map((member) => member.generalName).filter(Boolean).join(' / ');
     const overlaps = generalOverlaps(current, team.members, generalsById());
@@ -794,26 +782,48 @@ function templateSheet() {
         <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入</button>
       </li>`;
   }).join('');
-  return sheet('載入範本隊伍', `
-    <p>從範本新增一隊到帳號「${esc(current.name)}」。不會改動已經有的隊伍。強度會寫進隊伍名稱，加點會寫進備註。</p>
-    <div class="template-filters">
-      <label>劇本
-        <select id="template-scenario" class="field" data-action="set-template-scenario">${scenarioOptions}</select>
-      </label>
-      <label>國家
-        <select id="template-country" class="field" data-action="set-template-country">${countryOptions}</select>
-      </label>
-    </div>
-    <label>隊伍或武將
-      <input id="template-query" class="search" data-model="template-query" value="${esc(ui.templates.query)}" placeholder="隊伍名稱或武將名稱" autocomplete="off">
-    </label>
-    <label class="season-opt">
-      <input id="template-substitute" type="checkbox" data-action="toggle-template-substitute" ${ui.templates.substitute ? 'checked' : ''}>
-      替代隊伍
-    </label>
+  return `
     <p class="sub">顯示 ${matched.length} / ${all.length}</p>
     ${items ? `<ul class="template-list">${items}</ul>` : '<div class="empty"><p>沒有符合的範本。</p></div>'}
-  `);
+  `;
+}
+
+function templateSheet() {
+  if (!ui.templates) return '';
+  const current = account();
+  const all = ui.catalog.templates || [];
+  const scenarios = templateScenarios(all);
+  const scenarioOptions = ['', ...scenarios].map((value) => {
+    const label = value || '全部';
+    const selected = ui.templates.scenario === value ? 'selected' : '';
+    return `<option value="${esc(value)}" ${selected}>${esc(label)}</option>`;
+  }).join('');
+  const countryOptions = ['', ...TEMPLATE_COUNTRIES].map((value) => {
+    const label = value || '全部';
+    const selected = ui.templates.country === value ? 'selected' : '';
+    return `<option value="${esc(value)}" ${selected}>${esc(label)}</option>`;
+  }).join('');
+  return sheet('載入範本隊伍', `
+    <div class="template-body">
+      <p>從範本新增一隊到帳號「${esc(current.name)}」。不會改動已經有的隊伍。強度會寫進隊伍名稱，加點會寫進備註。</p>
+      <div class="template-filters">
+        <label>劇本
+          <select id="template-scenario" class="field" data-action="set-template-scenario">${scenarioOptions}</select>
+        </label>
+        <label>國家
+          <select id="template-country" class="field" data-action="set-template-country">${countryOptions}</select>
+        </label>
+      </div>
+      <label>隊伍或武將
+        <input id="template-query" class="search" data-model="template-query" value="${esc(ui.templates.query)}" placeholder="隊伍名稱或武將名稱" autocomplete="off" enterkeyhint="search">
+      </label>
+      <label class="season-opt">
+        <input id="template-substitute" type="checkbox" data-action="toggle-template-substitute" ${ui.templates.substitute ? 'checked' : ''}>
+        替代隊伍
+      </label>
+    </div>
+    <div id="template-results" class="template-results">${templateResultsMarkup()}</div>
+  `, 'template-sheet');
 }
 
 function shareSheet() {
@@ -1218,10 +1228,11 @@ function customPicker() {
   `);
 }
 
-function sheet(title, body) {
+function sheet(title, body, className = '') {
+  const extra = className ? ` ${className}` : '';
   return `
     <div class="backdrop" data-action="backdrop-close">
-      <section class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}" data-scroll="sheet" tabindex="-1">
+      <section class="sheet${extra}" role="dialog" aria-modal="true" aria-label="${esc(title)}" data-scroll="sheet" tabindex="-1">
         <div class="row-between"><h3>${esc(title)}</h3><button type="button" class="btn-ghost" data-action="close-picker">關閉</button></div>
         ${body}
       </section>
@@ -1908,7 +1919,15 @@ function onInput(event) {
     ui.shareImport = { ...ui.shareImport, text: el.value };
     return;
   }
-  else if (model === 'template-query' && ui.templates) ui.templates = { ...ui.templates, query: el.value };
+  else if (model === 'template-query' && ui.templates) {
+    ui.templates = { ...ui.templates, query: el.value };
+    const results = document.getElementById('template-results');
+    if (results) {
+      results.innerHTML = templateResultsMarkup();
+      results.scrollTop = 0;
+      return;
+    }
+  }
   else if (model === 'account-file' && ui.accountFile) {
     ui.accountFile = { ...ui.accountFile, text: el.value, account: null };
     return;

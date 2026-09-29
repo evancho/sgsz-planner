@@ -283,6 +283,16 @@ button.grow-name { cursor: pointer; }
 .team-head .team-title { flex: 1 1 160px; min-width: 0; }
 .team-tools { flex: 0 0 auto; flex-wrap: wrap; justify-content: flex-end; }
 .template-filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+.sheet.template-sheet {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  height: min(86vh, 820px);
+}
+.template-sheet > .row-between { padding: 16px 16px 0; flex: 0 0 auto; }
+.template-body { padding: 0 16px; flex: 0 0 auto; }
+.template-results { overflow: auto; flex: 1; min-height: 0; padding: 0 16px 16px; }
 .template-list { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .template-item {
   display: flex;
