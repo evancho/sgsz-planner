@@ -429,6 +429,11 @@ export function tacticDropText(dropped) {
   return `戰法 ${dropped.map((item) => item.name).join('、')} 已在其他隊伍，已從新隊伍移除。`;
 }
 
+export function tacticConflictLine(dropped) {
+  if (!dropped?.length) return '';
+  return `戰法 ${dropped.map((item) => item.name).join('、')} 已在其他隊伍`;
+}
+
 export function generalBlockReason({ account, team, slot, general, generalsById, usage }) {
   if (!general) return '找不到武將';
   if (!account.owned?.[general.id]) return '未擁有';
@@ -1067,6 +1072,17 @@ function templateCountryOrder(country) {
 function templateRankOrder(rank) {
   const match = /^T(\d+(?:\.\d+)?)$/.exec(String(rank || '').trim());
   return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
+}
+
+/** 已依國家、強度排好的清單，把反灰的隊伍移到最後，組內順序不變。 */
+export function placeBlockedTemplatesLast(teams, isBlocked) {
+  const open = [];
+  const blocked = [];
+  for (const team of teams || []) {
+    if (isBlocked?.(team)) blocked.push(team);
+    else open.push(team);
+  }
+  return [...open, ...blocked];
 }
 
 /** 劇本、國家用下拉篩選。文字比對隊伍名稱或武將名稱。結果先依國家，再依強度。 */

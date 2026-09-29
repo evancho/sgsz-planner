@@ -293,6 +293,8 @@ button.grow-name { cursor: pointer; }
 .template-sheet > .row-between { padding: 16px 16px 0; flex: 0 0 auto; }
 .template-body { padding: 0 16px; flex: 0 0 auto; }
 .template-results { overflow: auto; flex: 1; min-height: 0; padding: 0 16px 16px; }
+.template-options { display: flex; flex-wrap: wrap; gap: 0 16px; }
+.template-options .season-opt { margin: 8px 0; }
 .template-list { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .template-item {
   display: flex;

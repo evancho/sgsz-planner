@@ -10,6 +10,7 @@ import {
   generalOverlaps,
   normalizeState,
   overlapBlockText,
+  tacticConflictLine,
   tacticDropText,
 } from '../js/logic.js';
 
@@ -52,6 +53,8 @@ test('a tactic already on another team is dropped from the incoming team', () =>
   assert.deepEqual(result.members[0].learned, [null, 'qianli']);
   assert.equal(result.dropped[0].name, '鋒矢陣');
   assert.equal(tacticDropText(result.dropped), '戰法 鋒矢陣 已在其他隊伍，已從新隊伍移除。');
+  assert.equal(tacticConflictLine(result.dropped), '戰法 鋒矢陣 已在其他隊伍');
+  assert.equal(tacticConflictLine([]), '');
   assert.equal(account.teams[0].members[0].learned[0], 'fengshi');
   assert.equal(incoming[0].learned[0], 'fengshi');
 });
