@@ -1796,7 +1796,15 @@ function onClick(event) {
       ui.shareImport = null;
       ui.accountExport = null;
       ui.accountFile = null;
-      ui.templates = { scenario: '', country: '', query: '', substitute: false, grayTactics: false, sort: 'rank' };
+      const scenarios = templateScenarios(ui.catalog?.templates || []);
+      ui.templates = {
+        scenario: scenarios.includes('常規劇本') ? '常規劇本' : '',
+        country: '',
+        query: '',
+        substitute: false,
+        grayTactics: false,
+        sort: 'rank',
+      };
       render();
       break;
     case 'add-template': {
