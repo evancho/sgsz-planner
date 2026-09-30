@@ -461,6 +461,8 @@ button.member-name:focus-visible { color: var(--gold); }
   line-height: 1.25;
 }
 .member-learn .slot-btn strong { font-size: 14px; font-weight: 650; }
+.slot-label { display: flex; flex-wrap: wrap; gap: 2px 6px; align-items: baseline; }
+.slot-origin { color: var(--gold-2); font-size: 12px; }
 .member-actions {
   display: flex;
   gap: 8px;
