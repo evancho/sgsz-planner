@@ -31,8 +31,10 @@ import {
   generalBlockReason,
   generalOverlaps,
   overlapBlockText,
-  ownershipGapLine,
   ownershipGaps,
+  generalGapLine,
+  tacticGapLine,
+  dropUnownedTactics,
   dropUsedTactics,
   tacticConflictLine,
   tacticDropText,
@@ -741,6 +743,7 @@ function shareView(token) {
       ${prepared.droppedText ? `<p class="warn">${esc(prepared.droppedText)}</p>` : ''}
       ${prepared.overlaps.length ? `<p class="warn">${esc(overlapBlockText(prepared.overlaps))}</p>` : ''}
       ${prepared.gapLine ? `<p class="warn">${esc(prepared.gapLine)}，不能加入。</p>` : ''}
+      ${prepared.tacticLine ? `<p class="warn">${esc(prepared.tacticLine)}。</p>` : ''}
       <label class="season-opt">
         <input id="share-substitute" type="checkbox" data-action="toggle-share-substitute" ${ui.shareSubstitute ? 'checked' : ''}>
         替代隊伍
@@ -776,6 +779,7 @@ function shareImportSheet() {
     ${prepared.droppedText ? `<p class="warn">${esc(prepared.droppedText)}</p>` : ''}
     ${prepared.overlaps.length ? `<p class="warn">${esc(overlapBlockText(prepared.overlaps))}</p>` : ''}
     ${prepared.gapLine ? `<p class="warn">${esc(prepared.gapLine)}，不能加入。</p>` : ''}
+    ${prepared.tacticLine ? `<p class="warn">${esc(prepared.tacticLine)}。</p>` : ''}
     <label class="season-opt">
       <input id="share-substitute" type="checkbox" data-action="toggle-share-substitute" ${ui.shareImport.substitute ? 'checked' : ''}>
       替代隊伍
@@ -810,13 +814,14 @@ function templateBlockState(team, current, usage, tactics) {
   const gaps = templateOwnershipGaps(team, current);
   const tacticHits = templateTacticHits(team, usage, tactics);
   const generalBlocked = overlaps.length > 0 && !ui.templates.substitute;
-  const missingBlocked = Boolean(ownershipGapLine(gaps));
+  const missingBlocked = Boolean(generalGapLine(gaps));
   const tacticBlocked = tacticHits.length > 0;
   return {
     blocked: generalBlocked || missingBlocked || tacticBlocked,
     notes: [
       generalBlocked ? '武將已在其他隊伍' : '',
-      missingBlocked ? ownershipGapLine(gaps) : '',
+      missingBlocked ? generalGapLine(gaps) : '',
+      tacticGapLine(gaps),
       tacticBlocked ? tacticConflictLine(tacticHits) : '',
     ].filter(Boolean),
   };
@@ -827,7 +832,11 @@ function templateResultsMarkup() {
   const all = ui.catalog.templates || [];
   const usage = buildUsage(current);
   const tactics = tacticsById(current);
-  const rows = orderTeamTemplates(filterTeamTemplates(all, ui.templates), (team) => templateOwnedRed(team, current))
+  const rows = orderTeamTemplates(
+    filterTeamTemplates(all, ui.templates),
+    (team) => templateOwnedRed(team, current),
+    ui.templates.sort,
+  )
     .map((team) => ({
       team,
       state: templateBlockState(team, current, usage, tactics),
@@ -873,13 +882,19 @@ function templateSheet() {
   }).join('');
   return sheet('載入範本隊伍', `
     <div class="template-body">
-      <p>從範本新增一隊到帳號「${esc(current.name)}」。不會改動已經有的隊伍。強度會寫進隊伍名稱，加點會寫進備註。還沒擁有的武將或戰法不能加入。</p>
+      <p>從範本新增一隊到帳號「${esc(current.name)}」。不會改動已經有的隊伍。強度會寫進隊伍名稱，加點會寫進備註。還沒擁有的武將不能加入。只缺戰法時可以加入，那些戰法留空。</p>
       <div class="template-filters">
         <label>劇本
           <select id="template-scenario" class="field" data-action="set-template-scenario">${scenarioOptions}</select>
         </label>
         <label>國家
           <select id="template-country" class="field" data-action="set-template-country">${countryOptions}</select>
+        </label>
+        <label>排序
+          <select id="template-sort" class="field" data-action="set-template-sort">
+            <option value="rank" ${ui.templates.sort === 'red' ? '' : 'selected'}>強度</option>
+            <option value="red" ${ui.templates.sort === 'red' ? 'selected' : ''}>紅度</option>
+          </select>
         </label>
       </div>
       <label>隊伍或武將
@@ -1420,11 +1435,16 @@ function prepareIncomingTeam(current, share) {
     generalName: (id) => generalsById().get(id)?.name || '',
     tacticName: (id) => tacticsById(current).get(id)?.name || '',
   });
-  const dropped = dropUsedTactics(share.members, buildUsage(current), tacticsById(current));
+  const lookup = {
+    tacticName: (id) => tacticsById(current).get(id)?.name || '',
+  };
+  const stripped = dropUnownedTactics(share.members, current, lookup);
+  const dropped = dropUsedTactics(stripped.members, buildUsage(current), tacticsById(current));
   return {
     overlaps,
     gaps,
-    gapLine: ownershipGapLine(gaps),
+    gapLine: generalGapLine(gaps),
+    tacticLine: tacticGapLine(gaps),
     droppedText: tacticDropText(dropped.dropped),
     share: { ...share, members: dropped.members },
   };
@@ -1436,15 +1456,19 @@ function commitTeamShare(current, share, options = {}) {
     toast(overlapBlockText(overlaps));
     return;
   }
-  const gapLine = ownershipGapLine(ownershipGaps(share.members, current, {
+  const gaps = ownershipGaps(share.members, current, {
     generalName: (id) => generalsById().get(id)?.name || '',
     tacticName: (id) => tacticsById(current).get(id)?.name || '',
-  }));
+  });
+  const gapLine = generalGapLine(gaps);
   if (gapLine) {
     toast(`${gapLine}，不能加入。`);
     return;
   }
-  const dropped = dropUsedTactics(share.members, buildUsage(current), tacticsById(current));
+  const stripped = dropUnownedTactics(share.members, current, {
+    tacticName: (id) => tacticsById(current).get(id)?.name || '',
+  });
+  const dropped = dropUsedTactics(stripped.members, buildUsage(current), tacticsById(current));
   const nextShare = { ...share, members: dropped.members };
   const teamId = newId('team');
   const missing = shareGapLines(nextShare, current);
@@ -1453,7 +1477,8 @@ function commitTeamShare(current, share, options = {}) {
     toast(applied.error);
     return;
   }
-  ui.shareApplied = { teamId, name: share.name, missing, dropped: tacticDropText(dropped.dropped) };
+  const tacticNote = [tacticGapLine(gaps), tacticDropText(dropped.dropped)].filter(Boolean).join('。');
+  ui.shareApplied = { teamId, name: share.name, missing, dropped: tacticNote };
   ui.shareImport = null;
   ui.shareLink = '';
   ui.shareName = '';
@@ -1462,7 +1487,7 @@ function commitTeamShare(current, share, options = {}) {
     ...ui.state,
     accounts: ui.state.accounts.map((item) => (item.id === current.id ? applied.account : item)),
   });
-  if (dropped.dropped.length) toast(tacticDropText(dropped.dropped));
+  if (tacticNote) toast(tacticNote, 5200);
   location.hash = `#/teams/${teamId}`;
 }
 
@@ -1763,7 +1788,7 @@ function onClick(event) {
       ui.shareImport = null;
       ui.accountExport = null;
       ui.accountFile = null;
-      ui.templates = { scenario: '', country: '', query: '', substitute: false, grayTactics: false };
+      ui.templates = { scenario: '', country: '', query: '', substitute: false, grayTactics: false, sort: 'rank' };
       render();
       break;
     case 'add-template': {
@@ -1778,7 +1803,8 @@ function onClick(event) {
         toast(overlapBlockText(overlaps));
         break;
       }
-      const gapLine = ownershipGapLine(templateOwnershipGaps(template, current));
+      const gaps = templateOwnershipGaps(template, current);
+      const gapLine = generalGapLine(gaps);
       if (gapLine) {
         toast(`${gapLine}，不能加入。`);
         break;
@@ -1792,13 +1818,16 @@ function onClick(event) {
       }
       const id = newId('team');
       const built = teamFromTemplate(template, id);
-      const dropped = dropUsedTactics(built.members, usage, tactics);
+      const stripped = dropUnownedTactics(built.members, current, {
+        tacticName: (tacticId) => tactics.get(tacticId)?.name || '',
+      });
+      const dropped = dropUsedTactics(stripped.members, usage, tactics);
       const team = { ...built, members: dropped.members, substitute: ui.templates.substitute === true };
       commit(updateAccount(ui.state, current.id, (item) => ({
         ...item,
         teams: [...item.teams, team],
       })));
-      const note = tacticDropText(dropped.dropped);
+      const note = [tacticGapLine(gaps), tacticDropText(dropped.dropped)].filter(Boolean).join('。');
       toast(note ? `已加入${team.name}。${note}` : `已加入${team.name}`, note ? 5200 : 2800);
       break;
     }
@@ -2115,6 +2144,9 @@ function onChange(event) {
     render();
   } else if (el.dataset.action === 'set-template-country' && ui.templates) {
     ui.templates = { ...ui.templates, country: el.value };
+    render();
+  } else if (el.dataset.action === 'set-template-sort' && ui.templates) {
+    ui.templates = { ...ui.templates, sort: el.value === 'red' ? 'red' : 'rank' };
     render();
   } else if (el.dataset.action === 'toggle-template-substitute' && ui.templates) {
     ui.templates = { ...ui.templates, substitute: el.checked };
