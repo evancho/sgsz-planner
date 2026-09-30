@@ -429,6 +429,28 @@ export function tacticDropText(dropped) {
   return `戰法 ${dropped.map((item) => item.name).join('、')} 已在其他隊伍，已從新隊伍移除。`;
 }
 
+/** 帳號還沒有的傳承從新隊伍拿掉，槽位留空。 */
+export function dropUnownedTactics(members, account, lookup = {}) {
+  const tacticName = lookup.tacticName || ((id) => id);
+  const dropped = [];
+  const seen = new Set();
+  const next = (members || []).map((member) => {
+    if (!member) return member;
+    const learned = [0, 1].map((index) => {
+      const id = member.learned?.[index] || null;
+      if (!id) return null;
+      if (account?.tacticsOwned?.[id]) return id;
+      if (!seen.has(id)) {
+        seen.add(id);
+        dropped.push({ id, name: tacticName(id) || id });
+      }
+      return null;
+    });
+    return { ...member, learned };
+  });
+  return { members: next, dropped };
+}
+
 export function tacticConflictLine(dropped) {
   if (!dropped?.length) return '';
   return `戰法 ${dropped.map((item) => item.name).join('、')} 已在其他隊伍`;
@@ -473,6 +495,18 @@ export function ownershipGapLine(gaps) {
   if (gaps?.generals?.length) parts.push(`缺少武將 ${gaps.generals.join('、')}`);
   if (gaps?.tactics?.length) parts.push(`缺少戰法 ${gaps.tactics.join('、')}`);
   return parts.join('；');
+}
+
+/** 缺武將才擋下整隊。 */
+export function generalGapLine(gaps) {
+  if (!gaps?.generals?.length) return '';
+  return `缺少武將 ${gaps.generals.join('、')}`;
+}
+
+/** 只缺戰法時仍可加入，那些槽位留空。 */
+export function tacticGapLine(gaps) {
+  if (!gaps?.tactics?.length) return '';
+  return `缺少戰法 ${gaps.tactics.join('、')}，加入時留空`;
 }
 
 export function generalBlockReason({ account, team, slot, general, generalsById, usage }) {
@@ -1136,12 +1170,17 @@ export function placeBlockedTemplatesLast(teams, isBlocked) {
   return [...open, ...blocked];
 }
 
-/** 先強度（T0 在前），同強度再依紅度總和，高的在前。 */
-export function orderTeamTemplates(teams, redOf = () => 0) {
+/** 強度：T0 在前，同強度再依紅度。紅度：總紅度高的在前，同分再看強度。 */
+export function orderTeamTemplates(teams, redOf = () => 0, mode = 'rank') {
   return [...(teams || [])].sort((a, b) => {
     const rankDiff = templateRankOrder(a.rank) - templateRankOrder(b.rank);
+    const redDiff = (Number(redOf(b)) || 0) - (Number(redOf(a)) || 0);
+    if (mode === 'red') {
+      if (redDiff) return redDiff;
+      return rankDiff;
+    }
     if (rankDiff) return rankDiff;
-    return (Number(redOf(b)) || 0) - (Number(redOf(a)) || 0);
+    return redDiff;
   });
 }
 

@@ -133,6 +133,11 @@ test('範本依強度再依已有紅度，不依國家', () => {
   const firstOtherT0 = ranked.findIndex((team) => team.rank === 'T0' && team.country !== '魏');
   const firstT1 = ranked.findIndex((team) => team.rank === 'T1');
   assert.ok(firstOtherT0 > 0 && firstOtherT0 < firstT1);
+  const byRed = orderTeamTemplates([
+    { id: 'low-rank', rank: 'T2' },
+    { id: 'high-rank', rank: 'T0' },
+  ], (team) => (team.id === 'low-rank' ? 9 : 1), 'red');
+  assert.deepEqual(byRed.map((team) => team.id), ['low-rank', 'high-rank']);
 });
 
 test('反灰的範本排在最後，其餘仍先強度再紅度', () => {

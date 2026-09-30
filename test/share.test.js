@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { applyTeamShare, decodeTeamShare, emptyAccount, encodeTeamShare, ownershipGapLine, ownershipGaps, shareGaps, shareTokenFromText } from '../js/logic.js';
+import { applyTeamShare, decodeTeamShare, dropUnownedTactics, emptyAccount, encodeTeamShare, generalGapLine, ownershipGapLine, ownershipGaps, shareGaps, shareTokenFromText, tacticGapLine } from '../js/logic.js';
 
 const team = {
   id: 'team-shu',
@@ -135,6 +135,15 @@ test('missing generals or tactics are named and block a load', () => {
   assert.deepEqual(gaps.generals, ['無雙星彩']);
   assert.deepEqual(gaps.tactics, ['蓄勢待發', '藤甲兵', '破甲']);
   assert.equal(ownershipGapLine(gaps), '缺少武將 無雙星彩；缺少戰法 蓄勢待發、藤甲兵、破甲');
+  assert.equal(generalGapLine(gaps), '缺少武將 無雙星彩');
+  assert.equal(tacticGapLine(gaps), '缺少戰法 蓄勢待發、藤甲兵、破甲，加入時留空');
+  assert.equal(generalGapLine({ generals: [], tactics: ['蓄勢待發'] }), '');
+  const stripped = dropUnownedTactics(members, account, {
+    tacticName: (id) => ({ xushidai: '蓄勢待發', tengjia: '藤甲兵' }[id] || id),
+  });
+  assert.deepEqual(stripped.members[0].learned, ['feigong', null]);
+  assert.deepEqual(stripped.members[1].learned, [null, null]);
+  assert.deepEqual(stripped.dropped.map((item) => item.name), ['蓄勢待發', '藤甲兵']);
   account.owned['wushuang-xingcai'] = { red: 0, dynamic: false, awaken: false };
   account.tacticsOwned = { feigong: true, xushidai: true, tengjia: true };
   const still = ownershipGaps(members, account, { tacticName: (id) => id });
