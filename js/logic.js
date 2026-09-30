@@ -398,6 +398,18 @@ export function overlapBlockText(overlaps) {
   return `${who}，不能加入。勾選替代隊伍可略過。`;
 }
 
+/** 空槽記住原本的戰法名。槽位重新放上戰法後，那個提示就拿掉。 */
+function memberWithLearned(member, learned, fresh = []) {
+  const vacated = [0, 1].map((index) => {
+    if (learned[index]) return null;
+    return clip(fresh[index] || member?.vacated?.[index], 32) || null;
+  });
+  const next = { ...member, learned };
+  if (vacated.some(Boolean)) next.vacated = vacated;
+  else delete next.vacated;
+  return next;
+}
+
 /** 已有隊伍佔滿的戰法從新隊伍拿掉。同一支新隊伍裡的重複不在這裡處理。 */
 export function dropUsedTactics(members, usage, tacticsById) {
   const counts = new Map();
@@ -406,20 +418,23 @@ export function dropUsedTactics(members, usage, tacticsById) {
   const seen = new Set();
   const next = (members || []).map((member) => {
     if (!member) return member;
+    const fresh = [null, null];
     const learned = [0, 1].map((index) => {
       const id = member.learned?.[index] || null;
       if (!id) return null;
       const copies = tacticsById?.get(id)?.copies || 1;
       if ((counts.get(id) || 0) >= copies) {
+        const name = tacticsById?.get(id)?.name || id;
+        fresh[index] = name;
         if (!seen.has(id)) {
           seen.add(id);
-          dropped.push({ id, name: tacticsById?.get(id)?.name || id });
+          dropped.push({ id, name });
         }
         return null;
       }
       return id;
     });
-    return { ...member, learned };
+    return memberWithLearned(member, learned, fresh);
   });
   return { members: next, dropped };
 }
@@ -436,17 +451,20 @@ export function dropUnownedTactics(members, account, lookup = {}) {
   const seen = new Set();
   const next = (members || []).map((member) => {
     if (!member) return member;
+    const fresh = [null, null];
     const learned = [0, 1].map((index) => {
       const id = member.learned?.[index] || null;
       if (!id) return null;
       if (account?.tacticsOwned?.[id]) return id;
+      const name = tacticName(id) || id;
+      fresh[index] = name;
       if (!seen.has(id)) {
         seen.add(id);
-        dropped.push({ id, name: tacticName(id) || id });
+        dropped.push({ id, name });
       }
       return null;
     });
-    return { ...member, learned };
+    return memberWithLearned(member, learned, fresh);
   });
   return { members: next, dropped };
 }
@@ -613,7 +631,7 @@ function normalizeMember(raw) {
       secondary: secondarySlots(raw.bingshu),
     };
   }
-  return { generalId, learned, bingshu };
+  return memberWithLearned({ generalId, bingshu, vacated: raw.vacated }, learned);
 }
 
 /** Backup v1 stored 副將、主將、副將. Later backups store 主將 first. */
@@ -1106,11 +1124,11 @@ export function applyTeamShare(account, share, teamId, options = {}) {
   const members = share.members.map((member) => {
     if (!member) return null;
     owned[member.generalId] = mergeShareOwned(owned[member.generalId], member);
-    return {
+    return memberWithLearned({
       generalId: member.generalId,
-      learned: member.learned.slice(),
+      vacated: member.vacated,
       bingshu: member.bingshu ? { ...member.bingshu } : null,
-    };
+    }, member.learned.slice());
   });
   return {
     ok: true,

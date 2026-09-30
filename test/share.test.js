@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { applyTeamShare, decodeTeamShare, dropUnownedTactics, emptyAccount, encodeTeamShare, generalGapLine, ownershipGapLine, ownershipGaps, shareGaps, shareTokenFromText, tacticGapLine } from '../js/logic.js';
+import { APP_ID, BACKUP_VERSION, applyTeamShare, decodeTeamShare, dropUnownedTactics, emptyAccount, encodeTeamShare, generalGapLine, normalizeState, ownershipGapLine, ownershipGaps, shareGaps, shareTokenFromText, tacticGapLine } from '../js/logic.js';
 
 const team = {
   id: 'team-shu',
@@ -142,8 +142,31 @@ test('missing generals or tactics are named and block a load', () => {
     tacticName: (id) => ({ xushidai: '蓄勢待發', tengjia: '藤甲兵' }[id] || id),
   });
   assert.deepEqual(stripped.members[0].learned, ['feigong', null]);
+  assert.deepEqual(stripped.members[0].vacated, [null, '蓄勢待發']);
   assert.deepEqual(stripped.members[1].learned, [null, null]);
+  assert.deepEqual(stripped.members[1].vacated, ['藤甲兵', null]);
   assert.deepEqual(stripped.dropped.map((item) => item.name), ['蓄勢待發', '藤甲兵']);
+  const kept = normalizeState({
+    app: APP_ID,
+    backupVersion: BACKUP_VERSION,
+    activeAccountId: account.id,
+    accounts: [{
+      ...account,
+      teams: [{
+        id: 'team-hint',
+        name: '提示',
+        notes: '',
+        members: [
+          { generalId: 'sp-guanyu', learned: ['feigong', 'xushidai'], vacated: [null, '蓄勢待發'], bingshu: null },
+          { generalId: 'wushuang-xingcai', learned: [null, null], vacated: ['藤甲兵', null], bingshu: null },
+          null,
+        ],
+      }],
+    }],
+  });
+  assert.equal(kept.ok, true);
+  assert.equal(kept.state.accounts[0].teams[0].members[0].vacated, undefined);
+  assert.deepEqual(kept.state.accounts[0].teams[0].members[1].vacated, ['藤甲兵', null]);
   account.owned['wushuang-xingcai'] = { red: 0, dynamic: false, awaken: false };
   account.tacticsOwned = { feigong: true, xushidai: true, tengjia: true };
   const still = ownershipGaps(members, account, { tacticName: (id) => id });

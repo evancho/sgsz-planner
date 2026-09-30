@@ -51,6 +51,7 @@ test('a tactic already on another team is dropped from the incoming team', () =>
   const incoming = [{ generalId: 'liubei', learned: ['fengshi', 'qianli'], bingshu: null }, null, null];
   const result = dropUsedTactics(incoming, buildUsage(account), tactics);
   assert.deepEqual(result.members[0].learned, [null, 'qianli']);
+  assert.deepEqual(result.members[0].vacated, ['鋒矢陣', null]);
   assert.equal(result.dropped[0].name, '鋒矢陣');
   assert.equal(tacticDropText(result.dropped), '戰法 鋒矢陣 已在其他隊伍，已從新隊伍移除。');
   assert.equal(tacticConflictLine(result.dropped), '戰法 鋒矢陣 已在其他隊伍');

@@ -1023,9 +1023,17 @@ function memberCard(team, member, slot, current) {
 function learnedButton(team, member, slot, index) {
   const tacticId = member.learned[index];
   const tactic = tacticId ? tacticsById().get(tacticId) : null;
+  const origin = tacticId ? '' : String(member.vacated?.[index] || '').trim();
   const text = tactic ? tactic.name : tacticId ? `未知戰法 ${tacticId}` : '選擇傳承戰法';
-  const label = tactic ? `替換${tactic.name}` : tacticId ? `替換未知戰法 ${tacticId}` : '選擇傳承戰法';
-  return `<button type="button" class="slot-btn" data-action="open-tactic" data-team="${esc(team.id)}" data-slot="${slot}" data-learned="${index}" aria-label="${esc(label)}"><span class="faint">傳承 ${index + 1}</span><strong>${esc(text)}</strong></button>`;
+  const label = tactic
+    ? `替換${tactic.name}`
+    : origin
+      ? `選擇傳承戰法，原本是${origin}`
+      : tacticId
+        ? `替換未知戰法 ${tacticId}`
+        : '選擇傳承戰法';
+  const originHtml = origin ? `<span class="slot-origin">原 ${esc(origin)}</span>` : '';
+  return `<button type="button" class="slot-btn" data-action="open-tactic" data-team="${esc(team.id)}" data-slot="${slot}" data-learned="${index}" aria-label="${esc(label)}"><span class="slot-label"><span class="faint">傳承 ${index + 1}</span>${originHtml}</span><strong>${esc(text)}</strong></button>`;
 }
 
 function nodeButton(node, on, layer) {
@@ -2305,9 +2313,13 @@ function assignTactic(current, teamId, slot, learnedIndex, tacticId) {
     return;
   }
   mapMembers(current, teamId, slot, (existing) => {
-    const learned = existing.learned.slice();
+    const learned = [0, 1].map((index) => existing.learned?.[index] || null);
     learned[learnedIndex] = tacticId;
-    return { ...existing, learned };
+    const vacated = [0, 1].map((index) => (learned[index] ? null : existing.vacated?.[index] || null));
+    const next = { ...existing, learned };
+    if (vacated.some(Boolean)) next.vacated = vacated;
+    else delete next.vacated;
+    return next;
   });
 }
 
