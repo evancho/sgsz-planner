@@ -44,9 +44,35 @@ export function freshState() {
   return {
     app: APP_ID,
     backupVersion: BACKUP_VERSION,
+    updatedAt: new Date().toISOString(),
     activeAccountId: id,
     accounts: [emptyAccount(id, '主帳')],
   };
+}
+
+/** Parse backup timestamps for last-write-wins. Prefer updatedAt, then exportedAt. */
+export function backupUpdatedAt(payload) {
+  if (!payload || typeof payload !== 'object') return 0;
+  const raw = payload.updatedAt || payload.exportedAt || '';
+  const time = Date.parse(String(raw));
+  return Number.isFinite(time) ? time : 0;
+}
+
+/**
+ * Compare two backup payloads. Returns which side wins for whole-state sync.
+ * @returns {{ choice: 'local'|'remote'|'equal', localAt: number, remoteAt: number }}
+ */
+export function pickNewerBackup(local, remote) {
+  const localAt = backupUpdatedAt(local);
+  const remoteAt = backupUpdatedAt(remote);
+  if (remoteAt > localAt) return { choice: 'remote', localAt, remoteAt };
+  if (localAt > remoteAt) return { choice: 'local', localAt, remoteAt };
+  return { choice: 'equal', localAt, remoteAt };
+}
+
+/** Bump updatedAt before persisting a local edit. */
+export function touchUpdatedAt(state, when = new Date()) {
+  return { ...state, updatedAt: when.toISOString() };
 }
 
 function clip(value, max) {
@@ -736,11 +762,16 @@ export function normalizeState(input) {
   }
   let activeAccountId = cleanId(input.activeAccountId);
   if (!seen.has(activeAccountId)) activeAccountId = accounts[0].id;
+  // Prefer updatedAt, then exportedAt. Leave empty for legacy local data so LWW
+  // does not invent "now" and accidentally beat a real cloud backup.
+  const stamp = input.updatedAt || input.exportedAt || '';
+  const updatedAt = backupUpdatedAt({ updatedAt: stamp }) ? String(stamp) : '';
   return {
     ok: true,
     state: {
       app: APP_ID,
       backupVersion: BACKUP_VERSION,
+      updatedAt,
       activeAccountId,
       accounts,
     },
@@ -751,6 +782,7 @@ export function exportPayload(state, catalogVersion) {
   return {
     app: APP_ID,
     backupVersion: BACKUP_VERSION,
+    updatedAt: state.updatedAt || new Date().toISOString(),
     exportedAt: new Date().toISOString(),
     catalogVersion,
     activeAccountId: state.activeAccountId,

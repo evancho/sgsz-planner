@@ -35,6 +35,27 @@ Android 可用 Chrome 的「加到主畫面」。電腦直接用瀏覽器即可�
 
 備份檔包含所有帳號，不是只有正在看的那一個。單帳號檔是另一種 JSON（`kind` 為 `account`），請在帳號卡上載入；貼到備份頁不會整包取代。整包備份也不能在帳號卡上當成單帳號載入。舊版備份仍可匯入：主將會排到第一個位置，原本的主將與兩位副將不會對調。
 
+## OneDrive 同步
+
+可選。連上之後，本機變更會在短時間內與 OneDrive **App 專用資料夾**裡的 `sgsz-planner-backup.json` 自動同步。每位使用者登**自己的** Microsoft 帳號；不會寫入別人的 OneDrive。權限只有 `Files.ReadWrite.AppFolder`，讀不到該帳號其他檔案。
+
+衝突規則：整包 **最後寫入贏**（比備份裡的 `updatedAt`）。兩邊離線各改一輪再開時，時間較新的整包會蓋掉較舊的。
+
+### 設定（維護者／fork 一次）
+
+1. 到 [Azure Portal](https://portal.azure.com) → Microsoft Entra ID → **App registrations** → New registration。
+2. 名稱自訂；帳戶類型選可登入**個人 Microsoft 帳戶**（例如「Accounts in any organizational directory and personal Microsoft accounts」或 Personal 相關選項）。
+3. 平台選 **Single-page application (SPA)**，Redirect URI 精確填：
+   - `https://evancho.github.io/sgsz-planner/`
+   - 本機測試可再加 `http://127.0.0.1:8765/`
+4. **API permissions** → Microsoft Graph → Delegated：`Files.ReadWrite.AppFolder`、`User.Read`。個人開發可略過管理員同意。
+5. 把 **Application (client) ID** 寫進 [`js/onedrive-config.js`](js/onedrive-config.js) 的 `clientId`。這是公開值；**不要**建立或提交 client secret。
+6. 部署後打開備份頁 → **連接 OneDrive** → 同意權限。
+
+手動驗證：裝置 A 改一筆武將並等數秒；裝置 B 打開（或切回前景）應看到較新資料。兩機離線各改再開時，較新 `updatedAt` 者勝。
+
+未填 `clientId` 時，備份頁只顯示設定說明，不影響手動 JSON 備份。
+
 ## 怎麼用
 
 **武將**只收名將（橙卡），列表一行一位，名稱是武將本名（孫尚香、陸遜、周瑜），不會在名字前面加「典藏」。勾選擁有後可展開紅度 0–5、動態、典藏；設定其中一項就會收合，並立刻寫進這台裝置。再點名稱可以展開改下一項。取消擁有也會收合。有動態形象或可標典藏的卡，才會出現「有／無」；內政武將不顯示典藏。把動態標成「有」之後，列上才會出現「動態」。把典藏標成「有」之後，列上才會出現「典藏」。篩選對齊遊戲裡常見的條件：品質、適性 A 以上、陣營、COST、軍事／內政、典藏、動態形象。預設依統御由高到低，同統御再依魏、蜀、吳、群；篩選之後仍是這個順序。也可以改成稀有、統御由低到高、陣營或名稱。新帳號的武將與戰法都是未擁有。已經上陣的卡會在名字下方標「部隊中」。自帶戰法有資料才顯示，沒有就不留空的「自帶戰法」。

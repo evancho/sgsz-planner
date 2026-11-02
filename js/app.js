@@ -68,10 +68,15 @@ import {
   orderTeamTemplates,
   placeBlockedTemplatesLast,
   templateOwnedRed,
+  touchUpdatedAt,
+  pickNewerBackup,
   updateAccount,
   usefulInnate,
 } from './logic.js';
 import { loadState, saveState } from './store.js';
+
+const SYNC_DEBOUNCE_MS = 1500;
+const SYNC_LAST_KEY = 'sgsz-onedrive-last-sync';
 
 const ui = {
   catalog: null,
@@ -100,7 +105,20 @@ const ui = {
   openGenerals: {},
   nameDraft: {},
   installHidden: localStorage.getItem('sgsz-hide-install') === '1',
+  sync: {
+    ready: false,
+    configured: false,
+    signedIn: false,
+    account: '',
+    status: 'idle',
+    lastAt: localStorage.getItem(SYNC_LAST_KEY) || '',
+    error: '',
+  },
 };
+
+let onedriveApi = null;
+let syncTimer = null;
+let syncInFlight = null;
 
 const CAMP_CLASS = { 魏: 'wei', 蜀: 'shu', 吳: 'wu', 群: 'qun' };
 
@@ -157,13 +175,217 @@ function collapseGeneral(id) {
 }
 
 function commit(next, options = {}) {
-  ui.state = next;
+  ui.state = options.keepStamp ? next : touchUpdatedAt(next);
   try {
     saveState(ui.state);
   } catch {
     toast('儲存空間不足，這次變更可能沒寫入。');
   }
   if (!options.quiet) render();
+  if (!options.skipSync) scheduleCloudSync();
+}
+
+async function loadOneDriveApi() {
+  if (!onedriveApi) onedriveApi = await import('./onedrive.js');
+  return onedriveApi;
+}
+
+function formatSyncTime(iso) {
+  if (!iso) return '尚未同步';
+  const time = Date.parse(iso);
+  if (!Number.isFinite(time)) return iso;
+  try {
+    return new Intl.DateTimeFormat('zh-TW', {
+      dateStyle: 'short',
+      timeStyle: 'short',
+      timeZone: 'Asia/Taipei',
+    }).format(new Date(time));
+  } catch {
+    return new Date(time).toLocaleString();
+  }
+}
+
+function setSyncLast(iso) {
+  ui.sync.lastAt = iso;
+  try {
+    localStorage.setItem(SYNC_LAST_KEY, iso);
+  } catch {
+    /* ignore quota */
+  }
+}
+
+async function refreshSyncStatus() {
+  try {
+    const config = await import('./onedrive-config.js');
+    const id = String(config.clientId || '').trim();
+    ui.sync.configured = Boolean(id) && id !== 'YOUR_AZURE_SPA_CLIENT_ID';
+    if (!ui.sync.configured) {
+      ui.sync.signedIn = false;
+      ui.sync.account = '';
+      ui.sync.ready = true;
+      ui.sync.error = '';
+      return;
+    }
+    const api = await loadOneDriveApi();
+    await api.initOneDrive();
+    ui.sync.signedIn = Boolean(api.getAccount());
+    ui.sync.account = api.displayName();
+    ui.sync.ready = true;
+    ui.sync.error = '';
+  } catch (error) {
+    ui.sync.ready = true;
+    ui.sync.error = error?.message || 'OneDrive 模組載入失敗';
+  }
+}
+
+function scheduleCloudSync() {
+  if (!ui.sync.configured || !ui.sync.signedIn) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(() => {
+    void syncWithOneDrive({ quiet: true });
+  }, SYNC_DEBOUNCE_MS);
+}
+
+async function syncWithOneDrive(options = {}) {
+  if (syncInFlight) return syncInFlight;
+  syncInFlight = (async () => {
+    ui.sync.status = 'syncing';
+    ui.sync.error = '';
+    if (options.render !== false && document.querySelector('[data-sync-panel]')) render();
+    try {
+      const api = await loadOneDriveApi();
+      if (!api.isConfigured()) {
+        ui.sync.configured = false;
+        ui.sync.status = 'idle';
+        return;
+      }
+      if (!api.getAccount()) {
+        ui.sync.signedIn = false;
+        ui.sync.status = 'idle';
+        if (!options.quiet) toast('請先連接 OneDrive');
+        return;
+      }
+      const localPayload = exportPayload(ui.state, ui.catalog.version);
+      // Compare with the stored stamp, not a freshly invented export time.
+      const localStamp = { updatedAt: ui.state.updatedAt || '' };
+      if (!ui.state.updatedAt) localPayload.updatedAt = localPayload.exportedAt;
+      const downloaded = await api.downloadBackup();
+      if (downloaded.pending) return;
+      if (!downloaded.ok) {
+        ui.sync.status = 'error';
+        ui.sync.error = downloaded.error;
+        if (!options.quiet) toast(downloaded.error);
+        return;
+      }
+      if (!downloaded.payload) {
+        const uploaded = await api.uploadBackup(localPayload);
+        if (uploaded.pending) return;
+        if (!uploaded.ok) {
+          ui.sync.status = 'error';
+          ui.sync.error = uploaded.error;
+          if (!options.quiet) toast(uploaded.error);
+          return;
+        }
+        if (!ui.state.updatedAt) {
+          ui.state = { ...ui.state, updatedAt: localPayload.updatedAt };
+          saveState(ui.state);
+        }
+        setSyncLast(new Date().toISOString());
+        ui.sync.status = 'idle';
+        if (!options.quiet) toast('已同步到 OneDrive');
+        return;
+      }
+      const pick = pickNewerBackup(localStamp, downloaded.payload);
+      if (pick.choice === 'remote') {
+        const normalized = normalizeState(downloaded.payload);
+        if (!normalized.ok) {
+          ui.sync.status = 'error';
+          ui.sync.error = normalized.error || '雲端備份無法讀取';
+          if (!options.quiet) toast(ui.sync.error);
+          return;
+        }
+        commit(normalized.state, { keepStamp: true, skipSync: true });
+        setSyncLast(new Date().toISOString());
+        ui.sync.status = 'idle';
+        toast('已從 OneDrive 還原較新備份');
+        return;
+      }
+      if (pick.choice === 'local') {
+        const toUpload = ui.state.updatedAt
+          ? localPayload
+          : { ...localPayload, updatedAt: localPayload.exportedAt };
+        const uploaded = await api.uploadBackup(toUpload);
+        if (uploaded.pending) return;
+        if (!uploaded.ok) {
+          ui.sync.status = 'error';
+          ui.sync.error = uploaded.error;
+          if (!options.quiet) toast(uploaded.error);
+          return;
+        }
+        if (!ui.state.updatedAt) {
+          ui.state = { ...ui.state, updatedAt: toUpload.updatedAt };
+          saveState(ui.state);
+        }
+        setSyncLast(new Date().toISOString());
+        ui.sync.status = 'idle';
+        if (!options.quiet) toast('已同步到 OneDrive');
+        return;
+      }
+      setSyncLast(new Date().toISOString());
+      ui.sync.status = 'idle';
+      if (!options.quiet) toast('已是最新');
+    } catch (error) {
+      ui.sync.status = 'error';
+      ui.sync.error = error?.message || '同步失敗';
+      if (!options.quiet) toast(ui.sync.error);
+    } finally {
+      syncInFlight = null;
+      if (options.render !== false) {
+        const onBackup = (location.hash || '').includes('backup');
+        if (onBackup || ui.sync.status === 'error') render();
+      }
+    }
+  })();
+  return syncInFlight;
+}
+
+function syncPanelHtml() {
+  const sync = ui.sync;
+  if (!sync.ready) {
+    return `
+      <article class="panel" data-sync-panel style="padding:14px;margin-bottom:12px">
+        <h3>OneDrive 同步</h3>
+        <p class="muted">正在檢查…</p>
+      </article>`;
+  }
+  if (!sync.configured) {
+    return `
+      <article class="panel" data-sync-panel style="padding:14px;margin-bottom:12px">
+        <h3>OneDrive 同步</h3>
+        <p class="muted">尚未設定 Azure 應用程式。在 <code>js/onedrive-config.js</code> 填入 SPA 的 client ID，並依 README「OneDrive 同步」完成註冊後即可使用。每位使用者登自己的 Microsoft 帳號；App 只能寫入 OneDrive 的應用程式資料夾。</p>
+      </article>`;
+  }
+  const statusLine = sync.status === 'syncing'
+    ? '同步中…'
+    : sync.error
+      ? esc(sync.error)
+      : `上次同步：${esc(formatSyncTime(sync.lastAt))}`;
+  const accountLine = sync.signedIn
+    ? `<p class="muted">已連接：${esc(sync.account || 'Microsoft 帳號')}</p>`
+    : '<p class="muted">尚未連接。連接後會在本機儲存變更時，與 OneDrive 自動同步（較新的整包備份會蓋掉較舊的）。</p>';
+  return `
+    <article class="panel" data-sync-panel style="padding:14px;margin-bottom:12px">
+      <h3>OneDrive 同步</h3>
+      ${accountLine}
+      <p class="faint">${statusLine}</p>
+      <div class="btn-row" style="margin-top:10px">
+        ${sync.signedIn
+          ? `
+            <button type="button" class="btn primary" data-action="onedrive-sync" ${sync.status === 'syncing' ? 'disabled' : ''}>立即同步</button>
+            <button type="button" class="btn-ghost" data-action="onedrive-signout">中斷連接</button>`
+          : `<button type="button" class="btn primary" data-action="onedrive-signin">連接 OneDrive</button>`}
+      </div>
+    </article>`;
 }
 
 function account() {
@@ -296,7 +518,7 @@ function accountsView() {
       <div class="help-grid">
         ${help('加入主畫面', '用 iPhone Safari 打開這個網站，點分享，再點「加入主畫面」。圖示會像 App 一樣留在桌面，並在第一次載入後離線可用。')}
         ${help('多帳號', '上方選單可直接切換。武將紅度、戰法有無、隊伍都跟著帳號走，不會混在一起。每張卡可以單獨匯出或載入。新賽季可新增且不含隊伍，只繼承武將與戰法。')}
-        ${help('備份', '到備份頁下載 JSON，包含全部帳號。換手機時用「匯入」整包還原。單一帳號請用帳號卡上的匯出與載入。')}
+        ${help('備份', '到備份頁可連接 OneDrive 自動同步，或下載 JSON。換手機時也可用「匯入」整包還原。單一帳號請用帳號卡上的匯出與載入。')}
         <a class="help-card" href="#/changelog">
           <h3>更新紀錄</h3>
           <p class="help">目前 ${esc(ui.catalog.release?.version || '')} · ${esc(ui.catalog.release?.date || '')}。查看每次更新改了什麼。</p>
@@ -1137,6 +1359,7 @@ function backupView() {
           <p class="sub">匯出包含全部帳號。匯入會取代這台裝置上的配將資料。單帳號檔請回帳號卡載入。</p>
         </div>
       </div>
+      ${syncPanelHtml()}
       <div class="backup-grid">
         <article class="panel" style="padding:14px">
           <h3>匯出</h3>
@@ -2062,6 +2285,37 @@ function onClick(event) {
     case 'download-backup':
       downloadBackup();
       break;
+    case 'onedrive-signin':
+      void (async () => {
+        try {
+          const api = await loadOneDriveApi();
+          const result = await api.signIn();
+          if (!result.ok) {
+            toast(result.error || '登入失敗');
+            return;
+          }
+          if (result.redirect) return;
+          await refreshSyncStatus();
+          render();
+          await syncWithOneDrive({ quiet: false });
+        } catch (error) {
+          toast(error?.message || '登入失敗');
+        }
+      })();
+      break;
+    case 'onedrive-signout':
+      void (async () => {
+        try {
+          const api = await loadOneDriveApi();
+          await api.signOut();
+        } catch (error) {
+          toast(error?.message || '中斷失敗');
+        }
+      })();
+      break;
+    case 'onedrive-sync':
+      void syncWithOneDrive({ quiet: false });
+      break;
     case 'import-text':
       stageImport(document.getElementById('import-text')?.value || '');
       break;
@@ -2216,12 +2470,13 @@ function persistAccountName(el) {
   delete ui.nameDraft[id];
   const existing = ui.state.accounts.find((item) => item.id === id);
   if (!existing || existing.name === name) return;
-  ui.state = updateAccount(ui.state, id, (item) => ({ ...item, name }));
+  ui.state = touchUpdatedAt(updateAccount(ui.state, id, (item) => ({ ...item, name })));
   try {
     saveState(ui.state);
   } catch {
     toast('儲存空間不足，這次變更可能沒寫入。');
   }
+  scheduleCloudSync();
   document.querySelectorAll('select[data-action="switch-account"] option').forEach((option) => {
     if (option.value === id) option.textContent = name;
   });
@@ -2490,11 +2745,12 @@ function confirmDialog() {
     return;
   }
   if (dialog.kind === 'import' && ui.pendingImport) {
-    ui.state = ui.pendingImport;
+    ui.state = touchUpdatedAt(ui.pendingImport);
     ui.pendingImport = null;
     saveState(ui.state);
     toast('已還原備份');
     render();
+    scheduleCloudSync();
     return;
   }
   if (dialog.kind === 'replace-account' && ui.accountFile?.account) {
@@ -2644,6 +2900,16 @@ async function boot() {
   if (!location.hash) history.replaceState(null, '', '#/generals');
   render();
   registerSW();
+  await refreshSyncStatus();
+  if ((location.hash || '').includes('backup')) render();
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    if (!ui.sync.configured || !ui.sync.signedIn) return;
+    void syncWithOneDrive({ quiet: true });
+  });
+  if (ui.sync.configured && ui.sync.signedIn) {
+    void syncWithOneDrive({ quiet: true });
+  }
 }
 
 boot();

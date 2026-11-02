@@ -1,7 +1,14 @@
 {
-  "version": "1.2.30",
-  "date": "20260930",
+  "version": "1.2.31",
+  "date": "20261102",
   "releases": [
+    {
+      "version": "1.2.31",
+      "date": "20261102",
+      "changes": [
+        "備份頁可連接 OneDrive 自動同步：每位使用者登自己的 Microsoft 帳號，只寫入 App 專用資料夾；衝突時整包以較新的 updatedAt 為準。"
+      ]
+    },
     {
       "version": "1.2.30",
       "date": "20260930",

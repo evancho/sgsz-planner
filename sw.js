@@ -1,5 +1,5 @@
 // 版本以 data/version.json 為準。發版時改那份檔案，並把 CACHE 改成 sgsz-planner-<version>。
-const CACHE = 'sgsz-planner-1.2.30';
+const CACHE = 'sgsz-planner-1.2.31';
 
 const ASSETS = [
   './',
@@ -8,6 +8,8 @@ const ASSETS = [
   './js/app.js',
   './js/logic.js',
   './js/store.js',
+  './js/onedrive-config.js',
+  './js/onedrive.js',
   './data/meta.json',
   './data/generals.json',
   './data/tactics.json',
