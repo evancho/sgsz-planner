@@ -114,6 +114,25 @@ export function pickSyncBackup(local, remote) {
   return { ...base, protected: false };
 }
 
+/** Stable-ish fingerprint so we can detect real content differences. */
+export function backupFingerprint(payload) {
+  return JSON.stringify({
+    updatedAt: payload?.updatedAt || payload?.exportedAt || '',
+    accounts: payload?.accounts || [],
+  });
+}
+
+export function backupsDiffer(local, remote) {
+  if (!local || !remote) return true;
+  return backupFingerprint(local) !== backupFingerprint(remote);
+}
+
+export function archiveBackupFileName(when = new Date(), side = 'backup') {
+  const stamp = when.toISOString().replace(/[:.]/g, '-');
+  const label = side === 'local' || side === 'remote' ? side : 'backup';
+  return `sgsz-planner-archive-${label}-${stamp}.json`;
+}
+
 /** Bump updatedAt before persisting a local edit. */
 export function touchUpdatedAt(state, when = new Date()) {
   return { ...state, updatedAt: when.toISOString() };

@@ -11,6 +11,8 @@ import {
   normalizeState,
   pickNewerBackup,
   pickSyncBackup,
+  backupsDiffer,
+  archiveBackupFileName,
   touchUpdatedAt,
 } from '../js/logic.js';
 
@@ -116,4 +118,18 @@ test('pickSyncBackup never lets an empty install wipe a filled backup', () => {
   assert.equal(guarded.protected, 'local-sparse');
   assert.equal(pickSyncBackup(filled, emptyNewer).choice, 'local');
   assert.equal(pickSyncBackup(filled, emptyNewer).protected, 'remote-sparse');
+});
+
+test('backupsDiffer detects content changes and archive names are safe', () => {
+  const a = {
+    updatedAt: '2026-11-02T10:00:00.000Z',
+    accounts: [{ id: 'a', owned: { guanyu: { red: 1 } }, tacticsOwned: {}, customTactics: [], teams: [] }],
+  };
+  const b = {
+    updatedAt: '2026-11-02T10:00:00.000Z',
+    accounts: [{ id: 'a', owned: {}, tacticsOwned: {}, customTactics: [], teams: [] }],
+  };
+  assert.equal(backupsDiffer(a, a), false);
+  assert.equal(backupsDiffer(a, b), true);
+  assert.match(archiveBackupFileName(new Date('2026-11-02T10:00:00.000Z'), 'remote'), /^sgsz-planner-archive-remote-2026-11-02T/);
 });

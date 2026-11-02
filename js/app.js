@@ -70,6 +70,9 @@ import {
   templateOwnedRed,
   touchUpdatedAt,
   pickSyncBackup,
+  backupsDiffer,
+  backupSubstance,
+  isSparseBackup,
   updateAccount,
   usefulInnate,
 } from './logic.js';
@@ -114,6 +117,7 @@ const ui = {
     lastAt: localStorage.getItem(SYNC_LAST_KEY) || '',
     error: '',
   },
+  syncConflict: null,
 };
 
 let onedriveApi = null;
@@ -239,19 +243,119 @@ async function refreshSyncStatus() {
 }
 
 function scheduleCloudSync() {
-  if (!ui.sync.configured || !ui.sync.signedIn) return;
+  if (!ui.sync.configured || !ui.sync.signedIn || ui.syncConflict) return;
   clearTimeout(syncTimer);
   syncTimer = setTimeout(() => {
     void syncWithOneDrive({ quiet: true });
   }, SYNC_DEBOUNCE_MS);
 }
 
+function syncSideSummary(payload, label) {
+  const sub = backupSubstance(payload);
+  const when = formatSyncTime(payload?.updatedAt || payload?.exportedAt || '');
+  const empty = isSparseBackup(payload) ? '（空帳）' : '';
+  return `${label}${empty}：更新 ${when} · 武將 ${sub.owned} · 戰法 ${sub.tactics} · 隊伍 ${sub.teams}`;
+}
+
+function openSyncConflict(localPayload, remotePayload) {
+  const suggestion = pickSyncBackup(localPayload, remotePayload);
+  ui.syncConflict = {
+    local: localPayload,
+    remote: remotePayload,
+    suggestion: suggestion.choice === 'equal' ? null : suggestion.choice,
+    protected: suggestion.protected || false,
+  };
+  ui.sync.status = 'conflict';
+  ui.justOpened = true;
+  render();
+  toast('本機與 OneDrive 資料不同，請選擇要保留哪一邊');
+}
+
+async function resolveSyncConflict(choice) {
+  const conflict = ui.syncConflict;
+  if (!conflict || (choice !== 'local' && choice !== 'remote')) return;
+  ui.sync.status = 'syncing';
+  render();
+  try {
+    const api = await loadOneDriveApi();
+    if (choice === 'local') {
+      const archived = await api.uploadArchive(conflict.remote, 'remote');
+      if (archived.pending) return;
+      if (!archived.ok) {
+        ui.sync.status = 'error';
+        ui.sync.error = archived.error || '無法備份雲端舊檔';
+        toast(ui.sync.error);
+        render();
+        return;
+      }
+      const toUpload = conflict.local;
+      const uploaded = await api.uploadBackup(toUpload);
+      if (uploaded.pending) return;
+      if (!uploaded.ok) {
+        ui.sync.status = 'error';
+        ui.sync.error = uploaded.error;
+        toast(uploaded.error);
+        render();
+        return;
+      }
+      if (!ui.state.updatedAt && toUpload.updatedAt) {
+        ui.state = { ...ui.state, updatedAt: toUpload.updatedAt };
+        saveState(ui.state);
+      }
+      ui.syncConflict = null;
+      setSyncLast(new Date().toISOString());
+      ui.sync.status = 'idle';
+      toast(`已使用本機，雲端舊檔已存成 ${archived.fileName || 'archive'}`);
+      render();
+      return;
+    }
+    const archived = await api.uploadArchive(conflict.local, 'local');
+    if (archived.pending) return;
+    if (!archived.ok) {
+      ui.sync.status = 'error';
+      ui.sync.error = archived.error || '無法備份本機舊檔';
+      toast(ui.sync.error);
+      render();
+      return;
+    }
+    const normalized = normalizeState(conflict.remote);
+    if (!normalized.ok) {
+      ui.sync.status = 'error';
+      ui.sync.error = normalized.error || '雲端備份無法讀取';
+      toast(ui.sync.error);
+      render();
+      return;
+    }
+    const keepRemote = await api.uploadBackup(conflict.remote);
+    if (keepRemote.pending) return;
+    if (!keepRemote.ok) {
+      ui.sync.status = 'error';
+      ui.sync.error = keepRemote.error;
+      toast(keepRemote.error);
+      render();
+      return;
+    }
+    commit(normalized.state, { keepStamp: true, skipSync: true });
+    ui.syncConflict = null;
+    setSyncLast(new Date().toISOString());
+    ui.sync.status = 'idle';
+    toast(`已使用雲端，本機舊檔已存成 ${archived.fileName || 'archive'}`);
+    render();
+  } catch (error) {
+    ui.sync.status = 'error';
+    ui.sync.error = error?.message || '同步失敗';
+    toast(ui.sync.error);
+    render();
+  }
+}
+
 async function syncWithOneDrive(options = {}) {
   if (syncInFlight) return syncInFlight;
+  if (ui.syncConflict && options.quiet) return;
   syncInFlight = (async () => {
     ui.sync.status = 'syncing';
     ui.sync.error = '';
-    if (options.render !== false && document.querySelector('[data-sync-panel]')) render();
+    if (options.render !== false && (document.querySelector('[data-sync-panel]') || ui.syncConflict)) render();
     try {
       const api = await loadOneDriveApi();
       if (!api.isConfigured()) {
@@ -266,11 +370,10 @@ async function syncWithOneDrive(options = {}) {
         return;
       }
       const localPayload = exportPayload(ui.state, ui.catalog.version);
-      // Compare with the stored stamp, not a freshly invented export time.
       if (!ui.state.updatedAt) localPayload.updatedAt = localPayload.exportedAt;
       const localForSync = {
         ...localPayload,
-        updatedAt: ui.state.updatedAt || '',
+        updatedAt: ui.state.updatedAt || localPayload.updatedAt || '',
         accounts: ui.state.accounts,
       };
       const downloaded = await api.downloadBackup();
@@ -294,63 +397,27 @@ async function syncWithOneDrive(options = {}) {
           ui.state = { ...ui.state, updatedAt: localPayload.updatedAt };
           saveState(ui.state);
         }
+        ui.syncConflict = null;
         setSyncLast(new Date().toISOString());
         ui.sync.status = 'idle';
         if (!options.quiet) toast('已同步到 OneDrive');
         return;
       }
-      const pick = pickSyncBackup(localForSync, downloaded.payload);
-      if (pick.choice === 'remote') {
-        const normalized = normalizeState(downloaded.payload);
-        if (!normalized.ok) {
-          ui.sync.status = 'error';
-          ui.sync.error = normalized.error || '雲端備份無法讀取';
-          if (!options.quiet) toast(ui.sync.error);
-          return;
-        }
-        commit(normalized.state, { keepStamp: true, skipSync: true });
+      if (!backupsDiffer(localForSync, downloaded.payload)) {
+        ui.syncConflict = null;
         setSyncLast(new Date().toISOString());
         ui.sync.status = 'idle';
-        toast(pick.protected === 'local-sparse'
-          ? '已從 OneDrive 還原有資料的備份（略過空帳）'
-          : '已從 OneDrive 還原較新備份');
+        if (!options.quiet) toast('已是最新');
         return;
       }
-      if (pick.choice === 'local') {
-        const toUpload = ui.state.updatedAt
-          ? localPayload
-          : { ...localPayload, updatedAt: localPayload.exportedAt };
-        const uploaded = await api.uploadBackup(toUpload);
-        if (uploaded.pending) return;
-        if (!uploaded.ok) {
-          ui.sync.status = 'error';
-          ui.sync.error = uploaded.error;
-          if (!options.quiet) toast(uploaded.error);
-          return;
-        }
-        if (!ui.state.updatedAt) {
-          ui.state = { ...ui.state, updatedAt: toUpload.updatedAt };
-          saveState(ui.state);
-        }
-        setSyncLast(new Date().toISOString());
-        ui.sync.status = 'idle';
-        if (!options.quiet || pick.protected === 'remote-sparse') {
-          toast(pick.protected === 'remote-sparse'
-            ? '已上傳本機有資料的備份（略過雲端空帳）'
-            : '已同步到 OneDrive');
-        }
-        return;
-      }
-      setSyncLast(new Date().toISOString());
-      ui.sync.status = 'idle';
-      if (!options.quiet) toast('已是最新');
+      openSyncConflict(localForSync, downloaded.payload);
     } catch (error) {
       ui.sync.status = 'error';
       ui.sync.error = error?.message || '同步失敗';
       if (!options.quiet) toast(ui.sync.error);
     } finally {
       syncInFlight = null;
-      if (options.render !== false) {
+      if (options.render !== false && !ui.syncConflict) {
         const onBackup = (location.hash || '').includes('backup');
         if (onBackup || ui.sync.status === 'error') render();
       }
@@ -380,13 +447,17 @@ function syncPanelHtml() {
     : sync.error
       ? esc(sync.error)
       : `上次同步：${esc(formatSyncTime(sync.lastAt))}`;
+  const conflictNote = ui.syncConflict
+    ? '<p class="warn">本機與雲端不同，請在跳出的視窗選擇要保留哪一邊。被蓋掉的那份會先存成 OneDrive 封存檔。</p>'
+    : '';
   const accountLine = sync.signedIn
     ? `<p class="muted">已連接：${esc(sync.account || 'Microsoft 帳號')}</p>`
-    : '<p class="muted">尚未連接。連接後會在本機儲存變更時，與 OneDrive 自動同步（較新的整包備份會蓋掉較舊的）。</p>';
+    : '<p class="muted">尚未連接。連接後會比對本機與 OneDrive；兩邊不同時會詢問要用哪一邊，並先封存舊檔再覆蓋。</p>';
   return `
     <article class="panel" data-sync-panel style="padding:14px;margin-bottom:12px">
       <h3>OneDrive 同步</h3>
       ${accountLine}
+      ${conflictNote}
       <p class="faint">${statusLine}</p>
       <div class="btn-row" style="margin-top:10px">
         ${sync.signedIn
@@ -396,6 +467,31 @@ function syncPanelHtml() {
           : `<button type="button" class="btn primary" data-action="onedrive-signin">連接 OneDrive</button>`}
       </div>
     </article>`;
+}
+
+function syncConflictHtml() {
+  const conflict = ui.syncConflict;
+  if (!conflict) return '';
+  const tip = conflict.suggestion === 'remote'
+    ? '建議：雲端較完整或較新。'
+    : conflict.suggestion === 'local'
+      ? '建議：本機較完整或較新。'
+      : '兩邊內容不同。';
+  return `
+    <div class="backdrop" data-action="sync-conflict-later">
+      <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="sync-conflict-title" tabindex="-1">
+        <h3 id="sync-conflict-title">本機與 OneDrive 不同</h3>
+        <p>請選擇要保留哪一邊。另一邊會先存成 OneDrive 應用程式資料夾裡的封存檔（檔名含 archive），不會直接丟掉。</p>
+        <p class="muted">${esc(syncSideSummary(conflict.local, '本機'))}</p>
+        <p class="muted">${esc(syncSideSummary(conflict.remote, '雲端'))}</p>
+        <p class="faint">${esc(tip)}</p>
+        <div class="btn-row" style="margin-top:12px">
+          <button type="button" class="btn primary" data-autofocus data-action="sync-keep-local">使用本機</button>
+          <button type="button" class="btn" data-action="sync-keep-remote">使用雲端</button>
+          <button type="button" class="btn-ghost" data-action="sync-conflict-later">稍後</button>
+        </div>
+      </section>
+    </div>`;
 }
 
 function account() {
@@ -502,7 +598,7 @@ function installBanner() {
 }
 
 function overlay() {
-  return `${pickerHtml()}${bingshuSheet()}${shareSheet()}${shareImportSheet()}${templateSheet()}${accountExportSheet()}${accountFileSheet()}${dialogHtml()}`;
+  return `${pickerHtml()}${bingshuSheet()}${shareSheet()}${shareImportSheet()}${templateSheet()}${accountExportSheet()}${accountFileSheet()}${dialogHtml()}${syncConflictHtml()}`;
 }
 
 function colophon() {
@@ -1645,7 +1741,7 @@ function render() {
   };
   document.title = `${titles[here.name] || '配將簿'} · 配將簿`;
   document.getElementById('app').innerHTML = shell(view());
-  const lock = Boolean(ui.dialog || ui.picker || ui.bingshu || ui.shareLink || ui.shareImport || ui.templates || ui.accountExport || ui.accountFile || (ui.filterOpen && window.innerWidth < 980));
+  const lock = Boolean(ui.dialog || ui.syncConflict || ui.picker || ui.bingshu || ui.shareLink || ui.shareImport || ui.templates || ui.accountExport || ui.accountFile || (ui.filterOpen && window.innerWidth < 980));
   document.body.classList.toggle('lock', lock);
   const nextSheet = sheetKey ? document.querySelector(`[data-scroll="${sheetKey}"]`) : null;
   if (nextSheet) nextSheet.scrollTop = sheetY;
@@ -1736,7 +1832,7 @@ function onClick(event) {
   const el = event.target.closest('[data-action]');
   if (!el) return;
   const action = el.dataset.action;
-  if ((action === 'backdrop-close') && event.target !== el) return;
+  if ((action === 'backdrop-close' || action === 'sync-conflict-later') && event.target !== el && el.classList.contains('backdrop')) return;
   if (action === 'backdrop-close') {
     ui.dialog = null;
     ui.pendingImport = null;
@@ -2326,6 +2422,17 @@ function onClick(event) {
     case 'onedrive-sync':
       void syncWithOneDrive({ quiet: false });
       break;
+    case 'sync-keep-local':
+      void resolveSyncConflict('local');
+      break;
+    case 'sync-keep-remote':
+      void resolveSyncConflict('remote');
+      break;
+    case 'sync-conflict-later':
+      ui.syncConflict = null;
+      ui.sync.status = 'idle';
+      render();
+      break;
     case 'import-text':
       stageImport(document.getElementById('import-text')?.value || '');
       break;
@@ -2788,7 +2895,10 @@ function bind() {
       return;
     }
     if (event.key !== 'Escape') return;
-    if (ui.dialog) {
+    if (ui.syncConflict) {
+      ui.syncConflict = null;
+      ui.sync.status = 'idle';
+    } else if (ui.dialog) {
       ui.dialog = null;
       ui.pendingImport = null;
     } else if (ui.shareLink) {

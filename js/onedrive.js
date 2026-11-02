@@ -1,4 +1,5 @@
 import { PublicClientApplication, InteractionRequiredAuthError } from 'https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.28.1/+esm';
+import { archiveBackupFileName } from './logic.js';
 import { backupFileName, clientId, loginRequest } from './onedrive-config.js';
 
 const GRAPH = 'https://graph.microsoft.com/v1.0';
@@ -106,8 +107,8 @@ async function graph(path, { method = 'GET', body, token: accessToken } = {}) {
   return response;
 }
 
-function contentPath() {
-  return `/me/drive/special/approot:/${backupFileName}:/content`;
+function contentPath(fileName = backupFileName) {
+  return `/me/drive/special/approot:/${fileName}:/content`;
 }
 
 /** @returns {Promise<{ ok: true, payload: object|null } | { ok: false, error: string }>} */
@@ -129,11 +130,11 @@ export async function downloadBackup() {
 }
 
 /** @returns {Promise<{ ok: true } | { ok: false, error: string }>} */
-export async function uploadBackup(payload) {
+export async function uploadBackup(payload, fileName = backupFileName) {
   try {
     const accessToken = await token();
     if (!accessToken) return { ok: true, pending: true };
-    const response = await graph(contentPath(), {
+    const response = await graph(contentPath(fileName), {
       method: 'PUT',
       token: accessToken,
       body: payload,
@@ -141,9 +142,15 @@ export async function uploadBackup(payload) {
     if (!response.ok) {
       return { ok: false, error: `上傳失敗（${response.status}）` };
     }
-    return { ok: true };
+    return { ok: true, fileName };
   } catch (error) {
     if (error?.message === 'not-signed-in') return { ok: false, error: '尚未連接 OneDrive' };
     return { ok: false, error: error?.message || '上傳失敗' };
   }
+}
+
+/** Keep a discarded copy in the App folder before overwriting the main backup. */
+export async function uploadArchive(payload, side = 'backup') {
+  const fileName = archiveBackupFileName(new Date(), side);
+  return uploadBackup(payload, fileName);
 }
