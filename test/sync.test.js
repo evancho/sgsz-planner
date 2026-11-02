@@ -7,8 +7,10 @@ import {
   emptyAccount,
   exportPayload,
   freshState,
+  isSparseBackup,
   normalizeState,
   pickNewerBackup,
+  pickSyncBackup,
   touchUpdatedAt,
 } from '../js/logic.js';
 
@@ -81,4 +83,37 @@ test('touchUpdatedAt bumps the stamp', () => {
   const next = touchUpdatedAt(state, later);
   assert.equal(next.updatedAt, '2026-11-02T15:00:00.000Z');
   assert.notEqual(next.updatedAt, state.updatedAt);
+});
+
+test('pickSyncBackup never lets an empty install wipe a filled backup', () => {
+  const filled = {
+    updatedAt: '2026-11-01T10:00:00.000Z',
+    accounts: [{
+      id: 'acct-1',
+      name: '主帳',
+      owned: { guanyu: { red: 5, dynamic: false, awaken: false } },
+      tacticsOwned: { bamen: true },
+      customTactics: [],
+      teams: [],
+    }],
+  };
+  const emptyNewer = {
+    updatedAt: '2026-11-02T12:00:00.000Z',
+    accounts: [{
+      id: 'acct-2',
+      name: '主帳',
+      owned: {},
+      tacticsOwned: {},
+      customTactics: [],
+      teams: [],
+    }],
+  };
+  assert.equal(isSparseBackup(emptyNewer), true);
+  assert.equal(isSparseBackup(filled), false);
+  assert.equal(pickNewerBackup(emptyNewer, filled).choice, 'local');
+  const guarded = pickSyncBackup(emptyNewer, filled);
+  assert.equal(guarded.choice, 'remote');
+  assert.equal(guarded.protected, 'local-sparse');
+  assert.equal(pickSyncBackup(filled, emptyNewer).choice, 'local');
+  assert.equal(pickSyncBackup(filled, emptyNewer).protected, 'remote-sparse');
 });

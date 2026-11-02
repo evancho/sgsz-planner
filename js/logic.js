@@ -70,6 +70,50 @@ export function pickNewerBackup(local, remote) {
   return { choice: 'equal', localAt, remoteAt };
 }
 
+/** Count roster substance so empty installs cannot wipe a filled backup. */
+export function backupSubstance(payload) {
+  const accounts = Array.isArray(payload?.accounts) ? payload.accounts : [];
+  let owned = 0;
+  let tactics = 0;
+  let teams = 0;
+  let customs = 0;
+  for (const account of accounts) {
+    owned += Object.keys(account?.owned || {}).length;
+    tactics += Object.keys(account?.tacticsOwned || {}).length;
+    teams += Array.isArray(account?.teams) ? account.teams.length : 0;
+    customs += Array.isArray(account?.customTactics) ? account.customTactics.length : 0;
+  }
+  return {
+    accounts: accounts.length,
+    owned,
+    tactics,
+    teams,
+    customs,
+    total: owned + tactics + teams + customs,
+  };
+}
+
+export function isSparseBackup(payload) {
+  return backupSubstance(payload).total === 0;
+}
+
+/**
+ * Last-write-wins, but a sparse (empty) side never overwrites a non-sparse side.
+ * @returns {{ choice: 'local'|'remote'|'equal', localAt: number, remoteAt: number, protected: false|'local-sparse'|'remote-sparse' }}
+ */
+export function pickSyncBackup(local, remote) {
+  const base = pickNewerBackup(local, remote);
+  const localSparse = isSparseBackup(local);
+  const remoteSparse = isSparseBackup(remote);
+  if (localSparse && !remoteSparse) {
+    return { ...base, choice: 'remote', protected: 'local-sparse' };
+  }
+  if (remoteSparse && !localSparse) {
+    return { ...base, choice: 'local', protected: 'remote-sparse' };
+  }
+  return { ...base, protected: false };
+}
+
 /** Bump updatedAt before persisting a local edit. */
 export function touchUpdatedAt(state, when = new Date()) {
   return { ...state, updatedAt: when.toISOString() };

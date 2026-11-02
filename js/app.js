@@ -69,7 +69,7 @@ import {
   placeBlockedTemplatesLast,
   templateOwnedRed,
   touchUpdatedAt,
-  pickNewerBackup,
+  pickSyncBackup,
   updateAccount,
   usefulInnate,
 } from './logic.js';
@@ -267,8 +267,12 @@ async function syncWithOneDrive(options = {}) {
       }
       const localPayload = exportPayload(ui.state, ui.catalog.version);
       // Compare with the stored stamp, not a freshly invented export time.
-      const localStamp = { updatedAt: ui.state.updatedAt || '' };
       if (!ui.state.updatedAt) localPayload.updatedAt = localPayload.exportedAt;
+      const localForSync = {
+        ...localPayload,
+        updatedAt: ui.state.updatedAt || '',
+        accounts: ui.state.accounts,
+      };
       const downloaded = await api.downloadBackup();
       if (downloaded.pending) return;
       if (!downloaded.ok) {
@@ -295,7 +299,7 @@ async function syncWithOneDrive(options = {}) {
         if (!options.quiet) toast('已同步到 OneDrive');
         return;
       }
-      const pick = pickNewerBackup(localStamp, downloaded.payload);
+      const pick = pickSyncBackup(localForSync, downloaded.payload);
       if (pick.choice === 'remote') {
         const normalized = normalizeState(downloaded.payload);
         if (!normalized.ok) {
@@ -307,7 +311,9 @@ async function syncWithOneDrive(options = {}) {
         commit(normalized.state, { keepStamp: true, skipSync: true });
         setSyncLast(new Date().toISOString());
         ui.sync.status = 'idle';
-        toast('已從 OneDrive 還原較新備份');
+        toast(pick.protected === 'local-sparse'
+          ? '已從 OneDrive 還原有資料的備份（略過空帳）'
+          : '已從 OneDrive 還原較新備份');
         return;
       }
       if (pick.choice === 'local') {
@@ -328,7 +334,11 @@ async function syncWithOneDrive(options = {}) {
         }
         setSyncLast(new Date().toISOString());
         ui.sync.status = 'idle';
-        if (!options.quiet) toast('已同步到 OneDrive');
+        if (!options.quiet || pick.protected === 'remote-sparse') {
+          toast(pick.protected === 'remote-sparse'
+            ? '已上傳本機有資料的備份（略過雲端空帳）'
+            : '已同步到 OneDrive');
+        }
         return;
       }
       setSyncLast(new Date().toISOString());
