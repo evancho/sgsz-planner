@@ -16,6 +16,11 @@ function seat(generalId, generalName, learned, learnedNames, bingshu, extra = {}
   return member;
 }
 
+function xunbingNote(members) {
+  const need = (members || []).some((member) => member?.aptNeed?.letter === 'S');
+  return need ? '需訓兵振旅' : '';
+}
+
 function team(id, title, members, tricks, extraNote = '', scenarioOnly = false) {
   const row = {
     id,
@@ -29,7 +34,7 @@ function team(id, title, members, tricks, extraNote = '', scenarioOnly = false) 
     source: SOURCE,
     strategy: [],
     tricks,
-    note: extraNote ? `${BASE}。${extraNote}` : BASE,
+    note: [BASE, extraNote, xunbingNote(members)].filter(Boolean).join('。'),
     members,
   };
   if (scenarioOnly) row.scenarioOnly = true;

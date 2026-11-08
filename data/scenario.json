@@ -1,31 +1,7 @@
 {
   "catalogVersion": "1.2.9",
   "weapons": [],
-  "merits": [
-    {
-      "id": "xunbing",
-      "name": "訓兵振旅",
-      "scenarios": [
-        "hanyan"
-      ],
-      "status": "待核",
-      "sourceUrl": "",
-      "note": "",
-      "excludes": [],
-      "limits": {
-        "account": 2,
-        "team": 1
-      },
-      "effect": {
-        "kind": "apt",
-        "letter": "S",
-        "troops": null,
-        "skipTags": [
-          "仙人"
-        ]
-      }
-    }
-  ],
+  "merits": [],
   "hanConvert": {
     "status": "待核",
     "max": 3,
@@ -74,7 +50,7 @@
         "楚歌四起",
         "多多益善"
       ],
-      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認",
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。需訓兵振旅",
       "members": [
         {
           "generalId": "sp-guanyu",
@@ -216,7 +192,7 @@
         "楚歌四起",
         "多多益善"
       ],
-      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認",
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。需訓兵振旅",
       "members": [
         {
           "generalId": "sp-guanyu",
@@ -340,7 +316,7 @@
         "合圍夾擊",
         "設伏十面"
       ],
-      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認",
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。需訓兵振旅",
       "members": [
         {
           "generalId": "pangtong",
@@ -577,7 +553,7 @@
         "推食解衣",
         "圯橋受書"
       ],
-      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。奇正之勢圖鑑未收。奇略末張依 sgsdeck 奇略列表改為圯橋受書",
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。奇正之勢圖鑑未收。奇略末張依 sgsdeck 奇略列表改為圯橋受書。需訓兵振旅",
       "members": [
         {
           "generalId": "sp-zhugeliang",
@@ -690,7 +666,7 @@
         "博浪椎秦",
         "橫掃河西"
       ],
-      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。大戰士圖鑑未收",
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。大戰士圖鑑未收。需訓兵振旅",
       "members": [
         {
           "generalId": "zhangfei",
@@ -2606,7 +2582,7 @@
         "合圍夾擊"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-qianlong-lvbu-gong",
-      "note": "整理站內容已核，官方原圖待核",
+      "note": "整理站內容已核，官方原圖待核。需訓兵振旅",
       "members": [
         {
           "generalId": "xuyou",
@@ -2714,7 +2690,7 @@
         "楚歌四起"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-pangtong-gong",
-      "note": "整理站內容已核，官方原圖待核",
+      "note": "整理站內容已核，官方原圖待核。需訓兵振旅",
       "members": [
         {
           "generalId": "sp-zhugeliang",
@@ -2819,7 +2795,7 @@
         "敗中求生"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-beifa-dun",
-      "note": "整理站內容已核，官方原圖待核",
+      "note": "整理站內容已核，官方原圖待核。需訓兵振旅",
       "members": [
         {
           "generalId": "sp-zhugeliang",
@@ -2930,7 +2906,7 @@
         "定計安儲"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-hedan-zhang",
-      "note": "整理站內容已核，官方原圖待核",
+      "note": "整理站內容已核，官方原圖待核。需訓兵振旅",
       "members": [
         {
           "generalId": "zhoutai",

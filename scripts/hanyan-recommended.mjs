@@ -15,6 +15,12 @@ function seat(generalId, generalName, learned, learnedNames, bingshu, extra = ''
 }
 
 const SOURCE_NOTE = '整理站內容已核，官方原圖待核';
+const IMMORTAL_IDS = new Set(['zhangjiao', 'yuji', 'zuoci']);
+
+function xunbingNote(members) {
+  const need = (members || []).some((member) => member?.aptNeed?.letter === 'S' && !IMMORTAL_IDS.has(member.generalId));
+  return need ? '需訓兵振旅' : '';
+}
 
 function team(id, title, strategy, slug, members, tricks, note = '', withOfficial = true) {
   const row = {
@@ -25,7 +31,7 @@ function team(id, title, strategy, slug, members, tricks, note = '', withOfficia
     strategy: [strategy],
     tricks,
     source: `https://sgsdeck.com/recommended/${slug}`,
-    note: note ? `${SOURCE_NOTE}。${note}` : SOURCE_NOTE,
+    note: [SOURCE_NOTE, note, xunbingNote(members)].filter(Boolean).join('。'),
     members,
   };
   if (withOfficial) row.officialSource = OFFICIAL;
@@ -118,16 +124,5 @@ export const hanyanRecommended = [
   ], ['設伏十面', '楚歌四起', '背水列陣', '暗度陳倉', '功成身退'], '', false),
 ];
 
-export const hanyanMerits = [
-  {
-    id: 'xunbing',
-    name: '訓兵振旅',
-    scenarios: ['hanyan'],
-    status: '待核',
-    sourceUrl: '',
-    note: '',
-    excludes: [],
-    limits: { account: 2, team: 1 },
-    effect: { kind: 'apt', letter: 'S', troops: null, skipTags: ['仙人'] },
-  },
-];
+/** 訓兵振旅不另做標記；需用的隊伍寫在註解。 */
+export const hanyanMerits = [];

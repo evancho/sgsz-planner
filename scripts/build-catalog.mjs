@@ -351,6 +351,7 @@ generals.push(
     camp: '漢',
     cost: 7,
     quality: '名將',
+    role: '軍事',
     dynamic: true,
     awaken: true,
     apt: { 騎: 'S', 盾: 'A', 弓: 'S', 槍: 'A', 器械: 'B' },
@@ -358,7 +359,7 @@ generals.push(
     debutScenario: 'hanyan',
     status: '已核',
     sourceUrl: 'https://sgsdeck.com/generals/SP曹操',
-    note: `適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」，本圖鑑的軍事／內政對不上，定位待核。${DEBUT_NOTE}`,
+    note: `適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」；定位軍事。${DEBUT_NOTE}`,
   }),
   pendingGeneral({
     id: 'heshi',
@@ -380,11 +381,12 @@ generals.push(
     camp: '漢',
     cost: 7,
     quality: '名將',
+    role: '軍事',
     apt: { 騎: 'A', 盾: 'B', 弓: 'S', 槍: 'S', 器械: 'C' },
     innate: '天威嘯陣',
     status: '已核',
     sourceUrl: 'https://sgsdeck.com/generals/40Y呂布',
-    note: '獨立卡，不是普通呂布。兵演春秋推出後自動轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。武將頁取得方式寫全賽季名將卡包、三國志系列 40 週年紀念名將卡包。台灣新聞稿 https://news.omg.com.tw/News/NewsContent?NewsID=13659 寫免費送給全服主公。各劇本都能選。自帶天威嘯陣。傳承待核。頁首標「武」，定位待核。動態待核、典藏待核。可轉回群。',
+    note: '獨立卡，不是普通呂布。兵演春秋推出後自動轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。武將頁取得方式寫全賽季名將卡包、三國志系列 40 週年紀念名將卡包。台灣新聞稿 https://news.omg.com.tw/News/NewsContent?NewsID=13659 寫免費送給全服主公。各劇本都能選。自帶天威嘯陣。傳承待核。頁首標「武」；定位軍事。動態待核、典藏待核。可轉回群。',
   }),
 );
 
