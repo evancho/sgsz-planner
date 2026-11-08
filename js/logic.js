@@ -973,11 +973,29 @@ export function normalizeRecommended(list) {
     if (source) team.source = source;
     if (officialSource) team.officialSource = officialSource;
     if (note) team.note = note;
+    if (team.rank) {
+      team.rankStatus = '待核';
+      const rankBasis = clip(raw.rankBasis, 240);
+      const rankConfidence = ['低', '中低', '中', '中高'].includes(raw.rankConfidence) ? raw.rankConfidence : '';
+      const rankSources = normalizeRankSources(raw.rankSources);
+      if (rankBasis) team.rankBasis = rankBasis;
+      if (rankConfidence) team.rankConfidence = rankConfidence;
+      if (rankSources.length) team.rankSources = rankSources;
+    }
     const alternatives = normalizeAlternatives(raw.alternatives);
     if (alternatives.length) team.alternatives = alternatives;
     teams.push(team);
   }
   return teams;
+}
+
+function normalizeRankSources(list) {
+  if (!Array.isArray(list)) return [];
+  return list.slice(0, 4).map((raw) => {
+    const url = clip(raw?.url, 180);
+    if (!/^https:\/\//.test(url)) return null;
+    return { label: clip(raw?.label, 24) || '來源', url };
+  }).filter(Boolean);
 }
 
 function normalizeAlternatives(list) {

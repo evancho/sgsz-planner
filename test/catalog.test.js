@@ -274,6 +274,20 @@ test('generals and tactics are internally consistent', () => {
   assert.deepEqual(dahan.alternatives.map((item) => item.id), ['hanyan-dahan-gong', 'baha-b-gong-1', 'baha-b-gong-2', 'baha-b-gong-3']);
   assert.equal(dahan.alternatives[0].status, '待核');
   assert.equal(dahan.alternatives[1].status, '已核');
+  assert.equal(dahan.rank, 'T0');
+  assert.equal(dahan.rankStatus, '待核');
+  assert.equal(dahan.rankConfidence, '中高');
+  assert.equal(dahan.alternatives.every((item) => item.rank === undefined), true);
+  const ranks = { T0: 0, 'T0.5': 0, T1: 0, 'T1.5': 0, T2: 0, '黑科技': 0 };
+  for (const team of scenario.recommended) {
+    assert.equal(team.rankStatus, '待核');
+    assert.ok(team.rank in ranks, team.id);
+    ranks[team.rank] += 1;
+    assert.equal((team.alternatives || []).every((item) => item.rank === undefined), true);
+  }
+  assert.deepEqual(ranks, { T0: 7, 'T0.5': 6, T1: 10, 'T1.5': 5, T2: 1, '黑科技': 1 });
+  assert.equal(scenario.recommended.find((team) => team.id === 'baha-d-pengci').rank, '黑科技');
+  assert.equal(scenario.recommended.find((team) => team.id === 'baha-d-saozi').rank, 'T2');
   const fugui = dami.find((team) => team.id === 'dami-fugui');
   assert.equal(fugui.status, '待核');
   assert.equal(fugui.alternatives.find((item) => item.id === 'baha-b-jiaxu-2').status, '已核');

@@ -109,6 +109,7 @@ const ui = {
   shareImport: null,
   shareSubstitute: false,
   templates: null,
+  recommendSort: 'source',
   accountExport: null,
   accountFile: null,
   dialog: null,
@@ -1843,13 +1844,20 @@ function recommendSheet() {
   const official = list.filter((team) => !team.origin);
   const player = list.filter((team) => team.origin === 'bahamut');
   const dami = list.filter((team) => team.origin === 'dami');
+  const order = (rows) => (ui.recommendSort === 'rank' ? orderTeamTemplates(rows, () => 0, 'rank') : rows);
   const body = list.length ? `
-    ${recommendGroup('大米團隊（截圖）', dami, '使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。這組不提供套用。同型優先：大米，其次 24李老师，再其餘。', current)}
-    ${recommendGroup('巴哈玩家版', player, '已核只代表來源轉錄正確，不代表隊伍強度。24李老师的隊伍排在其他巴哈作者前面。', current)}
-    ${recommendGroup('官方推薦', official, '整理站內容已核，官方原圖待核。', current)}
+    ${recommendGroup('大米團隊（截圖）', order(dami), '使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。這組不提供套用。同型優先：大米，其次 24李老师，再其餘。', current)}
+    ${recommendGroup('巴哈玩家版', order(player), '已核只代表來源轉錄正確，不代表隊伍強度。24李老师的隊伍排在其他巴哈作者前面。', current)}
+    ${recommendGroup('官方推薦', order(official), '整理站內容已核，官方原圖待核。', current)}
   ` : `<p>「${esc(scenarioName(current.scenario))}」還沒有推薦隊伍。</p>`;
   return sheet('推薦隊伍', `
-    <p class="sub">套用時缺武將不能加入，缺戰法會留空。方略與奇略順序會跟著寫進隊伍。</p>
+    <p class="sub">套用時缺武將不能加入，缺戰法會留空。方略與奇略順序會跟著寫進隊伍。強度全部待核，替代配置不繼承主卡強度。</p>
+    <label>排序
+      <select id="recommend-sort" class="field" data-action="set-recommend-sort">
+        <option value="source" ${ui.recommendSort === 'rank' ? '' : 'selected'}>來源</option>
+        <option value="rank" ${ui.recommendSort === 'rank' ? 'selected' : ''}>強度</option>
+      </select>
+    </label>
     ${body}
   `, 'template-sheet');
 }
@@ -1895,10 +1903,11 @@ function recommendCard(team, current) {
   const limited = team.scenarioOnly ? '<span class="mini limited">漢焰長明限定</span>' : '';
   return `
     <article class="help-card">
-      <h3>${esc(team.title)} ${origin}${limited}${verified}${citeHtml(team)}
+      <h3>${esc([team.rank, team.title].filter(Boolean).join(' '))} ${origin}${limited}${verified}${citeHtml(team)}
         <button type="button" class="chip ${missing.length ? '' : 'on'}" data-action="toggle-gap" data-id="${esc(team.id)}" aria-expanded="${open}">${badge}</button>
       </h3>
       ${byline}
+      ${rankBasisHtml(team)}
       ${open ? `<ul class="share-missing">${missing.map((line) => `<li>${esc(line)}</li>`).join('') || '<li>武將和戰法都已擁有。</li>'}</ul>` : ''}
       ${planLine(team)}
       <ul>${members}</ul>
@@ -1910,6 +1919,13 @@ function recommendCard(team, current) {
         : '<p class="faint">僅供參考，不提供套用。</p>'}
       ${altHtml(team)}
     </article>`;
+}
+
+function rankBasisHtml(team) {
+  if (!team.rank) return '';
+  const links = (team.rankSources || []).map((item) => `<a class="cite" href="${esc(item.url)}" target="_blank" rel="noopener">${esc(item.label)}</a>`).join('');
+  const confidence = team.rankConfidence ? ` · 信心${esc(team.rankConfidence)}` : '';
+  return `<p class="faint">評級待核${confidence}</p>${team.rankBasis ? `<p class="faint">${esc(team.rankBasis)}</p>` : ''}${links ? `<p>${links}</p>` : ''}`;
 }
 
 function altHtml(team) {
@@ -2889,6 +2905,9 @@ function onChange(event) {
     render();
   } else if (el.dataset.action === 'set-template-country' && ui.templates) {
     ui.templates = { ...ui.templates, country: el.value };
+    render();
+  } else if (el.dataset.action === 'set-recommend-sort') {
+    ui.recommendSort = el.value === 'rank' ? 'rank' : 'source';
     render();
   } else if (el.dataset.action === 'set-template-sort' && ui.templates) {
     ui.templates = { ...ui.templates, sort: el.value === 'red' ? 'red' : 'rank' };
