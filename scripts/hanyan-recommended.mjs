@@ -14,7 +14,7 @@ function seat(generalId, generalName, learned, learnedNames, bingshu, extra = ''
   return member;
 }
 
-const SOURCE_NOTE = '整理站內容已核，官方原圖待核';
+const SOURCE_NOTE = '官方原圖待核';
 const IMMORTAL_IDS = new Set(['zhangjiao', 'yuji', 'zuoci']);
 
 function xunbingNote(members) {

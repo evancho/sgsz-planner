@@ -1978,9 +1978,7 @@ function altHtml(team) {
   const list = team.alternatives || [];
   if (!list.length) return '';
   const cards = list.map((alt) => {
-    const status = alt.status === '已核'
-      ? '<span class="mini verified">已核</span>'
-      : '<span class="mini review">待核</span>';
+    const status = alt.status === '待核' ? '<span class="mini review">待核</span>' : '';
     const origin = alt.originLabel ? `<span class="mini origin">${esc(alt.originLabel)}</span>` : '';
     const who = alt.author ? `<span class="faint">${esc(alt.author)}</span>` : '';
     const link = alt.source ? `<a class="cite" href="${esc(alt.source)}" target="_blank" rel="noopener">來源</a>` : '';

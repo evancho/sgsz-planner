@@ -414,7 +414,8 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(official.length, 10);
   assert.equal(bahamut.length, 11);
   assert.equal(dami.length, 9);
-  assert.equal(official.every((team) => team.status === '待核' && team.scenario === 'hanyan' && team.tricks.length === 5 && team.note.startsWith('整理站內容已核，官方原圖待核')), true);
+  assert.equal(official.every((team) => team.status === '待核' && team.scenario === 'hanyan' && team.tricks.length === 5 && team.note.startsWith('官方原圖待核')), true);
+  assert.equal(official.every((team) => !team.note.includes('已核')), true);
   assert.match(official.find((team) => team.id === 'hanyan-dudu').note, /合圍突擊/);
   assert.match(official.find((team) => team.id === 'hanyan-dudu').note, /合圍夾擊/);
   assert.equal(bahamut.every((team) => team.status === '已核' && team.originLabel === '巴哈玩家版'), true);
