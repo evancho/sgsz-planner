@@ -611,6 +611,23 @@ export function ownershipGaps(members, account, lookup = {}) {
   const seenTactics = new Set();
   const generalName = lookup.generalName || ((id) => id);
   const tacticName = lookup.tacticName || ((id) => id);
+  const recordNamedTactic = (name, keepUnknown) => {
+    const named = lookup.tacticByName?.(name);
+    if (named?.id) {
+      if (seenTactics.has(named.id) || account?.tacticsOwned?.[named.id]) {
+        seenTactics.add(named.id);
+        return;
+      }
+      seenTactics.add(named.id);
+      tactics.push(named.name || name);
+      return;
+    }
+    if (!keepUnknown) return;
+    const key = `named:${name}`;
+    if (seenTactics.has(key)) return;
+    seenTactics.add(key);
+    tactics.push(name);
+  };
   for (const member of members || []) {
     if (!member) continue;
     const generalId = member.generalId;
@@ -625,10 +642,15 @@ export function ownershipGaps(members, account, lookup = {}) {
     for (let index = 0; index < 2; index += 1) {
       if (member.learned?.[index]) continue;
       const name = String(member.learnedNames?.[index] || '').trim();
-      const key = `named:${name}`;
-      if (!name || seenTactics.has(key)) continue;
-      seenTactics.add(key);
-      tactics.push(name);
+      if (!name) continue;
+      recordNamedTactic(name, true);
+    }
+    const hasLearned = (member.learned || []).some(Boolean) || (member.learnedNames || []).some((name) => String(name || '').trim());
+    if (!hasLearned && member.tacticsRaw) {
+      for (const part of String(member.tacticsRaw).split(/[、，,／/]/)) {
+        const name = part.replace(/（.*?）/g, '').trim();
+        if (name) recordNamedTactic(name, false);
+      }
     }
     for (const tacticId of member.learned || []) {
       if (!tacticId || seenTactics.has(tacticId)) continue;

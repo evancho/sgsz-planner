@@ -236,9 +236,16 @@ function t(row) {
   if (row.name.startsWith('拓·')) tactic.variant = '拓';
   else if (row.name.startsWith('精·')) tactic.variant = '精';
   else if (row.name.startsWith('轉·')) tactic.variant = '轉';
-  if (tactic.variant) tactic.scenarios = ['yingxiong'];
+  // 沒指定劇本時，拓·／精·／轉· 先視為英雄命世。事件與傳承不因前綴以外的來源而被限定。
+  if (row.scenarios) tactic.scenarios = row.scenarios;
+  else if (tactic.variant) tactic.scenarios = ['yingxiong'];
+  if (row.exchange?.length) tactic.exchange = row.exchange;
+  if (row.fromNames?.length) tactic.fromNames = row.fromNames;
   // 戰法的 source 仍是傳承／事件／自帶／賽季。網址放 sourceUrl，避免蓋掉來源類型。
-  return cite(tactic, tactic.variant ? '待核' : '已核');
+  const cited = cite(tactic, row.status || (tactic.variant ? '待核' : '已核'));
+  if (row.sourceUrl) cited.sourceUrl = row.sourceUrl;
+  if (row.note) cited.note = row.note;
+  return cited;
 }
 
 function cite(item, status = '已核') {
@@ -250,9 +257,17 @@ function cite(item, status = '已核') {
   };
 }
 
-function extra(id, name, type, source, from, troops, desc) {
-  return { id, name, type, source, from, troops, rank: 'S', desc };
+function extra(id, name, type, source, from, troops, desc, more = {}) {
+  return { id, name, type, source, from, troops, rank: 'S', desc, ...more };
 }
+
+const HANYAN_SEASON = 'https://sgsdeck.com/seasons/pk-s27';
+const hanyanShop = (origin) => ({
+  scenarios: ['hanyan'],
+  status: '待核',
+  sourceUrl: HANYAN_SEASON,
+  note: `原戰法：${origin}。效果差異待核。巴哈攻略同列。`,
+});
 
 const extraTactics = [
   extra('fengyan', '風焰相形', '指揮', '自帶', ['duwei-shenheng'], null, '成功發動主動或突擊戰法時，有機率治療我軍單體，並有較高機率立刻再施放一次；再次發動無需準備與冷卻。'),
@@ -276,16 +291,63 @@ const extraTactics = [
   extra('aoni', '傲睨王侯', '指揮', '自帶', ['xuyou'], null, '偷取敵軍屬性，轉為我軍的持續增益。'),
   extra('shenmou', '深謀遠慮', '指揮', '傳承', ['sp-bulianshi'], ['弓', '器械'], '將我軍主將的普通攻擊轉為謀略傷害，造成謀略傷害時治療我軍單體。僅弓兵與器械。'),
   extra('gangrou-ji', '剛柔並濟', '指揮', '傳承', ['sp-dongzhuo'], ['弓', '器械'], '降低我軍兵力最低者受到的傷害，並壓低敵軍兵力最高者的輸出。僅弓兵與器械。'),
-  extra('tuo-duohun', '拓·奪魂挾魄', '主動', '賽季', [], null, '英雄命示賽季商店的奪魂挾魄拓本，每輪最多可購兩項。沿用原戰法：偷取敵軍屬性，此消彼長。'),
+  extra('tuo-duohun', '拓·奪魂挾魄', '主動', '賽季', [], null, '英雄命示賽季商店的奪魂挾魄拓本，每輪最多可購兩項。沿用原戰法：偷取敵軍屬性，此消彼長。', {
+    scenarios: ['yingxiong', 'hanyan'],
+    sourceUrl: HANYAN_SEASON,
+    note: '漢焰長明拓印四選一也列這項。巴哈攻略同列。',
+  }),
   extra('tuo-shibie', '拓·士別三日', '被動', '賽季', [], null, '英雄命示賽季商店的士別三日拓本，每輪最多可購兩項。沿用原戰法：前三回合無法普通攻擊但有機率規避，第四回合提高智力並對敵軍全體造成謀略傷害。'),
   extra('tuo-yigua', '拓·以寡敵眾', '被動', '賽季', [], null, '英雄命示賽季商店的以寡敵眾拓本，每輪最多可購兩項。沿用原戰法：第2、4、6回合依武力治療自己並提高武力，第5回合對敵軍全體造成兵刃傷害。'),
   extra('tuo-jifeng', '拓·疾風驟雨', '主動', '賽季', [], null, '英雄命示賽季商店的疾風驟雨拓本，每輪最多可購兩項。與原戰法分開登記，具體係數以遊戲內為準。'),
   extra('jing-yulin', '精·魚鱗陣', '陣法', '賽季', [], null, '英雄命示賽季商店的魚鱗陣精進版，每輪最多可購兩項。提升統率，並有機會獲得抵御或治療。具體係數以遊戲內為準。'),
   extra('jing-fengshi', '精·鋒矢陣', '陣法', '賽季', [], ['騎', '盾', '槍'], '英雄命示賽季商店的鋒矢陣精進版，每輪最多可購兩項。沿用原戰法：主將傷害提高也更易受傷，副將傷害下降但更耐打。'),
   extra('tuo-xushi', '拓·蓄勢待發', '指揮', '賽季', [], ['盾', '器械'], '兵演春秋賽季商店的蓄勢待發拓本，每輪最多可購兩項。沿用原戰法：限盾、器械。自身提高智力與統率並獲得先攻，但無法造成傷害；每回合有機率使我軍群體獲得規避。'),
-  extra('tuo-caochuan', '拓·草船借箭', '主動', '賽季', [], null, '兵演春秋賽季商店的草船借箭拓本，每輪最多可購兩項。沿用原戰法：移除我軍群體負面，並給予急救，受傷時有機率依統率回復。'),
-  extra('tuo-guagu', '拓·刮骨療毒', '主動', '賽季', [], null, '兵演春秋賽季商店的刮骨療毒拓本，每輪最多可購兩項。沿用原戰法：為損失兵力最多的我軍單體清除負面狀態，並依智力治療。'),
+  extra('tuo-caochuan', '拓·草船借箭', '主動', '賽季', [], null, '兵演春秋賽季商店的草船借箭拓本，每輪最多可購兩項。沿用原戰法：移除我軍群體負面，並給予急救，受傷時有機率依統率回復。', {
+    scenarios: ['yingxiong', 'hanyan'],
+    sourceUrl: HANYAN_SEASON,
+    note: '漢焰長明拓印四選一也列這項。巴哈攻略同列。',
+  }),
+  extra('tuo-guagu', '拓·刮骨療毒', '主動', '賽季', [], null, '兵演春秋賽季商店的刮骨療毒拓本，每輪最多可購兩項。沿用原戰法：為損失兵力最多的我軍單體清除負面狀態，並依智力治療。', {
+    scenarios: ['yingxiong', 'hanyan'],
+    sourceUrl: HANYAN_SEASON,
+    note: '漢焰長明拓印四選一也列這項。巴哈攻略同列。',
+  }),
   extra('jing-lingji', '精·靈機一動', '主動', '賽季', [], null, '兵演春秋賽季商店的靈機一動精進版，每輪最多可購兩項。全兵種可用，屬性提升低於原戰法。'),
+  extra('cangqi', '藏器待時', '被動', '傳承', [], ['盾', '器械'], '提高自身主動戰法發動率，造成兵刃傷害時有機率破陣，並降低自身受到的普通攻擊傷害。僅盾兵與器械。', {
+    status: '待核',
+    fromNames: ['SP曹操'],
+    sourceUrl: 'https://sgsdeck.com/tactics/藏器待時',
+    note: '傳承自 SP曹操。SP曹操尚未收入武將圖鑑，所以 from 先留空。',
+  }),
+  extra('jueji', '絕計折謀', '主動', '傳承', [], null, '對敵軍單體造成謀略傷害，並有機率計窮。', {
+    status: '待核',
+    fromNames: ['何氏'],
+    sourceUrl: 'https://sgsdeck.com/tactics/絕計折謀',
+    note: '傳承自何氏。何氏尚未收入武將圖鑑，所以 from 先留空。',
+  }),
+  extra('taoyuan', '桃園結義', '指揮', '事件', [], null, '每回合有機率治療我軍群體，並依溢出治療對敵軍群體造成兵刃傷害。', {
+    status: '待核',
+    exchange: ['liubei', 'guanyu', 'zhangfei'],
+    sourceUrl: 'https://sgsdeck.com/tactics/桃園結義',
+    note: '事件兌換武將依巴哈攻略 https://forum.gamer.com.tw/C.php?bsn=36815&snA=11630 。整理站兌換欄未列武將名。',
+  }),
+  extra('tuo-zhongzhi', '拓·眾志成城', '指揮', '賽季', [], null, '漢焰長明拓印四選一的眾志成城拓本。效果差異待核。', {
+    scenarios: ['hanyan'],
+    status: '待核',
+    sourceUrl: HANYAN_SEASON,
+    note: '巴哈攻略同列這項拓印。',
+  }),
+  extra('heng-e', '衡軛陣', '陣法', '賽季', [], null, '漢焰長明賽季商店陣法。我軍統御皆不相同時調整普攻目標與傷害，係數待核。', {
+    scenarios: ['hanyan'],
+    status: '待核',
+    sourceUrl: HANYAN_SEASON,
+    note: '賽季商店新增陣法，沒有對應原版。係數待核。巴哈攻略同列。',
+  }),
+  extra('zhuan-xingyi', '轉·形一陣', '陣法', '賽季', [], null, '漢焰長明賽季商店的形一陣轉本。發動條件改為三人自帶戰法類型皆不相同，係數待核。', hanyanShop('形一陣')),
+  extra('zhuan-weizhen', '轉·威震華夏', '主動', '賽季', [], null, '漢焰長明賽季商店的威震華夏轉本。效果差異待核。', hanyanShop('威震華夏')),
+  extra('tuo-jushi', '拓·聚石成金', '主動', '賽季', [], null, '漢焰長明賽季商店的聚石成金拓本。效果差異待核。', hanyanShop('聚石成金')),
+  extra('tuo-zhene', '拓·鎮扼防拒', '指揮', '賽季', [], null, '漢焰長明賽季商店的鎮扼防拒拓本。效果差異待核。', hanyanShop('鎮扼防拒')),
+  extra('zhuan-shizi', '轉·獅子奮迅', '主動', '賽季', [], null, '漢焰長明賽季商店的獅子奮迅轉本。效果差異待核。', hanyanShop('獅子奮迅')),
 ];
 
 const tactics = [...tacticRows.map(t), ...extraTactics.map(t)];
@@ -297,6 +359,9 @@ for (const tactic of tactics) {
   tacticIds.add(tactic.id);
   for (const fromId of tactic.from) {
     if (!ids.has(fromId)) throw new Error(`missing general ${fromId} for ${tactic.id}`);
+  }
+  for (const exchangeId of tactic.exchange || []) {
+    if (!ids.has(exchangeId)) throw new Error(`missing exchange ${exchangeId} for ${tactic.id}`);
   }
 }
 

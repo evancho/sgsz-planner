@@ -45,7 +45,7 @@ const qilueGuan = ['設伏十面', '博浪椎秦', '臨危不懼', '楚歌四起
 const qilueQi = ['合圍夾擊', '設伏十面', '楚歌四起', '博浪椎秦', '多多益善'];
 
 function guanYu() {
-  return seat('sp-guanyu', 'SP關羽', ['yigua', null], ['以寡敵眾', '藏器待時'], fenji(), {
+  return seat('sp-guanyu', 'SP關羽', ['yigua', 'cangqi'], ['以寡敵眾', '藏器待時'], fenji(), {
     traits: guanTraits,
     aptNeed: { troop: '盾', letter: 'S' },
     remark: '屬性高武',
@@ -53,7 +53,7 @@ function guanYu() {
 }
 
 function faZheng(alt) {
-  return seat('sp-fazheng', 'SP法正', ['xushidai', null], ['蓄勢待發', '拓·鎮扼防拒'], chui(), {
+  return seat('sp-fazheng', 'SP法正', ['xushidai', 'tuo-zhene'], ['蓄勢待發', '拓·鎮扼防拒'], chui(), {
     traits: faTraits,
     remark: alt ? '屬性高智。第二戰法可換非攻制勝' : '屬性高智',
   });
@@ -67,7 +67,7 @@ export const hanyanDami = [
       remark: '屬性高統。第二戰法可換藤甲兵',
     }),
     faZheng(true),
-  ], qilueGuan, '藏器待時、拓·鎮扼防拒圖鑑未收'),
+  ], qilueGuan),
   team('dami-xingcai', '星彩法關盾', [
     guanYu(),
     seat('wushuang-xingcai', '無雙星彩', ['yulin', 'feigong'], ['魚鱗陣', '非攻制勝'], chui(), {
@@ -75,7 +75,7 @@ export const hanyanDami = [
       remark: '截圖寫 co星彩。屬性高統。第二戰法可換藤甲兵',
     }),
     faZheng(true),
-  ], qilueGuan, '藏器待時、拓·鎮扼防拒圖鑑未收'),
+  ], qilueGuan),
   team('dami-shuzhi', '蜀智盾', [
     seat('pangtong', '龐統', ['shibie', 'beishe'], ['士別三日', '杯蛇鬼車'], book('shiji', 'sanjun', 'guixin', 'tongjun'), {
       traits: ['雍雅', '暴躁'],
@@ -86,7 +86,7 @@ export const hanyanDami = [
       aptNeed: { troop: '盾', letter: 'A' },
     }),
     faZheng(false),
-  ], ['楚歌四起', '暗度陳倉', '功成身退', '合圍夾擊', '設伏十面'], '拓·鎮扼防拒圖鑑未收', true),
+  ], ['楚歌四起', '暗度陳倉', '功成身退', '合圍夾擊', '設伏十面'], '', true),
   team('dami-shugong', '蜀弓', [
     seat('jiangwei', '姜維', ['duohun', 'fenzui'], ['奪魂挾魄', '焚輜營壘'], book('zuozhan', 'manyong', 'wentao', 'zhirui'), {
       traits: ['靈動'],
@@ -138,7 +138,7 @@ export const hanyanDami = [
       traits: ['靈動', '出奇'],
       remark: '特技擇一：迴響或符咒。第二戰法可換轉·獅子奮迅',
     }),
-  ], qilueQi, '轉·獅子奮迅圖鑑未收，只列為替代'),
+  ], qilueQi, '轉·獅子奮迅已收入圖鑑，此卡仍只列為替代'),
   team('dami-shuzhi-qi', '叔侄騎', [
     seat('sp-xunyu', 'SP荀彧', ['jieli', 'guagu'], ['竭力佐謀', '刮骨療毒'], chui(), {
       traits: faTraits,
@@ -151,7 +151,7 @@ export const hanyanDami = [
       traits: ['靈動', '出奇'],
       remark: '特技擇一：迴響或符咒。第二戰法可換轉·獅子奮迅',
     }),
-  ], qilueQi, '轉·獅子奮迅圖鑑未收，只列為替代'),
+  ], qilueQi, '轉·獅子奮迅已收入圖鑑，此卡仍只列為替代'),
   team('dami-taiwei', '太尉盾', [
     seat('simayi', '司馬懿', ['hantian', 'zhongzhi'], ['熯天熾地', '眾志成城'], book('shiji', 'leshan', 'jiuzhan', 'tongjun'), {
       traits: ['劈風', '長慮', '出奇', '暴躁'],

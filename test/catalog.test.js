@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { isInventoryTactic } from '../js/logic.js';
+import { fitsScenario, isInventoryTactic, ownershipGaps } from '../js/logic.js';
 
 const meta = JSON.parse(readFileSync(new URL('../data/meta.json', import.meta.url)));
 const generalsFile = JSON.parse(readFileSync(new URL('../data/generals.json', import.meta.url)));
@@ -238,17 +238,88 @@ test('generals and tactics are internally consistent', () => {
   const huijun = byName.get('麾軍結陣');
   assert.equal(huijun.source, '事件');
   assert.equal(huijun.scenarios, undefined);
+  const hanyanAlso = new Set(['tuo-caochuan', 'tuo-guagu', 'tuo-duohun']);
+  const hanyanOnly = new Set(['tuo-zhongzhi', 'heng-e', 'zhuan-xingyi', 'zhuan-weizhen', 'tuo-jushi', 'tuo-zhene', 'zhuan-shizi']);
+  const hanyanOpen = new Set(['cangqi', 'jueji', 'taoyuan']);
   for (const tactic of tacticsFile.tactics) {
-    if (tactic.variant === '拓' || tactic.variant === '精') {
+    if (hanyanAlso.has(tactic.id)) {
+      assert.deepEqual(tactic.scenarios, ['yingxiong', 'hanyan'], tactic.id);
+      assert.equal(tactic.status, '待核', tactic.id);
+      assert.match(tactic.sourceUrl, /^https:\/\/sgsdeck.com\//, tactic.id);
+    } else if (hanyanOnly.has(tactic.id)) {
+      assert.deepEqual(tactic.scenarios, ['hanyan'], tactic.id);
+      assert.equal(tactic.status, '待核', tactic.id);
+      assert.equal(tactic.rank, 'S', tactic.id);
+      assert.match(tactic.sourceUrl, /^https:\/\/sgsdeck.com\/seasons\/pk-s27$/, tactic.id);
+    } else if (tactic.variant === '拓' || tactic.variant === '精') {
       assert.deepEqual(tactic.scenarios, ['yingxiong'], tactic.id);
       assert.equal(tactic.status, '待核', tactic.id);
       assert.equal(tactic.sourceUrl, '', tactic.id);
       assert.equal(tactic.scenarios.includes('hanyan'), false, tactic.id);
-    } else {
+    } else if (!hanyanOpen.has(tactic.id)) {
       assert.equal(tactic.scenarios, undefined, tactic.id);
     }
   }
+  const cangqi = byName.get('藏器待時');
+  assert.equal(cangqi.source, '傳承');
+  assert.equal(cangqi.type, '被動');
+  assert.equal(cangqi.rank, 'S');
+  assert.equal(cangqi.status, '待核');
+  assert.deepEqual(cangqi.troops, ['盾', '器械']);
+  assert.deepEqual(cangqi.from, []);
+  assert.deepEqual(cangqi.fromNames, ['SP曹操']);
+  assert.equal(cangqi.scenarios, undefined);
+  assert.equal(cangqi.sourceUrl, 'https://sgsdeck.com/tactics/藏器待時');
+  const jueji = byName.get('絕計折謀');
+  assert.equal(jueji.source, '傳承');
+  assert.equal(jueji.type, '主動');
+  assert.deepEqual(jueji.fromNames, ['何氏']);
+  assert.equal(jueji.scenarios, undefined);
+  assert.equal(jueji.sourceUrl, 'https://sgsdeck.com/tactics/絕計折謀');
+  const taoyuan = byName.get('桃園結義');
+  assert.equal(taoyuan.source, '事件');
+  assert.equal(taoyuan.type, '指揮');
+  assert.deepEqual(taoyuan.exchange, ['liubei', 'guanyu', 'zhangfei']);
+  assert.equal(taoyuan.scenarios, undefined);
+  assert.equal(fitsScenario(taoyuan, 'regular'), true);
+  assert.equal(fitsScenario(byName.get('拓·鎮扼防拒'), 'hanyan'), true);
+  assert.equal(fitsScenario(byName.get('拓·鎮扼防拒'), 'regular'), false);
+  assert.equal(fitsScenario(huijun, 'hanyan'), true);
+  assert.equal(byName.has('承天靖世'), false);
+  assert.equal(byName.has('帷內擅權'), false);
   const scenario = JSON.parse(readFileSync(new URL('../data/scenario.json', import.meta.url)));
+  const tacticName = (id) => tacticsFile.tactics.find((item) => item.id === id)?.name || '';
+  const beifaGuan = scenario.recommended.find((team) => team.id === 'hanyan-beifa').members[1];
+  assert.equal(beifaGuan.learned[0], 'cangqi');
+  const missingCangqi = ownershipGaps([beifaGuan], { owned: { guanxing: true }, tacticsOwned: { qianli: true } }, { tacticName });
+  assert.equal(missingCangqi.tactics.includes('藏器待時'), true);
+  const ownedCangqi = ownershipGaps([beifaGuan], { owned: { guanxing: true }, tacticsOwned: { qianli: true, cangqi: true } }, { tacticName });
+  assert.equal(ownedCangqi.tactics.includes('藏器待時'), false);
+  const dahanRaw = scenario.recommended.find((team) => team.id === 'baha-d-dahan').members[0];
+  const rawMissing = ownershipGaps([dahanRaw], { owned: {}, tacticsOwned: {} }, {
+    tacticName,
+    tacticByName: (name) => tacticsFile.tactics.find((item) => item.name === name) || null,
+  });
+  assert.equal(rawMissing.tactics.includes('桃園結義'), true);
+  const rawOwned = ownershipGaps([dahanRaw], { owned: {}, tacticsOwned: { taoyuan: true, 'gangrou-ji': true } }, {
+    tacticName,
+    tacticByName: (name) => tacticsFile.tactics.find((item) => item.name === name) || null,
+  });
+  assert.equal(rawOwned.tactics.includes('桃園結義'), false);
+  const namedOnly = ownershipGaps([{
+    generalId: 'sp-guanyu',
+    learned: [null, null],
+    learnedNames: ['以寡敵眾', '藏器待時'],
+  }], { owned: { 'sp-guanyu': true }, tacticsOwned: { cangqi: true } }, {
+    tacticName,
+    tacticByName: (name) => tacticsFile.tactics.find((item) => item.name === name) || null,
+  });
+  assert.equal(namedOnly.tactics.includes('藏器待時'), false);
+  assert.equal(namedOnly.tactics.includes('以寡敵眾'), true);
+  const damiFa = scenario.recommended.find((team) => team.id === 'dami-madai').members[2];
+  assert.equal(damiFa.learned[1], 'tuo-zhene');
+  const missingZhene = ownershipGaps([damiFa], { owned: { 'sp-fazheng': true }, tacticsOwned: { xushidai: true } }, { tacticName });
+  assert.equal(missingZhene.tactics.includes('拓·鎮扼防拒'), true);
   assert.equal(scenario.merits[0].id, 'xunbing');
   assert.equal(scenario.merits[0].status, '待核');
   assert.deepEqual(scenario.merits[0].scenarios, ['hanyan']);

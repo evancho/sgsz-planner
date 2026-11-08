@@ -62,14 +62,14 @@
         "楚歌四起",
         "多多益善"
       ],
-      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。藏器待時、拓·鎮扼防拒圖鑑未收",
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認",
       "members": [
         {
           "generalId": "sp-guanyu",
           "generalName": "SP關羽",
           "learned": [
             "yigua",
-            null
+            "cangqi"
           ],
           "learnedNames": [
             "以寡敵眾",
@@ -127,7 +127,7 @@
           "generalName": "SP法正",
           "learned": [
             "xushidai",
-            null
+            "tuo-zhene"
           ],
           "learnedNames": [
             "蓄勢待發",
@@ -204,14 +204,14 @@
         "楚歌四起",
         "多多益善"
       ],
-      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。藏器待時、拓·鎮扼防拒圖鑑未收",
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認",
       "members": [
         {
           "generalId": "sp-guanyu",
           "generalName": "SP關羽",
           "learned": [
             "yigua",
-            null
+            "cangqi"
           ],
           "learnedNames": [
             "以寡敵眾",
@@ -268,7 +268,7 @@
           "generalName": "SP法正",
           "learned": [
             "xushidai",
-            null
+            "tuo-zhene"
           ],
           "learnedNames": [
             "蓄勢待發",
@@ -328,7 +328,7 @@
         "合圍夾擊",
         "設伏十面"
       ],
-      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。拓·鎮扼防拒圖鑑未收",
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認",
       "members": [
         {
           "generalId": "pangtong",
@@ -388,7 +388,7 @@
           "generalName": "SP法正",
           "learned": [
             "xushidai",
-            null
+            "tuo-zhene"
           ],
           "learnedNames": [
             "蓄勢待發",
@@ -785,7 +785,7 @@
         "博浪椎秦",
         "多多益善"
       ],
-      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。轉·獅子奮迅圖鑑未收，只列為替代",
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。轉·獅子奮迅已收入圖鑑，此卡仍只列為替代",
       "members": [
         {
           "generalId": "sp-xunyu",
@@ -932,7 +932,7 @@
         "博浪椎秦",
         "多多益善"
       ],
-      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。轉·獅子奮迅圖鑑未收，只列為替代",
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。轉·獅子奮迅已收入圖鑑，此卡仍只列為替代",
       "members": [
         {
           "generalId": "sp-xunyu",
@@ -2820,7 +2820,7 @@
           "generalId": "guanxing",
           "generalName": "關興",
           "learned": [
-            null,
+            "cangqi",
             "qianli"
           ],
           "learnedNames": [

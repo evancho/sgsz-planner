@@ -994,6 +994,7 @@ function seasonChip(tactic) {
   if (tactic.source !== '賽季') return '';
   if (String(tactic.name).startsWith('拓·')) return '<span class="mini season">拓</span>';
   if (String(tactic.name).startsWith('精·')) return '<span class="mini season">精</span>';
+  if (String(tactic.name).startsWith('轉·')) return '<span class="mini season">轉</span>';
   return '<span class="mini season">賽季</span>';
 }
 
@@ -1022,11 +1023,24 @@ function tacticRow(tactic, current, usage) {
           ${tactic.custom ? '<span class="mini">自訂</span>' : ''}
         </h3>
         <p class="muted">${esc(tactic.desc)}</p>
+        ${tacticOriginLine(tactic)}
         ${where ? `<p class="faint">${esc(where)}</p>` : ''}
         ${tactic.custom ? `<button type="button" class="btn-ghost" data-action="ask-delete-custom" data-id="${esc(tactic.id)}">刪除自訂</button>` : ''}
       </div>
       <div class="quota ${state}"><span>${label}</span><b>${remain}/${copies}</b></div>
     </article>`;
+}
+
+function tacticOriginLine(tactic) {
+  const inherit = (tactic.fromNames || []).filter(Boolean).join('、');
+  const exchange = (tactic.exchange || [])
+    .map((id) => generalsById().get(id)?.name || id)
+    .filter(Boolean)
+    .join('、');
+  const bits = [];
+  if (inherit) bits.push(`傳承自 ${inherit}`);
+  if (exchange) bits.push(`事件兌換 ${exchange}`);
+  return bits.length ? `<p class="faint">${esc(bits.join(' · '))}</p>` : '';
 }
 
 function rankTag(tactic) {
@@ -1289,10 +1303,17 @@ function templateTacticHits(template, usage, tactics) {
   return dropUsedTactics(template.members, usage, tactics).dropped;
 }
 
+function tacticByName(name, current = account()) {
+  const query = String(name || '').trim();
+  if (!query) return null;
+  return tacticsFor(current).find((tactic) => tactic.name === query) || null;
+}
+
 function templateOwnershipGaps(template, current) {
   return ownershipGaps(template.members, current, {
     generalName: (id) => generalsById().get(id)?.name || '',
     tacticName: (id) => tacticsById(current).get(id)?.name || '',
+    tacticByName: (name) => tacticByName(name, current),
   });
 }
 

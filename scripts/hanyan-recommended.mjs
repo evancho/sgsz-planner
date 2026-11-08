@@ -37,7 +37,7 @@ const chui = () => book('shiji', 'sanjun', 'chuilian', 'tongjun');
 
 export const hanyanRecommended = [
   team('hanyan-dahan-gong', '大漢弓', '整軍', 's27-official-dahan-gong', [
-    seat(null, 'SP曹操', [null, 'gangrou-ji'], ['桃園結義', '剛柔並濟'], sanjun()),
+    seat(null, 'SP曹操', ['taoyuan', 'gangrou-ji'], ['桃園結義', '剛柔並濟'], sanjun()),
     seat('sp-luzhi', 'SP盧植', ['yanxing', 'xiandeng'], ['雁行陣', '先登死士'], sanjun()),
     seat('sp-diaochan', 'SP貂蟬', ['shencang', 'luli'], ['深藏若虛', '戮力同心'], sanjun()),
   ], ['芒碭隱蹤', '沛縣聚義', '約法三章', '鴻門遁險', '推食解衣']),
@@ -52,7 +52,7 @@ export const hanyanRecommended = [
     seat('xuyou', '許攸', ['linwei', 'jiefan'], ['臨危救主', '解煩衛'], book('junxing', 'xibing', 'shoushi', 'fangbei')),
   ], ['橫掃河西', '封狼居胥', '摧鋒陷敵', '斬逆納降', '追亡逐北']),
   team('hanyan-faguan', '法關盾', '襲擾', 's27-official-fa-guan-dun', [
-    seat('sp-guanyu', 'SP關羽', ['yigua', null], ['以寡敵眾', '藏器待時'], book('jiubian', 'fenji', 'baizhan', 'yanxu')),
+    seat('sp-guanyu', 'SP關羽', ['yigua', 'cangqi'], ['以寡敵眾', '藏器待時'], book('jiubian', 'fenji', 'baizhan', 'yanxu')),
     seat('sp-fazheng', 'SP法正', ['xushidai', 'feigong'], ['蓄勢待發', '非攻制勝'], chui()),
     seat('madai', '馬岱', ['tengjia', 'yulin'], ['藤甲兵', '魚鱗陣'], chui(), '可換無雙星彩'),
   ], ['設伏十面', '背水列陣', '楚歌四起', '治延軍勢', '多多益善']),
@@ -98,7 +98,7 @@ export const hanyanRecommended = [
   ], ['芒碭隱蹤', '推食解衣', '沛縣聚義', '博浪椎秦', '敗中求生'], '', false),
   team('hanyan-beifa', '北伐盾', '整軍', 's27-official-beifa-dun', [
     seat('sp-zhugeliang', 'SP諸葛亮', ['xushidai', 'caochuan'], ['蓄勢待發', '草船借箭'], book('shiji', 'sanjun', 'chuilian', 'tongjun'), { traits: ['靈動', '天機'], aptNeed: { troop: '盾', letter: 'S' }, remark: '替代選項：知己知彼' }),
-    seat('guanxing', '關興', [null, 'qianli'], ['藏器待時', '千里走單騎'], book('xushi', 'houfa', 'guimou', 'jiangwei-book'), { traits: ['龍驤', '靈動'], aptNeed: { troop: '盾', letter: 'S' } }),
+    seat('guanxing', '關興', ['cangqi', 'qianli'], ['藏器待時', '千里走單騎'], book('xushi', 'houfa', 'guimou', 'jiangwei-book'), { traits: ['龍驤', '靈動'], aptNeed: { troop: '盾', letter: 'S' } }),
     seat('zhangbao', '張苞', ['futang', 'feigong'], ['赴湯蹈火', '非攻制勝'], book('shiji', 'zhenge', 'tongjun', 'chuilian'), { traits: ['虎峙', '靈動'] }),
   ], ['沛縣聚義', '芒碭隱蹤', '博浪椎秦', '定計安儲', '敗中求生'], '', false),
   team('hanyan-hedan', '核彈張', '謀算', 's27-official-hedan-zhang', [

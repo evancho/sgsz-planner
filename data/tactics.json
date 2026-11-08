@@ -3018,11 +3018,12 @@
       "desc": "英雄命示賽季商店的奪魂挾魄拓本，每輪最多可購兩項。沿用原戰法：偷取敵軍屬性，此消彼長。",
       "variant": "拓",
       "scenarios": [
-        "yingxiong"
+        "yingxiong",
+        "hanyan"
       ],
-      "sourceUrl": "",
+      "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": ""
+      "note": "漢焰長明拓印四選一也列這項。巴哈攻略同列。"
     },
     {
       "id": "tuo-shibie",
@@ -3158,11 +3159,12 @@
       "desc": "兵演春秋賽季商店的草船借箭拓本，每輪最多可購兩項。沿用原戰法：移除我軍群體負面，並給予急救，受傷時有機率依統率回復。",
       "variant": "拓",
       "scenarios": [
-        "yingxiong"
+        "yingxiong",
+        "hanyan"
       ],
-      "sourceUrl": "",
+      "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": ""
+      "note": "漢焰長明拓印四選一也列這項。巴哈攻略同列。"
     },
     {
       "id": "tuo-guagu",
@@ -3177,11 +3179,12 @@
       "desc": "兵演春秋賽季商店的刮骨療毒拓本，每輪最多可購兩項。沿用原戰法：為損失兵力最多的我軍單體清除負面狀態，並依智力治療。",
       "variant": "拓",
       "scenarios": [
-        "yingxiong"
+        "yingxiong",
+        "hanyan"
       ],
-      "sourceUrl": "",
+      "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": ""
+      "note": "漢焰長明拓印四選一也列這項。巴哈攻略同列。"
     },
     {
       "id": "jing-lingji",
@@ -3201,6 +3204,197 @@
       "sourceUrl": "",
       "status": "待核",
       "note": ""
+    },
+    {
+      "id": "cangqi",
+      "name": "藏器待時",
+      "type": "被動",
+      "source": "傳承",
+      "from": [],
+      "troops": [
+        "盾",
+        "器械"
+      ],
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "提高自身主動戰法發動率，造成兵刃傷害時有機率破陣，並降低自身受到的普通攻擊傷害。僅盾兵與器械。",
+      "fromNames": [
+        "SP曹操"
+      ],
+      "sourceUrl": "https://sgsdeck.com/tactics/藏器待時",
+      "status": "待核",
+      "note": "傳承自 SP曹操。SP曹操尚未收入武將圖鑑，所以 from 先留空。"
+    },
+    {
+      "id": "jueji",
+      "name": "絕計折謀",
+      "type": "主動",
+      "source": "傳承",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "對敵軍單體造成謀略傷害，並有機率計窮。",
+      "fromNames": [
+        "何氏"
+      ],
+      "sourceUrl": "https://sgsdeck.com/tactics/絕計折謀",
+      "status": "待核",
+      "note": "傳承自何氏。何氏尚未收入武將圖鑑，所以 from 先留空。"
+    },
+    {
+      "id": "taoyuan",
+      "name": "桃園結義",
+      "type": "指揮",
+      "source": "事件",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "每回合有機率治療我軍群體，並依溢出治療對敵軍群體造成兵刃傷害。",
+      "exchange": [
+        "liubei",
+        "guanyu",
+        "zhangfei"
+      ],
+      "sourceUrl": "https://sgsdeck.com/tactics/桃園結義",
+      "status": "待核",
+      "note": "事件兌換武將依巴哈攻略 https://forum.gamer.com.tw/C.php?bsn=36815&snA=11630 。整理站兌換欄未列武將名。"
+    },
+    {
+      "id": "tuo-zhongzhi",
+      "name": "拓·眾志成城",
+      "type": "指揮",
+      "source": "賽季",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "漢焰長明拓印四選一的眾志成城拓本。效果差異待核。",
+      "variant": "拓",
+      "scenarios": [
+        "hanyan"
+      ],
+      "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
+      "status": "待核",
+      "note": "巴哈攻略同列這項拓印。"
+    },
+    {
+      "id": "heng-e",
+      "name": "衡軛陣",
+      "type": "陣法",
+      "source": "賽季",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "漢焰長明賽季商店陣法。我軍統御皆不相同時調整普攻目標與傷害，係數待核。",
+      "scenarios": [
+        "hanyan"
+      ],
+      "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
+      "status": "待核",
+      "note": "賽季商店新增陣法，沒有對應原版。係數待核。巴哈攻略同列。"
+    },
+    {
+      "id": "zhuan-xingyi",
+      "name": "轉·形一陣",
+      "type": "陣法",
+      "source": "賽季",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "漢焰長明賽季商店的形一陣轉本。發動條件改為三人自帶戰法類型皆不相同，係數待核。",
+      "variant": "轉",
+      "scenarios": [
+        "hanyan"
+      ],
+      "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
+      "status": "待核",
+      "note": "原戰法：形一陣。效果差異待核。巴哈攻略同列。"
+    },
+    {
+      "id": "zhuan-weizhen",
+      "name": "轉·威震華夏",
+      "type": "主動",
+      "source": "賽季",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "漢焰長明賽季商店的威震華夏轉本。效果差異待核。",
+      "variant": "轉",
+      "scenarios": [
+        "hanyan"
+      ],
+      "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
+      "status": "待核",
+      "note": "原戰法：威震華夏。效果差異待核。巴哈攻略同列。"
+    },
+    {
+      "id": "tuo-jushi",
+      "name": "拓·聚石成金",
+      "type": "主動",
+      "source": "賽季",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "漢焰長明賽季商店的聚石成金拓本。效果差異待核。",
+      "variant": "拓",
+      "scenarios": [
+        "hanyan"
+      ],
+      "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
+      "status": "待核",
+      "note": "原戰法：聚石成金。效果差異待核。巴哈攻略同列。"
+    },
+    {
+      "id": "tuo-zhene",
+      "name": "拓·鎮扼防拒",
+      "type": "指揮",
+      "source": "賽季",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "漢焰長明賽季商店的鎮扼防拒拓本。效果差異待核。",
+      "variant": "拓",
+      "scenarios": [
+        "hanyan"
+      ],
+      "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
+      "status": "待核",
+      "note": "原戰法：鎮扼防拒。效果差異待核。巴哈攻略同列。"
+    },
+    {
+      "id": "zhuan-shizi",
+      "name": "轉·獅子奮迅",
+      "type": "主動",
+      "source": "賽季",
+      "from": [],
+      "troops": null,
+      "copies": 1,
+      "orange": true,
+      "rank": "S",
+      "desc": "漢焰長明賽季商店的獅子奮迅轉本。效果差異待核。",
+      "variant": "轉",
+      "scenarios": [
+        "hanyan"
+      ],
+      "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
+      "status": "待核",
+      "note": "原戰法：獅子奮迅。效果差異待核。巴哈攻略同列。"
     }
   ]
 }
