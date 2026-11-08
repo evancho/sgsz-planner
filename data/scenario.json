@@ -1859,55 +1859,6 @@
       ]
     },
     {
-      "id": "baha-b-jiaxu-1",
-      "scenario": "hanyan",
-      "title": "賈詡／48級後第一配置",
-      "status": "待核",
-      "origin": "bahamut",
-      "originLabel": "巴哈玩家版",
-      "tricksBound": false,
-      "applyReady": false,
-      "author": "你看星星无数",
-      "authorAccount": "f472xz256x",
-      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647",
-      "postedAt": "2026-10-31 11:33:26",
-      "strategy": [],
-      "tricks": [],
-      "note": "同隊SP荀彧與賈詡均帶刮骨療毒；原文確如此，不能自行改另一格。",
-      "members": [
-        {
-          "generalId": null,
-          "generalName": "sp荀彧",
-          "learned": [
-            null,
-            null
-          ],
-          "learnedNames": [],
-          "tacticsRaw": "靈機一動、刮骨療毒"
-        },
-        {
-          "generalId": "jiaxu",
-          "generalName": "賈詡",
-          "learned": [
-            null,
-            null
-          ],
-          "learnedNames": [],
-          "tacticsRaw": "刮骨療毒、上兵伐謀"
-        },
-        {
-          "generalId": null,
-          "generalName": "sp郭嘉",
-          "learned": [
-            null,
-            null
-          ],
-          "learnedNames": [],
-          "tacticsRaw": "奪魂攜魄、當鋒催決"
-        }
-      ]
-    },
-    {
       "id": "baha-b-jiaxu-2",
       "scenario": "hanyan",
       "title": "賈詡／48級後第二配置",
