@@ -90,10 +90,10 @@ import {
   touchUpdatedAt,
   pickSyncBackup,
   backupsDiffer,
+  backupFingerprint,
   backupSubstance,
   isSparseBackup,
-  makeConflictAck,
-  conflictPromptDecision,
+  syncMergeDecision,
   updateAccount,
   usefulInnate,
 } from './logic.js';
@@ -101,7 +101,8 @@ import { loadState, saveState } from './store.js';
 
 const SYNC_DEBOUNCE_MS = 1500;
 const SYNC_LAST_KEY = 'sgsz-onedrive-last-sync';
-const SYNC_CONFLICT_ACK_KEY = 'sgsz-onedrive-conflict-ack';
+const SYNC_BASELINE_KEY = 'sgsz-onedrive-baseline-fp';
+const SYNC_DISMISS_REMOTE_KEY = 'sgsz-onedrive-dismiss-remote-fp';
 
 const ui = {
   catalog: null,
@@ -299,33 +300,51 @@ function setSyncLast(iso) {
   }
 }
 
-function readConflictAck() {
+function readSyncBaseline() {
   try {
-    return JSON.parse(localStorage.getItem(SYNC_CONFLICT_ACK_KEY) || 'null');
+    return localStorage.getItem(SYNC_BASELINE_KEY) || '';
   } catch {
-    return null;
+    return '';
   }
 }
 
-function writeConflictAck(choice, local, remote) {
+function writeSyncBaseline(payloadOrFp) {
+  const fp = typeof payloadOrFp === 'string' ? payloadOrFp : backupFingerprint(payloadOrFp);
+  if (!fp) return;
   try {
-    localStorage.setItem(SYNC_CONFLICT_ACK_KEY, JSON.stringify(makeConflictAck(choice, local, remote)));
+    localStorage.setItem(SYNC_BASELINE_KEY, fp);
   } catch {
     /* ignore quota */
   }
 }
 
-function clearConflictAck() {
+function clearDismissedRemote() {
   try {
-    localStorage.removeItem(SYNC_CONFLICT_ACK_KEY);
+    localStorage.removeItem(SYNC_DISMISS_REMOTE_KEY);
   } catch {
     /* ignore */
   }
 }
 
-function dismissSyncConflict(choice = 'later') {
+function readDismissedRemote() {
+  try {
+    return localStorage.getItem(SYNC_DISMISS_REMOTE_KEY) || '';
+  } catch {
+    return '';
+  }
+}
+
+function writeDismissedRemote(payload) {
+  try {
+    localStorage.setItem(SYNC_DISMISS_REMOTE_KEY, backupFingerprint(payload));
+  } catch {
+    /* ignore quota */
+  }
+}
+
+function dismissSyncConflict() {
   const conflict = ui.syncConflict;
-  if (conflict?.local && conflict?.remote) writeConflictAck(choice, conflict.local, conflict.remote);
+  if (conflict?.remote) writeDismissedRemote(conflict.remote);
   ui.syncConflict = null;
   ui.sync.status = 'idle';
   render();
@@ -333,6 +352,11 @@ function dismissSyncConflict(choice = 'later') {
 
 async function refreshSyncStatus() {
   try {
+    try {
+      localStorage.removeItem('sgsz-onedrive-conflict-ack');
+    } catch {
+      /* ignore */
+    }
     const config = await import('./onedrive-config.js');
     const id = String(config.clientId || '').trim();
     ui.sync.configured = Boolean(id) && id !== 'YOUR_AZURE_SPA_CLIENT_ID';
@@ -384,6 +408,51 @@ function openSyncConflict(localPayload, remotePayload) {
   toast('本機與 OneDrive 資料不同，請選擇要保留哪一邊');
 }
 
+async function pushLocalBackup(localPayload, options = {}) {
+  const api = await loadOneDriveApi();
+  if (options.archiveRemote) {
+    const archived = await api.uploadArchive(options.archiveRemote, 'remote');
+    if (archived.pending) return { ok: true, pending: true };
+    if (!archived.ok) return { ok: false, error: archived.error || '無法備份雲端舊檔' };
+    options.archiveName = archived.fileName;
+  }
+  const uploaded = await api.uploadBackup(localPayload);
+  if (uploaded.pending) return { ok: true, pending: true };
+  if (!uploaded.ok) return { ok: false, error: uploaded.error || '上傳失敗' };
+  if (!ui.state.updatedAt && localPayload.updatedAt) {
+    ui.state = { ...ui.state, updatedAt: localPayload.updatedAt };
+    saveState(ui.state);
+  }
+  writeSyncBaseline(localPayload);
+  clearDismissedRemote();
+  ui.syncConflict = null;
+  setSyncLast(new Date().toISOString());
+  ui.sync.status = 'idle';
+  return { ok: true, archiveName: options.archiveName || '' };
+}
+
+async function pullRemoteBackup(remotePayload, options = {}) {
+  const api = await loadOneDriveApi();
+  if (options.archiveLocal) {
+    const archived = await api.uploadArchive(options.archiveLocal, 'local');
+    if (archived.pending) return { ok: true, pending: true };
+    if (!archived.ok) return { ok: false, error: archived.error || '無法備份本機舊檔' };
+    options.archiveName = archived.fileName;
+  }
+  const normalized = normalizeState(remotePayload);
+  if (!normalized.ok) return { ok: false, error: normalized.error || '雲端備份無法讀取' };
+  const keepRemote = await api.uploadBackup(remotePayload);
+  if (keepRemote.pending) return { ok: true, pending: true };
+  if (!keepRemote.ok) return { ok: false, error: keepRemote.error || '上傳失敗' };
+  commit(normalized.state, { keepStamp: true, skipSync: true });
+  writeSyncBaseline(remotePayload);
+  clearDismissedRemote();
+  ui.syncConflict = null;
+  setSyncLast(new Date().toISOString());
+  ui.sync.status = 'idle';
+  return { ok: true, archiveName: options.archiveName || '' };
+}
+
 async function resolveSyncConflict(choice, options = {}) {
   const conflict = options.conflict || ui.syncConflict;
   if (!conflict || (choice !== 'local' && choice !== 'remote')) return;
@@ -391,71 +460,34 @@ async function resolveSyncConflict(choice, options = {}) {
   ui.sync.status = 'syncing';
   if (!quiet) render();
   try {
-    const api = await loadOneDriveApi();
     if (choice === 'local') {
-      const archived = await api.uploadArchive(conflict.remote, 'remote');
-      if (archived.pending) return;
-      if (!archived.ok) {
+      const result = await pushLocalBackup(conflict.local, {
+        archiveRemote: quiet ? null : conflict.remote,
+      });
+      if (result.pending) return;
+      if (!result.ok) {
         ui.sync.status = 'error';
-        ui.sync.error = archived.error || '無法備份雲端舊檔';
+        ui.sync.error = result.error;
         if (!quiet) toast(ui.sync.error);
         render();
         return;
       }
-      const toUpload = conflict.local;
-      const uploaded = await api.uploadBackup(toUpload);
-      if (uploaded.pending) return;
-      if (!uploaded.ok) {
-        ui.sync.status = 'error';
-        ui.sync.error = uploaded.error;
-        if (!quiet) toast(uploaded.error);
-        render();
-        return;
-      }
-      if (!ui.state.updatedAt && toUpload.updatedAt) {
-        ui.state = { ...ui.state, updatedAt: toUpload.updatedAt };
-        saveState(ui.state);
-      }
-      writeConflictAck('local', conflict.local, conflict.remote);
-      ui.syncConflict = null;
-      setSyncLast(new Date().toISOString());
-      ui.sync.status = 'idle';
-      if (!quiet) toast(`已使用本機，雲端舊檔已存成 ${archived.fileName || 'archive'}`);
+      if (!quiet) toast(`已使用本機${result.archiveName ? `，雲端舊檔已存成 ${result.archiveName}` : ''}`);
       render();
       return;
     }
-    const archived = await api.uploadArchive(conflict.local, 'local');
-    if (archived.pending) return;
-    if (!archived.ok) {
+    const result = await pullRemoteBackup(conflict.remote, {
+      archiveLocal: quiet ? null : conflict.local,
+    });
+    if (result.pending) return;
+    if (!result.ok) {
       ui.sync.status = 'error';
-      ui.sync.error = archived.error || '無法備份本機舊檔';
+      ui.sync.error = result.error;
       if (!quiet) toast(ui.sync.error);
       render();
       return;
     }
-    const normalized = normalizeState(conflict.remote);
-    if (!normalized.ok) {
-      ui.sync.status = 'error';
-      ui.sync.error = normalized.error || '雲端備份無法讀取';
-      if (!quiet) toast(ui.sync.error);
-      render();
-      return;
-    }
-    const keepRemote = await api.uploadBackup(conflict.remote);
-    if (keepRemote.pending) return;
-    if (!keepRemote.ok) {
-      ui.sync.status = 'error';
-      ui.sync.error = keepRemote.error;
-      if (!quiet) toast(keepRemote.error);
-      render();
-      return;
-    }
-    commit(normalized.state, { keepStamp: true, skipSync: true });
-    writeConflictAck('remote', conflict.local, conflict.remote);
-    ui.syncConflict = null;
-    setSyncLast(new Date().toISOString());
-    ui.sync.status = 'idle';
-    if (!quiet) toast(`已使用雲端，本機舊檔已存成 ${archived.fileName || 'archive'}`);
+    if (!quiet) toast(`已使用雲端${result.archiveName ? `，本機舊檔已存成 ${result.archiveName}` : ''}`);
     render();
   } catch (error) {
     ui.sync.status = 'error';
@@ -501,45 +533,63 @@ async function syncWithOneDrive(options = {}) {
         return;
       }
       if (!downloaded.payload) {
-        const uploaded = await api.uploadBackup(localPayload);
-        if (uploaded.pending) return;
-        if (!uploaded.ok) {
+        const result = await pushLocalBackup(localForSync);
+        if (result.pending) return;
+        if (!result.ok) {
           ui.sync.status = 'error';
-          ui.sync.error = uploaded.error;
-          if (!options.quiet) toast(uploaded.error);
+          ui.sync.error = result.error;
+          if (!options.quiet) toast(result.error);
           return;
         }
-        if (!ui.state.updatedAt) {
-          ui.state = { ...ui.state, updatedAt: localPayload.updatedAt };
-          saveState(ui.state);
-        }
-        ui.syncConflict = null;
-        setSyncLast(new Date().toISOString());
-        ui.sync.status = 'idle';
         if (!options.quiet) toast('已同步到 OneDrive');
         return;
       }
       if (!backupsDiffer(localForSync, downloaded.payload)) {
-        clearConflictAck();
+        writeSyncBaseline(localForSync);
+        clearDismissedRemote();
         ui.syncConflict = null;
         setSyncLast(new Date().toISOString());
         ui.sync.status = 'idle';
         if (!options.quiet) toast('已是最新');
         return;
       }
-      const decision = conflictPromptDecision(readConflictAck(), localForSync, downloaded.payload, {
-        quiet: options.quiet,
-      });
-      if (decision === 'skip') {
+      if (options.quiet && readDismissedRemote() && readDismissedRemote() === backupFingerprint(downloaded.payload)) {
         ui.syncConflict = null;
         ui.sync.status = 'idle';
         return;
       }
-      if (decision === 'local' || decision === 'remote') {
-        await resolveSyncConflict(decision, {
-          quiet: true,
-          conflict: { local: localForSync, remote: downloaded.payload },
-        });
+      const decision = syncMergeDecision(localForSync, downloaded.payload, readSyncBaseline(), {
+        quiet: options.quiet,
+      });
+      if (decision === 'equal' || decision === 'skip') {
+        if (decision === 'equal') writeSyncBaseline(localForSync);
+        ui.syncConflict = null;
+        ui.sync.status = 'idle';
+        return;
+      }
+      if (decision === 'push-local') {
+        const result = await pushLocalBackup(localForSync);
+        if (result.pending) return;
+        if (!result.ok) {
+          ui.sync.status = 'error';
+          ui.sync.error = result.error;
+          if (!options.quiet) toast(result.error);
+          return;
+        }
+        if (!options.quiet) toast('已同步到 OneDrive');
+        return;
+      }
+      if (decision === 'pull-remote') {
+        const result = await pullRemoteBackup(downloaded.payload);
+        if (result.pending) return;
+        if (!result.ok) {
+          ui.sync.status = 'error';
+          ui.sync.error = result.error;
+          if (!options.quiet) toast(result.error);
+          return;
+        }
+        if (!options.quiet) toast('已從 OneDrive 更新');
+        render();
         return;
       }
       openSyncConflict(localForSync, downloaded.payload);
@@ -580,11 +630,11 @@ function syncPanelHtml() {
       ? esc(sync.error)
       : `上次同步：${esc(formatSyncTime(sync.lastAt))}`;
   const conflictNote = ui.syncConflict
-    ? '<p class="warn">本機與雲端不同，請在跳出的視窗選擇要保留哪一邊。被蓋掉的那份會先存成 OneDrive 封存檔。</p>'
+    ? '<p class="warn">兩邊都在上次同步後改過，請選要保留哪一邊。被蓋掉的那份會先存成 OneDrive 封存檔。</p>'
     : '';
   const accountLine = sync.signedIn
     ? `<p class="muted">已連接：${esc(sync.account || 'Microsoft 帳號')}</p>`
-    : '<p class="muted">尚未連接。連接後會比對本機與 OneDrive；兩邊不同時會詢問要用哪一邊，並先封存舊檔再覆蓋。</p>';
+    : '<p class="muted">尚未連接。連接後本機的新增／修改會自動上傳；只有兩邊都改過、無法自動判斷時才會詢問。</p>';
   return `
     <article class="panel" data-sync-panel style="padding:14px;margin-bottom:12px">
       <h3>OneDrive 同步</h3>
