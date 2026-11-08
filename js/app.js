@@ -1609,7 +1609,7 @@ function memberCard(team, member, slot, current) {
           <span class="tag">${TEAM_POSITIONS[slot]}</span>
           ${general ? `
             <button type="button" class="member-name" data-action="open-general" data-team="${esc(team.id)}" data-slot="${slot}" aria-label="替換${esc(plainName(general))}">${esc(plainName(general))}${duweiMark(general)}</button>
-            <span class="member-meta">${campInk(general.camp)} · ${Number.isInteger(general.cost) ? `C${general.cost}` : '統御待核'}${isDuwei(general) ? '（天賦可 +1）' : ''} · ${esc(general.role || '定位待核')}</span>
+            <span class="member-meta">${campInk(general.camp)} · ${Number.isInteger(general.cost) ? `C${general.cost}` : '統御待核'}${isDuwei(general) ? '（天賦可 +1）' : ''}${general.role ? ` · ${esc(general.role)}` : ''}</span>
             <div class="apt-row">${aptHtml(general, current)}</div>
             ${marks ? `<div class="member-marks">${marks}</div>` : ''}
             ${meritNames.length ? `<div class="member-marks">${meritNames.map((name) => `<span class="mini">${esc(name)}</span>`).join('')}</div>` : ''}

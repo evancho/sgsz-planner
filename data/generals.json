@@ -4010,7 +4010,7 @@
       "quality": "名將",
       "collection": false,
       "dynamic": true,
-      "awaken": null,
+      "awaken": false,
       "apt": {
         "騎": "C",
         "盾": "C",
@@ -4033,8 +4033,8 @@
       "role": "軍事",
       "quality": "名將",
       "collection": false,
-      "dynamic": null,
-      "awaken": null,
+      "dynamic": true,
+      "awaken": false,
       "apt": {
         "騎": "A",
         "盾": "B",

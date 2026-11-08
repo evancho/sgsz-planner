@@ -492,6 +492,8 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(heshi.status, '已核');
   assert.equal(heshi.apt.弓, '待核');
   assert.equal(heshi.apt.騎, 'C');
+  assert.equal(heshi.dynamic, true);
+  assert.equal(heshi.awaken, false);
   assert.equal(heshi.note, '');
   assert.equal(heshi.sourceUrl, '');
   assert.equal(heshi.debutScenario, 'hanyan');
@@ -511,8 +513,8 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(fitsScenario(y40, 'yingxiong'), true);
   assert.equal(fitsScenario(y40, 'hanyan'), true);
   assert.equal(y40.innate, '天威嘯陣');
-  assert.equal(y40.dynamic, null);
-  assert.equal(y40.awaken, null);
+  assert.equal(y40.dynamic, true);
+  assert.equal(y40.awaken, false);
   const liangCosts = {
     baoxin: 5,
     liuzhang: 3,
