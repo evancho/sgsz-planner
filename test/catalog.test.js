@@ -10,10 +10,12 @@ const bingshu = JSON.parse(readFileSync(new URL('../data/bingshu.json', import.m
 const appRelease = JSON.parse(readFileSync(new URL('../data/version.json', import.meta.url)));
 
 test('catalog files share one version', () => {
-  assert.equal(meta.catalogVersion, '1.2.8');
+  assert.equal(meta.catalogVersion, '1.2.9');
   assert.equal(generalsFile.catalogVersion, meta.catalogVersion);
   assert.equal(tacticsFile.catalogVersion, meta.catalogVersion);
   assert.equal(bingshu.catalogVersion, meta.catalogVersion);
+  const scenario = JSON.parse(readFileSync(new URL('../data/scenario.json', import.meta.url)));
+  assert.equal(scenario.catalogVersion, meta.catalogVersion);
   const sw = readFileSync(new URL('../sw.js', import.meta.url), 'utf8');
   assert.match(sw, new RegExp(`const CACHE = 'sgsz-planner-${appRelease.version.replaceAll('.', '\\.')}'`));
 });
@@ -232,4 +234,62 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(wufeng.rank, 'S');
   assert.equal(byName.get('千里走單騎').id, 'qianli');
   assert.equal(byName.has('千里單騎'), false);
+
+  const huijun = byName.get('麾軍結陣');
+  assert.equal(huijun.source, '事件');
+  assert.equal(huijun.scenarios, undefined);
+  for (const tactic of tacticsFile.tactics) {
+    if (tactic.variant === '拓' || tactic.variant === '精') {
+      assert.deepEqual(tactic.scenarios, ['yingxiong'], tactic.id);
+      assert.equal(tactic.status, '待核', tactic.id);
+      assert.equal(tactic.sourceUrl, '', tactic.id);
+      assert.equal(tactic.scenarios.includes('hanyan'), false, tactic.id);
+    } else {
+      assert.equal(tactic.scenarios, undefined, tactic.id);
+    }
+  }
+  const scenario = JSON.parse(readFileSync(new URL('../data/scenario.json', import.meta.url)));
+  assert.equal(scenario.merits[0].id, 'xunbing');
+  assert.equal(scenario.merits[0].status, '待核');
+  assert.deepEqual(scenario.merits[0].scenarios, ['hanyan']);
+  assert.deepEqual(scenario.merits[0].limits, { account: 2, team: 1 });
+  assert.equal(scenario.merits[0].excludes.length, 0);
+  assert.equal(scenario.recommended.length, 53);
+  const official = scenario.recommended.filter((team) => team.origin !== 'bahamut');
+  const bahamut = scenario.recommended.filter((team) => team.origin === 'bahamut');
+  assert.equal(official.length, 16);
+  assert.equal(official.every((team) => team.status === '待核' && team.scenario === 'hanyan' && team.tricks.length === 5 && team.note.startsWith('整理站內容已核，官方原圖待核')), true);
+  assert.match(official.find((team) => team.id === 'hanyan-dudu').note, /合圍突擊/);
+  assert.match(official.find((team) => team.id === 'hanyan-dudu').note, /合圍夾擊/);
+  assert.equal(bahamut.length, 37);
+  assert.equal(bahamut.every((team) => team.originLabel === '巴哈玩家版' && team.author && /^https:\/\/forum\.gamer\.com\.tw\//.test(team.source)), true);
+  const verifiedIds = [
+    'baha-a-xuyou', 'baha-a-huangfu', 'baha-a-chengpu',
+    'baha-b-gong-1', 'baha-b-gong-2', 'baha-b-gong-3', 'baha-b-xunyou-1', 'baha-b-xunyou-2', 'baha-b-jiaxu-2',
+    'baha-c-fugui', 'baha-c-roudu',
+    'baha-d-dahan', 'baha-d-taishi', 'baha-d-qianlong-fa', 'baha-d-shuzhi', 'baha-d-huangma',
+    'baha-d-qiaoliao', 'baha-d-saozi', 'baha-d-kangkai', 'baha-d-wenhou', 'baha-d-pengci',
+  ];
+  assert.equal(verifiedIds.every((id) => bahamut.find((team) => team.id === id)?.status === '已核'), true);
+  assert.equal(bahamut.find((team) => team.id === 'baha-b-jiaxu-1').note.includes('刮骨療毒'), true);
+  assert.equal(bahamut.find((team) => team.id === 'baha-c-fadao').status, '待核');
+  assert.match(bahamut.find((team) => team.id === 'baha-c-qiaoliao').note, /無雙/);
+  assert.match(bahamut.find((team) => team.id === 'baha-d-qianlong-diao').note, /剛柔/);
+  assert.match(bahamut.find((team) => team.id === 'baha-d-40lv').note, /波浪推秦/);
+  assert.equal(bahamut.find((team) => team.id === 'baha-d-40lv').tricks.length, 6);
+  assert.equal(bahamut.find((team) => team.id === 'baha-d-40lv').applyReady, false);
+  assert.match(bahamut.find((team) => team.id === 'baha-d-faguan').note, /SP關於/);
+  assert.match(bahamut.find((team) => team.id === 'baha-d-wumou').note, /荀攸/);
+  assert.equal(bahamut.filter((team) => team.status === '已核').length, 21);
+  assert.equal(generalsFile.generals.every((general) => general.status === '已核' && general.sourceUrl === ''), true);
+  assert.equal(byName.get('麾軍結陣').status, '已核');
+  assert.equal(scenario.weapons.length, 0);
+  assert.equal(scenario.treasures, undefined);
+  const pangtong = scenario.recommended.find((team) => team.id === 'hanyan-pangtong-gong');
+  assert.equal(pangtong.members[0].remark, '替代選項：盛氣凌敵');
+  assert.equal(pangtong.members[0].learned.includes('shengqi'), false);
+  const xuyou = scenario.recommended.find((team) => team.id === 'hanyan-qianlong-lvbu').members[0];
+  assert.deepEqual(xuyou.traits, ['靈動', '出奇']);
+  assert.deepEqual(xuyou.aptNeed, { troop: '弓', letter: 'S' });
+  assert.equal(scenario.recommended.filter((team) => team.officialSource).length, 8);
 });

@@ -1,0 +1,3349 @@
+{
+  "catalogVersion": "1.2.9",
+  "weapons": [],
+  "merits": [
+    {
+      "id": "xunbing",
+      "name": "訓兵振旅",
+      "scenarios": [
+        "hanyan"
+      ],
+      "status": "待核",
+      "sourceUrl": "",
+      "note": "",
+      "excludes": [],
+      "limits": {
+        "account": 2,
+        "team": 1
+      },
+      "effect": {
+        "kind": "apt",
+        "letter": "S",
+        "troops": null,
+        "skipTags": [
+          "仙人"
+        ]
+      }
+    }
+  ],
+  "recommended": [
+    {
+      "id": "hanyan-dahan-gong",
+      "scenario": "hanyan",
+      "title": "大漢弓",
+      "status": "待核",
+      "strategy": [
+        "整軍"
+      ],
+      "tricks": [
+        "芒碭隱蹤",
+        "沛縣聚義",
+        "約法三章",
+        "鴻門遁險",
+        "推食解衣"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-dahan-gong",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "SP曹操",
+          "learned": [
+            null,
+            "gangrou-ji"
+          ],
+          "learnedNames": [
+            "桃園結義",
+            "剛柔並濟"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          }
+        },
+        {
+          "generalId": "sp-luzhi",
+          "generalName": "SP盧植",
+          "learned": [
+            "yanxing",
+            "xiandeng"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "先登死士"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          }
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            "shencang",
+            "luli"
+          ],
+          "learnedNames": [
+            "深藏若虛",
+            "戮力同心"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          }
+        }
+      ],
+      "officialSource": "https://www.facebook.com/100064157226677/posts/1549258503889376/"
+    },
+    {
+      "id": "hanyan-sanshi-lvbu",
+      "scenario": "hanyan",
+      "title": "三勢40Y呂布盾",
+      "status": "待核",
+      "strategy": [
+        "強攻"
+      ],
+      "tricks": [
+        "橫掃河西",
+        "追亡逐北",
+        "博浪椎秦",
+        "臨危不懼",
+        "壯志不絕"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-sanshi-lvbu-dun",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40Y呂布",
+          "learned": [
+            "xueren",
+            "chenmu"
+          ],
+          "learnedNames": [
+            "血刃爭鋒",
+            "瞋目橫矛"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "shiruo",
+            "secondary": [
+              "jiuzhan",
+              "yanxu"
+            ]
+          }
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            "xushidai",
+            "tengjia"
+          ],
+          "learnedNames": [
+            "蓄勢待發",
+            "藤甲兵"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          }
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            "sanshi",
+            "linwei"
+          ],
+          "learnedNames": [
+            "三勢陣",
+            "臨危救主"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          }
+        }
+      ],
+      "officialSource": "https://www.facebook.com/100064157226677/posts/1549258503889376/"
+    },
+    {
+      "id": "hanyan-huangma",
+      "scenario": "hanyan",
+      "title": "皇馬槍",
+      "status": "待核",
+      "strategy": [
+        "強攻"
+      ],
+      "tricks": [
+        "橫掃河西",
+        "封狼居胥",
+        "摧鋒陷敵",
+        "斬逆納降",
+        "追亡逐北"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-huangma-qiang",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "摧鋒斷刃"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          }
+        },
+        {
+          "generalId": "sp-huangfusong",
+          "generalName": "SP皇甫嵩",
+          "learned": [
+            "caochuan",
+            "wanjun"
+          ],
+          "learnedNames": [
+            "草船借箭",
+            "萬軍奪帥"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "shenshi",
+            "secondary": [
+              "kaihe",
+              "fenli"
+            ]
+          }
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            "linwei",
+            "jiefan"
+          ],
+          "learnedNames": [
+            "臨危救主",
+            "解煩衛"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          }
+        }
+      ],
+      "officialSource": "https://www.facebook.com/100064157226677/posts/1549258503889376/"
+    },
+    {
+      "id": "hanyan-faguan",
+      "scenario": "hanyan",
+      "title": "法關盾",
+      "status": "待核",
+      "strategy": [
+        "襲擾"
+      ],
+      "tricks": [
+        "設伏十面",
+        "背水列陣",
+        "楚歌四起",
+        "治延軍勢",
+        "多多益善"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-fa-guan-dun",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "learned": [
+            "yigua",
+            null
+          ],
+          "learnedNames": [
+            "以寡敵眾",
+            "藏器待時"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          }
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            "xushidai",
+            "feigong"
+          ],
+          "learnedNames": [
+            "蓄勢待發",
+            "非攻制勝"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          }
+        },
+        {
+          "generalId": "madai",
+          "generalName": "馬岱",
+          "learned": [
+            "tengjia",
+            "yulin"
+          ],
+          "learnedNames": [
+            "藤甲兵",
+            "魚鱗陣"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "remark": "可換無雙星彩"
+        }
+      ],
+      "officialSource": "https://www.facebook.com/100064157226677/posts/1549258503889376/"
+    },
+    {
+      "id": "hanyan-wumou",
+      "scenario": "hanyan",
+      "title": "五謀騎",
+      "status": "待核",
+      "strategy": [
+        "謀算"
+      ],
+      "tricks": [
+        "設伏十面",
+        "背水列陣",
+        "楚歌四起",
+        "多多益善",
+        "合圍夾擊"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-wumou-qi",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "learnedNames": [
+            "竭力佐謀",
+            "刮骨療毒"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          }
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "上兵伐謀"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          }
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "learned": [
+            "lingji",
+            "luli"
+          ],
+          "learnedNames": [
+            "靈機一動",
+            "戮力同心"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          }
+        }
+      ],
+      "officialSource": "https://www.facebook.com/100064157226677/posts/1549258503889376/"
+    },
+    {
+      "id": "hanyan-erqiao",
+      "scenario": "hanyan",
+      "title": "二喬弓",
+      "status": "待核",
+      "strategy": [
+        "強攻"
+      ],
+      "tricks": [
+        "橫掃河西",
+        "諫封示公",
+        "博浪椎秦",
+        "封狼居胥",
+        "追亡逐北"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-erqiao-gong",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "wushuang-daqiao",
+          "generalName": "無雙大喬",
+          "learned": [
+            "meihuo",
+            "duxing"
+          ],
+          "learnedNames": [
+            "魅惑",
+            "獨行赴斗"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          }
+        },
+        {
+          "generalId": "sunshangxiang",
+          "generalName": "孫尚香",
+          "learned": [
+            "dangfeng",
+            "sucheng"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "速乘其利"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "cangdao",
+              "shengzhan"
+            ]
+          }
+        },
+        {
+          "generalId": "wushuang-xiaoqiao",
+          "generalName": "無雙小喬",
+          "learned": [
+            "caochuan",
+            "linwei"
+          ],
+          "learnedNames": [
+            "草船借箭",
+            "臨危救主"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "zhenge",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          }
+        }
+      ],
+      "officialSource": "https://www.facebook.com/100064157226677/posts/1549258503889376/"
+    },
+    {
+      "id": "hanyan-dudu",
+      "scenario": "hanyan",
+      "title": "都督弓",
+      "status": "待核",
+      "strategy": [
+        "襲擾"
+      ],
+      "tricks": [
+        "設伏十面",
+        "背水列陣",
+        "治延軍勢",
+        "多多益善",
+        "合圍夾擊"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-dudu-gong",
+      "note": "整理站內容已核，官方原圖待核。原圖寫「合圍突擊」，整理站推定為合圍夾擊。",
+      "members": [
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "learned": [
+            "duohun",
+            "luli"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "戮力同心"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wentao",
+              "shengzhan"
+            ]
+          }
+        },
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "learned": [
+            "gongbu",
+            "wanjun"
+          ],
+          "learnedNames": [
+            "功不唐捐",
+            "萬軍奪帥"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "jingzhun",
+              "fenli"
+            ]
+          }
+        },
+        {
+          "generalId": "sp-lvmeng",
+          "generalName": "SP呂蒙",
+          "learned": [
+            "caochuan",
+            "dangfeng"
+          ],
+          "learnedNames": [
+            "草船借箭",
+            "當鋒摧決"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "cangdao",
+              "wulue"
+            ]
+          }
+        }
+      ],
+      "officialSource": "https://www.facebook.com/100064157226677/posts/1549258503889376/"
+    },
+    {
+      "id": "hanyan-qilin",
+      "scenario": "hanyan",
+      "title": "麒麟弓",
+      "status": "待核",
+      "strategy": [
+        "謀算"
+      ],
+      "tricks": [
+        "設伏十面",
+        "楚歌四起",
+        "背水列陣",
+        "多多益善",
+        "博浪椎秦"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-qilin-gong",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "learned": [
+            "duohun",
+            "beishe"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "杯蛇鬼車"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          }
+        },
+        {
+          "generalId": "pangtong",
+          "generalName": "龐統",
+          "learned": [
+            "taiping",
+            "shibie"
+          ],
+          "learnedNames": [
+            "太平道法",
+            "士別三日"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "jiangwei-book",
+              "zhanbu"
+            ]
+          }
+        },
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "learned": [
+            "dangfeng",
+            "guagu"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "刮骨療毒"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "lijun",
+              "chiyuan"
+            ]
+          }
+        }
+      ],
+      "officialSource": "https://www.facebook.com/100064157226677/posts/1549258503889376/"
+    },
+    {
+      "id": "hanyan-lvdiaolu",
+      "scenario": "hanyan",
+      "title": "40Y呂貂盧弓",
+      "status": "待核",
+      "strategy": [
+        "久戰"
+      ],
+      "tricks": [
+        "橫掃河西",
+        "追亡逐北",
+        "鴻門遁險",
+        "沛縣聚義",
+        "約法三章"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-lv-diao-lu-gong",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40Y呂布",
+          "learned": [
+            "xueren",
+            "yinxian"
+          ],
+          "learnedNames": [
+            "血刃爭鋒",
+            "引弦力戰"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "shiruo",
+            "secondary": [
+              "jiuzhan",
+              "yanxu"
+            ]
+          },
+          "traits": [
+            "踩踏",
+            "無雙"
+          ]
+        },
+        {
+          "generalId": "sp-luzhi",
+          "generalName": "SP盧植",
+          "learned": [
+            "yanxing",
+            "gangrou-ji"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "剛柔並濟"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "traits": [
+            "護主",
+            "妖氣"
+          ]
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            "shencang",
+            "luli"
+          ],
+          "learnedNames": [
+            "深藏若虛",
+            "戮力同心"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "traits": [
+            "雍雅",
+            "妖氣"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hanyan-qianlong-lvbu",
+      "scenario": "hanyan",
+      "title": "潛龍呂布弓",
+      "status": "待核",
+      "strategy": [
+        "謀算"
+      ],
+      "tricks": [
+        "背水列陣",
+        "設伏十面",
+        "誘敵離營",
+        "博浪椎秦",
+        "合圍夾擊"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-qianlong-lvbu-gong",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            "qianlong",
+            "linwei"
+          ],
+          "learnedNames": [
+            "潛龍陣",
+            "臨危救主"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "traits": [
+            "靈動",
+            "出奇"
+          ],
+          "aptNeed": {
+            "troop": "弓",
+            "letter": "S"
+          }
+        },
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "learned": [
+            "duohun",
+            "luli"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "戮力同心"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wentao",
+              "shengzhan"
+            ]
+          },
+          "remark": "可換SP郭嘉（兵書以治擊亂、鬼謀、將威，特技出奇）",
+          "traits": [
+            "樂奏",
+            "暴躁"
+          ]
+        },
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "摧鋒斷刃"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "jingzhun",
+              "kaihe"
+            ]
+          },
+          "remark": "轉漢",
+          "traits": [
+            "無雙",
+            "靈動"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hanyan-pangtong-gong",
+      "scenario": "hanyan",
+      "title": "龐統弓",
+      "status": "待核",
+      "strategy": [
+        "謀算"
+      ],
+      "tricks": [
+        "博浪椎秦",
+        "設伏十面",
+        "背水列陣",
+        "多多益善",
+        "楚歌四起"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-pangtong-gong",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "sp-zhugeliang",
+          "generalName": "SP諸葛亮",
+          "learned": [
+            "caochuan",
+            "yanxing"
+          ],
+          "learnedNames": [
+            "草船借箭",
+            "雁行陣"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "remark": "替代選項：盛氣凌敵",
+          "traits": [
+            "靈動",
+            "天機"
+          ]
+        },
+        {
+          "generalId": "guanyu",
+          "generalName": "關羽",
+          "learned": [
+            "qianli",
+            "jueqi"
+          ],
+          "learnedNames": [
+            "千里走單騎",
+            "絕其汲道"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "miaosuan"
+            ]
+          },
+          "traits": [
+            "武聖"
+          ],
+          "aptNeed": {
+            "troop": "弓",
+            "letter": "S"
+          }
+        },
+        {
+          "generalId": "pangtong",
+          "generalName": "龐統",
+          "learned": [
+            "fenzui",
+            "beishe"
+          ],
+          "learnedNames": [
+            "焚輜營壘",
+            "杯蛇鬼車"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "traits": [
+            "靈動"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hanyan-taiwei",
+      "scenario": "hanyan",
+      "title": "太尉盾",
+      "status": "待核",
+      "strategy": [
+        "整軍"
+      ],
+      "tricks": [
+        "芒碭隱蹤",
+        "推食解衣",
+        "沛縣聚義",
+        "博浪椎秦",
+        "敗中求生"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-taiwei-dun",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "simayi",
+          "generalName": "司馬懿",
+          "learned": [
+            "zhongzhi",
+            "hantian"
+          ],
+          "learnedNames": [
+            "眾志成城",
+            "熯天熾地"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "traits": [
+            "長慮",
+            "擐甲"
+          ]
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "learned": [
+            "meihuo",
+            "tengjia"
+          ],
+          "learnedNames": [
+            "魅惑",
+            "藤甲兵"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "traits": [
+            "援助"
+          ]
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "learned": [
+            "xushidai",
+            "guagu"
+          ],
+          "learnedNames": [
+            "蓄勢待發",
+            "刮骨療毒"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "traits": [
+            "靈動"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hanyan-beifa",
+      "scenario": "hanyan",
+      "title": "北伐盾",
+      "status": "待核",
+      "strategy": [
+        "整軍"
+      ],
+      "tricks": [
+        "沛縣聚義",
+        "芒碭隱蹤",
+        "博浪椎秦",
+        "定計安儲",
+        "敗中求生"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-beifa-dun",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "sp-zhugeliang",
+          "generalName": "SP諸葛亮",
+          "learned": [
+            "xushidai",
+            "caochuan"
+          ],
+          "learnedNames": [
+            "蓄勢待發",
+            "草船借箭"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "remark": "替代選項：知己知彼",
+          "traits": [
+            "靈動",
+            "天機"
+          ],
+          "aptNeed": {
+            "troop": "盾",
+            "letter": "S"
+          }
+        },
+        {
+          "generalId": "guanxing",
+          "generalName": "關興",
+          "learned": [
+            null,
+            "qianli"
+          ],
+          "learnedNames": [
+            "藏器待時",
+            "千里走單騎"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "traits": [
+            "龍驤",
+            "靈動"
+          ],
+          "aptNeed": {
+            "troop": "盾",
+            "letter": "S"
+          }
+        },
+        {
+          "generalId": "zhangbao",
+          "generalName": "張苞",
+          "learned": [
+            "futang",
+            "feigong"
+          ],
+          "learnedNames": [
+            "赴湯蹈火",
+            "非攻制勝"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "zhenge",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "traits": [
+            "虎峙",
+            "靈動"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hanyan-hedan",
+      "scenario": "hanyan",
+      "title": "核彈張",
+      "status": "待核",
+      "strategy": [
+        "謀算"
+      ],
+      "tricks": [
+        "設伏十面",
+        "背水列陣",
+        "博浪椎秦",
+        "楚歌四起",
+        "定計安儲"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-hedan-zhang",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "learned": [
+            "qianlong",
+            "shengqi"
+          ],
+          "learnedNames": [
+            "潛龍陣",
+            "盛氣凌敵"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "shoushi",
+              "tiejia"
+            ]
+          },
+          "traits": [
+            "靈動",
+            "護主"
+          ]
+        },
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "learned": [
+            "gangyong",
+            "jifeng"
+          ],
+          "learnedNames": [
+            "剛勇無前",
+            "疾風驟雨"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yitui",
+            "secondary": [
+              "jingzhun",
+              "chizhong"
+            ]
+          },
+          "traits": [
+            "雄烈"
+          ]
+        },
+        {
+          "generalId": "sp-yuanshao",
+          "generalName": "SP袁紹",
+          "learned": [
+            "hengsao",
+            "xianzhen"
+          ],
+          "learnedNames": [
+            "橫掃千軍",
+            "陷陣營"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "shengzhan",
+              "zhirui"
+            ]
+          },
+          "traits": [
+            "號令"
+          ],
+          "aptNeed": {
+            "troop": "盾",
+            "letter": "S"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hanyan-kangkai",
+      "scenario": "hanyan",
+      "title": "慷慨弓",
+      "status": "待核",
+      "strategy": [
+        "強攻"
+      ],
+      "tricks": [
+        "封狼居胥",
+        "摧鋒陷敵",
+        "定計安儲",
+        "壯志不絕",
+        "追亡逐北"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-kangkai-gong",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "ganning",
+          "generalName": "甘寧",
+          "learned": [
+            "caochuan",
+            "jinfan"
+          ],
+          "learnedNames": [
+            "草船借箭",
+            "錦帆軍"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "traits": [
+            "華服"
+          ]
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "摧鋒斷刃"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "traits": [
+            "靈動"
+          ]
+        },
+        {
+          "generalId": "sp-lvmeng",
+          "generalName": "SP呂蒙",
+          "learned": [
+            "yanxing",
+            "linwei"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "臨危救主"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "traits": [
+            "踩踏"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hanyan-sanxian",
+      "scenario": "hanyan",
+      "title": "三仙飛熊",
+      "status": "待核",
+      "strategy": [
+        "謀算"
+      ],
+      "tricks": [
+        "設伏十面",
+        "楚歌四起",
+        "背水列陣",
+        "暗度陳倉",
+        "功成身退"
+      ],
+      "source": "https://sgsdeck.com/recommended/s27-official-sanxian-feixiong",
+      "note": "整理站內容已核，官方原圖待核",
+      "members": [
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "learned": [
+            "taiping",
+            "shangbing"
+          ],
+          "learnedNames": [
+            "太平道法",
+            "上兵伐謀"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "traits": [
+            "天公",
+            "靈動"
+          ],
+          "aptNeed": {
+            "troop": "騎",
+            "letter": "S"
+          }
+        },
+        {
+          "generalId": "yuji",
+          "generalName": "于吉",
+          "learned": [
+            "fengshi",
+            "feixiong"
+          ],
+          "learnedNames": [
+            "鋒矢陣",
+            "飛熊軍"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "traits": [
+            "行雨"
+          ]
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "learnedNames": [
+            "竭力佐謀",
+            "刮骨療毒"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "jiuzhu",
+              "lijun"
+            ]
+          },
+          "traits": [
+            "奇門"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "baha-a-xuyou",
+      "scenario": "hanyan",
+      "title": "許攸版本",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "我三弟無敵",
+      "authorAccount": "helven",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11645",
+      "postedAt": "2026-10-31 13:04:04",
+      "strategy": [],
+      "tricks": [
+        "韜晦",
+        "背水",
+        "十面",
+        "長安",
+        "多多"
+      ],
+      "note": "作者稱輸出上限高、防速攻較弱。血刃可換的寫法不另開隊伍。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40呂",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "藏器、血刃",
+          "bingshuRaw": "蠻勇武略執銳／示敵百戰掩虛",
+          "remark": "全兵種S"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp法",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "蓄勢、三勢",
+          "bingshuRaw": "三軍統軍錘鍊"
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "藤甲、臨危",
+          "bingshuRaw": "三軍統軍錘鍊",
+          "remark": "盾散"
+        }
+      ]
+    },
+    {
+      "id": "baha-a-huangfu",
+      "scenario": "hanyan",
+      "title": "皇甫版本",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "我三弟無敵",
+      "authorAccount": "helven",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11645",
+      "postedAt": "2026-10-31 13:04:04",
+      "strategy": [],
+      "tricks": [
+        "韜晦",
+        "背水",
+        "十面",
+        "長安",
+        "多多"
+      ],
+      "note": "",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40呂",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "藏器、血刃",
+          "bingshuRaw": "蠻勇武略執銳／示敵百戰掩虛",
+          "remark": "全兵種S"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp法",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "蓄勢、三勢",
+          "bingshuRaw": "三軍統軍錘鍊"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp皇",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "藤甲、臨危",
+          "bingshuRaw": "援其勵軍掩虛",
+          "remark": "盾散＋群"
+        }
+      ]
+    },
+    {
+      "id": "baha-a-chengpu",
+      "scenario": "hanyan",
+      "title": "程普（松鼠）版本",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "我三弟無敵",
+      "authorAccount": "helven",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11645",
+      "postedAt": "2026-10-31 13:04:04",
+      "strategy": [],
+      "tricks": [
+        "韜晦",
+        "背水",
+        "十面",
+        "月下",
+        "多多"
+      ],
+      "note": "控制與坦度取向。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40呂",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "藏器、文武",
+          "bingshuRaw": "蠻勇武略執銳／示敵百戰掩虛",
+          "remark": "全兵種S"
+        },
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "藤甲、臨危",
+          "bingshuRaw": "無戰守勢防備"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp法",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "蓄勢、轉形一",
+          "bingshuRaw": "三軍統軍錘鍊"
+        }
+      ]
+    },
+    {
+      "id": "baha-b-gong-1",
+      "scenario": "hanyan",
+      "title": "漢弓／第一套配置",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "你看星星无数",
+      "authorAccount": "f472xz256x",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647",
+      "postedAt": "2026-10-31 11:33:26",
+      "strategy": [],
+      "tricks": [],
+      "note": "45～48級穩定性取向；曹操2速貼盧植。兵書、方略、奇略原文未寫。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "sp曹操",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "草船借箭、剛柔並濟"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp盧植",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "雁行陣、先登死士",
+          "remark": "1速"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp貂蟬",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "深藏若虛、戮力同心"
+        }
+      ]
+    },
+    {
+      "id": "baha-b-gong-2",
+      "scenario": "hanyan",
+      "title": "漢弓／第二套配置",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "你看星星无数",
+      "authorAccount": "f472xz256x",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647",
+      "postedAt": "2026-10-31 11:33:26",
+      "strategy": [],
+      "tricks": [],
+      "note": "建議48級後。深藏與移花按環境互換。兵書、方略、奇略原文未寫。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "sp曹操",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "剛柔並濟、桃園結義"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp盧植",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "雁行陣、先登死士"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp貂蟬",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "移花接木、戮力同心"
+        }
+      ]
+    },
+    {
+      "id": "baha-b-gong-3",
+      "scenario": "hanyan",
+      "title": "漢弓／第三套配置",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "你看星星无数",
+      "authorAccount": "f472xz256x",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647",
+      "postedAt": "2026-10-31 11:33:26",
+      "strategy": [],
+      "tricks": [],
+      "note": "速度盧植＞貂蟬＞曹操。兵書、方略、奇略原文未寫。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "sp曹操",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "草船借箭／桃園結義、先登死士",
+          "remark": "原文適用有雍雅沉重"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp貂蟬",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "深藏若虛、戮力同心"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp盧植",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "雁行陣、剛柔並濟"
+        }
+      ]
+    },
+    {
+      "id": "baha-b-xunyou-1",
+      "scenario": "hanyan",
+      "title": "旬攸版五謀／第一配置",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "你看星星无数",
+      "authorAccount": "f472xz256x",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647",
+      "postedAt": "2026-10-31 11:33:26",
+      "strategy": [],
+      "tricks": [],
+      "note": "錯字保持原文。轉獅子未定正式全名。兵書、方略、奇略原文未寫。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "sp荀彧",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "靈機一動、刮骨療毒",
+          "remark": "1速"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp郭嘉",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "奪魂攜魄、當鋒催決",
+          "remark": "貼速"
+        },
+        {
+          "generalId": "xunyou",
+          "generalName": "荀攸",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "轉獅子、上兵伐謀"
+        }
+      ]
+    },
+    {
+      "id": "baha-b-xunyou-2",
+      "scenario": "hanyan",
+      "title": "旬攸版五謀／有戮力同心的配置",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "你看星星无数",
+      "authorAccount": "f472xz256x",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647",
+      "postedAt": "2026-10-31 11:33:26",
+      "strategy": [],
+      "tricks": [],
+      "note": "兵書、方略、奇略原文未寫。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "sp荀彧",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "戮力同心、刮骨療毒"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp郭嘉",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "奪魂攜魄、當鋒催決"
+        },
+        {
+          "generalId": null,
+          "generalName": "旬攸",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "靈機一動、上兵伐謀",
+          "remark": "旬攸推定為荀攸，未綁圖鑑"
+        }
+      ]
+    },
+    {
+      "id": "baha-b-jiaxu-1",
+      "scenario": "hanyan",
+      "title": "賈詡／48級後第一配置",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "你看星星无数",
+      "authorAccount": "f472xz256x",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647",
+      "postedAt": "2026-10-31 11:33:26",
+      "strategy": [],
+      "tricks": [],
+      "note": "同隊SP荀彧與賈詡均帶刮骨療毒；原文確如此，不能自行改另一格。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "sp荀彧",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "靈機一動、刮骨療毒"
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "刮骨療毒、上兵伐謀"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp郭嘉",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "奪魂攜魄、當鋒催決"
+        }
+      ]
+    },
+    {
+      "id": "baha-b-jiaxu-2",
+      "scenario": "hanyan",
+      "title": "賈詡／48級後第二配置",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "你看星星无数",
+      "authorAccount": "f472xz256x",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647",
+      "postedAt": "2026-10-31 11:33:26",
+      "strategy": [],
+      "tricks": [],
+      "note": "作者建議48級後可轉賈詡。兵書、方略、奇略原文未寫。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "sp荀彧",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "戮力同心、刮骨療毒"
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "靈機一動、拓聚石成金"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp郭嘉",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "奪魂攜魄、上兵伐謀"
+        }
+      ]
+    },
+    {
+      "id": "baha-c-fugui",
+      "scenario": "hanyan",
+      "title": "富貴",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "4everfiona",
+      "authorAccount": "feverfiona",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11650",
+      "postedAt": "2026-11-01 23:34:19",
+      "strategy": [],
+      "tricks": [],
+      "note": "沒當鋒可改上兵，荀攸另一格改焚營或靈機一動。方略、奇略原文未寫。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "sp荀彧",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "竭力、刮骨"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp郭嘉",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "奪魂、當峰",
+          "bingshuRaw": "以退＋善戰＋精準"
+        },
+        {
+          "generalId": "xunyou",
+          "generalName": "荀攸",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "轉獅子、上兵"
+        }
+      ]
+    },
+    {
+      "id": "baha-c-fadao",
+      "scenario": "hanyan",
+      "title": "法刀",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "4everfiona",
+      "authorAccount": "feverfiona",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11650",
+      "postedAt": "2026-11-01 23:34:19",
+      "strategy": [],
+      "tricks": [],
+      "note": "正文只寫郭嘉，不能直接確定SP郭嘉；賈詡（荀攸）為替代，不能當同時上陣。卡別待核。",
+      "members": [
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "聚石成金、刮骨"
+        },
+        {
+          "generalId": "guojia",
+          "generalName": "郭嘉",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "奪魂、當鋒",
+          "remark": "前文寫SP郭嘉，本段只寫郭嘉"
+        },
+        {
+          "generalId": null,
+          "generalName": "賈詡（荀攸）",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "轉獅子、戮力同心"
+        }
+      ]
+    },
+    {
+      "id": "baha-c-qiaoliao",
+      "scenario": "hanyan",
+      "title": "喬遼左",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "4everfiona",
+      "authorAccount": "feverfiona",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11650",
+      "postedAt": "2026-11-01 23:34:19",
+      "strategy": [],
+      "tricks": [],
+      "note": "原段只寫大喬，未明寫無雙／SP版本；不得自動綁無雙大喬。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "大喬",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "獨行、衡軛陣",
+          "remark": "版本未明寫，不綁無雙卡"
+        },
+        {
+          "generalId": "zhangliao",
+          "generalName": "張遼",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "當峰、催鋒",
+          "remark": "全屬性S弓"
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "非攻、錦帆軍"
+        }
+      ]
+    },
+    {
+      "id": "baha-c-roudu",
+      "scenario": "hanyan",
+      "title": "肉嘟嘟",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "4everfiona",
+      "authorAccount": "feverfiona",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11650",
+      "postedAt": "2026-11-01 23:34:19",
+      "strategy": [],
+      "tricks": [],
+      "note": "維持前綴與錯字。方略、奇略原文未寫。",
+      "members": [
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "戮力同心、聚石成金",
+          "remark": "不紅可換sp周瑜"
+        },
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "拓鎮厄防拒（功不）、萬軍奪帥"
+        },
+        {
+          "generalId": null,
+          "generalName": "sp呂蒙（程普也可以）",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "雁行陣（當鋒也可以）、草船"
+        }
+      ]
+    },
+    {
+      "id": "baha-c-no1",
+      "scenario": "hanyan",
+      "title": "NO.1 許攸40呂",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "4everfiona",
+      "authorAccount": "feverfiona",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11650",
+      "postedAt": "2026-11-01 23:34:19",
+      "strategy": [],
+      "tricks": [
+        "十面",
+        "借箸",
+        "受書",
+        "安儲",
+        "多多益善"
+      ],
+      "note": "其他兩人戰法未逐格列，不用別的作者配置補齊。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40呂",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "藏器＋血刃／文武／奮突"
+        },
+        {
+          "generalId": null,
+          "generalName": "未逐格列",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": ""
+        },
+        {
+          "generalId": null,
+          "generalName": "未逐格列",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": ""
+        }
+      ]
+    },
+    {
+      "id": "baha-c-no2",
+      "scenario": "hanyan",
+      "title": "NO.2 皇普40呂",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "4everfiona",
+      "authorAccount": "feverfiona",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11650",
+      "postedAt": "2026-11-01 23:34:19",
+      "strategy": [],
+      "tricks": [
+        "十面",
+        "借箸",
+        "受書",
+        "安儲",
+        "多多益善"
+      ],
+      "note": "原文字形保留。其他武將未逐格列。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40呂",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "藏器＋奮突／血刃／文武"
+        },
+        {
+          "generalId": null,
+          "generalName": "皇普",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "",
+          "remark": "可雍雅尾速"
+        },
+        {
+          "generalId": null,
+          "generalName": "未逐格列",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": ""
+        }
+      ]
+    },
+    {
+      "id": "baha-c-no3",
+      "scenario": "hanyan",
+      "title": "NO.3 程普行1陣40呂",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "4everfiona",
+      "authorAccount": "feverfiona",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11650",
+      "postedAt": "2026-11-01 23:34:19",
+      "strategy": [],
+      "tricks": [
+        "十面",
+        "借箸",
+        "受書",
+        "安儲",
+        "多多益善"
+      ],
+      "note": "作者建議49～50級後考慮，不能照別篇補完。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40呂",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": ""
+        },
+        {
+          "generalId": null,
+          "generalName": "法正",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "轉行一陣",
+          "remark": "原文只點名，沒有完整逐格"
+        },
+        {
+          "generalId": "chengpu",
+          "generalName": "程普",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": ""
+        }
+      ]
+    },
+    {
+      "id": "baha-c-hangong",
+      "scenario": "hanyan",
+      "title": "漢弓",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "4everfiona",
+      "authorAccount": "feverfiona",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11650",
+      "postedAt": "2026-11-01 23:34:19",
+      "strategy": [],
+      "tricks": [
+        "約法",
+        "解衣",
+        "聚義",
+        "遁險",
+        "安儲"
+      ],
+      "note": "這段未逐行再標武將，不把推定對應寫成作者已明寫。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "未逐行標武將",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "桃園＋剛柔／雁行＋先登／戮力＋深藏"
+        }
+      ]
+    },
+    {
+      "id": "baha-c-huangma",
+      "scenario": "hanyan",
+      "title": "皇馬",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "4everfiona",
+      "authorAccount": "feverfiona",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11650",
+      "postedAt": "2026-11-01 23:34:19",
+      "strategy": [],
+      "tricks": [],
+      "note": "沒有完整三人配置。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "未逐格列",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "槍萬軍可承敵替換；弓錦番軍換解凡，可雁行；盾需蓄勢"
+        }
+      ]
+    },
+    {
+      "id": "baha-c-pengci",
+      "scenario": "hanyan",
+      "title": "碰瓷隊伍",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "4everfiona",
+      "authorAccount": "feverfiona",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11650",
+      "postedAt": "2026-11-01 23:34:19",
+      "strategy": [],
+      "tricks": [],
+      "note": "每次約65%兵出門。作者說要精準＋善戰。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "周泰",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "",
+          "remark": "未完整兩戰法"
+        },
+        {
+          "generalId": null,
+          "generalName": "張飛",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "",
+          "remark": "雄烈；未完整兩戰法"
+        },
+        {
+          "generalId": null,
+          "generalName": "袁術（sp朱）",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "上兵＋焚營（轉獅子）"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-dahan",
+      "scenario": "hanyan",
+      "title": "大漢弓",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "推衣解食",
+        "沛縣聚義",
+        "約法三章",
+        "鴻門遇險",
+        "茫蕩隱蹤"
+      ],
+      "note": "漢弓多可先帶移花接木。兵書、方略原文未寫。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "SP曹操",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "桃園結義、剛柔並濟"
+        },
+        {
+          "generalId": "sp-luzhi",
+          "generalName": "SP盧植",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "先登死士、雁形陣",
+          "remark": "1速"
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "勠力同心、深藏若虛"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-taishi",
+      "scenario": "hanyan",
+      "title": "太師弓",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "推衣解食",
+        "沛縣聚義",
+        "約法三章",
+        "鴻門遇險",
+        "茫蕩隱蹤"
+      ],
+      "note": "沒有抽滿SP曹操的替代。兵書、方略原文未寫。",
+      "members": [
+        {
+          "generalId": "sp-dongzhuo",
+          "generalName": "SP董卓",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "桃園結義、先登死士"
+        },
+        {
+          "generalId": "sp-luzhi",
+          "generalName": "SP盧植",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "剛柔、雁形陣",
+          "remark": "1速"
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "勠力同心、深藏若虛"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-qianlong-diao",
+      "scenario": "hanyan",
+      "title": "潛龍貂蟬弓",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "推衣解食",
+        "沛縣聚義",
+        "約法三章",
+        "鴻門遇險",
+        "茫蕩隱蹤"
+      ],
+      "note": "SP貂蟬與曹操均有剛柔選項，不能同時選造成重複；分支合法組合仍待確認。",
+      "members": [
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "剛柔並濟／勠力同心、深藏若虛"
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "草船／剛柔、潛龍陣"
+        },
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "功不唐捐、萬軍"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-qianlong-fa",
+      "scenario": "hanyan",
+      "title": "潛龍法正盾",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "設伏十面",
+        "合圍夾擊",
+        "楚歌四起",
+        "波浪推秦",
+        "功成身退"
+      ],
+      "note": "會佔用法正、貂蟬，作者推薦程度一般。",
+      "members": [
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "蓄勢待發、潛龍陣"
+        },
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "奪魄、風助火勢"
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "剛柔並濟／勠力同心、深藏若虛"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-40lv",
+      "scenario": "hanyan",
+      "title": "40呂盾",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "波浪推秦",
+        "設伏十面",
+        "波浪推秦",
+        "楚歌四起",
+        "波浪推秦",
+        "功成身退"
+      ],
+      "note": "奇略原文六張，波浪推秦重複三次；不能當第2–6回合五張。程普替代槽位亦未完整指定。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40呂布",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "血刃（文武）、藏器"
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "蓄勢待發、臨危救主"
+        },
+        {
+          "generalId": null,
+          "generalName": "許攸（程普或者SP皇埔嵩都可）",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "三勢陣、藤甲兵"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-shuzhi",
+      "scenario": "hanyan",
+      "title": "蜀智盾",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "芒砀隐踪",
+        "沛县聚义",
+        "波浪推秦",
+        "推食解衣",
+        "约法三章"
+      ],
+      "note": "前期刮骨、後期藤甲。正文未明寫每人全S使用方式。",
+      "members": [
+        {
+          "generalId": "pangtong",
+          "generalName": "龐統",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "士別三日、杯蛇"
+        },
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "刮骨／藤甲兵、乘敵不虞"
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "蓄勢待發、拓鎮扼防拒"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-faguan",
+      "scenario": "hanyan",
+      "title": "法官盾",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "臨危不懼",
+        "楚歌四起",
+        "設伏十面",
+        "博浪推秦",
+        "多多益善"
+      ],
+      "note": "原文SP關於疑為SP關羽、張星彩卡別未明；不得默默改字或綁無雙卡。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "SP關於",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "以寡敵眾、藏器待時",
+          "remark": "疑錯字，不改寫成SP關羽"
+        },
+        {
+          "generalId": null,
+          "generalName": "張星彩",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "魅惑、魚鱗陣",
+          "remark": "是否無雙卡未標，不綁卡"
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "拓鎮扼防拒、蓄勢待發"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-huangma",
+      "scenario": "hanyan",
+      "title": "皇馬",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "封狼居胥",
+        "橫掃河西",
+        "催峰陷敵",
+        "孤軍深入",
+        "壯志不絕"
+      ],
+      "note": "作者稱可變弓盾。變體不自行補。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "SP馬超",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "當峰、催峰斷刃"
+        },
+        {
+          "generalId": null,
+          "generalName": "SP皇埔嵩",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "草船、萬軍"
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "臨危救主／乘敵不虞、解煩衛"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-huangma-gong",
+      "scenario": "hanyan",
+      "title": "皇馬弓",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [],
+      "note": "B8 2026-11-05 10:38:56 留言。兵書、方略、奇略未另列，不從槍版複製。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "SP馬超",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "技能不變",
+          "remark": "留言未逐格重列"
+        },
+        {
+          "generalId": null,
+          "generalName": "SP皇埔嵩",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "雁形陣、草船",
+          "remark": "或者不帶草船，帶先登"
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "臨危救主、錦帆軍"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-qiaoliao",
+      "scenario": "hanyan",
+      "title": "喬遼左",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "封狼居胥",
+        "孤軍深入",
+        "博浪推秦",
+        "橫掃河西",
+        "壯志不絕"
+      ],
+      "note": "推薦前期弓、後期槍。",
+      "members": [
+        {
+          "generalId": "wushuang-daqiao",
+          "generalName": "無雙大喬",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "獨行付斗、草船"
+        },
+        {
+          "generalId": "zhangliao",
+          "generalName": "張遼",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "當峰、催峰斷刃"
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "臨危救主／乘敵不虞、衡軛陣"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-saozi",
+      "scenario": "hanyan",
+      "title": "嫂子弓",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "推衣解食",
+        "伺橋受書",
+        "臨危不懼",
+        "借箸代籌",
+        "約法三章"
+      ],
+      "note": "作者說模擬評分好但本人實戰拉胯。",
+      "members": [
+        {
+          "generalId": "sunquan",
+          "generalName": "孫權",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "當峰、兵無"
+        },
+        {
+          "generalId": "sp-bulianshi",
+          "generalName": "SP步練師",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "八門、深謀遠慮"
+        },
+        {
+          "generalId": "wushuang-daqiao",
+          "generalName": "無雙大喬",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "獨行付斗、草船"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-kangkai",
+      "scenario": "hanyan",
+      "title": "慷慨弓",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "封狼居胥",
+        "催峰陷敵",
+        "定計安儲",
+        "壯志不絕",
+        "追亡逐北"
+      ],
+      "note": "無皇馬、大漢玩家的首隊選項。",
+      "members": [
+        {
+          "generalId": "ganning",
+          "generalName": "甘寧",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "草船、錦帆軍"
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "當峰、催峰斷刃"
+        },
+        {
+          "generalId": null,
+          "generalName": "SP呂蒙／程普",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "臨危救主／乘敵不虞、雁形陣"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-wenhou",
+      "scenario": "hanyan",
+      "title": "溫侯弓",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "背水列阵",
+        "设伏十面",
+        "波浪推秦",
+        "受书",
+        "多多益善"
+      ],
+      "note": "諸葛亮／甘寧變體逐格不全，不補。",
+      "members": [
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "武峰陣、錦帆軍"
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "臨危救主、暫避鋒芒"
+        },
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "當峰、催峰"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-wumou",
+      "scenario": "hanyan",
+      "title": "五謀係列",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "设伏十面",
+        "背水列陣",
+        "合围夹击",
+        "波浪推奏",
+        "多多益善"
+      ],
+      "note": "第二將原文荀彧與上下文荀攸／賈詡衝突；轉獅子奮迅／上兵伐謀焚輜分隔與槽位不明。",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "靈機一動、勠力同心"
+        },
+        {
+          "generalId": null,
+          "generalName": "荀彧",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "刮骨、轉獅子奮迅／上兵伐謀焚輜",
+          "remark": "與下文荀攸／賈詡描述衝突"
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "奪魄、上兵伐謀／當峰"
+        }
+      ]
+    },
+    {
+      "id": "baha-d-pengci",
+      "scenario": "hanyan",
+      "title": "碰瓷系列／潛龍周泰袁術和SP朱儁",
+      "status": "已核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": true,
+      "author": "24李老师",
+      "authorAccount": "A1970li",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
+      "postedAt": "2026-11-04 20:01:42",
+      "strategy": [],
+      "tricks": [
+        "背水列阵",
+        "设伏十面",
+        "波浪推秦",
+        "受书",
+        "多多益善"
+      ],
+      "note": "每將6000～7000兵。SP朱儁可換張飛（橫掃、疾風驟雨）或SP袁紹（擎刀、疾風驟雨）。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "周泰",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "潛龍、盛氣"
+        },
+        {
+          "generalId": "yuanshu",
+          "generalName": "袁術",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "焚輜、上兵伐謀"
+        },
+        {
+          "generalId": "sp-zhujun",
+          "generalName": "SP朱儁",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "太平、無當"
+        }
+      ]
+    },
+    {
+      "id": "baha-e-dahan-dun",
+      "scenario": "hanyan",
+      "title": "大漢盾",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "松鼠",
+      "authorAccount": "jun59962903",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11652",
+      "postedAt": "2026-11-05 21:21:37",
+      "strategy": [],
+      "tricks": [],
+      "note": "松鼠自述先鋒服實測與三版比較。不把別篇文章的配置掛到這篇。圖片未轉錄。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40呂",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "",
+          "remark": "文字沒有逐格配置"
+        }
+      ]
+    },
+    {
+      "id": "baha-f-40y",
+      "scenario": "hanyan",
+      "title": "40Y呂布許攸SP法正",
+      "status": "待核",
+      "origin": "bahamut",
+      "originLabel": "巴哈玩家版",
+      "tricksBound": false,
+      "applyReady": false,
+      "author": "無名之輩~away",
+      "authorAccount": "p15017504299",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11630",
+      "postedAt": "2026-10-26 11:53:32",
+      "strategy": [],
+      "tricks": [],
+      "note": "5樓只列隊員與三勢陣，沒有完整配法。",
+      "members": [
+        {
+          "generalId": null,
+          "generalName": "40Y呂布",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": ""
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": "三勢陣"
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            null,
+            null
+          ],
+          "learnedNames": [],
+          "tacticsRaw": ""
+        }
+      ]
+    }
+  ]
+}

@@ -6,8 +6,10 @@
  */
 import { writeFileSync } from 'node:fs';
 import { tacticRows } from './tactic-catalog.mjs';
+import { hanyanBahamut } from './hanyan-bahamut.mjs';
+import { hanyanMerits, hanyanRecommended } from './hanyan-recommended.mjs';
 
-const VERSION = '1.2.8';
+const VERSION = '1.2.9';
 
 const APT_ORDER = ['騎', '盾', '弓', '槍', '器械'];
 
@@ -36,7 +38,7 @@ function g(id, name, camp, cost, role, apt, dyn, innate = '', tags = null) {
     nameKey: name,
   };
   if (tags?.length) general.tags = tags;
-  return general;
+  return cite(general);
 }
 
 const generals = [
@@ -213,7 +215,7 @@ function t(row) {
   if (row.rank !== 'S' && row.rank !== 'A') throw new Error(`rank ${row.id}`);
   if (!TACTIC_TYPES.includes(row.type)) throw new Error(`type ${row.id}`);
   if (!TACTIC_SOURCES.includes(row.source)) throw new Error(`source ${row.id}`);
-  return {
+  const tactic = {
     id: row.id,
     name: row.name,
     type: row.type,
@@ -224,6 +226,23 @@ function t(row) {
     orange: true,
     rank: row.rank,
     desc: row.desc,
+  };
+  // 推出賽季（released）與適用劇本（scenarios）分開。沒有 scenarios 的戰法所有劇本都看得到。
+  // 拓·／精·／轉· 才是劇本限定；事件戰法如麾軍結陣不因來源而被限定。
+  if (row.name.startsWith('拓·')) tactic.variant = '拓';
+  else if (row.name.startsWith('精·')) tactic.variant = '精';
+  else if (row.name.startsWith('轉·')) tactic.variant = '轉';
+  if (tactic.variant) tactic.scenarios = ['yingxiong'];
+  // 戰法的 source 仍是傳承／事件／自帶／賽季。網址放 sourceUrl，避免蓋掉來源類型。
+  return cite(tactic, tactic.variant ? '待核' : '已核');
+}
+
+function cite(item, status = '已核') {
+  return {
+    ...item,
+    sourceUrl: '',
+    status,
+    note: '',
   };
 }
 
@@ -411,9 +430,16 @@ const bingshu = {
   ],
 };
 
+for (const branch of bingshu.branches) {
+  Object.assign(branch, { sourceUrl: '', status: '已核', note: '' });
+  for (const node of [...branch.primary, ...branch.secondary]) {
+    Object.assign(node, { sourceUrl: '', status: '已核', note: '' });
+  }
+}
+
 const meta = {
   catalogVersion: VERSION,
-  updated: '2026-09-30',
+  updated: '2026-11-08',
   scope: '戰鬥類 S 級收到兗州之戰的公開清冊，並補上已核對的後續事件戰法；A 級只收已核對類型的常用戰法。另收英雄命示都尉自帶，以及賽季商店的拓本與精進陣法（含兵演春秋）。直接編輯 scripts/tactic-catalog.mjs 或本腳本的增補列後重跑建置即可擴充。',
 };
 
@@ -421,6 +447,12 @@ writeFileSync('data/meta.json', `${JSON.stringify(meta, null, 2)}\n`);
 writeFileSync('data/generals.json', `${JSON.stringify({ catalogVersion: VERSION, generals }, null, 2)}\n`);
 writeFileSync('data/tactics.json', `${JSON.stringify({ catalogVersion: VERSION, tactics }, null, 2)}\n`);
 writeFileSync('data/bingshu.json', `${JSON.stringify(bingshu, null, 2)}\n`);
+writeFileSync('data/scenario.json', `${JSON.stringify({
+  catalogVersion: VERSION,
+  weapons: [],
+  merits: hanyanMerits,
+  recommended: [...hanyanRecommended, ...hanyanBahamut],
+}, null, 2)}\n`);
 
 const byCamp = {};
 for (const general of generals) byCamp[general.camp] = (byCamp[general.camp] || 0) + 1;

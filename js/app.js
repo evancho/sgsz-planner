@@ -63,11 +63,22 @@ import {
   teamFromTemplate,
   templateDisplayName,
   templateScenarios,
+  STRATEGY_CHOICES,
+  coexistenceLines,
   TEMPLATE_COUNTRIES,
   filterTeamTemplates,
   orderTeamTemplates,
   placeBlockedTemplatesLast,
   templateOwnedRed,
+  SCENARIOS,
+  scenarioName,
+  fitsScenario,
+  hiddenScenarioNames,
+  normalizeScenarioPack,
+  meritsForScenario,
+  effectiveApt,
+  meritWarningLines,
+  teamFromRecommended,
   touchUpdatedAt,
   pickSyncBackup,
   backupsDiffer,
@@ -108,6 +119,9 @@ const ui = {
   openGenerals: {},
   nameDraft: {},
   installHidden: localStorage.getItem('sgsz-hide-install') === '1',
+  showAllScenarios: localStorage.getItem('sgsz-show-all-scenarios') === '1',
+  recommend: false,
+  gapOpen: {},
   sync: {
     ready: false,
     configured: false,
@@ -124,12 +138,58 @@ let onedriveApi = null;
 let syncTimer = null;
 let syncInFlight = null;
 
-const CAMP_CLASS = { 魏: 'wei', 蜀: 'shu', 吳: 'wu', 群: 'qun' };
+const CAMP_CLASS = { 魏: 'wei', 蜀: 'shu', 吳: 'wu', 群: 'qun', 漢: 'han' };
 
 function campInk(camp) {
   const kind = CAMP_CLASS[camp];
   if (!kind) return esc(camp);
   return `<span class="camp-ink ${kind}">${esc(camp)}</span>`;
+}
+
+function presentGeneral(general, current = account()) {
+  if (current?.camps?.[general.id] !== '漢' || general.camp === '漢') return general;
+  return { ...general, camp: '漢', campOrigin: general.camp };
+}
+
+function shownInScenario(item) {
+  if (ui.showAllScenarios) return true;
+  return fitsScenario(item, account().scenario);
+}
+
+function scenarioMarks(item) {
+  const ids = Array.isArray(item?.scenarios) ? item.scenarios : [];
+  if (!ids.length) return '';
+  return ids.map((id) => `<span class="mini scenario-${esc(id)}">${esc(scenarioName(id))}</span>`).join('');
+}
+
+function citeHtml(item) {
+  if (!item) return '';
+  const pending = item.status === '待核' || item.review === '待核' ? '<span class="mini review">待核</span>' : '';
+  const url = item.sourceUrl || (/^https?:\/\//.test(String(item.source || '')) ? item.source : '');
+  const link = url ? `<a class="cite" href="${esc(url)}" target="_blank" rel="noopener">來源</a>` : '';
+  const note = item.note ? `<span class="faint">${esc(item.note)}</span>` : '';
+  return `${pending}${link}${note}`;
+}
+
+function aptOf(general, current = account()) {
+  return effectiveApt(general, current.owned?.[general.id], ui.catalog?.merits || []);
+}
+
+function hiddenScenarioNote(record, scenarioId) {
+  const hidden = hiddenScenarioNames(record, scenarioId, {
+    tactic: (id) => tacticsById(record).get(id),
+    general: (id) => generalsById().get(id),
+  });
+  const names = [...hidden.generals, ...hidden.tactics];
+  if (!names.length) return '';
+  const shown = names.slice(0, 8).join('、');
+  const more = names.length > 8 ? `等 ${names.length} 項` : '';
+  return `換成${scenarioName(scenarioId)}後會隱藏：${shown}${more}。擁有紀錄仍留著。`;
+}
+
+function meritLines(current, teamId = '') {
+  const lines = meritWarningLines(current, ui.catalog?.merits || [], (id) => generalsById().get(id)?.name || id);
+  return lines.filter((line) => !teamId || line.includes('「') || line.includes('一個帳號'));
 }
 
 function emptyFilters() {
@@ -598,7 +658,7 @@ function installBanner() {
 }
 
 function overlay() {
-  return `${pickerHtml()}${bingshuSheet()}${shareSheet()}${shareImportSheet()}${templateSheet()}${accountExportSheet()}${accountFileSheet()}${dialogHtml()}${syncConflictHtml()}`;
+  return `${pickerHtml()}${bingshuSheet()}${recommendSheet()}${shareSheet()}${shareImportSheet()}${templateSheet()}${accountExportSheet()}${accountFileSheet()}${dialogHtml()}${syncConflictHtml()}`;
 }
 
 function colophon() {
@@ -655,6 +715,11 @@ function accountCard(item, active, index, count) {
             </label>
           </header>
           <p class="counts"><span>武將 ${owned}</span><span>戰法 ${tactics}</span><span>隊伍 ${item.teams.length}</span></p>
+          <label class="scenario-field">劇本
+            <select class="field" data-action="set-account-scenario" data-id="${esc(item.id)}">
+              ${SCENARIOS.map((row) => `<option value="${row.id}" ${item.scenario === row.id ? 'selected' : ''}>${row.name}</option>`).join('')}
+            </select>
+          </label>
           <div class="btn-row">
             <button type="button" class="btn" data-action="export-account" data-id="${esc(item.id)}">匯出</button>
             <button type="button" class="btn" data-action="open-account-file" data-id="${esc(item.id)}">載入</button>
@@ -677,8 +742,9 @@ function matchedGenerals() {
   const usage = usageFor(current);
   const filters = { ...ui.filters, query: ui.query, quick: ui.quick };
   const matched = sortGenerals(
-    ui.catalog.generals.filter((general) => matchesGeneral(general, current.owned[general.id], filters, {
+    ui.catalog.generals.filter((general) => shownInScenario(general)).map((general) => presentGeneral(general, current)).filter((general) => matchesGeneral(general, current.owned[general.id], filters, {
       inTeam: usage.generalTeams.has(general.id),
+      apt: aptOf(general, current),
     })),
     ui.sort,
   );
@@ -715,7 +781,9 @@ function generalsView() {
               ${quickChip('owned', '已擁有')}
               ${quickChip('free', '未擁有')}
               ${quickChip('team', '部隊中')}
+              <button type="button" class="chip" data-action="toggle-show-all-scenarios" aria-checked="${ui.showAllScenarios}">顯示全部劇本</button>
             </div>
+            ${meritBanner(account())}
           </div>
           <div class="roster" id="general-roster">
             ${generalRosterMarkup()}
@@ -781,6 +849,7 @@ function generalCard(general, current, usage) {
     duweiMark(general),
     ownedMarkHtml(owned),
     where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : '',
+    citeHtml(general),
   ].filter(Boolean).join('');
   const nameEl = owned
     ? `<button type="button" class="grow-name" data-action="toggle-expand" data-id="${esc(general.id)}" aria-expanded="${open}"><strong>${esc(name)}</strong></button>`
@@ -792,11 +861,11 @@ function generalCard(general, current, usage) {
         <span class="camp">${campInk(general.camp)}</span>
         <span class="cost" title="${esc(costTitle)}">C${general.cost}</span>
         ${nameEl}
-        <div class="apt-row">${aptHtml(general.apt)}</div>
+        <div class="apt-row">${aptHtml(general, current)}${hanButton(general)}</div>
         <button type="button" class="check ${owned ? 'on' : ''}" data-action="toggle-own" data-id="${esc(general.id)}" aria-pressed="${owned ? 'true' : 'false'}"><span class="box"></span>擁有</button>
         ${chipHtml ? `<div class="grow-chips">${chipHtml}</div>` : ''}
       </div>
-      ${open ? `<div class="grow-more">${ownedControls(general, owned)}${innate ? `<p class="faint innate">自帶 · ${esc(innate)}</p>` : ''}${duwei ? '<p class="faint">統御以 7 計；天賦身經百戰可 +1。</p>' : ''}</div>` : ''}
+      ${open ? `<div class="grow-more">${ownedControls(general, owned)}${meritControls(general, current)}${innate ? `<p class="faint innate">自帶 · ${esc(innate)}</p>` : ''}${duwei ? '<p class="faint">統御以 7 計；天賦身經百戰可 +1。</p>' : ''}</div>` : ''}
     </article>`;
 }
 
@@ -808,8 +877,42 @@ function aptLabel(troop) {
   return troop === '器械' ? '器' : troop;
 }
 
-function aptHtml(apt) {
-  return TROOP_ORDER.map((troop) => `<span class="apt apt-${apt[troop]}"><i>${aptLabel(troop)}</i>${apt[troop]}</span>`).join('');
+function aptHtml(general, current = account()) {
+  const apt = aptOf(general, current);
+  return TROOP_ORDER.map((troop) => {
+    const boosted = apt[troop] !== general.apt?.[troop];
+    return `<span class="apt apt-${apt[troop]}${boosted ? ' boost' : ''}" ${boosted ? 'title="訓兵振旅"' : ''}><i>${aptLabel(troop)}</i>${apt[troop]}</span>`;
+  }).join('');
+}
+
+function meritBanner(current, teamId = '') {
+  const lines = meritWarningLines(current, ui.catalog?.merits || [], (id) => plainName(generalsById().get(id)) || id)
+    .filter((line) => {
+      if (!teamId) return true;
+      const team = current.teams.find((item) => item.id === teamId);
+      return line.includes('一個帳號') || (team && line.includes(`「${team.name}」`));
+    });
+  if (!lines.length) return '';
+  return `<div class="warn-block">${lines.map((line) => `<p class="warn">${esc(line)}</p>`).join('')}</div>`;
+}
+
+function hanButton(general) {
+  const converted = Boolean(general.campOrigin);
+  const label = converted ? `恢復${general.campOrigin}` : '轉漢';
+  return `<button type="button" class="chip ${converted ? 'on' : ''}" data-action="toggle-han" data-id="${esc(general.id)}" aria-checked="${converted}" title="轉為漢陣營。可轉名額尚未限制。">${label}</button>`;
+}
+
+function meritControls(general, current) {
+  if (!current.owned?.[general.id]) return '';
+  const merits = meritsForScenario(ui.catalog?.merits || [], current.scenario);
+  if (!merits.length) return '';
+  const marks = current.owned[general.id].merits || [];
+  return merits.map((merit) => {
+    const on = marks.includes(merit.id);
+    const review = citeHtml(merit);
+    const skipped = (merit.effect?.skipTags || []).some((tag) => (general.tags || []).includes(tag));
+    return `<div class="seg" role="group" aria-label="${esc(merit.name)}"><button type="button" class="chip ${on ? 'on' : ''}" data-action="toggle-merit" data-id="${esc(general.id)}" data-merit="${esc(merit.id)}" aria-checked="${on}">${esc(merit.name)}</button>${review}${skipped ? '<span class="faint">不適用</span>' : ''}</div>`;
+  }).join('');
 }
 
 function ownedControls(general, owned) {
@@ -836,6 +939,7 @@ function visibleTactics(mode) {
   const source = mode === 'event' ? '事件' : mode === 'inherit' ? '傳承' : '';
   const list = tacticsFor(current).filter((tactic) => {
     if (!isInventoryTactic(tactic)) return false;
+    if (!shownInScenario(tactic)) return false;
     if (source && tactic.source !== source) return false;
     if (ui.tacticTab && ui.tacticTab !== '全部' && tactic.type !== ui.tacticTab) return false;
     if (!query) return true;
@@ -864,6 +968,7 @@ function tacticsView(mode) {
         <a class="btn ${mode === 'event' ? 'primary' : ''}" href="#/tactics/event">事件</a>
         <a class="btn ${mode === 'inherit' ? 'primary' : ''}" href="#/tactics/inherit">戰法傳承</a>
         <button type="button" class="btn" data-action="open-add-tactic">新增非橙戰法</button>
+        <button type="button" class="chip" data-action="toggle-show-all-scenarios" aria-checked="${ui.showAllScenarios}">顯示全部劇本</button>
       </div>
       <div class="chips" role="tablist" aria-label="戰法類型">
         ${tabs.map((tab) => `<button type="button" class="chip" data-action="set-tab" data-value="${tab}" aria-checked="${(ui.tacticTab || '全部') === tab}">${tab}</button>`).join('')}
@@ -901,6 +1006,8 @@ function tacticRow(tactic, current, usage) {
       <div class="body">
         <h3>${esc(tactic.name)}
           ${seasonChip(tactic)}
+          ${scenarioMarks(tactic)}
+          ${citeHtml(tactic)}
           ${rankTag(tactic)}
           <span class="tag">${esc(tactic.type)}</span>
           <span class="tag ghost">${esc(tactic.source)}</span>
@@ -932,14 +1039,55 @@ function teamsView() {
         <div class="btn-row team-tools">
           <button type="button" class="btn" data-action="open-share-import">載入</button>
           <button type="button" class="btn" data-action="open-templates">範本</button>
+          <button type="button" class="btn" data-action="open-recommend">推薦隊伍</button>
           <button type="button" class="btn primary" data-action="add-team">新增隊伍</button>
         </div>
       </div>
+      ${coexistHtml(current)}
       <div class="stack">
         ${current.teams.map((team, index) => teamCard(team, map, index, current.teams.length)).join('') || '<div class="empty"><p>還沒有隊伍。</p><p class="faint">可以自己新增。</p></div>'}
       </div>
       ${colophon()}
     </section>`;
+}
+
+function planLine(team) {
+  const parts = [];
+  if (team.strategy?.length) parts.push(`方略 ${team.strategy.join('、')}`);
+  const tricks = (team.tricks || []).filter(Boolean);
+  if (tricks.length) parts.push(`奇略 ${tricks.join('→')}`);
+  if (!parts.length) return '';
+  return `<p class="faint">${esc(parts.join(' · '))}</p>`;
+}
+
+function planEditor(team, current) {
+  if (current.scenario !== 'hanyan') return '';
+  const selected = team.strategy?.[0] || '';
+  const choices = STRATEGY_CHOICES.includes(selected) || !selected ? STRATEGY_CHOICES : [...STRATEGY_CHOICES, selected];
+  const tricks = [0, 1, 2, 3, 4].map((index) => team.tricks?.[index] || '');
+  return `
+    <div class="plan-editor">
+      <label>方略
+        <select class="field" data-action="set-strategy" data-id="${esc(team.id)}">
+          <option value="" ${selected ? '' : 'selected'}>未選</option>
+          ${choices.map((name) => `<option value="${esc(name)}" ${name === selected ? 'selected' : ''}>${esc(name)}</option>`).join('')}
+        </select>
+      </label>
+      <div class="trick-grid">
+        ${tricks.map((value, index) => `<label>第 ${index + 2} 回合<input class="field" data-model="team-trick" data-id="${esc(team.id)}" data-index="${index}" value="${esc(value)}" maxlength="24" autocomplete="off"></label>`).join('')}
+      </div>
+      <p class="faint">奇略限制還沒核對，這裡不擋。</p>
+    </div>`;
+}
+
+function coexistHtml(current) {
+  const lines = coexistenceLines(current, {
+    general: (id) => plainName(generalsById().get(id)) || id,
+    tactic: (id) => tacticsById(current).get(id)?.name || id,
+    nameKey: (id) => generalsById().get(id)?.nameKey || '',
+  });
+  if (!lines.length) return '';
+  return `<div class="warn-block">${lines.map((line) => `<p class="warn">${esc(line)}</p>`).join('')}</div>`;
 }
 
 function teamCard(team, map, index, count) {
@@ -950,6 +1098,7 @@ function teamCard(team, map, index, count) {
         <a class="team-card-main" href="#/teams/${esc(team.id)}">
           <div class="row-between"><h3>${esc(team.name)}${team.substitute ? '<span class="tag alt-team">替</span>' : ''}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
           <p>${esc(names)}</p>
+          ${planLine(team)}
           ${team.notes ? `<p class="muted team-notes">${esc(team.notes)}</p>` : ''}
         </a>
         <span class="member-move">
@@ -982,6 +1131,9 @@ function teamView(id) {
         <textarea id="team-notes" class="notes" data-model="team-notes" data-id="${esc(team.id)}" maxlength="500">${esc(team.notes)}</textarea>
       </label>
       <p class="sub" style="margin:10px 0">統御合計 ${teamCost(team, map)}。數字只供配隊參考，賽季上限不在這裡鎖死。</p>
+      ${planEditor(team, current)}
+      ${coexistHtml(current)}
+      ${meritBanner(current, team.id)}
       <div class="team-grid">
         ${team.members.map((member, slot) => memberCard(team, member, slot, current)).join('')}
       </div>
@@ -1292,9 +1444,16 @@ function accountFileSheet() {
   const incoming = ui.accountFile.account;
   const owned = Object.keys(incoming.owned).length;
   const tactics = Object.keys(incoming.tacticsOwned).length;
+  const chosen = ui.accountFile.scenario || (incoming.scenario === 'yingxiong' ? 'hanyan' : incoming.scenario);
   return sheet('載入帳號', `
-    <p>「${esc(incoming.name)}」 · 武將 ${owned} · 戰法 ${tactics} · 隊伍 ${incoming.teams.length}</p>
-    <p class="sub">新賽季按「不含隊伍」：武將與戰法進新帳號，這 ${incoming.teams.length} 支隊伍不帶過去。含隊伍的新增與覆寫仍會帶上隊伍。</p>
+    <p>「${esc(incoming.name)}」 · ${esc(scenarioName(incoming.scenario))} · 武將 ${owned} · 戰法 ${tactics} · 隊伍 ${incoming.teams.length}</p>
+    <p class="sub">新賽季按「不含隊伍」：武將與戰法進新帳號，這 ${incoming.teams.length} 支隊伍不帶過去。含隊伍的新增與覆寫仍會帶上隊伍。劇本限定的武將與戰法不會刪掉，只是先藏起來。</p>
+    <label>新帳號的劇本
+      <select class="field" data-action="set-inherit-scenario">
+        ${SCENARIOS.map((row) => `<option value="${row.id}" ${chosen === row.id ? 'selected' : ''}>${row.name}</option>`).join('')}
+      </select>
+    </label>
+    ${hiddenScenarioNote(incoming, chosen) ? `<p class="warn">${esc(hiddenScenarioNote(incoming, chosen))}</p>` : '<p class="faint">這個劇本沒有要隱藏的已擁有武將或戰法。</p>'}
     <div class="btn-row">
       <button type="button" class="btn primary" data-action="add-account-file" data-teams="omit">新增為新帳號，不含隊伍</button>
       <button type="button" class="btn" data-action="add-account-file">新增為新帳號</button>
@@ -1305,10 +1464,14 @@ function accountFileSheet() {
 }
 
 function memberCard(team, member, slot, current) {
-  const general = member ? generalsById().get(member.generalId) : null;
+  const raw = member ? generalsById().get(member.generalId) : null;
+  const general = raw ? presentGeneral(raw, current) : null;
   const books = ui.catalog.branches;
   const label = member?.bingshu ? bingshuLabel(member.bingshu, books) : '';
   const marks = general ? ownedMarkHtml(current.owned[general.id]) : '';
+  const meritNames = (current.owned?.[general?.id]?.merits || [])
+    .map((id) => (ui.catalog?.merits || []).find((merit) => merit.id === id)?.name)
+    .filter(Boolean);
   return `
     <article class="member">
       <div class="member-top">
@@ -1317,8 +1480,10 @@ function memberCard(team, member, slot, current) {
           ${general ? `
             <button type="button" class="member-name" data-action="open-general" data-team="${esc(team.id)}" data-slot="${slot}" aria-label="替換${esc(plainName(general))}">${esc(plainName(general))}${duweiMark(general)}</button>
             <span class="member-meta">${campInk(general.camp)} · C${general.cost}${isDuwei(general) ? '（天賦可 +1）' : ''} · ${esc(general.role)}</span>
-            <div class="apt-row">${aptHtml(general.apt)}</div>
+            <div class="apt-row">${aptHtml(general, current)}</div>
             ${marks ? `<div class="member-marks">${marks}</div>` : ''}
+            ${meritNames.length ? `<div class="member-marks">${meritNames.map((name) => `<span class="mini">${esc(name)}</span>`).join('')}</div>` : ''}
+            ${member.traits?.length || member.aptNeed ? `<p class="faint">${esc([member.traits?.length ? `特技 ${member.traits.join('、')}` : '', member.aptNeed ? `需${member.aptNeed.troop}${member.aptNeed.letter}` : ''].filter(Boolean).join(' · '))}</p>` : ''}
           ` : ''}
         </div>
         <span class="member-move">
@@ -1520,7 +1685,7 @@ function generalPickerResults() {
   const usage = usageFor(current);
   const filters = ui.picker.filters || emptyPickerFilters();
   const ownedCount = ui.catalog.generals.filter((general) => current.owned[general.id]).length;
-  let options = ui.catalog.generals.filter((general) => {
+  let options = ui.catalog.generals.filter((general) => shownInScenario(general) || general.id === team.members[ui.picker.slot]?.generalId).map((general) => presentGeneral(general, current)).filter((general) => {
     const owned = current.owned[general.id];
     return matchesGeneral(general, owned, {
       ...emptyFilters(),
@@ -1528,7 +1693,7 @@ function generalPickerResults() {
       quick: 'owned',
       camp: filters.camp,
       cost: filters.cost,
-    }, {});
+    }, { apt: aptOf(general, current) });
   });
   if ((ui.picker.sort || 'red') === 'red') options = sortByRedScore(options, (general) => current.owned[general.id]);
   const empty = ownedCount === 0 ? '還沒有勾選擁有的武將。' : '沒有符合的武將。';
@@ -1600,7 +1765,8 @@ function tacticPickerResults() {
   const map = tacticsById(current);
   const owned = ui.picker.owned || 'owned';
   const type = ui.picker.type || '全部';
-  const options = tacticsFor(current).filter((tactic) => isInventoryTactic(tactic) && matchesTacticPick(tactic, {
+  const kept = new Set((member?.learned || []).filter(Boolean));
+  const options = tacticsFor(current).filter((tactic) => isInventoryTactic(tactic) && (shownInScenario(tactic) || kept.has(tactic.id)) && matchesTacticPick(tactic, {
     query: ui.picker.query,
     type,
     owned,
@@ -1622,7 +1788,7 @@ function tacticPickerResults() {
         tacticsById: map,
         usage,
       });
-      const warning = reason ? '' : tacticTroopWarning(general, tactic);
+      const warning = reason ? '' : tacticTroopWarning(general ? { ...general, apt: aptOf(general, current) } : general, tactic);
       return `<button type="button" class="choice" data-action="pick-tactic" data-id="${esc(tactic.id)}" ${reason ? 'disabled' : ''}><strong>${esc(tactic.name)}</strong> ${seasonChip(tactic)} ${rankTag(tactic)} <span class="tag">${esc(tactic.type)}</span>${reason ? ` <span class="faint">${esc(reason)}</span>` : ''}${warning ? `<br><span class="warn">${esc(warning)}</span>` : ''}</button>`;
     }).join('') || `<p class="muted">${empty}</p>`}
   `;
@@ -1668,6 +1834,78 @@ function tacticPicker() {
         </div>
       </section>
     </div>`;
+}
+
+function recommendSheet() {
+  if (!ui.recommend) return '';
+  const current = account();
+  const list = (ui.catalog?.recommended || []).filter((team) => team.scenario === current.scenario);
+  const official = list.filter((team) => team.origin !== 'bahamut');
+  const player = list.filter((team) => team.origin === 'bahamut');
+  const body = list.length ? `
+    ${recommendGroup('官方推薦', official, '整理站內容已核，官方原圖待核。', current)}
+    ${recommendGroup('巴哈玩家版', player, '已核只代表來源轉錄正確，不代表隊伍強度。', current)}
+  ` : `<p>「${esc(scenarioName(current.scenario))}」還沒有推薦隊伍。</p>`;
+  return sheet('推薦隊伍', `
+    <p class="sub">套用時缺武將不能加入，缺戰法會留空。方略與奇略順序會跟著寫進隊伍。</p>
+    ${body}
+  `, 'template-sheet');
+}
+
+function recommendGroup(title, list, blurb, current) {
+  if (!list.length) return '';
+  return `<h4>${esc(title)}</h4><p class="sub">${esc(blurb)}</p>${list.map((team) => recommendCard(team, current)).join('')}`;
+}
+
+function recommendCard(team, current) {
+  const gaps = ownershipGaps(team.members, current, {
+    generalName: (id) => generalsById().get(id)?.name || id,
+    tacticName: (id) => tacticsById(current).get(id)?.name || id,
+  });
+  const blocked = generalGapLine(gaps);
+  const tacticLine = tacticGapLine(gaps);
+  const members = team.members.map((member) => {
+    if (!member) return '<li>空位</li>';
+    const learned = [0, 1].map((index) => {
+      const id = member.learned?.[index];
+      if (id) return tacticsById(current).get(id)?.name || member.learnedNames?.[index] || id;
+      return member.learnedNames?.[index] || '空';
+    });
+    const book = member.bingshu
+      ? bingshuLabel(member.bingshu, ui.catalog.branches)
+      : (member.bingshuRaw || '');
+    const traits = member.traits?.length ? `特技 ${member.traits.join('、')}` : '';
+    const apt = member.aptNeed ? `需${member.aptNeed.troop}${member.aptNeed.letter}` : '';
+    const extra = [traits, apt, member.remark].filter(Boolean).join(' · ');
+    const tactics = member.tacticsRaw || learned.filter((name) => name && name !== '空').join('、');
+    return `<li><strong>${esc(member.generalName || member.generalId)}</strong>${tactics ? ` ${esc(tactics)}` : ''}${book ? ` 〔${esc(book)}〕` : ''}${extra ? ` · ${esc(extra)}` : ''}</li>`;
+  }).join('');
+  const missing = [...gaps.generals.map((name) => `武將 ${name}`), ...gaps.tactics.map((name) => `戰法 ${name}`)];
+  const open = Boolean(ui.gapOpen[team.id]);
+  const badge = missing.length ? `缺 ${missing.length} 項` : '可組';
+  const canApply = team.applyReady !== false;
+  const who = [team.author, team.authorAccount].filter(Boolean).join('／');
+  const byline = who || team.postedAt
+    ? `<p class="faint">${esc([who, team.postedAt].filter(Boolean).join(' · '))}</p>`
+    : '';
+  const verified = team.status === '已核' ? '<span class="mini verified">已核</span>' : '';
+  const origin = team.originLabel ? `<span class="mini origin">${esc(team.originLabel)}</span>` : '';
+  return `
+    <article class="help-card">
+      <h3>${esc(team.title)} ${origin}${verified}${citeHtml(team)}
+        <button type="button" class="chip ${missing.length ? '' : 'on'}" data-action="toggle-gap" data-id="${esc(team.id)}" aria-expanded="${open}">${badge}</button>
+      </h3>
+      ${byline}
+      ${open ? `<ul class="share-missing">${missing.map((line) => `<li>${esc(line)}</li>`).join('') || '<li>武將和戰法都已擁有。</li>'}</ul>` : ''}
+      ${planLine(team)}
+      <ul>${members}</ul>
+      ${team.officialSource ? `<p><a class="cite" href="${esc(team.officialSource)}" target="_blank" rel="noopener">官方原貼</a></p>` : ''}
+      ${canApply && blocked ? `<p class="warn">${esc(blocked)}，不能加入。</p>` : ''}
+      ${canApply && tacticLine ? `<p class="warn">${esc(tacticLine)}，加入時留空。方略與奇略仍會帶上。</p>` : ''}
+      ${canApply
+        ? `<button type="button" class="btn primary" data-action="apply-recommend" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入這隊</button>`
+        : '<p class="faint">僅供參考，不提供套用。</p>'}
+    </article>`;
 }
 
 function customPicker() {
@@ -1845,6 +2083,7 @@ function onClick(event) {
     ui.templates = null;
     ui.accountExport = null;
     ui.accountFile = null;
+    ui.recommend = false;
     render();
     return;
   }
@@ -1858,6 +2097,85 @@ function onClick(event) {
     case 'apply-update':
       applyUpdate();
       break;
+    case 'toggle-show-all-scenarios':
+      ui.showAllScenarios = !ui.showAllScenarios;
+      localStorage.setItem('sgsz-show-all-scenarios', ui.showAllScenarios ? '1' : '0');
+      render();
+      break;
+    case 'toggle-han': {
+      const generalId = el.dataset.id;
+      commit(updateAccount(ui.state, current.id, (item) => {
+        const camps = { ...(item.camps || {}) };
+        if (camps[generalId] === '漢') delete camps[generalId];
+        else camps[generalId] = '漢';
+        const next = { ...item };
+        if (Object.keys(camps).length) next.camps = camps;
+        else delete next.camps;
+        return next;
+      }));
+      break;
+    }
+    case 'toggle-merit': {
+      const generalId = el.dataset.id;
+      const meritId = el.dataset.merit;
+      if (!current.owned[generalId]) break;
+      const nextState = updateAccount(ui.state, current.id, (item) => {
+        const record = { ...item.owned[generalId] };
+        const marks = new Set(record.merits || []);
+        if (marks.has(meritId)) marks.delete(meritId);
+        else marks.add(meritId);
+        if (marks.size) record.merits = [...marks];
+        else delete record.merits;
+        return { ...item, owned: { ...item.owned, [generalId]: record } };
+      });
+      commit(nextState);
+      const lines = meritWarningLines(activeAccount(nextState), ui.catalog?.merits || [], (id) => generalsById().get(id)?.name || id);
+      if (lines.length) toast(lines[0], 4200);
+      break;
+    }
+    case 'toggle-gap':
+      ui.gapOpen = { ...ui.gapOpen, [el.dataset.id]: !ui.gapOpen[el.dataset.id] };
+      render();
+      break;
+    case 'open-recommend':
+      ui.recommend = true;
+      ui.justOpened = true;
+      render();
+      break;
+    case 'apply-recommend': {
+      const rec = (ui.catalog?.recommended || []).find((item) => item.id === el.dataset.id);
+      if (!rec || rec.applyReady === false) break;
+      if (current.teams.length >= 40) {
+        toast('隊伍已滿，無法再載入');
+        break;
+      }
+      const gaps = ownershipGaps(rec.members, current, {
+        generalName: (id) => generalsById().get(id)?.name || id,
+        tacticName: (id) => tacticsById(current).get(id)?.name || id,
+      });
+      const gapLine = generalGapLine(gaps);
+      if (gapLine) {
+        toast(`${gapLine}，不能加入。`);
+        break;
+      }
+      const id = newId('team');
+      const built = teamFromRecommended(rec, id);
+      const tactics = tacticsById(current);
+      const stripped = dropUnownedTactics(built.members, current, {
+        tacticName: (tacticId) => tactics.get(tacticId)?.name || '',
+      });
+      const usage = buildUsage(current);
+      const dropped = dropUsedTactics(stripped.members, usage, tactics);
+      const team = { ...built, members: dropped.members };
+      commit(updateAccount(ui.state, current.id, (item) => ({
+        ...item,
+        teams: [...item.teams, team],
+      })));
+      const tacticLine = tacticGapLine(gaps);
+      const droppedText = [tacticLine, tacticDropText(dropped.dropped)].filter(Boolean).join('。');
+      toast(droppedText ? `已加入${rec.title}。${droppedText}` : `已加入${rec.title}`, 4200);
+      break;
+    }
     case 'add-account': {
       const id = newId('acct');
       const next = {
@@ -2099,6 +2417,7 @@ function onClick(event) {
       break;
     case 'close-picker':
       ui.picker = null;
+      ui.recommend = false;
       ui.shareLink = '';
       ui.shareName = '';
       ui.shareImport = null;
@@ -2255,14 +2574,16 @@ function onClick(event) {
     case 'add-account-file': {
       if (!ui.accountFile?.account) break;
       const omitTeams = el.dataset.teams === 'omit';
-      const added = addAccountFile(ui.state, ui.accountFile.account, { omitTeams });
+      const chosen = ui.accountFile.scenario || (ui.accountFile.account.scenario === 'yingxiong' ? 'hanyan' : ui.accountFile.account.scenario);
+      const added = addAccountFile(ui.state, { ...ui.accountFile.account, scenario: chosen }, { omitTeams, scenario: chosen });
       if (!added.ok) {
         toast(added.error);
         break;
       }
+      const hidden = hiddenScenarioNote(ui.accountFile.account, chosen);
       ui.accountFile = null;
       commit(added.state);
-      toast(omitTeams ? '已新增帳號，不含隊伍' : '已新增帳號');
+      toast([omitTeams ? '已新增帳號，不含隊伍' : '已新增帳號', hidden].filter(Boolean).join('。'), 4200);
       break;
     }
     case 'ask-replace-account-file': {
@@ -2512,6 +2833,22 @@ function onInput(event) {
   } else if (model === 'account-name') {
     ui.nameDraft[el.dataset.id] = el.value;
     return;
+  } else if (model === 'team-trick') {
+    const index = Number(el.dataset.index);
+    if (!Number.isInteger(index) || index < 0 || index > 4) return;
+    const value = el.value.slice(0, 24);
+    commit(updateAccount(ui.state, account().id, (item) => ({
+      ...item,
+      teams: item.teams.map((team) => {
+        if (team.id !== el.dataset.id) return team;
+        const tricks = [0, 1, 2, 3, 4].map((slot) => (slot === index ? value : team.tricks?.[slot] || ''));
+        const next = { ...team };
+        if (tricks.some(Boolean)) next.tricks = tricks;
+        else delete next.tricks;
+        return next;
+      }),
+    })), { quiet: true });
+    return;
   } else if (model === 'team-name' || model === 'team-notes') {
     const field = model === 'team-name' ? 'name' : 'notes';
     const value = el.value.slice(0, field === 'name' ? 24 : 500);
@@ -2544,6 +2881,28 @@ function onChange(event) {
   } else if (el.dataset.action === 'toggle-share-substitute') {
     if (ui.shareImport) ui.shareImport = { ...ui.shareImport, substitute: el.checked };
     else ui.shareSubstitute = el.checked;
+    render();
+  } else if (el.dataset.action === 'set-strategy') {
+    const value = el.value.trim();
+    commit(updateAccount(ui.state, account().id, (item) => ({
+      ...item,
+      teams: item.teams.map((team) => {
+        if (team.id !== el.dataset.id) return team;
+        const next = { ...team };
+        if (value) next.strategy = [value];
+        else delete next.strategy;
+        return next;
+      }),
+    })));
+  } else if (el.dataset.action === 'set-account-scenario') {
+    const id = el.dataset.id;
+    const scenario = el.value;
+    const item = ui.state.accounts.find((account) => account.id === id);
+    const hidden = item ? hiddenScenarioNote(item, scenario) : '';
+    commit(updateAccount(ui.state, id, (account) => ({ ...account, scenario })));
+    if (hidden) toast(hidden, 4200);
+  } else if (el.dataset.action === 'set-inherit-scenario') {
+    if (ui.accountFile) ui.accountFile = { ...ui.accountFile, scenario: el.value };
     render();
   } else if (el.dataset.action === 'switch-account') {
     commit({ ...ui.state, activeAccountId: el.value });
@@ -2788,7 +3147,8 @@ function stageAccountFile(text) {
     toast(result.error);
     return;
   }
-  ui.accountFile = { ...ui.accountFile, text, account: result.account };
+  const scenario = result.account.scenario === 'yingxiong' ? 'hanyan' : result.account.scenario;
+  ui.accountFile = { ...ui.accountFile, text, account: result.account, scenario };
   render();
 }
 
@@ -2871,7 +3231,8 @@ function confirmDialog() {
     return;
   }
   if (dialog.kind === 'replace-account' && ui.accountFile?.account) {
-    const replaced = replaceAccountFile(ui.state, ui.accountFile.targetId, ui.accountFile.account);
+    const chosen = ui.accountFile.scenario || ui.accountFile.account.scenario;
+    const replaced = replaceAccountFile(ui.state, ui.accountFile.targetId, { ...ui.accountFile.account, scenario: chosen });
     ui.accountFile = null;
     if (!replaced.ok) {
       toast(replaced.error);
@@ -2908,6 +3269,7 @@ function bind() {
     else if (ui.templates) ui.templates = null;
     else if (ui.accountExport) ui.accountExport = null;
     else if (ui.accountFile) ui.accountFile = null;
+    else if (ui.recommend) ui.recommend = false;
     else if (ui.picker) ui.picker = null;
     else if (ui.bingshu) ui.bingshu = null;
     else if (ui.filterOpen) ui.filterOpen = false;
@@ -2924,6 +3286,7 @@ function bind() {
     ui.templates = null;
     ui.accountExport = null;
     ui.accountFile = null;
+    ui.recommend = false;
     ui.dialog = null;
     ui.pendingImport = null;
     render();
@@ -2931,14 +3294,16 @@ function bind() {
 }
 
 async function loadCatalog() {
-  const [meta, generals, tactics, bingshu, release, templates] = await Promise.all([
+  const [meta, generals, tactics, bingshu, release, templates, scenarioFile] = await Promise.all([
     fetch('./data/meta.json').then((response) => response.json()),
     fetch('./data/generals.json').then((response) => response.json()),
     fetch('./data/tactics.json').then((response) => response.json()),
     fetch('./data/bingshu.json').then((response) => response.json()),
     fetch('./data/version.json').then((response) => response.json()),
     fetch('./data/team-templates.json').then((response) => response.json()),
+    fetch('./data/scenario.json').then((response) => response.json()),
   ]);
+  const scenario = normalizeScenarioPack(scenarioFile);
   return {
     version: meta.catalogVersion,
     release,
@@ -2946,6 +3311,8 @@ async function loadCatalog() {
     tactics: tactics.tactics,
     branches: bingshu.branches,
     templates: templates.teams,
+    merits: scenario.merits,
+    recommended: scenario.recommended,
     generalsById: new Map(generals.generals.map((general) => [general.id, general])),
   };
 }

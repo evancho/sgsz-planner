@@ -48,7 +48,7 @@ test('a single-account file is distinct from a full backup and round-trips', () 
   assert.deepEqual(again.account.teams[0].members[0].bingshu.secondary, ['miaosuan', 'guimou']);
   assert.deepEqual(
     Object.keys(again.account).sort(),
-    ['customTactics', 'id', 'name', 'owned', 'tacticsOwned', 'teams'],
+    ['customTactics', 'id', 'name', 'owned', 'scenario', 'tacticsOwned', 'teams'],
   );
 
   const full = exportPayload(stateOf([account]), '1.2.3');

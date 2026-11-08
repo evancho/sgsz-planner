@@ -3,7 +3,7 @@ export const BACKUP_VERSION = 2;
 export const ACCOUNT_FILE_VERSION = 1;
 /** Index 0 is 主將. The following slots are 副將, in list order. */
 export const TEAM_POSITIONS = ['主將', '副將', '副將'];
-export const CAMP_ORDER = ['魏', '蜀', '吳', '群'];
+export const CAMP_ORDER = ['魏', '蜀', '吳', '群', '漢'];
 export const TROOP_ORDER = ['騎', '弓', '槍', '盾', '器械'];
 export const QUALITIES = ['名將', '良將', '裨將', '偏將', '軍士'];
 export const TACTIC_TYPES = ['指揮', '主動', '突擊', '被動', '兵種', '陣法', '內政'];
@@ -13,6 +13,8 @@ export const DYNAMIC_FILTERS = ['已解鎖', '可解鎖', '無動態'];
 export const COLLECTION_FILTERS = ['典藏', '非典藏'];
 export const ROLE_FILTERS = ['軍事', '內政'];
 export const TAG_FILTERS = ['都尉', '非都尉'];
+/** 目前推薦隊伍用到的方略。奇略名稱先不限制。 */
+export const STRATEGY_CHOICES = ['整軍', '強攻', '襲擾', '謀算', '久戰'];
 export const SORTS = [
   { id: 'rare', label: '稀有' },
   { id: 'cost-desc', label: 'COST 高→低' },
@@ -28,10 +30,47 @@ export function newId(prefix = 'id') {
   return `${prefix}-${Date.now().toString(36)}${rand}`;
 }
 
-export function emptyAccount(id, name = '主帳') {
+export const SCENARIOS = [
+  { id: 'regular', name: '常規劇本' },
+  { id: 'yingxiong', name: '英雄命世' },
+  { id: 'hanyan', name: '漢焰長明' },
+];
+/** 舊帳號沒有劇本欄位時，視為上一季英雄命世。 */
+export const DEFAULT_ACCOUNT_SCENARIO = 'yingxiong';
+
+export function normalizeScenario(value) {
+  const raw = String(value || '').trim();
+  if (SCENARIOS.some((item) => item.id === raw)) return raw;
+  const byName = SCENARIOS.find((item) => item.name === raw);
+  return byName ? byName.id : DEFAULT_ACCOUNT_SCENARIO;
+}
+
+export function scenarioName(id) {
+  return SCENARIOS.find((item) => item.id === normalizeScenario(id)).name;
+}
+
+/** 沒有適用劇本陣列的資料，所有劇本都顯示。有陣列時才限定。 */
+export function fitsScenario(item, scenarioId) {
+  const marks = item?.scenarios;
+  if (!Array.isArray(marks) || marks.length === 0) return true;
+  return marks.includes(normalizeScenario(scenarioId));
+}
+
+export function meritIdList(value) {
+  if (!Array.isArray(value)) return [];
+  const out = [];
+  for (const item of value) {
+    const id = cleanId(item);
+    if (id && !out.includes(id)) out.push(id);
+  }
+  return out.slice(0, 8);
+}
+
+export function emptyAccount(id, name = '主帳', scenario = DEFAULT_ACCOUNT_SCENARIO) {
   return {
     id,
     name: clip(name, 24) || '主帳',
+    scenario: normalizeScenario(scenario),
     owned: {},
     tacticsOwned: {},
     customTactics: [],
@@ -213,7 +252,8 @@ export function matchesGeneral(general, ownedRecord, filters, extras) {
   }
   const troops = activeChoice(filters.troop, TROOP_ORDER);
   if (troops) {
-    const ok = [...troops].some((troop) => isAptitudeAtLeastA(general.apt[troop]));
+    const apt = extras?.apt || general.apt;
+    const ok = [...troops].some((troop) => isAptitudeAtLeastA(apt?.[troop]));
     if (!ok) return false;
   }
   const dynamic = activeChoice(filters.dynamic, DYNAMIC_FILTERS);
@@ -574,9 +614,21 @@ export function ownershipGaps(members, account, lookup = {}) {
   for (const member of members || []) {
     if (!member) continue;
     const generalId = member.generalId;
+    if (!generalId && member.generalName && !seenGenerals.has(member.generalName)) {
+      seenGenerals.add(member.generalName);
+      generals.push(member.generalName);
+    }
     if (generalId && !account?.owned?.[generalId] && !seenGenerals.has(generalId)) {
       seenGenerals.add(generalId);
       generals.push(member.generalName || generalName(generalId) || generalId);
+    }
+    for (let index = 0; index < 2; index += 1) {
+      if (member.learned?.[index]) continue;
+      const name = String(member.learnedNames?.[index] || '').trim();
+      const key = `named:${name}`;
+      if (!name || seenTactics.has(key)) continue;
+      seenTactics.add(key);
+      tactics.push(name);
     }
     for (const tacticId of member.learned || []) {
       if (!tacticId || seenTactics.has(tacticId)) continue;
@@ -720,7 +772,12 @@ function normalizeMember(raw) {
       secondary: secondarySlots(raw.bingshu),
     };
   }
-  return memberWithLearned({ generalId, bingshu, vacated: raw.vacated }, learned);
+  const base = { generalId, bingshu, vacated: raw.vacated };
+  const traits = stringList(raw.traits, 6);
+  if (traits.length) base.traits = traits;
+  const aptNeed = aptNeedOf(raw.aptNeed);
+  if (aptNeed) base.aptNeed = aptNeed;
+  return memberWithLearned(base, learned);
 }
 
 /** Backup v1 stored 副將、主將、副將. Later backups store 主將 first. */
@@ -739,11 +796,21 @@ function normalizeAccount(raw, backupVersion) {
     for (const [key, value] of Object.entries(raw.owned)) {
       const generalId = cleanId(key);
       if (!generalId || !value || typeof value !== 'object') continue;
-      owned[generalId] = {
+      const record = {
         red: clampRed(value.red),
         dynamic: asBool(value.dynamic),
         awaken: asBool(value.awaken),
       };
+      const merits = meritIdList(value.merits);
+      if (merits.length) record.merits = merits;
+      owned[generalId] = record;
+    }
+  }
+  const camps = {};
+  if (raw.camps && typeof raw.camps === 'object') {
+    for (const [key, value] of Object.entries(raw.camps)) {
+      const generalId = cleanId(key);
+      if (generalId && value === '漢') camps[generalId] = '漢';
     }
   }
   const tacticsOwned = {};
@@ -778,23 +845,422 @@ function normalizeAccount(raw, backupVersion) {
       if (!teamId || teamIds.has(teamId)) continue;
       teamIds.add(teamId);
       const members = orderTeamMembers(item.members, backupVersion);
-      teams.push({
+      const team = {
         id: teamId,
         name: clip(item?.name, 24) || '未命名隊伍',
         notes: clip(item?.notes, 500),
         substitute: item?.substitute === true,
         members,
-      });
+      };
+      const strategy = stringList(item?.strategy, 1);
+      const tricks = trickSlots(item?.tricks);
+      if (strategy.length) team.strategy = strategy;
+      if (tricks.some(Boolean)) team.tricks = tricks;
+      teams.push(team);
     }
   }
-  return {
+  const account = {
     id,
     name: clip(raw.name, 24) || '未命名帳號',
+    scenario: normalizeScenario(raw.scenario),
     owned,
     tacticsOwned,
     customTactics,
     teams,
   };
+  if (Object.keys(camps).length) account.camps = camps;
+  return account;
+}
+
+function stringList(value, max = 8) {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) => clip(item, 24)).filter(Boolean).slice(0, max);
+}
+
+/** 奇略固定第 2 到第 6 回合。空格留著，不把後面的往前補。 */
+function trickSlots(value) {
+  const raw = Array.isArray(value) ? value : [];
+  return [0, 1, 2, 3, 4].map((index) => clip(raw[index], 24));
+}
+
+export function recordStatus(value) {
+  if (value === '待核') return '待核';
+  if (value === '已核' || value === '已確認') return '已核';
+  return '已核';
+}
+
+/** 擁有紀錄裡，換到這個劇本後會被藏起來的名稱。資料本身不刪。 */
+export function hiddenScenarioNames(account, scenarioId, lookup = {}) {
+  const scenario = normalizeScenario(scenarioId);
+  const tactics = [];
+  const generals = [];
+  for (const id of Object.keys(account?.tacticsOwned || {})) {
+    if (!account.tacticsOwned[id]) continue;
+    const item = lookup.tactic?.(id);
+    if (item && !fitsScenario(item, scenario)) tactics.push(item.name);
+  }
+  for (const id of Object.keys(account?.owned || {})) {
+    const item = lookup.general?.(id);
+    if (item && !fitsScenario(item, scenario)) generals.push(item.name);
+  }
+  return { generals, tactics };
+}
+
+/** 劇本推薦隊伍。戰法可以留空；方略與奇略順序分開保存。 */
+export function normalizeRecommended(list) {
+  if (!Array.isArray(list)) return [];
+  const teams = [];
+  const seen = new Set();
+  for (const raw of list.slice(0, 120)) {
+    const id = cleanId(raw?.id);
+    if (!id || seen.has(id)) continue;
+    seen.add(id);
+    const members = [0, 1, 2].map((index) => {
+      const member = raw?.members?.[index];
+      if (!member || typeof member !== 'object') return null;
+      const generalId = cleanId(member.generalId) || null;
+      const generalName = clip(member.generalName, 24);
+      if (!generalId && !generalName) return null;
+      const next = {
+        generalId,
+        generalName,
+        learned: [0, 1].map((slot) => cleanId(member.learned?.[slot]) || null),
+        learnedNames: [0, 1].map((slot) => clip(member.learnedNames?.[slot], 40)),
+      };
+      const bingshu = normalizeBook(member.bingshu);
+      if (bingshu) next.bingshu = bingshu;
+      const tacticsRaw = clip(member.tacticsRaw, 80);
+      const bingshuRaw = clip(member.bingshuRaw, 80);
+      if (tacticsRaw) next.tacticsRaw = tacticsRaw;
+      if (bingshuRaw) next.bingshuRaw = bingshuRaw;
+      const remark = clip(member.remark, 160);
+      if (remark) next.remark = remark;
+      const traits = stringList(member.traits, 6);
+      if (traits.length) next.traits = traits;
+      const aptNeed = aptNeedOf(member.aptNeed || member.apt);
+      if (aptNeed) next.aptNeed = aptNeed;
+      return next;
+    });
+    const team = {
+      id,
+      scenario: normalizeScenario(raw.scenario),
+      title: clip(raw.title, 40) || '推薦隊伍',
+      rank: clip(raw.rank, 8),
+      status: recordStatus(raw.status || raw.review),
+      strategy: stringList(raw.strategy, 1),
+      tricks: raw.tricksBound === false ? stringList(raw.tricks, 8) : trickSlots(raw.tricks),
+      members,
+    };
+    if (raw.tricksBound === false) team.tricksBound = false;
+    if (raw.applyReady === false) team.applyReady = false;
+    if (raw.origin === 'bahamut') {
+      team.origin = 'bahamut';
+      team.originLabel = '巴哈玩家版';
+    }
+    const author = clip(raw.author, 24);
+    const authorAccount = clip(raw.authorAccount, 32);
+    const postedAt = clip(raw.postedAt, 40);
+    if (author) team.author = author;
+    if (authorAccount) team.authorAccount = authorAccount;
+    if (postedAt) team.postedAt = postedAt;
+    const source = clip(raw.source, 180);
+    const officialSource = clip(raw.officialSource, 180);
+    const note = clip(raw.note, 240);
+    if (source) team.source = source;
+    if (officialSource) team.officialSource = officialSource;
+    if (note) team.note = note;
+    teams.push(team);
+  }
+  return teams;
+}
+
+function aptNeedOf(raw) {
+  const troop = clip(raw?.troop, 4);
+  const letter = String(raw?.letter || '');
+  if (!TROOP_ORDER.includes(troop) || !/^[SABC]$/.test(letter)) return null;
+  return { troop, letter };
+}
+
+function normalizeBook(raw) {
+  if (!raw || typeof raw !== 'object' || !cleanId(raw.branch)) return null;
+  return {
+    branch: cleanId(raw.branch),
+    primary: cleanId(raw.primary) || null,
+    secondary: [cleanId(raw.secondary?.[0]) || null, cleanId(raw.secondary?.[1]) || null],
+  };
+}
+
+function recommendedNotes(rec) {
+  const lines = [];
+  if (rec.source) lines.push(`來源 ${rec.source}`);
+  if (rec.officialSource) lines.push(`官方 ${rec.officialSource}`);
+  if (rec.note) lines.push(rec.note);
+  for (const member of rec.members || []) {
+    if (member?.remark) lines.push(`${member.generalName || ''} ${member.remark}`.trim());
+  }
+  return clip(lines.join('；'), 500);
+}
+
+export function teamFromRecommended(rec, teamId) {
+  const label = [rec.rank, rec.title].filter(Boolean).join(' ') || '推薦隊伍';
+  const strategy = rec.strategy || [];
+  const tricks = rec.tricks || [];
+  const team = {
+    id: teamId,
+    name: clip(label, 24) || '推薦隊伍',
+    notes: recommendedNotes(rec),
+    substitute: false,
+    members: [0, 1, 2].map((index) => {
+      const member = rec.members?.[index];
+      if (!member?.generalId) return null;
+      const learned = [member.learned?.[0] || null, member.learned?.[1] || null];
+      const vacated = [0, 1].map((slot) => (learned[slot] ? null : member.learnedNames?.[slot] || null));
+      const base = { generalId: member.generalId, bingshu: member.bingshu || null, vacated };
+      if (member.traits?.length) base.traits = member.traits;
+      if (member.aptNeed) base.aptNeed = member.aptNeed;
+      return memberWithLearned(base, learned, vacated);
+    }),
+  };
+  if (strategy.length) team.strategy = strategy;
+  if (tricks.length) team.tricks = tricks;
+  return team;
+}
+
+export function normalizeMeritDefs(list) {
+  if (!Array.isArray(list)) return [];
+  const merits = [];
+  const seen = new Set();
+  for (const raw of list.slice(0, 40)) {
+    const id = cleanId(raw?.id);
+    const name = clip(raw?.name, 24);
+    if (!id || !name || seen.has(id)) continue;
+    seen.add(id);
+    const limits = {};
+    const accountLimit = Number(raw?.limits?.account);
+    const teamLimit = Number(raw?.limits?.team);
+    if (Number.isInteger(accountLimit) && accountLimit > 0) limits.account = accountLimit;
+    if (Number.isInteger(teamLimit) && teamLimit > 0) limits.team = teamLimit;
+    let effect = null;
+    if (raw?.effect?.kind === 'apt' && /^[SABC]$/.test(raw.effect.letter || '')) {
+      const troops = Array.isArray(raw.effect.troops)
+        ? raw.effect.troops.map((item) => clip(item, 8)).filter((item) => TROOP_ORDER.includes(item))
+        : [];
+      const skipTags = Array.isArray(raw.effect.skipTags)
+        ? raw.effect.skipTags.map((item) => clip(item, 12)).filter(Boolean).slice(0, 8)
+        : [];
+      effect = {
+        kind: 'apt',
+        letter: raw.effect.letter,
+        troops: troops.length ? troops : null,
+        skipTags,
+      };
+    }
+    merits.push({
+      id,
+      name,
+      scenarios: scenarioIdList(raw.scenarios),
+      status: recordStatus(raw.status || raw.review),
+      excludes: meritIdList(raw.excludes).filter((item) => item !== id),
+      limits,
+      effect,
+    });
+  }
+  return merits;
+}
+
+function scenarioIdList(value) {
+  if (!Array.isArray(value)) return [];
+  const out = [];
+  for (const item of value) {
+    const raw = String(item || '').trim();
+    const id = SCENARIOS.some((row) => row.id === raw)
+      ? raw
+      : SCENARIOS.find((row) => row.name === raw)?.id;
+    if (id && !out.includes(id)) out.push(id);
+  }
+  return out;
+}
+
+export function normalizeScenarioPack(raw) {
+  return {
+    weapons: [],
+    recommended: normalizeRecommended(raw?.recommended),
+    merits: normalizeMeritDefs(raw?.merits),
+  };
+}
+
+export function meritsForScenario(merits, scenarioId) {
+  return (merits || []).filter((merit) => fitsScenario(merit, scenarioId));
+}
+
+export function effectiveApt(general, ownedRecord, merits) {
+  const apt = { ...(general?.apt || {}) };
+  const marks = meritIdList(ownedRecord?.merits);
+  if (!marks.length) return apt;
+  const tags = Array.isArray(general?.tags) ? general.tags : [];
+  for (const merit of merits || []) {
+    if (!marks.includes(merit.id) || merit.effect?.kind !== 'apt') continue;
+    if ((merit.effect.skipTags || []).some((tag) => tags.includes(tag))) continue;
+    const troops = merit.effect.troops?.length ? merit.effect.troops : TROOP_ORDER;
+    for (const troop of troops) apt[troop] = merit.effect.letter;
+  }
+  return apt;
+}
+
+function exclusionPairs(merits) {
+  const pairs = [];
+  const seen = new Set();
+  for (const merit of merits || []) {
+    for (const otherId of merit.excludes || []) {
+      const key = [merit.id, otherId].sort().join('\0');
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const other = merits.find((item) => item.id === otherId) || { id: otherId, name: otherId };
+      pairs.push([merit, other]);
+    }
+  }
+  return pairs;
+}
+
+export function meritWarnings(account, meritDefs) {
+  const warnings = [];
+  const defs = meritDefs || [];
+  const owned = account?.owned || {};
+  for (const merit of defs) {
+    const holders = Object.keys(owned).filter((id) => meritIdList(owned[id]?.merits).includes(merit.id));
+    if (merit.limits?.account && holders.length > merit.limits.account) {
+      warnings.push({
+        kind: 'account',
+        meritId: merit.id,
+        name: merit.name,
+        limit: merit.limits.account,
+        generalIds: holders,
+      });
+    }
+    if (merit.limits?.team) {
+      for (const team of account?.teams || []) {
+        const inTeam = [];
+        for (const member of team?.members || []) {
+          const generalId = member?.generalId;
+          if (!generalId || inTeam.includes(generalId)) continue;
+          if (meritIdList(owned[generalId]?.merits).includes(merit.id)) inTeam.push(generalId);
+        }
+        if (inTeam.length > merit.limits.team) {
+          warnings.push({
+            kind: 'team',
+            meritId: merit.id,
+            name: merit.name,
+            teamId: team.id,
+            teamName: team.name || '未命名隊伍',
+            limit: merit.limits.team,
+            generalIds: inTeam,
+          });
+        }
+      }
+    }
+  }
+  for (const [generalId, record] of Object.entries(owned)) {
+    const marks = meritIdList(record?.merits);
+    for (const [left, right] of exclusionPairs(defs)) {
+      if (marks.includes(left.id) && marks.includes(right.id)) {
+        warnings.push({
+          kind: 'exclude-general',
+          generalIds: [generalId],
+          a: left.name,
+          b: right.name,
+        });
+      }
+    }
+  }
+  for (const team of account?.teams || []) {
+    const present = new Set();
+    for (const member of team?.members || []) {
+      for (const id of meritIdList(owned[member?.generalId]?.merits)) present.add(id);
+    }
+    for (const [left, right] of exclusionPairs(defs)) {
+      if (present.has(left.id) && present.has(right.id)) {
+        warnings.push({
+          kind: 'exclude-team',
+          teamId: team.id,
+          teamName: team.name || '未命名隊伍',
+          a: left.name,
+          b: right.name,
+        });
+      }
+    }
+  }
+  return warnings;
+}
+
+/** 同一武將或同一戰法出現在兩隊以上。拓·／轉·／精· 與原版 id 不同，不算衝突。 */
+export function coexistenceLines(account, nameOf = {}) {
+  const generalName = nameOf.general || ((id) => id);
+  const tacticName = nameOf.tactic || ((id) => id);
+  const nameKeyOf = nameOf.nameKey || (() => '');
+  const generals = new Map();
+  const names = new Map();
+  const tactics = new Map();
+  const add = (map, key, teamName) => {
+    if (!key) return;
+    const list = map.get(key) || [];
+    if (!list.includes(teamName)) list.push(teamName);
+    map.set(key, list);
+  };
+  for (const team of account?.teams || []) {
+    const teamName = team?.name || '未命名隊伍';
+    const seenGeneral = new Set();
+    const seenName = new Set();
+    const seenTactic = new Set();
+    for (const member of team?.members || []) {
+      const generalId = member?.generalId;
+      if (generalId && !seenGeneral.has(generalId)) {
+        seenGeneral.add(generalId);
+        add(generals, generalId, teamName);
+        const key = nameKeyOf(generalId);
+        if (key && !seenName.has(key)) {
+          seenName.add(key);
+          const bucket = names.get(key) || { teams: [], ids: new Set() };
+          if (!bucket.teams.includes(teamName)) bucket.teams.push(teamName);
+          bucket.ids.add(generalId);
+          names.set(key, bucket);
+        }
+      }
+      for (const tacticId of member?.learned || []) {
+        if (!tacticId || seenTactic.has(tacticId)) continue;
+        seenTactic.add(tacticId);
+        add(tactics, tacticId, teamName);
+      }
+    }
+  }
+  const lines = [];
+  for (const [id, teams] of generals) {
+    if (teams.length < 2) continue;
+    lines.push(`武將 ${generalName(id)} 出現在 ${teams.join('、')}`);
+  }
+  for (const [key, bucket] of names) {
+    if (bucket.ids.size < 2 || bucket.teams.length < 2) continue;
+    lines.push(`同名武將 ${key} 出現在 ${bucket.teams.join('、')}`);
+  }
+  for (const [id, teams] of tactics) {
+    if (teams.length < 2) continue;
+    lines.push(`戰法 ${tacticName(id)} 出現在 ${teams.join('、')}`);
+  }
+  return lines;
+}
+
+export function meritWarningLines(account, meritDefs, nameOf = (id) => id) {
+  return meritWarnings(account, meritDefs).map((warning) => {
+    const names = (warning.generalIds || []).map((id) => nameOf(id) || id).join('、');
+    if (warning.kind === 'account') {
+      return `${warning.name}一個帳號最多 ${warning.limit} 名，目前 ${warning.generalIds.length} 名：${names}`;
+    }
+    if (warning.kind === 'team') {
+      return `「${warning.teamName}」的${warning.name}一隊最多 ${warning.limit} 名，目前 ${warning.generalIds.length} 名：${names}`;
+    }
+    if (warning.kind === 'exclude-general') return `${names}不能同時標${warning.a}與${warning.b}`;
+    if (warning.kind === 'exclude-team') return `「${warning.teamName}」不能同時有${warning.a}與${warning.b}`;
+    return '';
+  }).filter(Boolean);
 }
 
 export function normalizeState(input) {
@@ -863,6 +1329,8 @@ export function exportAccountPayload(account, catalogVersion, options = {}) {
     account: {
       id: account.id,
       name: account.name,
+      scenario: normalizeScenario(account.scenario),
+      camps: account.camps || {},
       owned: account.owned,
       tacticsOwned: account.tacticsOwned,
       customTactics: account.customTactics,
@@ -898,7 +1366,12 @@ export function addAccountFile(state, account, options = {}) {
     return { ok: false, error: '帳號數量過多' };
   }
   const id = newId('acct');
-  const next = { ...account, id, teams: options.omitTeams ? [] : account.teams };
+  const next = {
+    ...account,
+    id,
+    scenario: normalizeScenario(options.scenario || account.scenario),
+    teams: options.omitTeams ? [] : account.teams,
+  };
   return {
     ok: true,
     state: {
