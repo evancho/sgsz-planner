@@ -6,8 +6,14 @@
  */
 import { writeFileSync } from 'node:fs';
 import { tacticRows } from './tactic-catalog.mjs';
+import { hanyanBahamut } from './hanyan-bahamut.mjs';
+import { hanyanDami } from './hanyan-dami.mjs';
+import { applyMerges } from './hanyan-merges.mjs';
+import { applyTiers } from './hanyan-tiers.mjs';
+import { hanConvert } from './han-convert.mjs';
+import { hanyanMerits, hanyanRecommended } from './hanyan-recommended.mjs';
 
-const VERSION = '1.2.8';
+const VERSION = '1.2.9';
 
 const APT_ORDER = ['騎', '盾', '弓', '槍', '器械'];
 
@@ -18,6 +24,36 @@ function parseApt(code) {
     apt[key] = code[i];
   });
   return apt;
+}
+
+function pendingGeneral(row) {
+  const apt = {};
+  for (const troop of APT_ORDER) {
+    const letter = row.apt?.[troop];
+    apt[troop] = /^[SABC]$/.test(letter || '') ? letter : '待核';
+  }
+  const general = {
+    id: row.id,
+    name: row.name,
+    camp: row.camp,
+    cost: Number.isInteger(row.cost) ? row.cost : null,
+    role: row.role || null,
+    quality: row.quality,
+    collection: false,
+    dynamic: typeof row.dynamic === 'boolean' ? row.dynamic : null,
+    awaken: typeof row.awaken === 'boolean' ? row.awaken : null,
+    apt,
+    innate: row.innate || '',
+    nameKey: row.name,
+    // 武將列表不寫來源／備註，跟一般卡一樣乾淨。
+    sourceUrl: '',
+    status: row.status === '待核' ? '待核' : '已核',
+    note: '',
+  };
+  if (Array.isArray(row.scenarios) && row.scenarios.length) general.scenarios = row.scenarios;
+  if (row.debutScenario) general.debutScenario = row.debutScenario;
+  if (row.scenarioLimit) general.scenarioLimit = row.scenarioLimit;
+  return general;
 }
 
 function g(id, name, camp, cost, role, apt, dyn, innate = '', tags = null) {
@@ -36,7 +72,7 @@ function g(id, name, camp, cost, role, apt, dyn, innate = '', tags = null) {
     nameKey: name,
   };
   if (tags?.length) general.tags = tags;
-  return general;
+  return cite(general);
 }
 
 const generals = [
@@ -63,7 +99,7 @@ const generals = [
   g('sp-yuanshao', 'SP袁紹', '群', 7, '軍事', 'BASBS', 1),
   g('menghuo', '孟獲', '群', 7, '軍事', 'SSBAC', 1),
   g('yuji', '于吉', '群', 7, '軍事', 'CBCCC', 1),
-  g('dongzhuo', '董卓', '群', 7, '軍事', 'ASSBC', 1),
+  g('dongzhuo', '董卓', '漢', 7, '軍事', 'ASSBC', 1),
   g('lvbu', '呂布', '群', 7, '軍事', 'SBSAC', 1),
   g('sp-lejin', 'SP樂進', '魏', 6, '軍事', 'SABSS', 1),
   g('sp-dianwei', 'SP典韋', '魏', 6, '軍事', 'ASCAC', 1),
@@ -121,15 +157,15 @@ const generals = [
   g('sunjian', '孫堅', '吳', 6, '軍事', 'ASSAC', 1),
   g('lukang', '陸抗', '吳', 6, '軍事', 'ABSAS', 1),
   g('zhouyu', '周瑜', '吳', 6, '軍事', 'BASAC', 1),
-  g('sp-luzhi', 'SP盧植', '群', 6, '軍事', 'BCSBS', 1),
-  g('sp-diaochan', 'SP貂蟬', '群', 6, '軍事', 'BCSCC', 1),
-  g('sp-dongzhuo', 'SP董卓', '群', 6, '軍事', 'ASSBC', 1),
+  g('sp-luzhi', 'SP盧植', '漢', 6, '軍事', 'BCSBS', 1),
+  g('sp-diaochan', 'SP貂蟬', '漢', 6, '軍事', 'BCSCC', 1),
+  g('sp-dongzhuo', 'SP董卓', '漢', 6, '軍事', 'ASSBC', 1),
   g('sp-zhangbao', 'SP張寶', '群', 6, '軍事', 'BSAAS', 1),
-  g('sp-huangfusong', 'SP皇甫嵩', '群', 6, '軍事', 'AAASS', 1),
-  g('sp-zhujun', 'SP朱儁', '群', 6, '軍事', 'CBSBA', 1),
+  g('sp-huangfusong', 'SP皇甫嵩', '漢', 6, '軍事', 'AAASS', 1),
+  g('sp-zhujun', 'SP朱儁', '漢', 6, '軍事', 'CBSBA', 1),
   g('quyi', '麴義', '群', 6, '軍事', 'BCSCB', 1),
   g('xuyou', '許攸', '群', 6, '軍事', 'AAAAC', 1),
-  g('caiyong', '蔡邕', '群', 6, '內政', 'CCBCC', 0),
+  g('caiyong', '蔡邕', '漢', 6, '內政', 'CCBCC', 0),
   g('duosi', '朵思大王', '群', 6, '軍事', 'SSACC', 1),
   g('jushou', '沮授', '群', 6, '軍事', 'BSSAA', 1),
   g('yuanshu', '袁術', '群', 6, '軍事', 'SBSBC', 1),
@@ -138,7 +174,7 @@ const generals = [
   g('zhurong', '祝融夫人', '群', 6, '軍事', 'SAAAC', 1),
   g('wutugu', '兀突骨', '群', 6, '軍事', 'SSCBC', 1),
   g('gongsunzan', '公孫瓚', '群', 6, '軍事', 'SCSCB', 1),
-  g('yuanshao', '袁紹', '群', 6, '軍事', 'BASBS', 1),
+  g('yuanshao', '袁紹', '漢', 6, '軍事', 'BASBS', 1),
   g('zhangjiao', '張角', '群', 6, '軍事', 'ASSBA', 1),
   g('wushuang-zhenji', '無雙甄姬', '魏', 5, '軍事', 'SBSBC', 1),
   g('manchong', '滿寵', '魏', 5, '軍事', 'ASABA', 1),
@@ -159,7 +195,7 @@ const generals = [
   g('chengpu', '程普', '吳', 5, '軍事', 'BAASB', 1),
   g('sunce', '孫策', '吳', 5, '軍事', 'SBASA', 1),
   g('sp-zhangliang', 'SP張梁', '群', 5, '軍事', 'BABSA', 1),
-  g('zhangrang', '張讓', '群', 5, '軍事', 'CSABB', 1),
+  g('zhangrang', '張讓', '漢', 5, '軍事', 'CSABB', 1),
   g('gaolan', '高覽', '群', 5, '軍事', 'AABSC', 1),
   g('muludawang', '木鹿大王', '群', 5, '軍事', 'SCCAC', 1),
   g('liru', '李儒', '群', 5, '軍事', 'SBABB', 1),
@@ -168,7 +204,7 @@ const generals = [
   g('wenchou', '文醜', '群', 5, '軍事', 'AASAC', 1),
   g('huaxiong', '華雄', '群', 5, '軍事', 'SBBAC', 1),
   g('yanliang', '顏良', '群', 5, '軍事', 'AABSC', 1),
-  g('huatuo', '華佗', '群', 5, '軍事', 'CCCCC', 1),
+  g('huatuo', '華佗', '漢', 5, '軍事', 'CCCCC', 1),
   g('zuoci', '左慈', '群', 5, '軍事', 'CCCCC', 1),
   g('caopi', '曹丕', '魏', 4, '軍事', 'AASCC', 1),
   g('sp-huangyueying', 'SP黃月英', '蜀', 4, '軍事', 'CCCCS', 1),
@@ -177,14 +213,14 @@ const generals = [
   g('fazheng', '法正', '蜀', 4, '軍事', 'BSAAA', 1),
   g('zhugege', '諸葛恪', '吳', 4, '軍事', 'CCASA', 1),
   g('daqiao', '大喬', '吳', 4, '軍事', 'CCBCC', 1),
-  g('diaochan', '貂蟬', '群', 4, '軍事', 'BCBCC', 1),
+  g('diaochan', '貂蟬', '漢', 4, '軍事', 'BCBCC', 1),
   g('chengong', '陳宮', '群', 4, '軍事', 'ABSAA', 1),
   g('simahui', '司馬徽', '群', 4, '內政', 'CCBCC', 0),
   g('zhangchunhua', '張春華', '魏', 3, '軍事', 'AAACB', 1),
   g('xiaoqiao', '小喬', '吳', 3, '軍事', 'CCBCC', 1),
   g('zoushi', '鄒氏', '群', 3, '內政', 'CBCCC', 0),
   g('dongbai', '董白', '群', 3, '軍事', 'CCCBC', 1),
-  g('caiwenji', '蔡文姬', '群', 3, '軍事', 'BCCCC', 1),
+  g('caiwenji', '蔡文姬', '漢', 3, '軍事', 'BCCCC', 1),
   // 英雄命示都尉。拜師才決定陣營，名冊預設群。適性未知，暫以全 A 佔位。統御記基礎 7。
   g('duwei-shenheng', '沈姮', '群', 7, '軍事', 'AAAAA', 0, '風焰相形', ['都尉']),
   g('duwei-qinxi', '秦溪', '群', 7, '軍事', 'AAAAA', 0, '先聲奪人', ['都尉']),
@@ -200,6 +236,164 @@ const generals = [
   g('duwei-machan', '馬禪', '群', 7, '軍事', 'AAAAA', 0, '運籌帷幄', ['都尉']),
 ];
 
+const SEASON_PK = 'https://sgsdeck.com/seasons/pk-s27';
+const SEASON_BINGYAN = 'https://sgsdeck.com/seasons/og-兵演春秋';
+const SHOT = '使用者遊戲截圖 2026-11-08';
+const KEEP_NOTE = '漢陣營之後常規劇本也可繼續用。可轉群。';
+const DEBUT_NOTE = `首次登場是漢焰長明。${KEEP_NOTE}`;
+const LIANG_NOTE = `漢焰長明賽季頁列為漢陣營良將。統御依${SHOT}。sgsdeck 武將頁 404，定位、適性、自帶、傳承仍待核。${DEBUT_NOTE}`;
+
+for (const [id, name, cost] of [
+  ['baoxin', '鮑信', 5],
+  ['liuzhang', '劉璋', 3],
+  ['liudai', '劉岱', 4],
+  ['chunyuqiong', '淳于瓊', 5],
+  ['liuyu', '劉虞', 4],
+  ['zhangyun', '張允', 5],
+  ['xugong', '許貢', 4],
+]) {
+  generals.push(pendingGeneral({
+    id,
+    name,
+    camp: '漢',
+    cost,
+    quality: '良將',
+    debutScenario: 'hanyan',
+    status: '已核',
+    sourceUrl: SEASON_PK,
+    note: LIANG_NOTE,
+  }));
+}
+
+/** 截圖補進的非 SP 漢將（只收良將以上，不收三星裨將）。陣營／統御／稀有度依截圖。 */
+const SHOT_HAN = [
+  {
+    id: 'zhujun',
+    name: '朱儁',
+    cost: 6,
+    quality: '良將',
+    apt: { 騎: 'C', 盾: 'B', 弓: 'S', 槍: 'B', 器械: 'A' },
+    innate: '鎮壓黃巾',
+    sourceUrl: 'https://sgsdeck.com/generals/朱儁',
+    note: `陣營漢、統御 6、良將、適性騎C盾B弓S槍B器A、自帶鎮壓黃巾（指揮）依${SHOT}武將詳情頁；可見描述「免疫沙暴並造成叛逃」，完整效果待核。sgsdeck 個人頁曾寫千里馳援，不採用。傳承 sgsdeck 寫聲東擊西，仍待核。個人頁舊標群，不採用。不是 SP朱儁。定位待核。不猜首登賽季。${KEEP_NOTE}`,
+  },
+  {
+    id: 'huangfusong',
+    name: '皇甫嵩',
+    cost: 5,
+    quality: '良將',
+    sourceUrl: '',
+    note: `陣營漢、統御 5、良將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/皇甫嵩 404，適性、自帶、傳承、定位待核。不是 SP皇甫嵩。不猜首登賽季。${KEEP_NOTE}`,
+  },
+  {
+    id: 'luzhi',
+    name: '盧植',
+    cost: 5,
+    quality: '良將',
+    apt: { 騎: 'B', 盾: 'C', 弓: 'A', 槍: 'B', 器械: 'B' },
+    innate: '五穀豐登',
+    sourceUrl: 'https://sgsdeck.com/generals/盧植',
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶五穀豐登、傳承五穀豐登依 sgsdeck 個人頁；個人頁舊標群，不採用。不是 SP盧植。定位待核。不猜首登賽季。${KEEP_NOTE}`,
+  },
+  {
+    id: 'kongrong',
+    name: '孔融',
+    cost: 5,
+    quality: '良將',
+    apt: { 騎: 'A', 盾: 'B', 弓: 'C', 槍: 'C', 器械: 'C' },
+    innate: '謙讓',
+    sourceUrl: 'https://sgsdeck.com/generals/孔融',
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶謙讓、傳承謙讓依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。不猜首登賽季。${KEEP_NOTE}`,
+  },
+  {
+    id: 'zhangren',
+    name: '張任',
+    cost: 5,
+    quality: '良將',
+    apt: { 騎: 'C', 盾: 'B', 弓: 'S', 槍: 'B', 器械: 'B' },
+    innate: '落鳳',
+    sourceUrl: 'https://sgsdeck.com/generals/張任',
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶落鳳、傳承落鳳依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。不猜首登賽季。${KEEP_NOTE}`,
+  },
+  {
+    id: 'chenlin',
+    name: '陳琳',
+    cost: 5,
+    quality: '良將',
+    apt: { 騎: 'C', 盾: 'C', 弓: 'B', 槍: 'C', 器械: 'B' },
+    innate: '碩果累累',
+    sourceUrl: 'https://sgsdeck.com/generals/陳琳',
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶碩果累累、傳承落雷依 sgsdeck 個人頁；個人頁舊標魏，不採用。定位待核。不猜首登賽季。${KEEP_NOTE}`,
+  },
+  {
+    id: 'liubiao',
+    name: '劉表',
+    cost: 3,
+    quality: '良將',
+    apt: { 騎: 'B', 盾: 'B', 弓: 'A', 槍: 'C', 器械: 'C' },
+    innate: '爭分奪秒',
+    sourceUrl: 'https://sgsdeck.com/generals/劉表',
+    note: `陣營漢、統御 3、良將依${SHOT}。適性、自帶爭分奪秒、傳承偃旗息鼓依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。不猜首登賽季。${KEEP_NOTE}`,
+  },
+];
+
+for (const row of SHOT_HAN) {
+  generals.push(pendingGeneral({
+    ...row,
+    camp: '漢',
+    status: '已核',
+  }));
+}
+
+generals.push(
+  pendingGeneral({
+    id: 'sp-caocao',
+    name: 'SP曹操',
+    camp: '漢',
+    cost: 7,
+    quality: '名將',
+    role: '軍事',
+    dynamic: true,
+    awaken: true,
+    apt: { 騎: 'S', 盾: 'A', 弓: 'S', 槍: 'A', 器械: 'B' },
+    innate: '承天靖世',
+    debutScenario: 'hanyan',
+    status: '已核',
+    sourceUrl: 'https://sgsdeck.com/generals/SP曹操',
+    note: `適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」；定位軍事。${DEBUT_NOTE}`,
+  }),
+  pendingGeneral({
+    id: 'heshi',
+    name: '何氏',
+    camp: '漢',
+    cost: 4,
+    quality: '名將',
+    dynamic: true,
+    awaken: false,
+    apt: { 騎: 'C', 盾: 'C', 槍: 'C', 器械: 'C' },
+    innate: '帷內擅權',
+    debutScenario: 'hanyan',
+    status: '已核',
+    sourceUrl: 'https://sgsdeck.com/generals/何氏',
+    note: `自帶帷內擅權、傳承絕計折謀。弓適性衝突：武將頁弓 B，賽季頁 https://sgsdeck.com/seasons/pk-s27 弓 A，弓待核。有動態、無典藏。${DEBUT_NOTE}`,
+  }),
+  pendingGeneral({
+    id: 'y40-lvbu',
+    name: '40Y呂布',
+    camp: '漢',
+    cost: 7,
+    quality: '名將',
+    role: '軍事',
+    dynamic: true,
+    awaken: false,
+    apt: { 騎: 'A', 盾: 'B', 弓: 'S', 槍: 'S', 器械: 'C' },
+    innate: '天威嘯陣',
+    status: '已核',
+    sourceUrl: 'https://sgsdeck.com/generals/40Y呂布',
+    note: '獨立卡，不是普通呂布。兵演春秋推出後自動轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。武將頁取得方式寫全賽季名將卡包、三國志系列 40 週年紀念名將卡包。台灣新聞稿 https://news.omg.com.tw/News/NewsContent?NewsID=13659 寫免費送給全服主公。各劇本都能選。自帶天威嘯陣。有動態、無典藏。可轉回群。',
+  }),
+);
+
 const ids = new Set();
 for (const general of generals) {
   if (ids.has(general.id)) throw new Error(`dup ${general.id}`);
@@ -210,10 +404,11 @@ const TACTIC_TYPES = ['指揮', '主動', '突擊', '被動', '兵種', '陣法'
 const TACTIC_SOURCES = ['傳承', '事件', '自帶', '賽季'];
 
 function t(row) {
-  if (row.rank !== 'S' && row.rank !== 'A') throw new Error(`rank ${row.id}`);
+  const unranked = row.quality === '未核';
+  if (!unranked && row.rank !== 'S' && row.rank !== 'A') throw new Error(`rank ${row.id}`);
   if (!TACTIC_TYPES.includes(row.type)) throw new Error(`type ${row.id}`);
   if (!TACTIC_SOURCES.includes(row.source)) throw new Error(`source ${row.id}`);
-  return {
+  const tactic = {
     id: row.id,
     name: row.name,
     type: row.type,
@@ -222,14 +417,64 @@ function t(row) {
     troops: row.troops,
     copies: 1,
     orange: true,
-    rank: row.rank,
     desc: row.desc,
+  };
+  if (!unranked) tactic.rank = row.rank;
+  else tactic.quality = '未核';
+  if (row.obtain) tactic.obtain = row.obtain;
+  // 推出賽季（released）與適用劇本（scenarios）分開。沒有 scenarios 的戰法所有劇本都看得到。
+  // 拓·／精·／轉· 才是劇本限定；事件戰法如麾軍結陣不因來源而被限定。
+  if (row.name.startsWith('拓·')) tactic.variant = '拓';
+  else if (row.name.startsWith('精·')) tactic.variant = '精';
+  else if (row.name.startsWith('轉·')) tactic.variant = '轉';
+  // 沒指定劇本時，拓·／精·／轉· 先視為英雄命世。事件與傳承不因前綴以外的來源而被限定。
+  if (row.scenarios) tactic.scenarios = row.scenarios;
+  else if (tactic.variant) tactic.scenarios = ['yingxiong'];
+  if (row.exchange?.length) tactic.exchange = row.exchange;
+  if (row.fromNames?.length) tactic.fromNames = row.fromNames;
+  // 戰法的 source 仍是傳承／事件／自帶／賽季。網址放 sourceUrl，避免蓋掉來源類型。
+  const cited = cite(tactic, row.status || (tactic.variant ? '待核' : '已核'));
+  if (row.sourceUrl) cited.sourceUrl = row.sourceUrl;
+  if (row.note) cited.note = row.note;
+  return cited;
+}
+
+function cite(item, status = '已核') {
+  return {
+    ...item,
+    sourceUrl: '',
+    status,
+    note: '',
   };
 }
 
-function extra(id, name, type, source, from, troops, desc) {
-  return { id, name, type, source, from, troops, rank: 'S', desc };
+function extra(id, name, type, source, from, troops, desc, more = {}) {
+  const row = { id, name, type, source, from, troops, desc, ...more };
+  if (more.quality !== '未核') row.rank = 'S';
+  return row;
 }
+
+const HANYAN_SEASON = 'https://sgsdeck.com/seasons/pk-s27';
+const USER_OK = '使用者確認 2026-11-08';
+const hanyanShop = (origin) => ({
+  scenarios: ['hanyan'],
+  status: '已核',
+  obtain: '賽季商店',
+  sourceUrl: HANYAN_SEASON,
+  note: `原戰法：${origin}。巴哈攻略同列。${USER_OK}`,
+});
+const hanyanPrint = {
+  status: '已核',
+  sourceUrl: HANYAN_SEASON,
+  note: `巴哈攻略同列這項拓印。${USER_OK}`,
+};
+const bothShops = {
+  scenarios: ['yingxiong', 'hanyan'],
+  status: '已核',
+  obtain: { yingxiong: '賽季商店', hanyan: '拓印四選一' },
+  sourceUrl: HANYAN_SEASON,
+  note: `英雄命世從賽季商店取得，漢焰長明改為拓印四選一。${USER_OK}`,
+};
 
 const extraTactics = [
   extra('fengyan', '風焰相形', '指揮', '自帶', ['duwei-shenheng'], null, '成功發動主動或突擊戰法時，有機率治療我軍單體，並有較高機率立刻再施放一次；再次發動無需準備與冷卻。'),
@@ -244,7 +489,12 @@ const extraTactics = [
   extra('huanbing', '緩兵之計', '主動', '自帶', ['duwei-xuyan'], null, '對敵我隨機武將多次施加抵御。落到我軍則降低受到的傷害，落到敵軍則降低其造成的傷害，持續一回合。'),
   extra('yuzhan', '愈戰愈勇', '指揮', '自帶', ['duwei-yangqi'], null, '我軍發動主動戰法後有機率提高戰鬥屬性，可疊加到戰鬥結束；累積觸發數次後治療我軍全體。'),
   extra('yunwei', '運籌帷幄', '指揮', '自帶', ['duwei-machan'], null, '戰鬥前數回合降低友軍受到的傷害，並賦予急救，受傷時有機率依智力獲得治療。'),
-  extra('huijun', '麾軍結陣', '指揮', '事件', [], null, '前四回合提高攜帶者主動戰法的發動率，第五回合造成傷害並治療。'),
+  extra('huijun', '麾軍結陣', '指揮', '事件', [], null, '自帶戰法為主動戰法時生效：前4回合提升自身主動戰法發動率（準備戰法提升更高）。第5回合行動前隨機對敵方單體造成兵刃傷害，或治療我軍兵力最低的友軍。', {
+    obtain: '事件',
+    status: '已核',
+    sourceUrl: 'https://sgsdeck.com/tactics/麾軍結陣',
+    note: USER_OK,
+  }),
   extra('yanren', '燕人咆哮', '被動', '自帶', ['zhangfei'], null, '第二、四回合對敵軍全體造成兵刃傷害；目標處於繳械或計窮時降低統率。自身為主將時，第六回合再打一輪。'),
   extra('jiangtian', '江天長焰', '指揮', '自帶', ['sp-zhouyu'], null, '每回合對敵軍施加長焰，提高其受到的謀略傷害，並造成謀略傷害。自身為主將時，長焰夠多有機率再打一次。'),
   extra('huoshao', '火燒連營', '主動', '自帶', ['luxun'], null, '對敵軍群體造成謀略傷害並施加灼燒；目標已在灼燒時傷害更高。'),
@@ -253,16 +503,83 @@ const extraTactics = [
   extra('aoni', '傲睨王侯', '指揮', '自帶', ['xuyou'], null, '偷取敵軍屬性，轉為我軍的持續增益。'),
   extra('shenmou', '深謀遠慮', '指揮', '傳承', ['sp-bulianshi'], ['弓', '器械'], '將我軍主將的普通攻擊轉為謀略傷害，造成謀略傷害時治療我軍單體。僅弓兵與器械。'),
   extra('gangrou-ji', '剛柔並濟', '指揮', '傳承', ['sp-dongzhuo'], ['弓', '器械'], '降低我軍兵力最低者受到的傷害，並壓低敵軍兵力最高者的輸出。僅弓兵與器械。'),
-  extra('tuo-duohun', '拓·奪魂挾魄', '主動', '賽季', [], null, '英雄命示賽季商店的奪魂挾魄拓本，每輪最多可購兩項。沿用原戰法：偷取敵軍屬性，此消彼長。'),
-  extra('tuo-shibie', '拓·士別三日', '被動', '賽季', [], null, '英雄命示賽季商店的士別三日拓本，每輪最多可購兩項。沿用原戰法：前三回合無法普通攻擊但有機率規避，第四回合提高智力並對敵軍全體造成謀略傷害。'),
-  extra('tuo-yigua', '拓·以寡敵眾', '被動', '賽季', [], null, '英雄命示賽季商店的以寡敵眾拓本，每輪最多可購兩項。沿用原戰法：第2、4、6回合依武力治療自己並提高武力，第5回合對敵軍全體造成兵刃傷害。'),
-  extra('tuo-jifeng', '拓·疾風驟雨', '主動', '賽季', [], null, '英雄命示賽季商店的疾風驟雨拓本，每輪最多可購兩項。與原戰法分開登記，具體係數以遊戲內為準。'),
-  extra('jing-yulin', '精·魚鱗陣', '陣法', '賽季', [], null, '英雄命示賽季商店的魚鱗陣精進版，每輪最多可購兩項。提升統率，並有機會獲得抵御或治療。具體係數以遊戲內為準。'),
-  extra('jing-fengshi', '精·鋒矢陣', '陣法', '賽季', [], ['騎', '盾', '槍'], '英雄命示賽季商店的鋒矢陣精進版，每輪最多可購兩項。沿用原戰法：主將傷害提高也更易受傷，副將傷害下降但更耐打。'),
-  extra('tuo-xushi', '拓·蓄勢待發', '指揮', '賽季', [], ['盾', '器械'], '兵演春秋賽季商店的蓄勢待發拓本，每輪最多可購兩項。沿用原戰法：限盾、器械。自身提高智力與統率並獲得先攻，但無法造成傷害；每回合有機率使我軍群體獲得規避。'),
-  extra('tuo-caochuan', '拓·草船借箭', '主動', '賽季', [], null, '兵演春秋賽季商店的草船借箭拓本，每輪最多可購兩項。沿用原戰法：移除我軍群體負面，並給予急救，受傷時有機率依統率回復。'),
-  extra('tuo-guagu', '拓·刮骨療毒', '主動', '賽季', [], null, '兵演春秋賽季商店的刮骨療毒拓本，每輪最多可購兩項。沿用原戰法：為損失兵力最多的我軍單體清除負面狀態，並依智力治療。'),
-  extra('jing-lingji', '精·靈機一動', '主動', '賽季', [], null, '兵演春秋賽季商店的靈機一動精進版，每輪最多可購兩項。全兵種可用，屬性提升低於原戰法。'),
+  extra('tuo-duohun', '拓·奪魂挾魄', '主動', '賽季', [], null, '對應原戰法奪魂挾魄', bothShops),
+  // 拓本效果同原戰法（兵種限制也相同）；精進版通常不限兵種。使用者確認 2026-11-09。
+  extra('tuo-shibie', '拓·士別三日', '被動', '賽季', [], null, '對應原戰法士別三日', {
+    status: '已核',
+    obtain: '賽季商店',
+    note: `效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09`,
+  }),
+  extra('tuo-yigua', '拓·以寡敵眾', '被動', '賽季', [], null, '對應原戰法以寡敵眾', {
+    status: '已核',
+    obtain: '賽季商店',
+    note: `效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09`,
+  }),
+  extra('tuo-jifeng', '拓·疾風驟雨', '主動', '賽季', [], null, '對應原戰法疾風驟雨', {
+    status: '已核',
+    obtain: '賽季商店',
+    note: `效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09`,
+  }),
+  extra('jing-yulin', '精·魚鱗陣', '陣法', '賽季', [], null, '對應原戰法魚鱗陣', {
+    status: '已核',
+    obtain: '賽季商店',
+    note: `精進版通常不限兵種。英雄命示賽季商店。使用者確認 2026-11-09`,
+  }),
+  extra('jing-fengshi', '精·鋒矢陣', '陣法', '賽季', [], null, '對應原戰法鋒矢陣', {
+    status: '已核',
+    obtain: '賽季商店',
+    note: `精進版通常不限兵種（原鋒矢陣限騎、盾、槍）。英雄命示賽季商店。使用者確認 2026-11-09`,
+  }),
+  extra('tuo-xushi', '拓·蓄勢待發', '指揮', '賽季', [], ['盾', '器械'], '對應原戰法蓄勢待發', {
+    status: '已核',
+    obtain: '賽季商店',
+    note: `效果同原戰法（限盾、器械）。兵演春秋賽季商店。使用者確認 2026-11-09`,
+  }),
+  extra('tuo-caochuan', '拓·草船借箭', '主動', '賽季', [], null, '對應原戰法草船借箭', bothShops),
+  extra('tuo-guagu', '拓·刮骨療毒', '主動', '賽季', [], null, '對應原戰法刮骨療毒', bothShops),
+  extra('jing-lingji', '精·靈機一動', '主動', '賽季', [], null, '對應原戰法靈機一動', {
+    status: '已核',
+    obtain: '賽季商店',
+    note: `精進版通常不限兵種（原靈機一動限騎、器械）。兵演春秋賽季商店。使用者確認 2026-11-09`,
+  }),
+  extra('cangqi', '藏器待時', '被動', '傳承', ['sp-caocao'], ['盾', '器械'], '前2回合，自身受到的普通攻擊傷害降低10%→20%（受統帥影響）。第3回合起，自身自帶主動戰法發動率提升4%→8%（受武力影響），且造成傷害時有15%→30%機率附帶10%→20%破陣（受武力影響）。僅盾兵與器械。', {
+    status: '已核',
+    obtain: '傳承',
+    fromNames: ['SP曹操'],
+    sourceUrl: 'https://sgsdeck.com/tactics/藏器待時',
+    note: `傳承自 SP曹操。${USER_OK}`,
+  }),
+  extra('jueji', '絕計折謀', '主動', '傳承', ['heshi'], null, '40%機率對敵軍隨機武將造成謀略傷害（118%→236%，受智力影響），並施加技窮狀態，持續1回合。', {
+    status: '已核',
+    obtain: '傳承',
+    fromNames: ['何氏'],
+    sourceUrl: 'https://sgsdeck.com/tactics/絕計折謀',
+    note: `傳承自何氏。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。${USER_OK}`,
+  }),
+  extra('taoyuan', '桃園結義', '指揮', '事件', [], null, '每回合有20%→40%機率（受統率影響，每種效果獨立判定）：我軍魅力最高者治療我軍單體（受智力影響）；統率最高者對敵軍智力最低者造成謀略傷害（受統率影響）；武力最高者對敵軍統率最低者造成兵刃傷害。該傷害率受我軍累計溢出治療量影響，觸發後重置。', {
+    status: '已核',
+    obtain: '事件',
+    exchange: ['liubei', 'guanyu', 'zhangfei'],
+    sourceUrl: 'https://sgsdeck.com/tactics/桃園結義',
+    note: `事件兌換武將依巴哈攻略 https://forum.gamer.com.tw/C.php?bsn=36815&snA=11630 。整理站兌換欄未列武將名。${USER_OK}`,
+  }),
+  extra('tuo-zhongzhi', '拓·眾志成城', '指揮', '賽季', [], null, '對應原戰法眾志成城', {
+    ...hanyanPrint,
+    scenarios: ['hanyan'],
+    obtain: '拓印四選一',
+  }),
+  extra('heng-e', '衡軛陣', '陣法', '賽季', [], null, '沒有對應原版。', {
+    scenarios: ['hanyan'],
+    status: '已核',
+    obtain: '賽季商店',
+    sourceUrl: HANYAN_SEASON,
+    note: `賽季商店新增陣法，沒有對應原版。巴哈攻略同列。${USER_OK}`,
+  }),
+  extra('zhuan-xingyi', '轉·形一陣', '陣法', '賽季', [], null, '對應原戰法形一陣', hanyanShop('形一陣')),
+  extra('zhuan-weizhen', '轉·威震華夏', '主動', '賽季', [], null, '對應原戰法威震華夏', hanyanShop('威震華夏')),
+  extra('tuo-jushi', '拓·聚石成金', '主動', '賽季', [], null, '對應原戰法聚石成金', hanyanShop('聚石成金')),
+  extra('tuo-zhene', '拓·鎮扼防拒', '指揮', '賽季', [], null, '對應原戰法鎮扼防拒', hanyanShop('鎮扼防拒')),
+  extra('zhuan-shizi', '轉·獅子奮迅', '主動', '賽季', [], null, '對應原戰法獅子奮迅', hanyanShop('獅子奮迅')),
 ];
 
 const tactics = [...tacticRows.map(t), ...extraTactics.map(t)];
@@ -274,6 +591,9 @@ for (const tactic of tactics) {
   tacticIds.add(tactic.id);
   for (const fromId of tactic.from) {
     if (!ids.has(fromId)) throw new Error(`missing general ${fromId} for ${tactic.id}`);
+  }
+  for (const exchangeId of tactic.exchange || []) {
+    if (!ids.has(exchangeId)) throw new Error(`missing exchange ${exchangeId} for ${tactic.id}`);
   }
 }
 
@@ -411,9 +731,16 @@ const bingshu = {
   ],
 };
 
+for (const branch of bingshu.branches) {
+  Object.assign(branch, { sourceUrl: '', status: '已核', note: '' });
+  for (const node of [...branch.primary, ...branch.secondary]) {
+    Object.assign(node, { sourceUrl: '', status: '已核', note: '' });
+  }
+}
+
 const meta = {
   catalogVersion: VERSION,
-  updated: '2026-09-30',
+  updated: '2026-11-08',
   scope: '戰鬥類 S 級收到兗州之戰的公開清冊，並補上已核對的後續事件戰法；A 級只收已核對類型的常用戰法。另收英雄命示都尉自帶，以及賽季商店的拓本與精進陣法（含兵演春秋）。直接編輯 scripts/tactic-catalog.mjs 或本腳本的增補列後重跑建置即可擴充。',
 };
 
@@ -421,6 +748,13 @@ writeFileSync('data/meta.json', `${JSON.stringify(meta, null, 2)}\n`);
 writeFileSync('data/generals.json', `${JSON.stringify({ catalogVersion: VERSION, generals }, null, 2)}\n`);
 writeFileSync('data/tactics.json', `${JSON.stringify({ catalogVersion: VERSION, tactics }, null, 2)}\n`);
 writeFileSync('data/bingshu.json', `${JSON.stringify(bingshu, null, 2)}\n`);
+writeFileSync('data/scenario.json', `${JSON.stringify({
+  catalogVersion: VERSION,
+  weapons: [],
+  merits: hanyanMerits,
+  hanConvert,
+  recommended: applyTiers(applyMerges([...hanyanDami, ...hanyanBahamut, ...hanyanRecommended])),
+}, null, 2)}\n`);
 
 const byCamp = {};
 for (const general of generals) byCamp[general.camp] = (byCamp[general.camp] || 0) + 1;

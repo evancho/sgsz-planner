@@ -1,5 +1,5 @@
 // 版本以 data/version.json 為準。發版時改那份檔案，並把 CACHE 改成 sgsz-planner-<version>。
-const CACHE = 'sgsz-planner-1.2.33';
+const CACHE = 'sgsz-planner-1.2.34';
 
 const ASSETS = [
   './',
@@ -15,6 +15,7 @@ const ASSETS = [
   './data/tactics.json',
   './data/bingshu.json',
   './data/team-templates.json',
+  './data/scenario.json',
   './data/version.json',
   './manifest.webmanifest',
   './icons/icon-192.png',
