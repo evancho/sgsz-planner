@@ -156,6 +156,33 @@ test('player teams keep unbound tricks, apply flag, author and per-team status',
   assert.equal(ready.members[0].tacticsRaw, '藏器、血刃');
 });
 
+test('大米隊伍自成來源，斜線替代不進裝備槽，劇本限定另標', () => {
+  const [team] = normalizeRecommended([{
+    id: 'dami-demo',
+    scenario: 'hanyan',
+    title: '蜀智盾',
+    status: '待核',
+    origin: 'dami',
+    applyReady: false,
+    scenarioOnly: true,
+    author: '三國志黑暗大米',
+    source: 'https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536',
+    note: '使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認',
+    members: [{
+      generalId: 'madai',
+      generalName: '馬岱',
+      learned: ['yulin', 'feigong'],
+      learnedNames: ['魚鱗陣', '非攻制勝'],
+      remark: '第二戰法可換藤甲兵',
+    }],
+  }]);
+  assert.equal(team.origin, 'dami');
+  assert.equal(team.originLabel, '大米團隊（截圖）');
+  assert.equal(team.scenarioOnly, true);
+  assert.equal(team.applyReady, false);
+  assert.equal(team.members[0].learned.includes('tengjia'), false);
+});
+
 test('the same tactic on two teams warns, and a variant does not count as the original', () => {
   const account = emptyAccount('acct-c', '衝突');
   account.teams = [

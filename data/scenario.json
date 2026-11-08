@@ -3344,6 +3344,917 @@
           "tacticsRaw": ""
         }
       ]
+    },
+    {
+      "id": "dami-madai",
+      "scenario": "hanyan",
+      "title": "馬岱法關盾",
+      "status": "待核",
+      "origin": "dami",
+      "originLabel": "大米團隊（截圖）",
+      "applyReady": false,
+      "author": "三國志黑暗大米",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536",
+      "strategy": [],
+      "tricks": [
+        "設伏十面",
+        "博浪椎秦",
+        "臨危不懼",
+        "楚歌四起",
+        "多多益善"
+      ],
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。藏器待時、拓·鎮扼防拒圖鑑未收",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "learned": [
+            "yigua",
+            null
+          ],
+          "learnedNames": [
+            "以寡敵眾",
+            "藏器待時"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "remark": "屬性高武",
+          "traits": [
+            "武聖",
+            "雍雅",
+            "破勢",
+            "暴躁"
+          ],
+          "aptNeed": {
+            "troop": "盾",
+            "letter": "S"
+          }
+        },
+        {
+          "generalId": "madai",
+          "generalName": "馬岱",
+          "learned": [
+            "yulin",
+            "feigong"
+          ],
+          "learnedNames": [
+            "魚鱗陣",
+            "非攻制勝"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "remark": "屬性高統。第二戰法可換藤甲兵",
+          "traits": [
+            "石膚",
+            "援助",
+            "護主",
+            "剛體"
+          ]
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            "xushidai",
+            null
+          ],
+          "learnedNames": [
+            "蓄勢待發",
+            "拓·鎮扼防拒"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "remark": "屬性高智。第二戰法可換非攻制勝",
+          "traits": [
+            "符咒",
+            "奇算",
+            "出奇",
+            "長健"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dami-xingcai",
+      "scenario": "hanyan",
+      "title": "星彩法關盾",
+      "status": "待核",
+      "origin": "dami",
+      "originLabel": "大米團隊（截圖）",
+      "applyReady": false,
+      "author": "三國志黑暗大米",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536",
+      "strategy": [],
+      "tricks": [
+        "設伏十面",
+        "博浪椎秦",
+        "臨危不懼",
+        "楚歌四起",
+        "多多益善"
+      ],
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。藏器待時、拓·鎮扼防拒圖鑑未收",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "learned": [
+            "yigua",
+            null
+          ],
+          "learnedNames": [
+            "以寡敵眾",
+            "藏器待時"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "remark": "屬性高武",
+          "traits": [
+            "武聖",
+            "雍雅",
+            "破勢",
+            "暴躁"
+          ],
+          "aptNeed": {
+            "troop": "盾",
+            "letter": "S"
+          }
+        },
+        {
+          "generalId": "wushuang-xingcai",
+          "generalName": "無雙星彩",
+          "learned": [
+            "yulin",
+            "feigong"
+          ],
+          "learnedNames": [
+            "魚鱗陣",
+            "非攻制勝"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "remark": "截圖寫 co星彩。屬性高統。第二戰法可換藤甲兵",
+          "traits": [
+            "石膚",
+            "援助",
+            "剛體"
+          ]
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            "xushidai",
+            null
+          ],
+          "learnedNames": [
+            "蓄勢待發",
+            "拓·鎮扼防拒"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "remark": "屬性高智。第二戰法可換非攻制勝",
+          "traits": [
+            "符咒",
+            "奇算",
+            "出奇",
+            "長健"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dami-shuzhi",
+      "scenario": "hanyan",
+      "title": "蜀智盾",
+      "status": "待核",
+      "origin": "dami",
+      "originLabel": "大米團隊（截圖）",
+      "applyReady": false,
+      "author": "三國志黑暗大米",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536",
+      "strategy": [],
+      "tricks": [
+        "楚歌四起",
+        "暗度陳倉",
+        "功成身退",
+        "合圍夾擊",
+        "設伏十面"
+      ],
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。拓·鎮扼防拒圖鑑未收",
+      "members": [
+        {
+          "generalId": "pangtong",
+          "generalName": "龐統",
+          "learned": [
+            "shibie",
+            "beishe"
+          ],
+          "learnedNames": [
+            "士別三日",
+            "杯蛇鬼車"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "guixin",
+              "tongjun"
+            ]
+          },
+          "remark": "特技擇一：劈風或迴響",
+          "traits": [
+            "雍雅",
+            "暴躁"
+          ],
+          "aptNeed": {
+            "troop": "盾",
+            "letter": "S"
+          }
+        },
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "learned": [
+            "chengdi",
+            "guagu"
+          ],
+          "learnedNames": [
+            "乘敵不虞",
+            "刮骨療毒"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "aptNeed": {
+            "troop": "盾",
+            "letter": "A"
+          }
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            "xushidai",
+            null
+          ],
+          "learnedNames": [
+            "蓄勢待發",
+            "拓·鎮扼防拒"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "remark": "屬性高智",
+          "traits": [
+            "符咒",
+            "奇算",
+            "出奇",
+            "長健"
+          ]
+        }
+      ],
+      "scenarioOnly": true
+    },
+    {
+      "id": "dami-shugong",
+      "scenario": "hanyan",
+      "title": "蜀弓",
+      "status": "待核",
+      "origin": "dami",
+      "originLabel": "大米團隊（截圖）",
+      "applyReady": false,
+      "author": "三國志黑暗大米",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536",
+      "strategy": [],
+      "tricks": [
+        "三策並進",
+        "暗度陳倉",
+        "背水列陣",
+        "多多益善",
+        "設伏十面"
+      ],
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。姜維主兵書截圖讀作蠻勇非勇",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "learned": [
+            "duohun",
+            "fenzui"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "焚輜營壘"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "traits": [
+            "靈動"
+          ]
+        },
+        {
+          "generalId": "pangtong",
+          "generalName": "龐統",
+          "learned": [
+            "taiping",
+            "shangbing"
+          ],
+          "learnedNames": [
+            "太平道法",
+            "上兵伐謀"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "remark": "特技擇一：劈風或迴響",
+          "traits": [
+            "靈動",
+            "暴躁"
+          ]
+        },
+        {
+          "generalId": "zhugeliang",
+          "generalName": "諸葛亮",
+          "learned": [
+            "yanxing",
+            "shengqi"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "盛氣凌敵"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "traits": [
+            "神算",
+            "靈動",
+            "長健"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dami-beifa",
+      "scenario": "hanyan",
+      "title": "北伐盾",
+      "status": "待核",
+      "origin": "dami",
+      "originLabel": "大米團隊（截圖）",
+      "applyReady": false,
+      "author": "三國志黑暗大米",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536",
+      "strategy": [],
+      "tricks": [
+        "芒碭隱蹤",
+        "博浪椎秦",
+        "約法三章",
+        "推食解衣",
+        "把橋受書"
+      ],
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。奇正之勢圖鑑未收。奇略末張截圖作把橋受書，未改寫",
+      "members": [
+        {
+          "generalId": "sp-zhugeliang",
+          "generalName": "SP諸葛亮",
+          "learned": [
+            "zhiji",
+            null
+          ],
+          "learnedNames": [
+            "知己知彼",
+            "奇正之勢"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "traits": [
+            "神算",
+            "長健"
+          ],
+          "aptNeed": {
+            "troop": "盾",
+            "letter": "S"
+          }
+        },
+        {
+          "generalId": "guanxing",
+          "generalName": "關興",
+          "learned": [
+            "qianli",
+            "wenwu"
+          ],
+          "learnedNames": [
+            "千里走單騎",
+            "文武雙全"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "remark": "截圖寫關與、千裏，對到關興、千里走單騎",
+          "traits": [
+            "龍驤",
+            "暴躁"
+          ],
+          "aptNeed": {
+            "troop": "盾",
+            "letter": "S"
+          }
+        },
+        {
+          "generalId": "zhangbao",
+          "generalName": "張苞",
+          "learned": [
+            "feigong",
+            "futang"
+          ],
+          "learnedNames": [
+            "非攻制勝",
+            "赴湯蹈火"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "traits": [
+            "虎峙"
+          ]
+        }
+      ],
+      "scenarioOnly": true
+    },
+    {
+      "id": "dami-wanghong",
+      "scenario": "hanyan",
+      "title": "網紅槍",
+      "status": "待核",
+      "origin": "dami",
+      "originLabel": "大米團隊（截圖）",
+      "applyReady": false,
+      "author": "三國志黑暗大米",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536",
+      "strategy": [],
+      "tricks": [
+        "壯志不絕",
+        "臨危不懼",
+        "封狼居胥",
+        "博浪椎秦",
+        "橫掃河西"
+      ],
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。大戰士圖鑑未收",
+      "members": [
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "learned": [
+            "luoyi",
+            "yiqi"
+          ],
+          "learnedNames": [
+            "裸衣血戰",
+            "一騎當千"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yizhi-bao",
+            "secondary": [
+              "jingzhun",
+              "shanzhan"
+            ]
+          },
+          "remark": "第二戰法可換摧鋒斷刃",
+          "traits": [
+            "雄烈",
+            "靈動",
+            "踩踏",
+            "暴躁"
+          ]
+        },
+        {
+          "generalId": "guanyinping",
+          "generalName": "關銀屏",
+          "learned": [
+            "jifeng",
+            "hengsao"
+          ],
+          "learnedNames": [
+            "疾風驟雨",
+            "橫掃千軍"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "yizhi",
+            "secondary": [
+              "guimou",
+              "zhirui"
+            ]
+          },
+          "traits": [
+            "迴響",
+            "靈動",
+            "踩踏"
+          ]
+        },
+        {
+          "generalId": "huangyueying",
+          "generalName": "黃月英",
+          "learned": [
+            "shengqi",
+            null
+          ],
+          "learnedNames": [
+            "盛氣凌敵",
+            "大戰士"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "youdi",
+            "secondary": [
+              "yanxu",
+              "suzhan"
+            ]
+          },
+          "traits": [
+            "靈動",
+            "踩踏"
+          ],
+          "aptNeed": {
+            "troop": "槍",
+            "letter": "S"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dami-fugui",
+      "scenario": "hanyan",
+      "title": "富貴騎",
+      "status": "待核",
+      "origin": "dami",
+      "originLabel": "大米團隊（截圖）",
+      "applyReady": false,
+      "author": "三國志黑暗大米",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536",
+      "strategy": [],
+      "tricks": [
+        "合圍夾擊",
+        "設伏十面",
+        "楚歌四起",
+        "博浪椎秦",
+        "多多益善"
+      ],
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。轉·獅子奮迅圖鑑未收，只列為替代",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "learnedNames": [
+            "竭力佐謀",
+            "刮骨療毒"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "traits": [
+            "符咒",
+            "奇算",
+            "出奇",
+            "長健"
+          ]
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "learned": [
+            "duohun",
+            "dangfeng"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "當鋒摧決"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "remark": "第二戰法可換上兵伐謀",
+          "traits": [
+            "符咒",
+            "奇算",
+            "出奇",
+            "長健"
+          ]
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "learned": [
+            "lingji",
+            "luli"
+          ],
+          "learnedNames": [
+            "靈機一動",
+            "戮力同心"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "remark": "特技擇一：迴響或符咒。第二戰法可換轉·獅子奮迅",
+          "traits": [
+            "靈動",
+            "出奇"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dami-shuzhi-qi",
+      "scenario": "hanyan",
+      "title": "叔侄騎",
+      "status": "待核",
+      "origin": "dami",
+      "originLabel": "大米團隊（截圖）",
+      "applyReady": false,
+      "author": "三國志黑暗大米",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536",
+      "strategy": [],
+      "tricks": [
+        "合圍夾擊",
+        "設伏十面",
+        "楚歌四起",
+        "博浪椎秦",
+        "多多益善"
+      ],
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。轉·獅子奮迅圖鑑未收，只列為替代",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "learned": [
+            "jieli",
+            "guagu"
+          ],
+          "learnedNames": [
+            "竭力佐謀",
+            "刮骨療毒"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "traits": [
+            "符咒",
+            "奇算",
+            "出奇",
+            "長健"
+          ]
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "learned": [
+            "duohun",
+            "dangfeng"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "當鋒摧決"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "zhirui"
+            ]
+          },
+          "remark": "第二戰法可換上兵伐謀",
+          "traits": [
+            "符咒",
+            "奇算",
+            "出奇",
+            "長健"
+          ]
+        },
+        {
+          "generalId": "xunyou",
+          "generalName": "荀攸",
+          "learned": [
+            "lingji",
+            "luli"
+          ],
+          "learnedNames": [
+            "靈機一動",
+            "戮力同心"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "remark": "特技擇一：迴響或符咒。第二戰法可換轉·獅子奮迅",
+          "traits": [
+            "靈動",
+            "出奇"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dami-taiwei",
+      "scenario": "hanyan",
+      "title": "太尉盾",
+      "status": "待核",
+      "origin": "dami",
+      "originLabel": "大米團隊（截圖）",
+      "applyReady": false,
+      "author": "三國志黑暗大米",
+      "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536",
+      "strategy": [],
+      "tricks": [
+        "芒碭隱蹤",
+        "沛縣聚義",
+        "約法三章",
+        "推食解衣",
+        "三策並進"
+      ],
+      "note": "使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認",
+      "members": [
+        {
+          "generalId": "simayi",
+          "generalName": "司馬懿",
+          "learned": [
+            "hantian",
+            "zhongzhi"
+          ],
+          "learnedNames": [
+            "熯天熾地",
+            "眾志成城"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "traits": [
+            "劈風",
+            "長慮",
+            "出奇",
+            "暴躁"
+          ]
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "learned": [
+            "tengjia",
+            "meihuo"
+          ],
+          "learnedNames": [
+            "藤甲兵",
+            "魅惑"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "traits": [
+            "援助"
+          ]
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "learned": [
+            "xingyi",
+            "xushidai"
+          ],
+          "learnedNames": [
+            "形一陣",
+            "蓄勢待發"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "traits": [
+            "扶危",
+            "長健"
+          ]
+        }
+      ]
     }
   ]
 }

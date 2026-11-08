@@ -288,6 +288,7 @@ button.grow-name { cursor: pointer; }
 .mini.review { color: #e7a06a; border-color: #e7a06a; font-weight: 700; }
 .mini.verified { color: #9dccb0; border-color: #6a9a7c; font-weight: 700; }
 .mini.origin { color: #e7c98a; border-color: #b8964a; }
+.mini.limited { color: #d7b4f0; border-color: #d7b4f0; font-weight: 700; }
 .sheet h4 { margin: 18px 0 4px; font-size: 16px; }
 .apt.boost { outline: 1px solid var(--han); }
 .scenario-field { display: block; margin-top: 8px; }

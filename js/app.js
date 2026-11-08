@@ -1840,11 +1840,13 @@ function recommendSheet() {
   if (!ui.recommend) return '';
   const current = account();
   const list = (ui.catalog?.recommended || []).filter((team) => team.scenario === current.scenario);
-  const official = list.filter((team) => team.origin !== 'bahamut');
+  const official = list.filter((team) => !team.origin);
   const player = list.filter((team) => team.origin === 'bahamut');
+  const dami = list.filter((team) => team.origin === 'dami');
   const body = list.length ? `
     ${recommendGroup('官方推薦', official, '整理站內容已核，官方原圖待核。', current)}
     ${recommendGroup('巴哈玩家版', player, '已核只代表來源轉錄正確，不代表隊伍強度。', current)}
+    ${recommendGroup('大米團隊（截圖）', dami, '使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。這組不提供套用。', current)}
   ` : `<p>「${esc(scenarioName(current.scenario))}」還沒有推薦隊伍。</p>`;
   return sheet('推薦隊伍', `
     <p class="sub">套用時缺武將不能加入，缺戰法會留空。方略與奇略順序會跟著寫進隊伍。</p>
@@ -1890,9 +1892,10 @@ function recommendCard(team, current) {
     : '';
   const verified = team.status === '已核' ? '<span class="mini verified">已核</span>' : '';
   const origin = team.originLabel ? `<span class="mini origin">${esc(team.originLabel)}</span>` : '';
+  const limited = team.scenarioOnly ? '<span class="mini limited">漢焰長明限定</span>' : '';
   return `
     <article class="help-card">
-      <h3>${esc(team.title)} ${origin}${verified}${citeHtml(team)}
+      <h3>${esc(team.title)} ${origin}${limited}${verified}${citeHtml(team)}
         <button type="button" class="chip ${missing.length ? '' : 'on'}" data-action="toggle-gap" data-id="${esc(team.id)}" aria-expanded="${open}">${badge}</button>
       </h3>
       ${byline}

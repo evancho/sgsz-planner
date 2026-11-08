@@ -93,7 +93,7 @@ Android 可用 Chrome 的「加到主畫面」。電腦直接用瀏覽器即可�
 
 ## 更新
 
-App 版本寫在 `data/version.json`（目前 1.2.34，日期代碼 `20261108`）。帳號卡上記著目前劇本。漢焰長明可以標訓兵振旅，推薦隊伍分成官方推薦與巴哈玩家版。帳號頁的「更新紀錄」和每頁底部的版本號都會讀這份檔案。`CHANGELOG.md` 是同一份清單。
+App 版本寫在 `data/version.json`（目前 1.2.34，日期代碼 `20261108`）。帳號卡上記著目前劇本。漢焰長明可以標訓兵振旅，推薦隊伍分成官方推薦、巴哈玩家版與大米團隊（截圖）。帳號頁的「更新紀錄」和每頁底部的版本號都會讀這份檔案。`CHANGELOG.md` 是同一份清單。
 
 每次發版都要一起改四件事：提高 `version`、把 `date` 改成 Asia/Taipei 的 `YYYYMMDD`、在 `releases` 最前面加上變更條目（並同步 `CHANGELOG.md`）、把 `sw.js` 的 `CACHE` 改成 `sgsz-planner-<version>`。
 

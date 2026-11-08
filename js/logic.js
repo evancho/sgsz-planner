@@ -956,7 +956,11 @@ export function normalizeRecommended(list) {
     if (raw.origin === 'bahamut') {
       team.origin = 'bahamut';
       team.originLabel = '巴哈玩家版';
+    } else if (raw.origin === 'dami') {
+      team.origin = 'dami';
+      team.originLabel = '大米團隊（截圖）';
     }
+    if (raw.scenarioOnly === true) team.scenarioOnly = true;
     const author = clip(raw.author, 24);
     const authorAccount = clip(raw.authorAccount, 32);
     const postedAt = clip(raw.postedAt, 40);
