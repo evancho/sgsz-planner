@@ -49,18 +49,25 @@ export function scenarioName(id) {
   return SCENARIOS.find((item) => item.id === normalizeScenario(id)).name;
 }
 
-/** 沒有適用劇本陣列的資料，所有劇本都顯示。有陣列時才限定。陣列沒有時間先後。 */
+/** 已核實的劇本禁用。只看頂層 scenarios，沒有陣列就不是禁用。陣列沒有時間先後。 */
 export function fitsScenario(item, scenarioId) {
   const marks = item?.scenarios;
   if (!Array.isArray(marks) || marks.length === 0) return true;
   return marks.includes(normalizeScenario(scenarioId));
 }
 
-/** 武將列表與空格選將器共用。scenarioLimit 待核時不拿來隱藏。 */
+/** 待核歸屬的預設顯示。scenarioLimit 不是已核實禁用，顯示全部時不擋。 */
+export function fitsDisplayLimit(item, scenarioId) {
+  const marks = item?.scenarioLimit?.scenarios;
+  if (!Array.isArray(marks) || marks.length === 0) return true;
+  return marks.includes(normalizeScenario(scenarioId));
+}
+
+/** 武將列表與空格選將器共用。顯示全部時，待核歸屬與已核實禁用都先放開；漢焰的都尉仍隱藏。 */
 export function generalListed(general, scenarioId, options = {}) {
   if (isDuwei(general) && normalizeScenario(scenarioId) === 'hanyan') return false;
   if (options.showAll) return true;
-  return fitsScenario(general, scenarioId);
+  return fitsScenario(general, scenarioId) && fitsDisplayLimit(general, scenarioId);
 }
 
 export function meritIdList(value) {
@@ -1110,7 +1117,7 @@ export function hiddenScenarioNames(account, scenarioId, lookup = {}) {
   }
   for (const id of Object.keys(account?.owned || {})) {
     const item = lookup.general?.(id);
-    if (item && !fitsScenario(item, scenario)) generals.push(item.name);
+    if (item && !generalListed(item, scenario)) generals.push(item.name);
   }
   return { generals, tactics };
 }

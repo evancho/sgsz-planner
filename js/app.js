@@ -863,6 +863,7 @@ function generalCard(general, current, usage) {
     duweiMark(general),
     ownedMarkHtml(owned),
     where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : '',
+    scenarioMarks(general),
     citeHtml(general),
   ].filter(Boolean).join('');
   const nameEl = owned
@@ -1860,6 +1861,12 @@ function generalPicker() {
             <div class="chips" role="radiogroup" aria-label="排序">
               <button type="button" class="chip" data-action="set-picker-sort" data-value="default" aria-checked="${sort === 'default'}">預設</button>
               <button type="button" class="chip" data-action="set-picker-sort" data-value="red" aria-checked="${sort === 'red'}">紅度</button>
+            </div>
+          </div>
+          <div class="filter-row">
+            <span>劇本</span>
+            <div class="chips">
+              <button type="button" class="chip" data-action="toggle-show-all-scenarios" aria-checked="${ui.showAllScenarios}">顯示全部劇本</button>
             </div>
           </div>
           ${pickerFilterRow('陣營', 'camp', CAMP_ORDER)}

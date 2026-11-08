@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { dropUsedTactics, fitsScenario, generalGapLine, generalListed, isInventoryTactic, ownershipGaps, teamFromRecommended } from '../js/logic.js';
+import { dropUsedTactics, fitsScenario, generalBlockReason, generalGapLine, generalListed, isInventoryTactic, ownershipGaps, teamFromRecommended } from '../js/logic.js';
 
 const meta = JSON.parse(readFileSync(new URL('../data/meta.json', import.meta.url)));
 const generalsFile = JSON.parse(readFileSync(new URL('../data/generals.json', import.meta.url)));
@@ -461,9 +461,10 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(spCao.scenarios, undefined);
   assert.equal(spCao.debutScenario, 'hanyan');
   assert.equal(spCao.scenarioLimit.status, '待核');
+  assert.equal(spCao.scenarioLimit.kind, 'display');
   assert.deepEqual(spCao.scenarioLimit.scenarios, ['hanyan']);
   assert.equal(spCao.scenarioLimit.sourceUrl, 'https://sgsdeck.com/seasons/pk-s27');
-  assert.equal(fitsScenario(spCao, 'regular'), true);
+  assert.equal(generalListed(spCao, 'regular'), false);
   assert.equal(spCao.sourceUrl, 'https://sgsdeck.com/generals/SP曹操');
   const heshi = generalsFile.generals.find((general) => general.id === 'heshi');
   assert.equal(heshi.apt.弓, '待核');
@@ -496,8 +497,11 @@ test('generals and tactics are internally consistent', () => {
     assert.equal(liang.scenarios, undefined);
     assert.equal(liang.debutScenario, 'hanyan');
     assert.equal(liang.scenarioLimit.status, '待核');
+    assert.equal(liang.scenarioLimit.kind, 'display');
     assert.equal(liang.scenarioLimit.sourceUrl, 'https://sgsdeck.com/seasons/pk-s27');
-    assert.equal(fitsScenario(liang, 'regular'), true);
+    assert.equal(generalListed(liang, 'regular'), false);
+    assert.equal(generalListed(liang, 'yingxiong'), false);
+    assert.equal(generalListed(liang, 'hanyan'), true);
     assert.equal(liang.sourceUrl, 'https://sgsdeck.com/seasons/pk-s27');
   }
   assert.deepEqual(byName.get('藏器待時').from, ['sp-caocao']);
@@ -578,11 +582,32 @@ test('generals and tactics are internally consistent', () => {
   assert.match(lvbu.members[0].remark, /不是普通呂布/);
   const lvdiaolu = scenario.recommended.find((team) => team.id === 'hanyan-lvdiaolu');
   assert.equal(lvdiaolu.members[0].generalId, 'y40-lvbu');
-  const regularOwned = { 'y40-lvbu': { red: 0 } };
-  const listed = generalsFile.generals.filter((general) => generalListed(general, 'regular'));
-  assert.equal(listed.some((general) => general.id === 'y40-lvbu'), true);
-  const picker = generalsFile.generals.filter((general) => generalListed(general, 'regular') && regularOwned[general.id]);
-  assert.deepEqual(picker.map((general) => general.id), ['y40-lvbu']);
+  const hanNew = ['sp-caocao', 'heshi', 'baoxin', 'liuzhang', 'liudai', 'chunyuqiong', 'liuyu', 'zhangyun', 'xugong'];
+  const ownedHan = Object.fromEntries([...hanNew, 'y40-lvbu'].map((id) => [id, { red: 0 }]));
+  const byId = new Map(generalsFile.generals.map((general) => [general.id, general]));
+  const emptyUsage = { generalTeams: new Map(), nameTeams: new Map() };
+  for (const scenario of ['regular', 'yingxiong', 'hanyan']) {
+    for (const showAll of [false, true]) {
+      const listedIds = new Set(generalsFile.generals.filter((general) => generalListed(general, scenario, { showAll })).map((general) => general.id));
+      const pickerIds = new Set(generalsFile.generals.filter((general) => generalListed(general, scenario, { showAll }) && ownedHan[general.id]).map((general) => general.id));
+      for (const id of hanNew) {
+        const visible = scenario === 'hanyan' || showAll;
+        assert.equal(listedIds.has(id), visible, `${id} 列表 ${scenario} 顯示全部=${showAll}`);
+        assert.equal(pickerIds.has(id), visible, `${id} 選將器 ${scenario} 顯示全部=${showAll}`);
+        if (!visible) continue;
+        assert.equal(generalBlockReason({
+          account: { owned: ownedHan, scenario },
+          team: { id: 'team-empty', members: [null, null, null] },
+          slot: 0,
+          general: byId.get(id),
+          generalsById: byId,
+          usage: emptyUsage,
+        }), '', `${id} 空格可選`);
+      }
+      assert.equal(listedIds.has('y40-lvbu'), true, `40Y 列表 ${scenario}`);
+      assert.equal(pickerIds.has('y40-lvbu'), true, `40Y 選將器 ${scenario}`);
+    }
+  }
   const app = readFileSync(new URL('../js/app.js', import.meta.url), 'utf8');
   assert.match(app, /function listedGeneral\(general\) \{\s*return generalListed\(general, account\(\)\.scenario/);
   assert.match(app, /listedGeneral\(general\) \|\| general\.id === keepId/);

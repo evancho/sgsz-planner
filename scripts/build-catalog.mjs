@@ -239,10 +239,11 @@ const SEASON_PK = 'https://sgsdeck.com/seasons/pk-s27';
 const SEASON_BINGYAN = 'https://sgsdeck.com/seasons/og-兵演春秋';
 const HANYAN_LIMIT = {
   status: '待核',
+  kind: 'display',
   scenarios: ['hanyan'],
   sourceUrl: SEASON_PK,
 };
-const DEBUT_NOTE = '首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用，所以劇本專屬另記，適用劇本限制待核，先不拿來隱藏。';
+const DEBUT_NOTE = '首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。';
 const LIANG_NOTE = `漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。${DEBUT_NOTE}`;
 
 for (const [id, name] of [
