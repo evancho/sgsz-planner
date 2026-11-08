@@ -867,7 +867,6 @@ function generalCard(general, current, usage) {
     ownedMarkHtml(owned),
     where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : '',
     scenarioMarks(general),
-    citeHtml(general),
   ].filter(Boolean).join('');
   const nameEl = owned
     ? `<button type="button" class="grow-name" data-action="toggle-expand" data-id="${esc(general.id)}" aria-expanded="${open}"><strong>${esc(name)}</strong></button>`

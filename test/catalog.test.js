@@ -51,8 +51,8 @@ test('generals and tactics are internally consistent', () => {
     assert.ok(['名將', '良將', '裨將'].includes(general.quality), general.id);
     assert.ok(['魏', '蜀', '吳', '群', '漢'].includes(general.camp), general.id);
     assert.ok(general.role == null || ['軍事', '內政'].includes(general.role), general.id);
-    if (general.status === '待核') assert.match(general.sourceUrl, /^https:\/\//, general.id);
-    else if (general.camp !== '漢') assert.equal(general.sourceUrl, '', general.id);
+    assert.equal(general.sourceUrl, '', general.id);
+    assert.equal(general.note, '', general.id);
     for (const troop of ['騎', '弓', '槍', '盾', '器械']) {
       if (general.apt[troop] === '待核') {
         assert.equal(general.camp, '漢', `${general.id} ${troop}`);
@@ -471,7 +471,7 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(beifa.members[0].learned[1], null);
   assert.equal(dami.find((team) => team.id === 'dami-xingcai').members[1].generalId, 'wushuang-xingcai');
   assert.equal(dami.find((team) => team.id === 'dami-wanghong').members[2].learnedNames[1], '大戰士');
-  assert.equal(generalsFile.generals.filter((general) => general.status === '已核' && general.camp !== '漢').every((general) => general.sourceUrl === ''), true);
+  assert.equal(generalsFile.generals.every((general) => general.sourceUrl === '' && general.note === ''), true);
   const autoHan = ['sp-huangfusong', 'sp-zhujun', 'caiyong', 'caiwenji', 'zhangrang', 'dongzhuo', 'sp-dongzhuo', 'diaochan', 'sp-diaochan', 'sp-luzhi', 'yuanshao', 'huatuo'];
   for (const id of autoHan) {
     assert.equal(generalsFile.generals.find((general) => general.id === id).camp, '漢', id);
@@ -486,18 +486,14 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(spCao.scenarioLimit, undefined);
   assert.equal(spCao.debutScenario, 'hanyan');
   assert.equal(generalListed(spCao, 'regular'), true);
-  assert.equal(spCao.sourceUrl, 'https://sgsdeck.com/generals/SP曹操');
-  assert.match(spCao.note, /定位軍事/);
-  assert.equal(spCao.note.includes('定位待核'), false);
+  assert.equal(spCao.sourceUrl, '');
+  assert.equal(spCao.note, '');
   const heshi = generalsFile.generals.find((general) => general.id === 'heshi');
   assert.equal(heshi.status, '已核');
   assert.equal(heshi.apt.弓, '待核');
   assert.equal(heshi.apt.騎, 'C');
-  assert.match(heshi.note, /武將頁弓 B/);
-  assert.match(heshi.note, /弓 A/);
-  assert.match(heshi.note, /弓待核/);
-  assert.match(heshi.note, /定位待核/);
-  assert.equal(heshi.note.includes('待補'), false);
+  assert.equal(heshi.note, '');
+  assert.equal(heshi.sourceUrl, '');
   assert.equal(heshi.debutScenario, 'hanyan');
   assert.equal(heshi.scenarioLimit, undefined);
   assert.equal(heshi.scenarios, undefined);
@@ -509,19 +505,14 @@ test('generals and tactics are internally consistent', () => {
   assert.deepEqual(y40.apt, { 騎: 'A', 盾: 'B', 弓: 'S', 槍: 'S', 器械: 'C' });
   assert.equal(y40.scenarios, undefined);
   assert.equal(y40.scenarioLimit, undefined);
-  assert.equal(y40.note.includes('英雄命世代表'), false);
+  assert.equal(y40.note, '');
+  assert.equal(y40.sourceUrl, '');
   assert.equal(fitsScenario(y40, 'regular'), true);
   assert.equal(fitsScenario(y40, 'yingxiong'), true);
   assert.equal(fitsScenario(y40, 'hanyan'), true);
   assert.equal(y40.innate, '天威嘯陣');
-  assert.match(y40.note, /傳承待核/);
-  assert.match(y40.note, /定位軍事/);
-  assert.equal(y40.note.includes('定位待核'), false);
-  assert.match(y40.note, /動態待核/);
-  assert.match(y40.note, /典藏待核/);
-  assert.equal(y40.note.includes('待補'), false);
-  assert.match(y40.note, /全賽季名將卡包/);
-  assert.match(y40.note, /NewsID=13659/);
+  assert.equal(y40.dynamic, null);
+  assert.equal(y40.awaken, null);
   const liangCosts = {
     baoxin: 5,
     liuzhang: 3,
@@ -539,16 +530,14 @@ test('generals and tactics are internally consistent', () => {
     assert.equal(liang.cost, cost, id);
     assert.equal(liang.innate, '');
     assert.equal(liang.apt.弓, '待核');
-    assert.match(liang.note, /使用者遊戲截圖 2026-11-08/);
-    assert.match(liang.note, /仍待核/);
-    assert.equal(liang.note.includes('待補'), false);
+    assert.equal(liang.note, '');
+    assert.equal(liang.sourceUrl, '');
     assert.equal(liang.scenarios, undefined);
     assert.equal(liang.scenarioLimit, undefined);
     assert.equal(liang.debutScenario, 'hanyan');
     assert.equal(generalListed(liang, 'regular'), true);
     assert.equal(generalListed(liang, 'yingxiong'), true);
     assert.equal(generalListed(liang, 'hanyan'), true);
-    assert.equal(liang.sourceUrl, 'https://sgsdeck.com/seasons/pk-s27');
   }
   const shotHan = [
     ['zhujun', '朱儁', 6, '良將', { 騎: 'C', 盾: 'B', 弓: 'S', 槍: 'B', 器械: 'A' }, '鎮壓黃巾'],
@@ -571,12 +560,10 @@ test('generals and tactics are internally consistent', () => {
     assert.equal(general.scenarios, undefined);
     assert.equal(general.scenarioLimit, undefined);
     assert.equal(general.debutScenario, undefined);
-    assert.equal(general.note.includes('首次登場'), false, id);
+    assert.equal(general.note, '');
+    assert.equal(general.sourceUrl, '');
     assert.equal(generalListed(general, 'regular'), true);
     assert.equal(generalListed(general, 'hanyan'), true);
-    assert.match(general.note, /使用者遊戲截圖 2026-11-08/);
-    assert.match(general.note, /可轉群/);
-    assert.match(general.note, /不猜首登賽季/);
     if (apt) assert.deepEqual(general.apt, apt);
     else assert.equal(general.apt.弓, '待核');
   }
@@ -587,11 +574,13 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(zhujun.name, '朱儁');
   assert.notEqual(zhujun.id, 'sp-zhujun');
   assert.equal(zhujun.innate, '鎮壓黃巾');
-  assert.match(zhujun.note, /鎮壓黃巾/);
-  assert.match(zhujun.note, /免疫沙暴並造成叛逃/);
-  assert.equal(zhujun.note.includes('叛逆'), false);
-  assert.match(zhujun.note, /千里馳援/);
-  assert.match(zhujun.note, /不採用/);
+  assert.equal(zhujun.note, '');
+  const buildCatalog = readFileSync(new URL('../scripts/build-catalog.mjs', import.meta.url), 'utf8');
+  assert.match(buildCatalog, /免疫沙暴並造成叛逃/);
+  assert.equal(buildCatalog.includes('叛逆'), false);
+  assert.match(buildCatalog, /千里馳援/);
+  assert.match(buildCatalog, /不採用/);
+  assert.match(buildCatalog, /不猜首登賽季/);
   assert.equal(generalsFile.generals.find((item) => item.id === 'luzhi').name, '盧植');
   assert.equal(generalsFile.generals.find((item) => item.id === 'sp-luzhi').name, 'SP盧植');
   assert.equal(generalsFile.generals.find((item) => item.id === 'huangfusong').name, '皇甫嵩');

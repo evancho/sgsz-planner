@@ -45,9 +45,10 @@ function pendingGeneral(row) {
     apt,
     innate: row.innate || '',
     nameKey: row.name,
-    sourceUrl: row.sourceUrl,
+    // 武將列表不寫來源／備註，跟一般卡一樣乾淨。
+    sourceUrl: '',
     status: row.status === '待核' ? '待核' : '已核',
-    note: row.note || '',
+    note: '',
   };
   if (Array.isArray(row.scenarios) && row.scenarios.length) general.scenarios = row.scenarios;
   if (row.debutScenario) general.debutScenario = row.debutScenario;
