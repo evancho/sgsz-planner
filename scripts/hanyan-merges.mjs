@@ -68,11 +68,6 @@ const ALTS = {
       '方略：強攻。三將兵書另列，不覆寫主卡。',
       '奇略：橫掃河西→封狼居胥→摧鋒陷敵→斬逆納降→追亡逐北。',
     ], FB),
-    alt('baha-d-huangma-gong', '皇馬弓', '巴哈玩家版', '24李老师', D, '已核', [
-      'SP皇甫嵩：雁形陣、草船，或不帶草船、改先登。',
-      '許攸：臨危救主、錦帆軍。SP馬超技能留言未重列。',
-      '兵書、方略、奇略未另列，不從槍版複製。',
-    ]),
   ],
   'dami-madai': [
     alt('hanyan-faguan', '官方整理版', '官方推薦', '', deck('s27-official-fa-guan-dun'), '已核', [
@@ -149,6 +144,24 @@ function rank(team) {
   return 3;
 }
 
+/** 三席都能對到圖鑑（或二擇一）且有戰法原文／編號，才掛成可加入的替代。純描述、缺將名的不列。 */
+function seatApplyable(member) {
+  if (!member) return false;
+  const hasGeneral = Boolean(member.generalId)
+    || (Array.isArray(member.generalChoices) && member.generalChoices.some((choice) => choice?.id));
+  if (!hasGeneral) return false;
+  const hasTactics = (Array.isArray(member.learned) && member.learned.some(Boolean))
+    || (Array.isArray(member.learnedNames) && member.learnedNames.some((name) => String(name || '').trim()))
+    || Boolean(String(member.tacticsRaw || '').trim());
+  return hasTactics;
+}
+
+function sourceApplyable(source) {
+  if (!source || source.applyReady === false) return false;
+  const seats = [0, 1, 2].map((index) => source.members?.[index]);
+  return seats.every(seatApplyable);
+}
+
 export function applyMerges(list) {
   const byId = new Map(list.map((team) => [team.id, team]));
   const next = list.filter((team) => !GONE.has(team.id)).map((team) => {
@@ -156,7 +169,7 @@ export function applyMerges(list) {
     if (!metaList) return team;
     const alternatives = metaList.map((meta) => {
       const source = byId.get(meta.id);
-      if (!source) return meta;
+      if (!sourceApplyable(source)) return null;
       const row = {
         ...meta,
         members: source.members,
@@ -166,12 +179,11 @@ export function applyMerges(list) {
         scenario: source.scenario,
       };
       if (source.tricksBound === false) row.tricksBound = false;
-      if (source.applyReady === false) row.applyReady = false;
       if (source.trickFormal) row.trickFormal = source.trickFormal;
       if (source.officialSource && !row.officialSource) row.officialSource = source.officialSource;
       return row;
-    });
-    return { ...team, alternatives };
+    }).filter(Boolean);
+    return alternatives.length ? { ...team, alternatives } : team;
   });
   return next.sort((a, b) => rank(a) - rank(b));
 }

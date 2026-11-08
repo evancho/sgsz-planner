@@ -27,14 +27,23 @@ const D = {
 
 const GENERALS = {
   SP法正: 'sp-fazheng',
+  sp法正: 'sp-fazheng',
   SP盧植: 'sp-luzhi',
+  sp盧植: 'sp-luzhi',
   SP貂蟬: 'sp-diaochan',
+  sp貂蟬: 'sp-diaochan',
   SP荀彧: 'sp-xunyu',
+  sp荀彧: 'sp-xunyu',
   SP郭嘉: 'sp-guojia',
+  sp郭嘉: 'sp-guojia',
   SP呂蒙: 'sp-lvmeng',
+  sp呂蒙: 'sp-lvmeng',
   SP董卓: 'sp-dongzhuo',
+  sp董卓: 'sp-dongzhuo',
   SP步練師: 'sp-bulianshi',
+  sp步練師: 'sp-bulianshi',
   SP朱儁: 'sp-zhujun',
+  sp朱儁: 'sp-zhujun',
   曹操: 'caocao',
   程普: 'chengpu',
   許攸: 'xuyou',
@@ -54,6 +63,7 @@ const GENERALS = {
   郭嘉: 'guojia',
   無雙大喬: 'wushuang-daqiao',
   SP馬超: 'sp-machao',
+  sp馬超: 'sp-machao',
   周泰: 'zhoutai',
   SP曹操: 'sp-caocao',
   sp曹操: 'sp-caocao',
@@ -162,7 +172,13 @@ export const hanyanBahamut = [
   team('baha-c-roudu', '肉嘟嘟', C, [
     seat('周瑜', '戮力同心、聚石成金', { remark: '不紅可換sp周瑜' }),
     seat('陸遜', '拓鎮厄防拒（功不）、萬軍奪帥'),
-    seat('sp呂蒙（程普也可以）', '雁行陣（當鋒也可以）、草船'),
+    seat('sp呂蒙（程普也可以）', '雁行陣（當鋒也可以）、草船', {
+      generalChoices: [
+        { id: 'sp-lvmeng', name: 'SP呂蒙' },
+        { id: 'chengpu', name: '程普' },
+      ],
+      resolveBasis: '原文「sp呂蒙（程普也可以）」為二擇一。',
+    }),
   ], [], '維持前綴與錯字。方略、奇略原文未寫。'),
   team('baha-d-dahan', '大漢弓', D, [
     seat('SP曹操', '桃園結義、剛柔並濟'),
