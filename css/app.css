@@ -294,6 +294,17 @@ button.grow-name { cursor: pointer; }
 .alts h4 { margin: 0 0 8px; font-size: 14px; }
 .alt + .alt { margin-top: 8px; }
 .alt ul { margin: 4px 0 0; }
+.template-head,
+.alt-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.template-head > div,
+.alt-head > div { flex: 1; min-width: 0; }
+.template-head .btn,
+.alt-head .btn { flex: 0 0 auto; }
 .apt.boost { outline: 1px solid var(--han); }
 .scenario-field { display: block; margin-top: 8px; }
 .cite { margin-left: 6px; font-size: 13px; }
@@ -320,16 +331,14 @@ h3 .chip { margin-left: 6px; vertical-align: middle; }
 .template-list { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .template-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 4px;
   padding: 10px 12px;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: #16130f;
 }
 .template-item p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
-.template-item .btn { flex: 0 0 auto; }
 .template-item.blocked,
 .help-card.blocked { opacity: 0.45; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
