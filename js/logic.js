@@ -1022,13 +1022,7 @@ function normalizeAccount(raw, backupVersion) {
       owned[generalId] = record;
     }
   }
-  const camps = {};
-  if (raw.camps && typeof raw.camps === 'object') {
-    for (const [key, value] of Object.entries(raw.camps)) {
-      const generalId = cleanId(key);
-      if (generalId && value === '漢') camps[generalId] = '漢';
-    }
-  }
+  const camps = normalizeCamps(raw.camps);
   const tacticsOwned = {};
   if (raw.tacticsOwned && typeof raw.tacticsOwned === 'object') {
     for (const [key, value] of Object.entries(raw.tacticsOwned)) {
@@ -1404,20 +1398,121 @@ export function normalizeScenarioPack(raw) {
   };
 }
 
+export function normalizeCamps(raw) {
+  const camps = {};
+  if (!raw || typeof raw !== 'object') return camps;
+  for (const [key, value] of Object.entries(raw)) {
+    const generalId = cleanId(key);
+    if (!generalId) continue;
+    if (value === '漢' || value === '群') camps[generalId] = value;
+  }
+  return camps;
+}
+
+/** 帳號陣營覆寫：群轉漢或漢轉群。 */
+export function presentCamp(general, camps) {
+  if (!general) return general;
+  const override = camps?.[general.id];
+  if (!override || override === general.camp) return general;
+  return { ...general, camp: override, campOrigin: general.camp };
+}
+
+export function campOverrideCounts(camps) {
+  let toHan = 0;
+  let toQun = 0;
+  for (const value of Object.values(camps || {})) {
+    if (value === '漢') toHan += 1;
+    else if (value === '群') toQun += 1;
+  }
+  return { toHan, toQun };
+}
+
+function toHanIds(convert) {
+  const list = Array.isArray(convert?.toHan) ? convert.toHan : convert?.ids;
+  return Array.isArray(list) ? list : [];
+}
+
+export function campConvertMax(convert) {
+  const max = Number(convert?.max);
+  return Number.isInteger(max) && max > 0 ? max : 3;
+}
+
+/**
+ * 下一個陣營覆寫。null 表示恢復圖鑑預設。
+ * blocked 時 reason 說明為什麼不能轉。
+ */
+export function nextCampOverride(general, camps, convert = {}) {
+  if (!general?.id) return { target: null, label: '', show: false, blocked: true, reason: '找不到武將' };
+  const current = camps?.[general.id];
+  const max = campConvertMax(convert);
+  const counts = campOverrideCounts(camps);
+  if (current === '漢' || current === '群') {
+    return {
+      target: null,
+      label: `恢復${general.camp}`,
+      show: true,
+      blocked: false,
+      reason: '',
+    };
+  }
+  if (general.camp === '漢') {
+    const blocked = counts.toHan > 0 || counts.toQun >= max;
+    return {
+      target: '群',
+      label: '轉群',
+      show: true,
+      blocked,
+      reason: counts.toHan > 0
+        ? '已有武將轉漢，不能同時轉群'
+        : counts.toQun >= max
+          ? `漢轉群最多 ${max} 名`
+          : '',
+    };
+  }
+  if (toHanIds(convert).includes(general.id)) {
+    const blocked = counts.toQun > 0 || counts.toHan >= max;
+    return {
+      target: '漢',
+      label: '轉漢',
+      show: true,
+      blocked,
+      reason: counts.toQun > 0
+        ? '已有武將轉群，不能同時轉漢'
+        : counts.toHan >= max
+          ? `群轉漢最多 ${max} 名`
+          : '',
+    };
+  }
+  return { target: null, label: '', show: false, blocked: true, reason: '' };
+}
+
+export function applyCampOverride(camps, generalId, target) {
+  const next = { ...(camps || {}) };
+  const id = cleanId(generalId);
+  if (!id) return next;
+  if (target === '漢' || target === '群') next[id] = target;
+  else delete next[id];
+  return next;
+}
+
 function normalizeHanConvert(raw) {
   const ids = [];
   const seen = new Set();
-  for (const value of Array.isArray(raw?.ids) ? raw.ids : []) {
+  const sourceIds = Array.isArray(raw?.toHan) ? raw.toHan : raw?.ids;
+  for (const value of Array.isArray(sourceIds) ? sourceIds : []) {
     const id = cleanId(value);
     if (!id || seen.has(id) || ids.length >= 20) continue;
     seen.add(id);
     ids.push(id);
   }
+  const max = Number(raw?.max);
   return {
-    status: '待核',
+    status: raw?.status === '待核' ? '待核' : '已核',
+    max: Number.isInteger(max) && max > 0 ? max : 3,
     source: clip(raw?.source, 180),
     officialPost: clip(raw?.officialPost, 180),
     note: clip(raw?.note, 240),
+    toHan: ids,
     ids,
   };
 }

@@ -533,7 +533,7 @@
     {
       "id": "dongzhuo",
       "name": "董卓",
-      "camp": "群",
+      "camp": "漢",
       "cost": 7,
       "role": "軍事",
       "quality": "名將",
@@ -1867,7 +1867,7 @@
     {
       "id": "sp-luzhi",
       "name": "SP盧植",
-      "camp": "群",
+      "camp": "漢",
       "cost": 6,
       "role": "軍事",
       "quality": "名將",
@@ -1890,7 +1890,7 @@
     {
       "id": "sp-diaochan",
       "name": "SP貂蟬",
-      "camp": "群",
+      "camp": "漢",
       "cost": 6,
       "role": "軍事",
       "quality": "名將",
@@ -1913,7 +1913,7 @@
     {
       "id": "sp-dongzhuo",
       "name": "SP董卓",
-      "camp": "群",
+      "camp": "漢",
       "cost": 6,
       "role": "軍事",
       "quality": "名將",
@@ -1959,7 +1959,7 @@
     {
       "id": "sp-huangfusong",
       "name": "SP皇甫嵩",
-      "camp": "群",
+      "camp": "漢",
       "cost": 6,
       "role": "軍事",
       "quality": "名將",
@@ -1982,7 +1982,7 @@
     {
       "id": "sp-zhujun",
       "name": "SP朱儁",
-      "camp": "群",
+      "camp": "漢",
       "cost": 6,
       "role": "軍事",
       "quality": "名將",
@@ -2051,7 +2051,7 @@
     {
       "id": "caiyong",
       "name": "蔡邕",
-      "camp": "群",
+      "camp": "漢",
       "cost": 6,
       "role": "內政",
       "quality": "名將",
@@ -2258,7 +2258,7 @@
     {
       "id": "yuanshao",
       "name": "袁紹",
-      "camp": "群",
+      "camp": "漢",
       "cost": 6,
       "role": "軍事",
       "quality": "名將",
@@ -2741,7 +2741,7 @@
     {
       "id": "zhangrang",
       "name": "張讓",
-      "camp": "群",
+      "camp": "漢",
       "cost": 5,
       "role": "軍事",
       "quality": "名將",
@@ -2948,7 +2948,7 @@
     {
       "id": "huatuo",
       "name": "華佗",
-      "camp": "群",
+      "camp": "漢",
       "cost": 5,
       "role": "軍事",
       "quality": "名將",
@@ -3155,7 +3155,7 @@
     {
       "id": "diaochan",
       "name": "貂蟬",
-      "camp": "群",
+      "camp": "漢",
       "cost": 4,
       "role": "軍事",
       "quality": "名將",
@@ -3316,7 +3316,7 @@
     {
       "id": "caiwenji",
       "name": "蔡文姬",
-      "camp": "群",
+      "camp": "漢",
       "cost": 3,
       "role": "軍事",
       "quality": "名將",
@@ -3668,17 +3668,9 @@
       "innate": "",
       "nameKey": "鮑信",
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。",
-      "debutScenario": "hanyan",
-      "scenarioLimit": {
-        "status": "待核",
-        "kind": "display",
-        "scenarios": [
-          "hanyan"
-        ],
-        "sourceUrl": "https://sgsdeck.com/seasons/pk-s27"
-      }
+      "status": "已核",
+      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待補。首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。",
+      "debutScenario": "hanyan"
     },
     {
       "id": "liuzhang",
@@ -3700,17 +3692,9 @@
       "innate": "",
       "nameKey": "劉璋",
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。",
-      "debutScenario": "hanyan",
-      "scenarioLimit": {
-        "status": "待核",
-        "kind": "display",
-        "scenarios": [
-          "hanyan"
-        ],
-        "sourceUrl": "https://sgsdeck.com/seasons/pk-s27"
-      }
+      "status": "已核",
+      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待補。首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。",
+      "debutScenario": "hanyan"
     },
     {
       "id": "liudai",
@@ -3732,17 +3716,9 @@
       "innate": "",
       "nameKey": "劉岱",
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。",
-      "debutScenario": "hanyan",
-      "scenarioLimit": {
-        "status": "待核",
-        "kind": "display",
-        "scenarios": [
-          "hanyan"
-        ],
-        "sourceUrl": "https://sgsdeck.com/seasons/pk-s27"
-      }
+      "status": "已核",
+      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待補。首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。",
+      "debutScenario": "hanyan"
     },
     {
       "id": "chunyuqiong",
@@ -3764,17 +3740,9 @@
       "innate": "",
       "nameKey": "淳于瓊",
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。",
-      "debutScenario": "hanyan",
-      "scenarioLimit": {
-        "status": "待核",
-        "kind": "display",
-        "scenarios": [
-          "hanyan"
-        ],
-        "sourceUrl": "https://sgsdeck.com/seasons/pk-s27"
-      }
+      "status": "已核",
+      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待補。首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。",
+      "debutScenario": "hanyan"
     },
     {
       "id": "liuyu",
@@ -3796,17 +3764,9 @@
       "innate": "",
       "nameKey": "劉虞",
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。",
-      "debutScenario": "hanyan",
-      "scenarioLimit": {
-        "status": "待核",
-        "kind": "display",
-        "scenarios": [
-          "hanyan"
-        ],
-        "sourceUrl": "https://sgsdeck.com/seasons/pk-s27"
-      }
+      "status": "已核",
+      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待補。首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。",
+      "debutScenario": "hanyan"
     },
     {
       "id": "zhangyun",
@@ -3828,17 +3788,9 @@
       "innate": "",
       "nameKey": "張允",
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。",
-      "debutScenario": "hanyan",
-      "scenarioLimit": {
-        "status": "待核",
-        "kind": "display",
-        "scenarios": [
-          "hanyan"
-        ],
-        "sourceUrl": "https://sgsdeck.com/seasons/pk-s27"
-      }
+      "status": "已核",
+      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待補。首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。",
+      "debutScenario": "hanyan"
     },
     {
       "id": "xugong",
@@ -3860,17 +3812,9 @@
       "innate": "",
       "nameKey": "許貢",
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。",
-      "debutScenario": "hanyan",
-      "scenarioLimit": {
-        "status": "待核",
-        "kind": "display",
-        "scenarios": [
-          "hanyan"
-        ],
-        "sourceUrl": "https://sgsdeck.com/seasons/pk-s27"
-      }
+      "status": "已核",
+      "note": "漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待補。首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。",
+      "debutScenario": "hanyan"
     },
     {
       "id": "sp-caocao",
@@ -3892,17 +3836,9 @@
       "innate": "承天靖世",
       "nameKey": "SP曹操",
       "sourceUrl": "https://sgsdeck.com/generals/SP曹操",
-      "status": "待核",
-      "note": "適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」，本圖鑑的軍事／內政對不上，定位待核。首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。",
-      "debutScenario": "hanyan",
-      "scenarioLimit": {
-        "status": "待核",
-        "kind": "display",
-        "scenarios": [
-          "hanyan"
-        ],
-        "sourceUrl": "https://sgsdeck.com/seasons/pk-s27"
-      }
+      "status": "已核",
+      "note": "適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」，本圖鑑的軍事／內政對不上，定位待補。首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。",
+      "debutScenario": "hanyan"
     },
     {
       "id": "heshi",
@@ -3924,17 +3860,9 @@
       "innate": "帷內擅權",
       "nameKey": "何氏",
       "sourceUrl": "https://sgsdeck.com/generals/何氏",
-      "status": "待核",
-      "note": "自帶帷內擅權、傳承絕計折謀。弓適性衝突：武將頁弓 B，賽季頁 https://sgsdeck.com/seasons/pk-s27 弓 A，弓待核。頁首標「謀」，定位待核。典藏未見於武將頁，待核。首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。",
-      "debutScenario": "hanyan",
-      "scenarioLimit": {
-        "status": "待核",
-        "kind": "display",
-        "scenarios": [
-          "hanyan"
-        ],
-        "sourceUrl": "https://sgsdeck.com/seasons/pk-s27"
-      }
+      "status": "已核",
+      "note": "自帶帷內擅權、傳承絕計折謀。弓適性衝突：武將頁弓 B，賽季頁 https://sgsdeck.com/seasons/pk-s27 弓 A，弓待補。頁首標「謀」，定位待補。典藏未見於武將頁。首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。",
+      "debutScenario": "hanyan"
     },
     {
       "id": "y40-lvbu",
@@ -3956,8 +3884,8 @@
       "innate": "天威嘯陣",
       "nameKey": "40Y呂布",
       "sourceUrl": "https://sgsdeck.com/generals/40Y呂布",
-      "status": "待核",
-      "note": "獨立卡，不是普通呂布。兵演春秋推出後轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。武將頁取得方式寫全賽季名將卡包、三國志系列 40 週年紀念名將卡包。台灣新聞稿 https://news.omg.com.tw/News/NewsContent?NewsID=13659 寫免費送給全服主公。沒有排除常規劇本的台港澳明文，所以各劇本都能選。自帶天威嘯陣。傳承武將頁未列，待核。頁首標「武」，定位待核。動態、典藏未見於武將頁，待核。"
+      "status": "已核",
+      "note": "獨立卡，不是普通呂布。兵演春秋推出後自動轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。武將頁取得方式寫全賽季名將卡包、三國志系列 40 週年紀念名將卡包。台灣新聞稿 https://news.omg.com.tw/News/NewsContent?NewsID=13659 寫免費送給全服主公。各劇本都能選。自帶天威嘯陣。傳承武將頁未列。頁首標「武」，定位待補。動態、典藏未見於武將頁。可轉回群。"
     }
   ]
 }

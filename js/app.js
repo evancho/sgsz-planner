@@ -35,6 +35,9 @@ import {
   memberTacticPlan,
   generalGapLine,
   generalListed,
+  presentCamp,
+  nextCampOverride,
+  applyCampOverride,
   tacticGapLine,
   dropUnownedTactics,
   dropUsedTactics,
@@ -149,8 +152,7 @@ function campInk(camp) {
 }
 
 function presentGeneral(general, current = account()) {
-  if (current?.camps?.[general.id] !== '漢' || general.camp === '漢') return general;
-  return { ...general, camp: '漢', campOrigin: general.camp };
+  return presentCamp(general, current?.camps);
 }
 
 function shownInScenario(item) {
@@ -915,12 +917,13 @@ function meritBanner(current, teamId = '') {
 }
 
 function hanButton(general) {
-  const eligible = (ui.catalog?.hanConvert?.ids || []).includes(general.id);
+  const base = generalsById().get(general.id) || general;
+  const action = nextCampOverride(base, account().camps || {}, ui.catalog?.hanConvert || {});
+  if (!action.show) return '';
   const converted = Boolean(general.campOrigin);
-  if (!eligible && !converted) return '';
-  const label = converted ? `恢復${general.campOrigin}` : '轉漢';
-  const sourceNote = ui.catalog?.hanConvert?.note || '來源：sgsdeck，官方待核';
-  return `<button type="button" class="chip ${converted ? 'on' : ''}" data-action="toggle-han" data-id="${esc(general.id)}" aria-checked="${converted}" title="${esc(sourceNote)}">${label}</button>`;
+  const sourceNote = ui.catalog?.hanConvert?.note || '';
+  const title = action.blocked ? action.reason : sourceNote;
+  return `<button type="button" class="chip ${converted ? 'on' : ''} ${action.blocked ? 'blocked' : ''}" data-action="toggle-han" data-id="${esc(general.id)}" aria-checked="${converted}" ${action.blocked ? 'disabled' : ''} title="${esc(title)}">${esc(action.label)}</button>`;
 }
 
 function meritControls(general, current) {
@@ -2174,10 +2177,15 @@ function onClick(event) {
       break;
     case 'toggle-han': {
       const generalId = el.dataset.id;
+      const base = generalsById().get(generalId);
+      const action = nextCampOverride(base, current.camps || {}, ui.catalog?.hanConvert || {});
+      if (!action.show) break;
+      if (action.blocked) {
+        toast(action.reason || '目前不能轉換陣營');
+        break;
+      }
       commit(updateAccount(ui.state, current.id, (item) => {
-        const camps = { ...(item.camps || {}) };
-        if (camps[generalId] === '漢') delete camps[generalId];
-        else camps[generalId] = '漢';
+        const camps = applyCampOverride(item.camps || {}, generalId, action.target);
         const next = { ...item };
         if (Object.keys(camps).length) next.camps = camps;
         else delete next.camps;

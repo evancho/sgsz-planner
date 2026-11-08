@@ -46,7 +46,7 @@ function pendingGeneral(row) {
     innate: row.innate || '',
     nameKey: row.name,
     sourceUrl: row.sourceUrl,
-    status: '待核',
+    status: row.status === '待核' ? '待核' : '已核',
     note: row.note || '',
   };
   if (Array.isArray(row.scenarios) && row.scenarios.length) general.scenarios = row.scenarios;
@@ -98,7 +98,7 @@ const generals = [
   g('sp-yuanshao', 'SP袁紹', '群', 7, '軍事', 'BASBS', 1),
   g('menghuo', '孟獲', '群', 7, '軍事', 'SSBAC', 1),
   g('yuji', '于吉', '群', 7, '軍事', 'CBCCC', 1),
-  g('dongzhuo', '董卓', '群', 7, '軍事', 'ASSBC', 1),
+  g('dongzhuo', '董卓', '漢', 7, '軍事', 'ASSBC', 1),
   g('lvbu', '呂布', '群', 7, '軍事', 'SBSAC', 1),
   g('sp-lejin', 'SP樂進', '魏', 6, '軍事', 'SABSS', 1),
   g('sp-dianwei', 'SP典韋', '魏', 6, '軍事', 'ASCAC', 1),
@@ -156,15 +156,15 @@ const generals = [
   g('sunjian', '孫堅', '吳', 6, '軍事', 'ASSAC', 1),
   g('lukang', '陸抗', '吳', 6, '軍事', 'ABSAS', 1),
   g('zhouyu', '周瑜', '吳', 6, '軍事', 'BASAC', 1),
-  g('sp-luzhi', 'SP盧植', '群', 6, '軍事', 'BCSBS', 1),
-  g('sp-diaochan', 'SP貂蟬', '群', 6, '軍事', 'BCSCC', 1),
-  g('sp-dongzhuo', 'SP董卓', '群', 6, '軍事', 'ASSBC', 1),
+  g('sp-luzhi', 'SP盧植', '漢', 6, '軍事', 'BCSBS', 1),
+  g('sp-diaochan', 'SP貂蟬', '漢', 6, '軍事', 'BCSCC', 1),
+  g('sp-dongzhuo', 'SP董卓', '漢', 6, '軍事', 'ASSBC', 1),
   g('sp-zhangbao', 'SP張寶', '群', 6, '軍事', 'BSAAS', 1),
-  g('sp-huangfusong', 'SP皇甫嵩', '群', 6, '軍事', 'AAASS', 1),
-  g('sp-zhujun', 'SP朱儁', '群', 6, '軍事', 'CBSBA', 1),
+  g('sp-huangfusong', 'SP皇甫嵩', '漢', 6, '軍事', 'AAASS', 1),
+  g('sp-zhujun', 'SP朱儁', '漢', 6, '軍事', 'CBSBA', 1),
   g('quyi', '麴義', '群', 6, '軍事', 'BCSCB', 1),
   g('xuyou', '許攸', '群', 6, '軍事', 'AAAAC', 1),
-  g('caiyong', '蔡邕', '群', 6, '內政', 'CCBCC', 0),
+  g('caiyong', '蔡邕', '漢', 6, '內政', 'CCBCC', 0),
   g('duosi', '朵思大王', '群', 6, '軍事', 'SSACC', 1),
   g('jushou', '沮授', '群', 6, '軍事', 'BSSAA', 1),
   g('yuanshu', '袁術', '群', 6, '軍事', 'SBSBC', 1),
@@ -173,7 +173,7 @@ const generals = [
   g('zhurong', '祝融夫人', '群', 6, '軍事', 'SAAAC', 1),
   g('wutugu', '兀突骨', '群', 6, '軍事', 'SSCBC', 1),
   g('gongsunzan', '公孫瓚', '群', 6, '軍事', 'SCSCB', 1),
-  g('yuanshao', '袁紹', '群', 6, '軍事', 'BASBS', 1),
+  g('yuanshao', '袁紹', '漢', 6, '軍事', 'BASBS', 1),
   g('zhangjiao', '張角', '群', 6, '軍事', 'ASSBA', 1),
   g('wushuang-zhenji', '無雙甄姬', '魏', 5, '軍事', 'SBSBC', 1),
   g('manchong', '滿寵', '魏', 5, '軍事', 'ASABA', 1),
@@ -194,7 +194,7 @@ const generals = [
   g('chengpu', '程普', '吳', 5, '軍事', 'BAASB', 1),
   g('sunce', '孫策', '吳', 5, '軍事', 'SBASA', 1),
   g('sp-zhangliang', 'SP張梁', '群', 5, '軍事', 'BABSA', 1),
-  g('zhangrang', '張讓', '群', 5, '軍事', 'CSABB', 1),
+  g('zhangrang', '張讓', '漢', 5, '軍事', 'CSABB', 1),
   g('gaolan', '高覽', '群', 5, '軍事', 'AABSC', 1),
   g('muludawang', '木鹿大王', '群', 5, '軍事', 'SCCAC', 1),
   g('liru', '李儒', '群', 5, '軍事', 'SBABB', 1),
@@ -203,7 +203,7 @@ const generals = [
   g('wenchou', '文醜', '群', 5, '軍事', 'AASAC', 1),
   g('huaxiong', '華雄', '群', 5, '軍事', 'SBBAC', 1),
   g('yanliang', '顏良', '群', 5, '軍事', 'AABSC', 1),
-  g('huatuo', '華佗', '群', 5, '軍事', 'CCCCC', 1),
+  g('huatuo', '華佗', '漢', 5, '軍事', 'CCCCC', 1),
   g('zuoci', '左慈', '群', 5, '軍事', 'CCCCC', 1),
   g('caopi', '曹丕', '魏', 4, '軍事', 'AASCC', 1),
   g('sp-huangyueying', 'SP黃月英', '蜀', 4, '軍事', 'CCCCS', 1),
@@ -212,14 +212,14 @@ const generals = [
   g('fazheng', '法正', '蜀', 4, '軍事', 'BSAAA', 1),
   g('zhugege', '諸葛恪', '吳', 4, '軍事', 'CCASA', 1),
   g('daqiao', '大喬', '吳', 4, '軍事', 'CCBCC', 1),
-  g('diaochan', '貂蟬', '群', 4, '軍事', 'BCBCC', 1),
+  g('diaochan', '貂蟬', '漢', 4, '軍事', 'BCBCC', 1),
   g('chengong', '陳宮', '群', 4, '軍事', 'ABSAA', 1),
   g('simahui', '司馬徽', '群', 4, '內政', 'CCBCC', 0),
   g('zhangchunhua', '張春華', '魏', 3, '軍事', 'AAACB', 1),
   g('xiaoqiao', '小喬', '吳', 3, '軍事', 'CCBCC', 1),
   g('zoushi', '鄒氏', '群', 3, '內政', 'CBCCC', 0),
   g('dongbai', '董白', '群', 3, '軍事', 'CCCBC', 1),
-  g('caiwenji', '蔡文姬', '群', 3, '軍事', 'BCCCC', 1),
+  g('caiwenji', '蔡文姬', '漢', 3, '軍事', 'BCCCC', 1),
   // 英雄命示都尉。拜師才決定陣營，名冊預設群。適性未知，暫以全 A 佔位。統御記基礎 7。
   g('duwei-shenheng', '沈姮', '群', 7, '軍事', 'AAAAA', 0, '風焰相形', ['都尉']),
   g('duwei-qinxi', '秦溪', '群', 7, '軍事', 'AAAAA', 0, '先聲奪人', ['都尉']),
@@ -237,14 +237,8 @@ const generals = [
 
 const SEASON_PK = 'https://sgsdeck.com/seasons/pk-s27';
 const SEASON_BINGYAN = 'https://sgsdeck.com/seasons/og-兵演春秋';
-const HANYAN_LIMIT = {
-  status: '待核',
-  kind: 'display',
-  scenarios: ['hanyan'],
-  sourceUrl: SEASON_PK,
-};
-const DEBUT_NOTE = '首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用。scenarioLimit 是待核歸屬，預設只在漢焰長明顯示，打開顯示全部後其他劇本也能看到並選用。這不是已核實的劇本禁用。';
-const LIANG_NOTE = `漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。${DEBUT_NOTE}`;
+const DEBUT_NOTE = '首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。';
+const LIANG_NOTE = `漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待補。${DEBUT_NOTE}`;
 
 for (const [id, name] of [
   ['baoxin', '鮑信'],
@@ -261,7 +255,7 @@ for (const [id, name] of [
     camp: '漢',
     quality: '良將',
     debutScenario: 'hanyan',
-    scenarioLimit: HANYAN_LIMIT,
+    status: '已核',
     sourceUrl: SEASON_PK,
     note: LIANG_NOTE,
   }));
@@ -279,9 +273,9 @@ generals.push(
     apt: { 騎: 'S', 盾: 'A', 弓: 'S', 槍: 'A', 器械: 'B' },
     innate: '承天靖世',
     debutScenario: 'hanyan',
-    scenarioLimit: HANYAN_LIMIT,
+    status: '已核',
     sourceUrl: 'https://sgsdeck.com/generals/SP曹操',
-    note: `適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」，本圖鑑的軍事／內政對不上，定位待核。${DEBUT_NOTE}`,
+    note: `適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」，本圖鑑的軍事／內政對不上，定位待補。${DEBUT_NOTE}`,
   }),
   pendingGeneral({
     id: 'heshi',
@@ -293,9 +287,9 @@ generals.push(
     apt: { 騎: 'C', 盾: 'C', 槍: 'C', 器械: 'C' },
     innate: '帷內擅權',
     debutScenario: 'hanyan',
-    scenarioLimit: HANYAN_LIMIT,
+    status: '已核',
     sourceUrl: 'https://sgsdeck.com/generals/何氏',
-    note: `自帶帷內擅權、傳承絕計折謀。弓適性衝突：武將頁弓 B，賽季頁 https://sgsdeck.com/seasons/pk-s27 弓 A，弓待核。頁首標「謀」，定位待核。典藏未見於武將頁，待核。${DEBUT_NOTE}`,
+    note: `自帶帷內擅權、傳承絕計折謀。弓適性衝突：武將頁弓 B，賽季頁 https://sgsdeck.com/seasons/pk-s27 弓 A，弓待補。頁首標「謀」，定位待補。典藏未見於武將頁。${DEBUT_NOTE}`,
   }),
   pendingGeneral({
     id: 'y40-lvbu',
@@ -305,8 +299,9 @@ generals.push(
     quality: '名將',
     apt: { 騎: 'A', 盾: 'B', 弓: 'S', 槍: 'S', 器械: 'C' },
     innate: '天威嘯陣',
+    status: '已核',
     sourceUrl: 'https://sgsdeck.com/generals/40Y呂布',
-    note: '獨立卡，不是普通呂布。兵演春秋推出後轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。武將頁取得方式寫全賽季名將卡包、三國志系列 40 週年紀念名將卡包。台灣新聞稿 https://news.omg.com.tw/News/NewsContent?NewsID=13659 寫免費送給全服主公。沒有排除常規劇本的台港澳明文，所以各劇本都能選。自帶天威嘯陣。傳承武將頁未列，待核。頁首標「武」，定位待核。動態、典藏未見於武將頁，待核。',
+    note: '獨立卡，不是普通呂布。兵演春秋推出後自動轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。武將頁取得方式寫全賽季名將卡包、三國志系列 40 週年紀念名將卡包。台灣新聞稿 https://news.omg.com.tw/News/NewsContent?NewsID=13659 寫免費送給全服主公。各劇本都能選。自帶天威嘯陣。傳承武將頁未列。頁首標「武」，定位待補。動態、典藏未見於武將頁。可轉回群。',
   }),
 );
 
