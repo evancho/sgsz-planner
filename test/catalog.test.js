@@ -288,6 +288,10 @@ test('generals and tactics are internally consistent', () => {
   assert.deepEqual(ranks, { T0: 7, 'T0.5': 6, T1: 10, 'T1.5': 5, T2: 1, '黑科技': 1 });
   assert.equal(scenario.recommended.find((team) => team.id === 'baha-d-pengci').rank, '黑科技');
   assert.equal(scenario.recommended.find((team) => team.id === 'baha-d-saozi').rank, 'T2');
+  assert.deepEqual(scenario.hanConvert.ids, ['caocao', 'liubei', 'sunjian', 'gongsunzan', 'lvbu', 'jiaxu', 'sp-yuanshao', 'sp-xunyu', 'yuanshu']);
+  assert.equal(scenario.hanConvert.status, '待核');
+  assert.equal(scenario.hanConvert.source, 'https://sgsdeck.com/seasons/pk-s27');
+  assert.match(scenario.hanConvert.officialPost, /facebook.com/);
   const fugui = dami.find((team) => team.id === 'dami-fugui');
   assert.equal(fugui.status, '待核');
   assert.equal(fugui.alternatives.find((item) => item.id === 'baha-b-jiaxu-2').status, '已核');

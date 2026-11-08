@@ -1132,6 +1132,25 @@ export function normalizeScenarioPack(raw) {
     weapons: [],
     recommended: normalizeRecommended(raw?.recommended),
     merits: normalizeMeritDefs(raw?.merits),
+    hanConvert: normalizeHanConvert(raw?.hanConvert),
+  };
+}
+
+function normalizeHanConvert(raw) {
+  const ids = [];
+  const seen = new Set();
+  for (const value of Array.isArray(raw?.ids) ? raw.ids : []) {
+    const id = cleanId(value);
+    if (!id || seen.has(id) || ids.length >= 20) continue;
+    seen.add(id);
+    ids.push(id);
+  }
+  return {
+    status: '待核',
+    source: clip(raw?.source, 180),
+    officialPost: clip(raw?.officialPost, 180),
+    note: clip(raw?.note, 240),
+    ids,
   };
 }
 

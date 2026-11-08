@@ -157,6 +157,11 @@ function shownInScenario(item) {
   return fitsScenario(item, account().scenario);
 }
 
+function listedGeneral(general) {
+  if (isDuwei(general) && account().scenario === 'hanyan') return false;
+  return shownInScenario(general);
+}
+
 function scenarioMarks(item) {
   const ids = Array.isArray(item?.scenarios) ? item.scenarios : [];
   if (!ids.length) return '';
@@ -659,7 +664,7 @@ function installBanner() {
 }
 
 function overlay() {
-  return `${pickerHtml()}${bingshuSheet()}${recommendSheet()}${shareSheet()}${shareImportSheet()}${templateSheet()}${accountExportSheet()}${accountFileSheet()}${dialogHtml()}${syncConflictHtml()}`;
+  return `${pickerHtml()}${bingshuSheet()}${shareSheet()}${shareImportSheet()}${templateSheet()}${accountExportSheet()}${accountFileSheet()}${dialogHtml()}${syncConflictHtml()}`;
 }
 
 function colophon() {
@@ -743,7 +748,7 @@ function matchedGenerals() {
   const usage = usageFor(current);
   const filters = { ...ui.filters, query: ui.query, quick: ui.quick };
   const matched = sortGenerals(
-    ui.catalog.generals.filter((general) => shownInScenario(general)).map((general) => presentGeneral(general, current)).filter((general) => matchesGeneral(general, current.owned[general.id], filters, {
+    ui.catalog.generals.filter((general) => listedGeneral(general)).map((general) => presentGeneral(general, current)).filter((general) => matchesGeneral(general, current.owned[general.id], filters, {
       inTeam: usage.generalTeams.has(general.id),
       apt: aptOf(general, current),
     })),
@@ -898,9 +903,11 @@ function meritBanner(current, teamId = '') {
 }
 
 function hanButton(general) {
+  const eligible = (ui.catalog?.hanConvert?.ids || []).includes(general.id);
   const converted = Boolean(general.campOrigin);
+  if (!eligible && !converted) return '';
   const label = converted ? `恢復${general.campOrigin}` : '轉漢';
-  return `<button type="button" class="chip ${converted ? 'on' : ''}" data-action="toggle-han" data-id="${esc(general.id)}" aria-checked="${converted}" title="轉為漢陣營。可轉名額尚未限制。">${label}</button>`;
+  return `<button type="button" class="chip ${converted ? 'on' : ''}" data-action="toggle-han" data-id="${esc(general.id)}" aria-checked="${converted}" title="待核。政廳漢室自選轉漢。可轉名額尚未限制。">${label}</button>`;
 }
 
 function meritControls(general, current) {
@@ -1040,7 +1047,6 @@ function teamsView() {
         <div class="btn-row team-tools">
           <button type="button" class="btn" data-action="open-share-import">載入</button>
           <button type="button" class="btn" data-action="open-templates">範本</button>
-          <button type="button" class="btn" data-action="open-recommend">推薦隊伍</button>
           <button type="button" class="btn primary" data-action="add-team">新增隊伍</button>
         </div>
       </div>
@@ -1290,6 +1296,25 @@ function templateOwnershipGaps(template, current) {
   });
 }
 
+function recommendCountry(team) {
+  const camps = (team.members || [])
+    .map((member) => generalsById().get(member?.generalId)?.camp)
+    .filter(Boolean);
+  const unique = [...new Set(camps)];
+  if (unique.length === 1) return unique[0];
+  return '混合';
+}
+
+function templatePool() {
+  const recommended = (ui.catalog?.recommended || []).map((team) => ({
+    ...team,
+    scenario: scenarioName(team.scenario),
+    country: recommendCountry(team),
+    fromRecommended: true,
+  }));
+  return [...(ui.catalog?.templates || []), ...recommended];
+}
+
 function templateBlockState(team, current, usage, tactics) {
   const overlaps = generalOverlaps(current, team.members, generalsById());
   const gaps = templateOwnershipGaps(team, current);
@@ -1297,20 +1322,25 @@ function templateBlockState(team, current, usage, tactics) {
   const generalBlocked = overlaps.length > 0 && !ui.templates.substitute;
   const missingBlocked = Boolean(generalGapLine(gaps));
   const tacticBlocked = tacticHits.length > 0;
+  const referenceOnly = team.fromRecommended && team.applyReady === false;
+  const duweiBlocked = current.scenario === 'hanyan' && (team.members || []).some((member) => isDuwei(generalsById().get(member?.generalId)));
   return {
-    blocked: generalBlocked || missingBlocked || tacticBlocked,
+    blocked: generalBlocked || missingBlocked || tacticBlocked || referenceOnly || duweiBlocked,
+    gaps,
     notes: [
       generalBlocked ? '武將已在其他隊伍' : '',
       missingBlocked ? generalGapLine(gaps) : '',
       tacticGapLine(gaps),
       tacticBlocked ? tacticConflictLine(tacticHits) : '',
+      referenceOnly ? '僅供參考，不提供套用' : '',
+      duweiBlocked ? '漢焰長明不能使用都尉' : '',
     ].filter(Boolean),
   };
 }
 
 function templateResultsMarkup() {
   const current = account();
-  const all = ui.catalog.templates || [];
+  const all = templatePool();
   const usage = buildUsage(current);
   const tactics = tacticsById(current);
   const rows = orderTeamTemplates(
@@ -1328,14 +1358,32 @@ function templateResultsMarkup() {
     const names = (team.members || []).map((member) => member.generalName).filter(Boolean).join(' / ');
     const blocked = state.blocked;
     const notes = state.notes;
+    const missing = team.fromRecommended
+      ? [...(state.gaps?.generals || []).map((name) => name), ...(state.gaps?.tactics || [])]
+      : [];
+    const badge = team.fromRecommended
+      ? `<span class="chip ${missing.length ? '' : 'on'}">${missing.length ? `缺 ${missing.length} 項` : '可組'}</span>`
+      : '';
+    const review = team.fromRecommended && (team.status === '待核' || team.rankStatus === '待核')
+      ? '<span class="mini review">待核</span>'
+      : '';
+    const source = team.fromRecommended && team.source
+      ? `<a class="cite" href="${esc(team.source)}" target="_blank" rel="noopener">來源</a>`
+      : '';
+    const basis = team.fromRecommended && team.rankBasis
+      ? `<p class="faint">${esc(team.rankBasis)}</p>`
+      : '';
     return `
       <li class="template-item${blocked ? ' blocked' : ''}">
         <div>
           <strong>${esc(templateDisplayName(team))}</strong>
           <span class="tag red-total">總紅度 ${red}</span>
           <span class="tag">${campInk(team.country)}</span>
+          ${review}${source}${badge}
           <p>${esc(names)}</p>
+          ${basis}
           ${notes.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
+          ${team.fromRecommended ? altHtml(team) : ''}
         </div>
         <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入</button>
       </li>`;
@@ -1349,7 +1397,7 @@ function templateResultsMarkup() {
 function templateSheet() {
   if (!ui.templates) return '';
   const current = account();
-  const all = ui.catalog.templates || [];
+  const all = templatePool();
   const scenarios = templateScenarios(all);
   const scenarioOptions = ['', ...scenarios].map((value) => {
     const label = value || '全部';
@@ -1686,7 +1734,11 @@ function generalPickerResults() {
   const usage = usageFor(current);
   const filters = ui.picker.filters || emptyPickerFilters();
   const ownedCount = ui.catalog.generals.filter((general) => current.owned[general.id]).length;
-  let options = ui.catalog.generals.filter((general) => shownInScenario(general) || general.id === team.members[ui.picker.slot]?.generalId).map((general) => presentGeneral(general, current)).filter((general) => {
+  const keepId = team.members[ui.picker.slot]?.generalId;
+  let options = ui.catalog.generals.filter((general) => {
+    if (isDuwei(general) && current.scenario === 'hanyan') return false;
+    return listedGeneral(general) || general.id === keepId;
+  }).map((general) => presentGeneral(general, current)).filter((general) => {
     const owned = current.owned[general.id];
     return matchesGeneral(general, owned, {
       ...emptyFilters(),
@@ -2481,9 +2533,10 @@ function onClick(event) {
       ui.shareImport = null;
       ui.accountExport = null;
       ui.accountFile = null;
-      const scenarios = templateScenarios(ui.catalog?.templates || []);
+      const scenarios = templateScenarios(templatePool());
+      const accountScenario = scenarioName(account().scenario);
       ui.templates = {
-        scenario: scenarios.includes('常規劇本') ? '常規劇本' : '',
+        scenario: scenarios.includes(accountScenario) ? accountScenario : '',
         country: '',
         query: '',
         substitute: false,
@@ -2493,8 +2546,16 @@ function onClick(event) {
       render();
       break;
     case 'add-template': {
-      const template = (ui.catalog.templates || []).find((item) => item.id === el.dataset.id);
+      const template = templatePool().find((item) => item.id === el.dataset.id);
       if (!template || !ui.templates) break;
+      if (template.fromRecommended && template.applyReady === false) {
+        toast('僅供參考，不提供套用');
+        break;
+      }
+      if (current.scenario === 'hanyan' && (template.members || []).some((member) => isDuwei(generalsById().get(member?.generalId)))) {
+        toast('漢焰長明不能使用都尉');
+        break;
+      }
       if (current.teams.length >= 40) {
         toast('隊伍已滿，無法再載入');
         break;
@@ -2518,7 +2579,7 @@ function onClick(event) {
         break;
       }
       const id = newId('team');
-      const built = teamFromTemplate(template, id);
+      const built = template.fromRecommended ? teamFromRecommended(template, id) : teamFromTemplate(template, id);
       const stripped = dropUnownedTactics(built.members, current, {
         tacticName: (tacticId) => tactics.get(tacticId)?.name || '',
       });
@@ -3353,6 +3414,7 @@ async function loadCatalog() {
     templates: templates.teams,
     merits: scenario.merits,
     recommended: scenario.recommended,
+    hanConvert: scenario.hanConvert,
     generalsById: new Map(generals.generals.map((general) => [general.id, general])),
   };
 }

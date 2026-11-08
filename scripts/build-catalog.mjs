@@ -10,6 +10,7 @@ import { hanyanBahamut } from './hanyan-bahamut.mjs';
 import { hanyanDami } from './hanyan-dami.mjs';
 import { applyMerges } from './hanyan-merges.mjs';
 import { applyTiers } from './hanyan-tiers.mjs';
+import { hanConvert } from './han-convert.mjs';
 import { hanyanMerits, hanyanRecommended } from './hanyan-recommended.mjs';
 
 const VERSION = '1.2.9';
@@ -454,6 +455,7 @@ writeFileSync('data/scenario.json', `${JSON.stringify({
   catalogVersion: VERSION,
   weapons: [],
   merits: hanyanMerits,
+  hanConvert,
   recommended: applyTiers(applyMerges([...hanyanDami, ...hanyanBahamut, ...hanyanRecommended])),
 }, null, 2)}\n`);
 
