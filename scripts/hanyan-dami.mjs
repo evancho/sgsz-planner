@@ -112,7 +112,7 @@ export const hanyanDami = [
     seat('zhangbao', '張苞', ['feigong', 'futang'], ['非攻制勝', '赴湯蹈火'], book('junxing', 'xibing', 'shoushi', 'fangbei'), {
       traits: ['虎峙'],
     }),
-  ], ['芒碭隱蹤', '博浪椎秦', '約法三章', '推食解衣', '把橋受書'], '奇正之勢圖鑑未收。奇略末張截圖作把橋受書，未改寫', true),
+  ], ['芒碭隱蹤', '博浪椎秦', '約法三章', '推食解衣', '圯橋受書'], '奇正之勢圖鑑未收。奇略末張依 sgsdeck 奇略列表改為圯橋受書', true),
   team('dami-wanghong', '網紅槍', [
     seat('zhangfei', '張飛', ['luoyi', 'yiqi'], ['裸衣血戰', '一騎當千'], book('yongjian', 'yizhi-bao', 'jingzhun', 'shanzhan'), {
       traits: ['雄烈', '靈動', '踩踏', '暴躁'],

@@ -603,6 +603,152 @@ export function tacticConflictLine(dropped) {
   return `戰法 ${dropped.map((item) => item.name).join('、')} 已在其他隊伍`;
 }
 
+/** 玩家簡稱對到圖鑑編號。完整名稱仍先用 tacticByName，這裡只補縮寫。 */
+export const TACTIC_ALIASES = {
+  藏器: 'cangqi',
+  轉形一: 'zhuan-xingyi',
+  草船: 'caochuan',
+  剛柔: 'gangrou-ji',
+  轉獅子: 'zhuan-shizi',
+  蓄勢: 'xushidai',
+  刮骨: 'guagu',
+  竭力: 'jieli',
+  奪魂: 'duohun',
+  奪魄: 'duohun',
+  奪魂攜魄: 'duohun',
+  當峰: 'dangfeng',
+  當鋒: 'dangfeng',
+  催峰: 'cuifeng',
+  催峰斷刃: 'cuifeng',
+  雁形: 'yanxing',
+  雁形陣: 'yanxing',
+  勠力: 'luli',
+  勠力同心: 'luli',
+  戮力: 'luli',
+  拓聚石: 'tuo-jushi',
+  拓聚石成金: 'tuo-jushi',
+  拓草船: 'tuo-caochuan',
+  拓刮骨: 'tuo-guagu',
+  拓奪魂: 'tuo-duohun',
+  拓鎮扼: 'tuo-zhene',
+  拓鎮扼防拒: 'tuo-zhene',
+  拓鎮厄: 'tuo-zhene',
+  拓鎮厄防拒: 'tuo-zhene',
+  衡軛: 'heng-e',
+  潛龍: 'qianlong',
+  盛氣: 'shengqi',
+  焚輜: 'fenzui',
+  上兵: 'shangbing',
+  太平: 'taiping',
+  無當: 'wudang',
+  血刃: 'xueren',
+  三勢: 'sanshi',
+  藤甲: 'tengjia',
+  文武: 'wenwu',
+  臨危: 'linwei',
+  杯蛇: 'beishe',
+  士別: 'shibie',
+  萬軍: 'wanjun',
+  先登: 'xiandeng',
+  深謀: 'shenmou',
+  八門: 'bamen',
+  兵無: 'bingwu',
+  錦帆: 'jinfan',
+  武峰: 'wufeng',
+  武峰陣: 'wufeng',
+  暫避: 'zanbi',
+  暫避鋒芒: 'zanbi',
+  獨行付斗: 'duxing',
+  獨行赴鬥: 'duxing',
+  乘敵: 'chengdi',
+  靈機: 'lingji',
+  風助: 'fengzhuo',
+};
+
+export function tacticToken(raw) {
+  return String(raw || '').replace(/（.*?）/g, '').replace(/\(.*?\)/g, '').trim();
+}
+
+function knownTactic(id, name, lookup) {
+  const byId = lookup.tacticById?.(id);
+  if (byId?.id) return { id: byId.id, name: byId.name || name };
+  const named = lookup.tacticName?.(id);
+  if (named && named !== id) return { id, name: named };
+  return null;
+}
+
+/** 完整名優先，其次縮寫。斜線只取前者當裝備，後者當替代。 */
+export function resolveTacticToken(token, lookup = {}) {
+  const name = tacticToken(token);
+  if (!name) return null;
+  const byName = lookup.tacticByName?.(name);
+  if (byName?.id) return { id: byName.id, name: byName.name || name };
+  const alias = TACTIC_ALIASES[name];
+  if (alias) {
+    const known = knownTactic(alias, name, lookup);
+    if (known) return known;
+  }
+  return { unknown: name };
+}
+
+export function memberTacticPlan(member, lookup = {}) {
+  const learned = [null, null];
+  const unknown = [];
+  const alternatives = [];
+  const taken = new Set();
+  const place = (resolved) => {
+    if (!resolved) return;
+    if (resolved.unknown) {
+      unknown.push(`無法辨識／待核：${resolved.unknown}`);
+      return;
+    }
+    if (taken.has(resolved.id)) return;
+    const slot = learned.findIndex((id) => !id);
+    if (slot < 0) {
+      unknown.push(`無法辨識／待核：${resolved.name}`);
+      return;
+    }
+    learned[slot] = resolved.id;
+    taken.add(resolved.id);
+  };
+  const consume = (raw) => {
+    const parts = String(raw || '').split(/[／/]/).map(tacticToken).filter(Boolean);
+    if (!parts.length) return;
+    place(resolveTacticToken(parts[0], lookup));
+    for (const alt of parts.slice(1)) {
+      const resolved = resolveTacticToken(alt, lookup);
+      if (!resolved) continue;
+      if (resolved.unknown) unknown.push(`無法辨識／待核：${resolved.unknown}`);
+      else alternatives.push(resolved.name);
+    }
+  };
+  const explicit = [0, 1].map((index) => member?.learned?.[index] || null);
+  if (explicit.some(Boolean)) {
+    explicit.forEach((id, index) => {
+      if (!id) {
+        const named = member?.learnedNames?.[index];
+        if (named) consume(named);
+        return;
+      }
+      const known = knownTactic(id, id, lookup);
+      learned[index] = id;
+      taken.add(id);
+      if (!known && lookup.tacticById) unknown.push(`無法辨識／待核：${id}`);
+    });
+    return { learned, unknown, alternatives };
+  }
+  const names = (member?.learnedNames || []).map((item) => String(item || '').trim()).filter(Boolean);
+  const rawSlots = names.length
+    ? names
+    : String(member?.tacticsRaw || '').split(/[、，,]/).map((item) => item.trim()).filter(Boolean);
+  rawSlots.slice(0, 2).forEach(consume);
+  rawSlots.slice(2).forEach((item) => {
+    const token = tacticToken(String(item).split(/[／/]/)[0]);
+    if (token) unknown.push(`無法辨識／待核：${token}`);
+  });
+  return { learned, unknown, alternatives };
+}
+
 /** 帳號還沒有的武將、傳承戰法。圖鑑未收、寫在未收錄裡的戰法也算缺少。兵書不算。 */
 export function ownershipGaps(members, account, lookup = {}) {
   const generals = [];
@@ -611,23 +757,6 @@ export function ownershipGaps(members, account, lookup = {}) {
   const seenTactics = new Set();
   const generalName = lookup.generalName || ((id) => id);
   const tacticName = lookup.tacticName || ((id) => id);
-  const recordNamedTactic = (name, keepUnknown) => {
-    const named = lookup.tacticByName?.(name);
-    if (named?.id) {
-      if (seenTactics.has(named.id) || account?.tacticsOwned?.[named.id]) {
-        seenTactics.add(named.id);
-        return;
-      }
-      seenTactics.add(named.id);
-      tactics.push(named.name || name);
-      return;
-    }
-    if (!keepUnknown) return;
-    const key = `named:${name}`;
-    if (seenTactics.has(key)) return;
-    seenTactics.add(key);
-    tactics.push(name);
-  };
   for (const member of members || []) {
     if (!member) continue;
     const generalId = member.generalId;
@@ -639,20 +768,13 @@ export function ownershipGaps(members, account, lookup = {}) {
       seenGenerals.add(generalId);
       generals.push(member.generalName || generalName(generalId) || generalId);
     }
-    for (let index = 0; index < 2; index += 1) {
-      if (member.learned?.[index]) continue;
-      const name = String(member.learnedNames?.[index] || '').trim();
-      if (!name) continue;
-      recordNamedTactic(name, true);
+    const plan = memberTacticPlan(member, lookup);
+    for (const label of plan.unknown) {
+      if (seenTactics.has(label)) continue;
+      seenTactics.add(label);
+      tactics.push(label);
     }
-    const hasLearned = (member.learned || []).some(Boolean) || (member.learnedNames || []).some((name) => String(name || '').trim());
-    if (!hasLearned && member.tacticsRaw) {
-      for (const part of String(member.tacticsRaw).split(/[、，,／/]/)) {
-        const name = part.replace(/（.*?）/g, '').trim();
-        if (name) recordNamedTactic(name, false);
-      }
-    }
-    for (const tacticId of member.learned || []) {
+    for (const tacticId of plan.learned) {
       if (!tacticId || seenTactics.has(tacticId)) continue;
       if (account?.tacticsOwned?.[tacticId]) continue;
       seenTactics.add(tacticId);
@@ -1069,10 +1191,11 @@ function recommendedNotes(rec) {
   return clip(lines.join('；'), 500);
 }
 
-export function teamFromRecommended(rec, teamId) {
+export function teamFromRecommended(rec, teamId, lookup) {
   const label = [rec.rank, rec.title].filter(Boolean).join(' ') || '推薦隊伍';
   const strategy = rec.strategy || [];
   const tricks = rec.tricks || [];
+  const extraNotes = [];
   const team = {
     id: teamId,
     name: clip(label, 24) || '推薦隊伍',
@@ -1081,14 +1204,23 @@ export function teamFromRecommended(rec, teamId) {
     members: [0, 1, 2].map((index) => {
       const member = rec.members?.[index];
       if (!member?.generalId) return null;
-      const learned = [member.learned?.[0] || null, member.learned?.[1] || null];
-      const vacated = [0, 1].map((slot) => (learned[slot] ? null : member.learnedNames?.[slot] || null));
-      const base = { generalId: member.generalId, bingshu: member.bingshu || null, vacated };
+      const base = { generalId: member.generalId, bingshu: member.bingshu || null };
       if (member.traits?.length) base.traits = member.traits;
       if (member.aptNeed) base.aptNeed = member.aptNeed;
-      return memberWithLearned(base, learned, vacated);
+      if (!lookup) {
+        const learned = [member.learned?.[0] || null, member.learned?.[1] || null];
+        const vacated = [0, 1].map((slot) => (learned[slot] ? null : member.learnedNames?.[slot] || null));
+        return memberWithLearned(base, learned, vacated);
+      }
+      const plan = memberTacticPlan(member, lookup);
+      const pending = [...plan.unknown];
+      const vacated = [0, 1].map((slot) => (plan.learned[slot] ? null : pending.shift() || null));
+      if (pending.length) extraNotes.push(...pending);
+      if (plan.alternatives.length) extraNotes.push(`替代：${plan.alternatives.join('、')}`);
+      return memberWithLearned(base, plan.learned, vacated);
     }),
   };
+  if (extraNotes.length) team.notes = clip([team.notes, ...extraNotes].filter(Boolean).join('；'), 500);
   if (strategy.length) team.strategy = strategy;
   if (tricks.length) team.tricks = tricks;
   return team;

@@ -13,8 +13,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "開局三回合，降低我軍智力最高者受到的兵刃傷害，以及武力最高者受到的謀略傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -31,8 +31,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "開局兩回合，使敵軍兩人每回合都有高機率繳械，無法普通攻擊。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -48,8 +48,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "第 2、4、6、8 回合對敵軍兩人造成逐漸提高的謀略傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -66,8 +66,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "開局三回合，降低雙方謀略傷害，並提高普通攻擊與突擊傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -84,8 +84,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "嘲諷敵軍主將，並提高自己的統率，持續數回合。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -102,8 +102,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "開局三回合，壓低敵軍武力最高者的兵刃傷害，以及智力最高者的謀略傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -120,8 +120,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "開局三回合使敵軍單體虛弱，造成傷害時有機率打空。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -137,8 +137,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "敵軍嘗試發動主動戰法時，有機率壓低其發動率，並略為提高我軍主動發動率。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -154,8 +154,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "自己為主將時，開局由副將分擔傷害；之後若帶有負面，有機率獲得反擊。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -171,8 +171,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "自己造成治療時降低目標受到的主動傷害；兵力過低時，我軍短時間分攤傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -188,8 +188,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "我軍群體發動準備戰法時，有機率獲得會心與奇謀，可疊加。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -205,8 +205,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "行動時有機率為我軍群體疊加抵御，並讓抵御更能留住。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -220,8 +220,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "前兩回合降低我軍兩人造成與受到的傷害，第三回合再為他們治療。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -237,8 +237,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "騎兵專用。開局兩回合使敵軍遇襲；我軍發動突擊後，降低普攻目標統率。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -252,8 +252,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的指揮戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -267,8 +267,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的指揮戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -282,8 +282,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的指揮戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -297,8 +297,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "有機率提高友軍造成的傷害，攜帶者速度要快才吃得到。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -315,8 +315,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "定軍山之戰事件戰法。限盾、器械。自身提高智力與統率並獲得先攻，但無法造成傷害；每回合有機率使我軍群體獲得規避。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -330,8 +330,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "戰鬥前四回合，降低我軍兩人受到的傷害。傳承自郭淮。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -345,8 +345,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "其他友軍受到普通攻擊時，有機率禁療該友軍，並對敵軍兩人造成兵刃傷害。傳承自劉封。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -360,8 +360,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "提高我軍全體武力與智力。傳承自李典。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -375,8 +375,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "首回合自己混亂，之後數回合獲得休整。傳承自廖化。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -390,8 +390,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "偶數回合治療我軍兩人，受智力影響。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -408,8 +408,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後使敵軍兩人虛弱；已虛弱者改為叛逃，持續掉血。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -426,8 +426,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "降低敵軍單體統率，並造成兵刃傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -443,8 +443,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "為損失兵力最多的我軍單體清除負面狀態，並依智力治療。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -461,8 +461,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "偷取敵軍屬性，此消彼長。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -479,8 +479,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "對敵軍全體造成兵刃傷害；目標已繳械或計窮時，有機率震懾。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -497,8 +497,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後降低敵軍兩人的統率與智力，並造成兵刃傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -520,8 +520,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後對敵軍全體造成高額兵刃傷害。騎、盾、槍、器械可用。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -538,8 +538,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後對敵軍兩人施加沙暴，並提高其受到的兵刃傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -553,8 +553,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "傳承取得的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -571,8 +571,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後對敵軍兩人造成謀略傷害，並治療我軍兩人。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -589,8 +589,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP周瑜、SP諸葛亮傳承的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -606,8 +606,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "對敵軍單體造成謀略傷害；未混亂則施加混亂，已混亂則使其打向友軍。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -623,8 +623,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "對敵軍兩人造成兵刃傷害，並依自身功能性狀態提高震懾機率。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -641,8 +641,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "對敵軍單體造成謀略傷害；目標已灼燒時再補一段。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -658,8 +658,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後對敵軍全體造成火攻，並施加灼燒。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -678,8 +678,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "弓兵專用。準備後對敵軍全體造成兵刃傷害，並有機率潰逃。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -696,8 +696,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後對敵軍兩人施加中毒。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -714,8 +714,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "治療自己並提高統率，可疊加；自己為副將時治療改受武力影響。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -732,8 +732,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後對敵軍兩人施加水攻，並提高其受到的謀略傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -750,8 +750,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "對敵軍單體同時造成兵刃與謀略傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -767,8 +767,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "貂蟬傳承的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -789,8 +789,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "提高自己武力並獲得群攻。騎、盾、槍、器械可用。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -810,8 +810,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "騎兵、弓兵可用。準備後對敵軍全體造成謀略傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -828,8 +828,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後使敵軍主將虛弱，並使我軍主將獲得休整。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -845,8 +845,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後以自己混亂為代價，使敵軍兩人計窮。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -863,8 +863,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "使自己與一名友軍進入連擊，每回合可以普通攻擊兩次。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -881,8 +881,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "降低敵軍兩人的武力與智力，可疊加。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -898,8 +898,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "選擇一名異性友軍，對方獲得治療或功能性增益時，自己有機率得到相同效果。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -916,8 +916,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP呂蒙、董白傳承的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -934,8 +934,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP荀彧、張讓傳承的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -951,8 +951,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "許攸傳承的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -969,8 +969,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP劉曄、諸葛恪傳承的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -987,8 +987,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP張寶、SP張梁傳承的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1004,8 +1004,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP曹真傳承的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1022,8 +1022,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP馬超、SP許褚傳承的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1039,8 +1039,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "馬岱傳承的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1054,8 +1054,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "移除我軍群體負面，並給予急救，受傷時有機率依統率回復。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1069,8 +1069,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "治療我軍兩人，並使他們獲得一回合休整。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1084,8 +1084,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的火系主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1104,8 +1104,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "對敵軍群體施加潰逃並降低其傷害，自己獲得倒戈。騎、盾、槍、器械可用。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1119,8 +1119,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後對敵軍群體造成兵刃傷害，並施加禁療。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1134,8 +1134,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "對敵軍兩人造成謀略傷害，並施加禁療。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1149,8 +1149,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "準備後對敵軍群體施加破壞與水攻；首回合發動時可不準備。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1166,8 +1166,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "盾兵專用。下回合前若受到沉重傷害則治療並減謀略傷，否則對敵軍全體造成兵刃傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1181,8 +1181,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "嘲諷敵軍全體，並提高自己的統率。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1196,8 +1196,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1211,8 +1211,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1226,8 +1226,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1241,8 +1241,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的主動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1259,8 +1259,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的主動戰法。限騎、器械。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1274,8 +1274,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的主動戰法。依智力治療我軍單體並提高統率，可疊加。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1289,8 +1289,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "對敵軍群體造成兵刃傷害，並有機率計窮。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1304,8 +1304,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "回復我軍兩人兵力，受智力影響。傳承自審配。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1319,8 +1319,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "對隨機敵軍單體造成兵刃傷害，並計窮一回合。傳承自張任。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1334,8 +1334,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "對敵軍單體造成兵刃傷害，隨機打出數段。傳承自張燕。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1349,8 +1349,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "準備後對敵軍全體施加沙暴，並使自己獲得一次抵御。傳承自張寶。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1364,8 +1364,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "對統率最低的敵軍單體造成兵刃傷害。傳承自臧霸。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1379,8 +1379,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "對敵軍單體造成兵刃傷害，並有機率震懾。傳承自潘璋。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1396,8 +1396,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "弓兵專用。提高會心並對敵軍單體造成兵刃傷害；目標為騎兵時附加潰逃。傳承自韓當。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1411,8 +1411,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "降低敵軍單體統率，並造成兵刃傷害。傳承自丁奉。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1426,8 +1426,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "對敵軍單體造成兩次兵刃傷害；目標已震懾時施加禁療。傳承自郭汜。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1441,8 +1441,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "對敵軍單體造成兵刃傷害並震懾。傳承自李傕。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1456,8 +1456,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "準備後對敵軍兩人造成兵刃傷害並施加灼燒。傳承自蔣欽。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1471,8 +1471,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "對敵軍單體同時造成兵刃與謀略傷害。傳承自曹真。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1486,8 +1486,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "對敵軍兩人造成謀略傷害，並降低其造成的傷害。傳承自劉曄。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1501,8 +1501,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "準備後對敵軍兩人造成謀略傷害，並降低速度。傳承自董允、朱儁。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1516,8 +1516,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "對隨機單體造成謀略傷害，並提高其受到的謀略傷害；有小機率打到友軍。傳承自陳琳。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1533,8 +1533,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "普通攻擊後對敵軍全體造成兵刃傷害；自己為主將時這段更痛。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1550,8 +1550,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "普通攻擊後再打一段兵刃傷害，並使目標混亂。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1569,8 +1569,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "騎兵專用。普通攻擊後追打敵軍單體，並有機率再打敵軍主將。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1587,8 +1587,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "普通攻擊後降低隨機敵軍的統率與智力；自己不是主將時，再給主將抵御。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1605,8 +1605,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "普通攻擊後對目標造成兵刃傷害，並計窮一回合。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1620,8 +1620,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "傳承取得的突擊戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1638,8 +1638,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "普通攻擊後造成謀略傷害；目標潰逃或中毒時，有機率虛弱。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1655,8 +1655,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "普通攻擊後獲得一次抵御，並提高下一次主動戰法傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1670,8 +1670,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "普通攻擊後造成謀略傷害，並偽報一回合，壓制被動與指揮。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1685,8 +1685,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "普通攻擊後再打一段高額兵刃；自己為主將且目標殘血時傷害更高。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1700,8 +1700,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "普通攻擊後追加數段兵刃傷害；目標武力較低時再壓低其傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1715,8 +1715,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "普通攻擊後降低目標統率，並計窮一回合。傳承自沙摩柯。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1730,8 +1730,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "普通攻擊後再對目標打出一段兵刃傷害。傳承自文聘。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1745,8 +1745,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "普通攻擊後追打兵刃；打到敵軍主將時再補一段謀略傷害。傳承自韓遂。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1762,8 +1762,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "前三回合無法普通攻擊但有機率規避，第四回合提高智力並對敵軍全體造成謀略傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1780,8 +1780,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "自己累積第三次普通攻擊時，對目標造成謀略傷害並治療自己。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1802,8 +1802,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "每次受到兵刃傷害提高武力；第五回合依疊層對敵軍全體造成兵刃傷害。騎、盾、槍可用。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1820,8 +1820,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "造成謀略傷害時提高智力，造成兵刃傷害時提高武力，皆可疊加。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1838,8 +1838,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "使自己獲得休整，每回合回復兵力。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1856,8 +1856,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "每回合提高自己造成的傷害，可疊加到戰鬥結束。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1871,8 +1871,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "傳承取得的被動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1889,8 +1889,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "受到普通攻擊時，有機率使攻擊者陷入混亂、計窮、繳械、虛弱之一。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1907,8 +1907,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP關羽、SP龐德傳承的被動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1924,8 +1924,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP皇甫嵩傳承的被動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1941,8 +1941,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "王異傳承的被動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1958,8 +1958,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP黃月英傳承的被動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1975,8 +1975,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "SP典韋傳承的被動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -1990,8 +1990,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "提高奇謀與自帶主動戰法發動率；自己為黃巾軍主將時，副將也吃到發動率。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2005,8 +2005,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "無法發動主動。前三回合獲得高額連擊與倒戈，並降低自己與一名敵軍的統率。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2020,8 +2020,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "免疫繳械；普通攻擊後提高自己造成的兵刃傷害，可疊加。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2037,8 +2037,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "弓兵專用。普通攻擊後有機率獲得群攻；已有群攻則提高武力。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2052,8 +2052,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "提高普通攻擊傷害，並在普攻後對目標累積酣鬥，疊滿後再提高普攻傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2067,8 +2067,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "受到普通攻擊時反擊；自己為副將時反擊更痛。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2082,8 +2082,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "受到兵刃傷害後，下回合提高會心，並提高下一次攻擊的傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2097,8 +2097,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的被動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2112,8 +2112,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的被動戰法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2127,8 +2127,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "每回合治療自身並降低受到的傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2142,8 +2142,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "提高自身主動戰法的發動率。傳承自馬良。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2157,8 +2157,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "使自己獲得休整，每回合回復兵力。傳承自董襲。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2176,8 +2176,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "騎兵進階為虎豹騎，提高武力，並提高突擊戰法發動率。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2195,8 +2195,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "騎兵進階為西涼鐵騎，開局數回合提高我軍會心。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2214,8 +2214,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "騎兵進階為象兵。延後結算部分傷害，但灼燒時會群攻並混亂。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2233,8 +2233,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "弓兵進階為白馬義從。提高行軍速度，開局先攻並提高主動發動率。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2252,8 +2252,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "弓兵進階為無當飛軍。提高統率與速度，並在首回合施加中毒。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2271,8 +2271,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "槍兵進階為白毦兵。普通攻擊後有機率再打一段謀略傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2290,8 +2290,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "槍兵進階為大戟士。普通攻擊時有機率對另一名敵軍造成兵刃傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2309,8 +2309,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "盾兵進階為陷陣營。提高武力與統率，開局數回合獲得急救。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2328,8 +2328,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "盾兵進階為藤甲兵。大幅降低兵刃傷害，但怕灼燒。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2347,8 +2347,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "弓兵進階為先登死士，使我軍免疫遇襲。傳承自麴義。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2364,8 +2364,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "槍兵進階為青州兵。造成傷害時有機率提高本次傷害，並壓低下次敵軍傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2381,8 +2381,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "弓兵進階為錦帆軍。普通攻擊有機率潰逃；目標已潰逃則再造成兵刃並回血。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2398,8 +2398,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "盾兵進階為虎衛軍。主將即將被普攻時，副將提高武力並反打攻擊者。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2415,8 +2415,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "盾兵進階為丹陽兵，偏向壓制謀略傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2432,8 +2432,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "騎兵進階為飛熊軍，治療可以轉成謀略傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2449,8 +2449,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "槍兵進階為解煩衛。普通攻擊時有機率造成傷害，否則回復兵力。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2471,8 +2471,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "騎、盾、槍可用。提高主將傷害也更易受傷；副將傷害下降，但更耐打。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2492,8 +2492,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "盾、器械可用。提高我軍統率，受擊時有機會獲得抵御或治療。傳承自SP法正、SP黃忠。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2510,8 +2510,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "開局兩回合壓低敵軍主將造成的傷害，並讓兩名副將分別少吃兵刃或謀略。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2527,8 +2527,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "戰鬥前三回合，壓低敵軍兩人造成的傷害，並讓我軍主將先攻。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2546,8 +2546,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "弓兵專用。每回合有機率把敵軍的減傷轉到我軍、把友軍負面轉給敵軍，並讓我軍統率最低者偷取敵軍統率。傳承自SP盧植。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2561,8 +2561,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "三人陣營都不同時，提高主將自帶主動或突擊的發動率，並輪流調整兩名副將。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2576,8 +2576,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的陣法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2591,8 +2591,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "三人兵種適性都不同時，主將更易成為目標並減傷，兩名副將分別增傷或治療。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2606,8 +2606,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "事件兌換的陣法。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2623,8 +2623,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "提高政治，適合內政委任。傳承自蔡邕。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2638,8 +2638,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "A",
       "desc": "委任為糧草官時提高糧食產量。",
+      "rank": "A",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2655,8 +2655,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "成功發動主動或突擊戰法時，有機率治療我軍單體，並有較高機率立刻再施放一次；再次發動無需準備與冷卻。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2672,8 +2672,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "偷取敵軍武力最高者的武力與速度給我軍武力最高者，並偷取智力最高者的智力與統率給我軍智力最高者。可疊加，持續兩回合。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2689,8 +2689,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "戰鬥前數回合降低敵軍全體戰鬥屬性；中後段並有機率使敵軍群體陷入恐懼，造成傷害或施加控制時可能失敗。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2706,8 +2706,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "每回合依統率差對敵軍單體造成無視防禦的傷害，並將一部分轉為可抵擋傷害的俘兵，隨機施放數次。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2723,8 +2723,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "友軍受傷時有機率對敵軍單體反打，每名武將每回合次數有限；我軍統率最高者被控制時，還會對敵軍全體造成傷害。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2740,8 +2740,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "隨機施放因利制權、坐守孤城、淨化、智計、料事如神、杯蛇鬼車其中一項的滿級效果，可執行一到兩次，無需準備與冷卻。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2757,8 +2757,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "自身無法造成傷害。第二回合起，友軍受到普通攻擊後有機率發動反擊，且可觸發普通攻擊類效果。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2774,8 +2774,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "敵軍發動主動戰法時，我軍智力最高者有機率打出謀略反擊；發動突擊戰法時，武力最高者有機率打出兵刃反擊。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2791,8 +2791,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "使我軍統率最高者減傷，並有較高機率嘲諷敵軍全體；偶數回合還有機率治療該武將。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2808,8 +2808,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "對敵我隨機武將多次施加抵御。落到我軍則降低受到的傷害，落到敵軍則降低其造成的傷害，持續一回合。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2825,8 +2825,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "我軍發動主動戰法後有機率提高戰鬥屬性，可疊加到戰鬥結束；累積觸發數次後治療我軍全體。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2842,8 +2842,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "戰鬥前數回合降低友軍受到的傷害，並賦予急救，受傷時有機率依智力獲得治療。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2857,9 +2857,10 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "前四回合提高攜帶者主動戰法的發動率，第五回合造成傷害並治療。",
-      "sourceUrl": "",
+      "rank": "S",
+      "obtain": "事件",
+      "sourceUrl": "https://sgsdeck.com/tactics/麾軍結陣",
       "status": "已核",
       "note": ""
     },
@@ -2874,8 +2875,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "第二、四回合對敵軍全體造成兵刃傷害；目標處於繳械或計窮時降低統率。自身為主將時，第六回合再打一輪。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2891,8 +2892,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "每回合對敵軍施加長焰，提高其受到的謀略傷害，並造成謀略傷害。自身為主將時，長焰夠多有機率再打一次。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2908,8 +2909,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "對敵軍群體造成謀略傷害並施加灼燒；目標已在灼燒時傷害更高。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2925,8 +2926,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "普通攻擊後對敵軍單體造成兵刃傷害，並降低目標統率。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2942,8 +2943,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "援護我軍承受一部分傷害，受到普通攻擊時反擊，並以休整回復兵力。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2959,8 +2960,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "偷取敵軍屬性，轉為我軍的持續增益。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2979,8 +2980,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "將我軍主將的普通攻擊轉為謀略傷害，造成謀略傷害時治療我軍單體。僅弓兵與器械。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -2999,8 +3000,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "降低我軍兵力最低者受到的傷害，並壓低敵軍兵力最高者的輸出。僅弓兵與器械。",
+      "rank": "S",
       "sourceUrl": "",
       "status": "已核",
       "note": ""
@@ -3014,8 +3015,12 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
-      "desc": "英雄命示賽季商店的奪魂挾魄拓本，每輪最多可購兩項。沿用原戰法：偷取敵軍屬性，此消彼長。",
+      "desc": "沿用原戰法：偷取敵軍屬性，此消彼長。",
+      "quality": "未核",
+      "obtain": {
+        "yingxiong": "賽季商店",
+        "hanyan": "拓印四選一"
+      },
       "variant": "拓",
       "scenarios": [
         "yingxiong",
@@ -3023,7 +3028,7 @@
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": "漢焰長明拓印四選一也列這項。巴哈攻略同列。"
+      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。品質沒有逐項台港澳來源。"
     },
     {
       "id": "tuo-shibie",
@@ -3034,8 +3039,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "英雄命示賽季商店的士別三日拓本，每輪最多可購兩項。沿用原戰法：前三回合無法普通攻擊但有機率規避，第四回合提高智力並對敵軍全體造成謀略傷害。",
+      "rank": "S",
       "variant": "拓",
       "scenarios": [
         "yingxiong"
@@ -3053,8 +3058,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "英雄命示賽季商店的以寡敵眾拓本，每輪最多可購兩項。沿用原戰法：第2、4、6回合依武力治療自己並提高武力，第5回合對敵軍全體造成兵刃傷害。",
+      "rank": "S",
       "variant": "拓",
       "scenarios": [
         "yingxiong"
@@ -3072,8 +3077,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "英雄命示賽季商店的疾風驟雨拓本，每輪最多可購兩項。與原戰法分開登記，具體係數以遊戲內為準。",
+      "rank": "S",
       "variant": "拓",
       "scenarios": [
         "yingxiong"
@@ -3091,8 +3096,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "英雄命示賽季商店的魚鱗陣精進版，每輪最多可購兩項。提升統率，並有機會獲得抵御或治療。具體係數以遊戲內為準。",
+      "rank": "S",
       "variant": "精",
       "scenarios": [
         "yingxiong"
@@ -3114,8 +3119,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "英雄命示賽季商店的鋒矢陣精進版，每輪最多可購兩項。沿用原戰法：主將傷害提高也更易受傷，副將傷害下降但更耐打。",
+      "rank": "S",
       "variant": "精",
       "scenarios": [
         "yingxiong"
@@ -3136,8 +3141,8 @@
       ],
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "兵演春秋賽季商店的蓄勢待發拓本，每輪最多可購兩項。沿用原戰法：限盾、器械。自身提高智力與統率並獲得先攻，但無法造成傷害；每回合有機率使我軍群體獲得規避。",
+      "rank": "S",
       "variant": "拓",
       "scenarios": [
         "yingxiong"
@@ -3155,8 +3160,12 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
-      "desc": "兵演春秋賽季商店的草船借箭拓本，每輪最多可購兩項。沿用原戰法：移除我軍群體負面，並給予急救，受傷時有機率依統率回復。",
+      "desc": "沿用原戰法：移除我軍群體負面，並給予急救，受傷時有機率依統率回復。",
+      "quality": "未核",
+      "obtain": {
+        "yingxiong": "賽季商店",
+        "hanyan": "拓印四選一"
+      },
       "variant": "拓",
       "scenarios": [
         "yingxiong",
@@ -3164,7 +3173,7 @@
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": "漢焰長明拓印四選一也列這項。巴哈攻略同列。"
+      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。品質沒有逐項台港澳來源。"
     },
     {
       "id": "tuo-guagu",
@@ -3175,8 +3184,12 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
-      "desc": "兵演春秋賽季商店的刮骨療毒拓本，每輪最多可購兩項。沿用原戰法：為損失兵力最多的我軍單體清除負面狀態，並依智力治療。",
+      "desc": "沿用原戰法：為損失兵力最多的我軍單體清除負面狀態，並依智力治療。",
+      "quality": "未核",
+      "obtain": {
+        "yingxiong": "賽季商店",
+        "hanyan": "拓印四選一"
+      },
       "variant": "拓",
       "scenarios": [
         "yingxiong",
@@ -3184,7 +3197,7 @@
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": "漢焰長明拓印四選一也列這項。巴哈攻略同列。"
+      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。品質沒有逐項台港澳來源。"
     },
     {
       "id": "jing-lingji",
@@ -3195,8 +3208,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
       "desc": "兵演春秋賽季商店的靈機一動精進版，每輪最多可購兩項。全兵種可用，屬性提升低於原戰法。",
+      "rank": "S",
       "variant": "精",
       "scenarios": [
         "yingxiong"
@@ -3217,8 +3230,9 @@
       ],
       "copies": 1,
       "orange": true,
+      "desc": "前2回合，自身受到的普通攻擊傷害降低10%→20%（受統帥影響）。第3回合起，自身自帶主動戰法發動率提升4%→8%（受武力影響），且造成傷害時有15%→30%機率附帶10%→20%破陣（受武力影響）。僅盾兵與器械。",
       "rank": "S",
-      "desc": "提高自身主動戰法發動率，造成兵刃傷害時有機率破陣，並降低自身受到的普通攻擊傷害。僅盾兵與器械。",
+      "obtain": "傳承",
       "fromNames": [
         "SP曹操"
       ],
@@ -3235,14 +3249,15 @@
       "troops": null,
       "copies": 1,
       "orange": true,
+      "desc": "40%機率對敵軍隨機武將造成謀略傷害（118%→236%，受智力影響），並施加技窮狀態，持續1回合。",
       "rank": "S",
-      "desc": "對敵軍單體造成謀略傷害，並有機率計窮。",
+      "obtain": "傳承",
       "fromNames": [
         "何氏"
       ],
       "sourceUrl": "https://sgsdeck.com/tactics/絕計折謀",
       "status": "待核",
-      "note": "傳承自何氏。何氏尚未收入武將圖鑑，所以 from 先留空。"
+      "note": "傳承自何氏。何氏尚未收入武將圖鑑，所以 from 先留空。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。"
     },
     {
       "id": "taoyuan",
@@ -3253,8 +3268,9 @@
       "troops": null,
       "copies": 1,
       "orange": true,
+      "desc": "每回合有20%→40%機率（受統率影響，每種效果獨立判定）：我軍魅力最高者治療我軍單體（受智力影響）；統率最高者對敵軍智力最低者造成謀略傷害（受統率影響）；武力最高者對敵軍統率最低者造成兵刃傷害。該傷害率受我軍累計溢出治療量影響，觸發後重置。",
       "rank": "S",
-      "desc": "每回合有機率治療我軍群體，並依溢出治療對敵軍群體造成兵刃傷害。",
+      "obtain": "事件",
       "exchange": [
         "liubei",
         "guanyu",
@@ -3273,15 +3289,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
-      "desc": "漢焰長明拓印四選一的眾志成城拓本。效果差異待核。",
+      "desc": "眾志成城拓本。效果差異待核。",
+      "quality": "未核",
+      "obtain": "拓印四選一",
       "variant": "拓",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": "巴哈攻略同列這項拓印。"
+      "note": "巴哈攻略同列這項拓印。品質沒有逐項台港澳來源。"
     },
     {
       "id": "heng-e",
@@ -3292,14 +3309,15 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
-      "desc": "漢焰長明賽季商店陣法。我軍統御皆不相同時調整普攻目標與傷害，係數待核。",
+      "desc": "我軍統御皆不相同時調整普攻目標與傷害，係數待核。",
+      "quality": "未核",
+      "obtain": "賽季商店",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": "賽季商店新增陣法，沒有對應原版。係數待核。巴哈攻略同列。"
+      "note": "賽季商店新增陣法，沒有對應原版。係數待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
     },
     {
       "id": "zhuan-xingyi",
@@ -3310,15 +3328,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
-      "desc": "漢焰長明賽季商店的形一陣轉本。發動條件改為三人自帶戰法類型皆不相同，係數待核。",
+      "desc": "形一陣轉本。發動條件改為三人自帶戰法類型皆不相同，係數待核。",
+      "quality": "未核",
+      "obtain": "賽季商店",
       "variant": "轉",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": "原戰法：形一陣。效果差異待核。巴哈攻略同列。"
+      "note": "原戰法：形一陣。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
     },
     {
       "id": "zhuan-weizhen",
@@ -3329,15 +3348,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
-      "desc": "漢焰長明賽季商店的威震華夏轉本。效果差異待核。",
+      "desc": "威震華夏轉本。效果差異待核。",
+      "quality": "未核",
+      "obtain": "賽季商店",
       "variant": "轉",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": "原戰法：威震華夏。效果差異待核。巴哈攻略同列。"
+      "note": "原戰法：威震華夏。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
     },
     {
       "id": "tuo-jushi",
@@ -3348,15 +3368,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
-      "desc": "漢焰長明賽季商店的聚石成金拓本。效果差異待核。",
+      "desc": "聚石成金拓本。效果差異待核。",
+      "quality": "未核",
+      "obtain": "賽季商店",
       "variant": "拓",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": "原戰法：聚石成金。效果差異待核。巴哈攻略同列。"
+      "note": "原戰法：聚石成金。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
     },
     {
       "id": "tuo-zhene",
@@ -3367,15 +3388,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
-      "desc": "漢焰長明賽季商店的鎮扼防拒拓本。效果差異待核。",
+      "desc": "鎮扼防拒拓本。效果差異待核。",
+      "quality": "未核",
+      "obtain": "賽季商店",
       "variant": "拓",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": "原戰法：鎮扼防拒。效果差異待核。巴哈攻略同列。"
+      "note": "原戰法：鎮扼防拒。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
     },
     {
       "id": "zhuan-shizi",
@@ -3386,15 +3408,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "rank": "S",
-      "desc": "漢焰長明賽季商店的獅子奮迅轉本。效果差異待核。",
+      "desc": "獅子奮迅轉本。效果差異待核。",
+      "quality": "未核",
+      "obtain": "賽季商店",
       "variant": "轉",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "待核",
-      "note": "原戰法：獅子奮迅。效果差異待核。巴哈攻略同列。"
+      "note": "原戰法：獅子奮迅。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
     }
   ]
 }

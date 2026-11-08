@@ -32,6 +32,7 @@ import {
   generalOverlaps,
   overlapBlockText,
   ownershipGaps,
+  memberTacticPlan,
   generalGapLine,
   tacticGapLine,
   dropUnownedTactics,
@@ -109,7 +110,6 @@ const ui = {
   shareImport: null,
   shareSubstitute: false,
   templates: null,
-  recommendSort: 'source',
   accountExport: null,
   accountFile: null,
   dialog: null,
@@ -121,7 +121,6 @@ const ui = {
   nameDraft: {},
   installHidden: localStorage.getItem('sgsz-hide-install') === '1',
   showAllScenarios: localStorage.getItem('sgsz-show-all-scenarios') === '1',
-  recommend: false,
   gapOpen: {},
   sync: {
     ready: false,
@@ -907,7 +906,8 @@ function hanButton(general) {
   const converted = Boolean(general.campOrigin);
   if (!eligible && !converted) return '';
   const label = converted ? `恢復${general.campOrigin}` : '轉漢';
-  return `<button type="button" class="chip ${converted ? 'on' : ''}" data-action="toggle-han" data-id="${esc(general.id)}" aria-checked="${converted}" title="待核。政廳漢室自選轉漢。可轉名額尚未限制。">${label}</button>`;
+  const sourceNote = ui.catalog?.hanConvert?.note || '來源：sgsdeck，官方待核';
+  return `<button type="button" class="chip ${converted ? 'on' : ''}" data-action="toggle-han" data-id="${esc(general.id)}" aria-checked="${converted}" title="${esc(sourceNote)}">${label}</button>`;
 }
 
 function meritControls(general, current) {
@@ -1023,6 +1023,7 @@ function tacticRow(tactic, current, usage) {
           ${tactic.custom ? '<span class="mini">自訂</span>' : ''}
         </h3>
         <p class="muted">${esc(tactic.desc)}</p>
+        ${obtainText(tactic) ? `<p class="faint">取得方式 ${esc(obtainText(tactic))}</p>` : ''}
         ${tacticOriginLine(tactic)}
         ${where ? `<p class="faint">${esc(where)}</p>` : ''}
         ${tactic.custom ? `<button type="button" class="btn-ghost" data-action="ask-delete-custom" data-id="${esc(tactic.id)}">刪除自訂</button>` : ''}
@@ -1044,9 +1045,21 @@ function tacticOriginLine(tactic) {
 }
 
 function rankTag(tactic) {
+  if (tactic.quality === '未核') return '<span class="tag" aria-label="品質未核">品質未核</span>';
   if (tactic.rank !== 'S' && tactic.rank !== 'A') return '';
   const grade = tactic.rank === 'S' ? 's' : 'a';
   return `<span class="tag grade-${grade}" aria-label="等級 ${tactic.rank}">${tactic.rank}</span>`;
+}
+
+function obtainText(tactic) {
+  const obtain = tactic?.obtain;
+  if (!obtain) return '';
+  if (typeof obtain === 'string') return obtain;
+  const scenario = account().scenario;
+  if (!ui.showAllScenarios && obtain[scenario]) return obtain[scenario];
+  return Object.entries(obtain)
+    .map(([id, label]) => `${scenarioName(id)}：${label}`)
+    .join('；');
 }
 
 function teamsView() {
@@ -1298,22 +1311,29 @@ function shareImportSheet() {
   `);
 }
 
-function templateTacticHits(template, usage, tactics) {
-  if (!ui.templates?.grayTactics) return [];
-  return dropUsedTactics(template.members, usage, tactics).dropped;
+function tacticLookup(current = account()) {
+  const list = tacticsFor(current);
+  return {
+    tacticName: (id) => list.find((tactic) => tactic.id === id)?.name || '',
+    tacticById: (id) => list.find((tactic) => tactic.id === id) || null,
+    tacticByName: (name) => list.find((tactic) => tactic.name === name) || null,
+  };
 }
 
-function tacticByName(name, current = account()) {
-  const query = String(name || '').trim();
-  if (!query) return null;
-  return tacticsFor(current).find((tactic) => tactic.name === query) || null;
+function templateTacticHits(template, usage, tactics, current = account()) {
+  if (!ui.templates?.grayTactics) return [];
+  const lookup = tacticLookup(current);
+  const prepared = (template.members || []).map((member) => {
+    if (!member) return member;
+    return { ...member, learned: memberTacticPlan(member, lookup).learned };
+  });
+  return dropUsedTactics(prepared, usage, tactics).dropped;
 }
 
 function templateOwnershipGaps(template, current) {
   return ownershipGaps(template.members, current, {
     generalName: (id) => generalsById().get(id)?.name || '',
-    tacticName: (id) => tacticsById(current).get(id)?.name || '',
-    tacticByName: (name) => tacticByName(name, current),
+    ...tacticLookup(current),
   });
 }
 
@@ -1910,96 +1930,6 @@ function tacticPicker() {
     </div>`;
 }
 
-function recommendSheet() {
-  if (!ui.recommend) return '';
-  const current = account();
-  const list = (ui.catalog?.recommended || []).filter((team) => team.scenario === current.scenario);
-  const official = list.filter((team) => !team.origin);
-  const player = list.filter((team) => team.origin === 'bahamut');
-  const dami = list.filter((team) => team.origin === 'dami');
-  const order = (rows) => (ui.recommendSort === 'rank' ? orderTeamTemplates(rows, () => 0, 'rank') : rows);
-  const body = list.length ? `
-    ${recommendGroup('大米團隊（截圖）', order(dami), '使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。這組不提供套用。同型優先：大米，其次 24李老师，再其餘。', current)}
-    ${recommendGroup('巴哈玩家版', order(player), '已核只代表來源轉錄正確，不代表隊伍強度。24李老师的隊伍排在其他巴哈作者前面。', current)}
-    ${recommendGroup('官方推薦', order(official), '整理站內容已核，官方原圖待核。', current)}
-  ` : `<p>「${esc(scenarioName(current.scenario))}」還沒有推薦隊伍。</p>`;
-  return sheet('推薦隊伍', `
-    <p class="sub">套用時缺武將不能加入，缺戰法會留空。方略與奇略順序會跟著寫進隊伍。強度全部待核，替代配置不繼承主卡強度。</p>
-    <label>排序
-      <select id="recommend-sort" class="field" data-action="set-recommend-sort">
-        <option value="source" ${ui.recommendSort === 'rank' ? '' : 'selected'}>來源</option>
-        <option value="rank" ${ui.recommendSort === 'rank' ? 'selected' : ''}>強度</option>
-      </select>
-    </label>
-    ${body}
-  `, 'template-sheet');
-}
-
-function recommendGroup(title, list, blurb, current) {
-  if (!list.length) return '';
-  return `<h4>${esc(title)}</h4><p class="sub">${esc(blurb)}</p>${list.map((team) => recommendCard(team, current)).join('')}`;
-}
-
-function recommendCard(team, current) {
-  const gaps = ownershipGaps(team.members, current, {
-    generalName: (id) => generalsById().get(id)?.name || id,
-    tacticName: (id) => tacticsById(current).get(id)?.name || id,
-  });
-  const blocked = generalGapLine(gaps);
-  const tacticLine = tacticGapLine(gaps);
-  const members = team.members.map((member) => {
-    if (!member) return '<li>空位</li>';
-    const learned = [0, 1].map((index) => {
-      const id = member.learned?.[index];
-      if (id) return tacticsById(current).get(id)?.name || member.learnedNames?.[index] || id;
-      return member.learnedNames?.[index] || '空';
-    });
-    const book = member.bingshu
-      ? bingshuLabel(member.bingshu, ui.catalog.branches)
-      : (member.bingshuRaw || '');
-    const traits = member.traits?.length ? `特技 ${member.traits.join('、')}` : '';
-    const apt = member.aptNeed ? `需${member.aptNeed.troop}${member.aptNeed.letter}` : '';
-    const extra = [traits, apt, member.remark].filter(Boolean).join(' · ');
-    const tactics = member.tacticsRaw || learned.filter((name) => name && name !== '空').join('、');
-    return `<li><strong>${esc(member.generalName || member.generalId)}</strong>${tactics ? ` ${esc(tactics)}` : ''}${book ? ` 〔${esc(book)}〕` : ''}${extra ? ` · ${esc(extra)}` : ''}</li>`;
-  }).join('');
-  const missing = [...gaps.generals.map((name) => `武將 ${name}`), ...gaps.tactics.map((name) => `戰法 ${name}`)];
-  const open = Boolean(ui.gapOpen[team.id]);
-  const badge = missing.length ? `缺 ${missing.length} 項` : '可組';
-  const canApply = team.applyReady !== false;
-  const who = [team.author, team.authorAccount].filter(Boolean).join('／');
-  const byline = who || team.postedAt
-    ? `<p class="faint">${esc([who, team.postedAt].filter(Boolean).join(' · '))}</p>`
-    : '';
-  const verified = team.status === '已核' ? '<span class="mini verified">已核</span>' : '';
-  const origin = team.originLabel ? `<span class="mini origin">${esc(team.originLabel)}</span>` : '';
-  const limited = team.scenarioOnly ? '<span class="mini limited">漢焰長明限定</span>' : '';
-  return `
-    <article class="help-card">
-      <h3>${esc([team.rank, team.title].filter(Boolean).join(' '))} ${origin}${limited}${verified}${citeHtml(team)}
-        <button type="button" class="chip ${missing.length ? '' : 'on'}" data-action="toggle-gap" data-id="${esc(team.id)}" aria-expanded="${open}">${badge}</button>
-      </h3>
-      ${byline}
-      ${rankBasisHtml(team)}
-      ${open ? `<ul class="share-missing">${missing.map((line) => `<li>${esc(line)}</li>`).join('') || '<li>武將和戰法都已擁有。</li>'}</ul>` : ''}
-      ${planLine(team)}
-      <ul>${members}</ul>
-      ${team.officialSource ? `<p><a class="cite" href="${esc(team.officialSource)}" target="_blank" rel="noopener">官方原貼</a></p>` : ''}
-      ${canApply && blocked ? `<p class="warn">${esc(blocked)}，不能加入。</p>` : ''}
-      ${canApply && tacticLine ? `<p class="warn">${esc(tacticLine)}，加入時留空。方略與奇略仍會帶上。</p>` : ''}
-      ${canApply
-        ? `<button type="button" class="btn primary" data-action="apply-recommend" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入這隊</button>`
-        : '<p class="faint">僅供參考，不提供套用。</p>'}
-      ${altHtml(team)}
-    </article>`;
-}
-
-function rankBasisHtml(team) {
-  if (!team.rank) return '';
-  const links = (team.rankSources || []).map((item) => `<a class="cite" href="${esc(item.url)}" target="_blank" rel="noopener">${esc(item.label)}</a>`).join('');
-  const confidence = team.rankConfidence ? ` · 信心${esc(team.rankConfidence)}` : '';
-  return `<p class="faint">評級待核${confidence}</p>${team.rankBasis ? `<p class="faint">${esc(team.rankBasis)}</p>` : ''}${links ? `<p>${links}</p>` : ''}`;
-}
 
 function altHtml(team) {
   const list = team.alternatives || [];
@@ -2193,7 +2123,6 @@ function onClick(event) {
     ui.templates = null;
     ui.accountExport = null;
     ui.accountFile = null;
-    ui.recommend = false;
     render();
     return;
   }
@@ -2247,45 +2176,6 @@ function onClick(event) {
       ui.gapOpen = { ...ui.gapOpen, [el.dataset.id]: !ui.gapOpen[el.dataset.id] };
       render();
       break;
-    case 'open-recommend':
-      ui.recommend = true;
-      ui.justOpened = true;
-      render();
-      break;
-    case 'apply-recommend': {
-      const rec = (ui.catalog?.recommended || []).find((item) => item.id === el.dataset.id);
-      if (!rec || rec.applyReady === false) break;
-      if (current.teams.length >= 40) {
-        toast('隊伍已滿，無法再載入');
-        break;
-      }
-      const gaps = ownershipGaps(rec.members, current, {
-        generalName: (id) => generalsById().get(id)?.name || id,
-        tacticName: (id) => tacticsById(current).get(id)?.name || id,
-      });
-      const gapLine = generalGapLine(gaps);
-      if (gapLine) {
-        toast(`${gapLine}，不能加入。`);
-        break;
-      }
-      const id = newId('team');
-      const built = teamFromRecommended(rec, id);
-      const tactics = tacticsById(current);
-      const stripped = dropUnownedTactics(built.members, current, {
-        tacticName: (tacticId) => tactics.get(tacticId)?.name || '',
-      });
-      const usage = buildUsage(current);
-      const dropped = dropUsedTactics(stripped.members, usage, tactics);
-      const team = { ...built, members: dropped.members };
-      commit(updateAccount(ui.state, current.id, (item) => ({
-        ...item,
-        teams: [...item.teams, team],
-      })));
-      const tacticLine = tacticGapLine(gaps);
-      const droppedText = [tacticLine, tacticDropText(dropped.dropped)].filter(Boolean).join('。');
-      toast(droppedText ? `已加入${rec.title}。${droppedText}` : `已加入${rec.title}`, 4200);
-      break;
-    }
     case 'add-account': {
       const id = newId('acct');
       const next = {
@@ -2527,7 +2417,6 @@ function onClick(event) {
       break;
     case 'close-picker':
       ui.picker = null;
-      ui.recommend = false;
       ui.shareLink = '';
       ui.shareName = '';
       ui.shareImport = null;
@@ -2600,7 +2489,7 @@ function onClick(event) {
         break;
       }
       const id = newId('team');
-      const built = template.fromRecommended ? teamFromRecommended(template, id) : teamFromTemplate(template, id);
+      const built = template.fromRecommended ? teamFromRecommended(template, id, tacticLookup(current)) : teamFromTemplate(template, id);
       const stripped = dropUnownedTactics(built.members, current, {
         tacticName: (tacticId) => tactics.get(tacticId)?.name || '',
       });
@@ -2987,9 +2876,6 @@ function onChange(event) {
     render();
   } else if (el.dataset.action === 'set-template-country' && ui.templates) {
     ui.templates = { ...ui.templates, country: el.value };
-    render();
-  } else if (el.dataset.action === 'set-recommend-sort') {
-    ui.recommendSort = el.value === 'rank' ? 'rank' : 'source';
     render();
   } else if (el.dataset.action === 'set-template-sort' && ui.templates) {
     ui.templates = { ...ui.templates, sort: el.value === 'red' ? 'red' : 'rank' };
@@ -3391,7 +3277,6 @@ function bind() {
     else if (ui.templates) ui.templates = null;
     else if (ui.accountExport) ui.accountExport = null;
     else if (ui.accountFile) ui.accountFile = null;
-    else if (ui.recommend) ui.recommend = false;
     else if (ui.picker) ui.picker = null;
     else if (ui.bingshu) ui.bingshu = null;
     else if (ui.filterOpen) ui.filterOpen = false;
@@ -3408,7 +3293,6 @@ function bind() {
     ui.templates = null;
     ui.accountExport = null;
     ui.accountFile = null;
-    ui.recommend = false;
     ui.dialog = null;
     ui.pendingImport = null;
     render();
