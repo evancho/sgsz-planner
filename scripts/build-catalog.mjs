@@ -263,7 +263,7 @@ for (const [id, name, cost] of [
   }));
 }
 
-/** 截圖補進的非 SP 漢將。陣營／統御／稀有度依截圖；適性／自帶只用已開的台港澳個人頁。 */
+/** 截圖補進的非 SP 漢將（只收良將以上，不收三星裨將）。陣營／統御／稀有度依截圖。 */
 const SHOT_HAN = [
   {
     id: 'zhujun',
@@ -271,9 +271,9 @@ const SHOT_HAN = [
     cost: 6,
     quality: '良將',
     apt: { 騎: 'C', 盾: 'B', 弓: 'S', 槍: 'B', 器械: 'A' },
-    innate: '',
+    innate: '鎮壓黃巾',
     sourceUrl: 'https://sgsdeck.com/generals/朱儁',
-    note: `陣營漢、統御 6、良將依${SHOT}。適性依 sgsdeck 個人頁。自帶待核：sgsdeck 寫千里馳援，台服巴哈 https://forum.gamer.com.tw/C.php?bsn=36815&snA=6234 與 https://forum.gamer.com.tw/C.php?bsn=36815&snA=6992 寫鎮壓黃巾；傳承 sgsdeck 寫聲東擊西。個人頁舊標群，不採用。不是 SP朱儁。定位待核。${DEBUT_NOTE}`,
+    note: `陣營漢、統御 6、良將、適性騎C盾B弓S槍B器A、自帶鎮壓黃巾（指揮）依${SHOT}武將詳情頁；可見描述「免疫沙暴並造成叛逆…」，完整效果待核。sgsdeck 個人頁曾寫千里馳援，不採用。傳承 sgsdeck 寫聲東擊西，仍待核。個人頁舊標群，不採用。不是 SP朱儁。定位待核。${DEBUT_NOTE}`,
   },
   {
     id: 'huangfusong',
@@ -332,46 +332,6 @@ const SHOT_HAN = [
     innate: '爭分奪秒',
     sourceUrl: 'https://sgsdeck.com/generals/劉表',
     note: `陣營漢、統御 3、良將依${SHOT}。適性、自帶爭分奪秒、傳承偃旗息鼓依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。${DEBUT_NOTE}`,
-  },
-  {
-    id: 'taoqian',
-    name: '陶謙',
-    cost: 4,
-    quality: '裨將',
-    sourceUrl: '',
-    note: `陣營漢、統御 4、裨將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/陶謙 404，適性、自帶、傳承、定位待核。${DEBUT_NOTE}`,
-  },
-  {
-    id: 'hejin',
-    name: '何進',
-    cost: 3,
-    quality: '裨將',
-    sourceUrl: '',
-    note: `陣營漢、統御 3、裨將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/何進 404，適性、自帶、傳承、定位待核。${DEBUT_NOTE}`,
-  },
-  {
-    id: 'dingyuan',
-    name: '丁原',
-    cost: 3,
-    quality: '裨將',
-    sourceUrl: '',
-    note: `陣營漢、統御 3、裨將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/丁原 404，適性、自帶、傳承、定位待核。${DEBUT_NOTE}`,
-  },
-  {
-    id: 'wangyun',
-    name: '王允',
-    cost: 3,
-    quality: '裨將',
-    sourceUrl: '',
-    note: `陣營漢、統御 3、裨將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/王允 404，適性、自帶、傳承、定位待核。${DEBUT_NOTE}`,
-  },
-  {
-    id: 'liuyao',
-    name: '劉繇',
-    cost: 3,
-    quality: '裨將',
-    sourceUrl: '',
-    note: `陣營漢、統御 3、裨將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/劉繇 404，適性、自帶、傳承、定位待核。${DEBUT_NOTE}`,
   },
 ];
 
