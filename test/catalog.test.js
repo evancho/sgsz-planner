@@ -254,28 +254,35 @@ test('generals and tactics are internally consistent', () => {
   assert.deepEqual(scenario.merits[0].scenarios, ['hanyan']);
   assert.deepEqual(scenario.merits[0].limits, { account: 2, team: 1 });
   assert.equal(scenario.merits[0].excludes.length, 0);
-  assert.equal(scenario.recommended.length, 46);
+  assert.equal(scenario.recommended.length, 30);
   const official = scenario.recommended.filter((team) => !team.origin);
   const bahamut = scenario.recommended.filter((team) => team.origin === 'bahamut');
-  assert.equal(official.length, 16);
+  const dami = scenario.recommended.filter((team) => team.origin === 'dami');
+  assert.equal(official.length, 10);
+  assert.equal(bahamut.length, 11);
+  assert.equal(dami.length, 9);
   assert.equal(official.every((team) => team.status === '待核' && team.scenario === 'hanyan' && team.tricks.length === 5 && team.note.startsWith('整理站內容已核，官方原圖待核')), true);
   assert.match(official.find((team) => team.id === 'hanyan-dudu').note, /合圍突擊/);
   assert.match(official.find((team) => team.id === 'hanyan-dudu').note, /合圍夾擊/);
-  assert.equal(bahamut.length, 21);
-  assert.equal(bahamut.every((team) => team.status === '已核'), true);
-  assert.equal(bahamut.some((team) => ['baha-d-qianlong-diao', 'baha-d-40lv', 'baha-d-faguan', 'baha-d-wumou', 'baha-c-no1', 'baha-e-dahan-dun', 'baha-f-40y', 'baha-d-huangma-gong'].includes(team.id)), false);
-  assert.equal(bahamut.every((team) => team.originLabel === '巴哈玩家版' && team.author && /^https:\/\/forum\.gamer\.com\.tw\//.test(team.source)), true);
-  const verifiedIds = [
-    'baha-a-xuyou', 'baha-a-huangfu', 'baha-a-chengpu',
-    'baha-b-gong-1', 'baha-b-gong-2', 'baha-b-gong-3', 'baha-b-xunyou-1', 'baha-b-xunyou-2', 'baha-b-jiaxu-2',
-    'baha-c-fugui', 'baha-c-roudu',
-    'baha-d-dahan', 'baha-d-taishi', 'baha-d-qianlong-fa', 'baha-d-shuzhi', 'baha-d-huangma',
-    'baha-d-qiaoliao', 'baha-d-saozi', 'baha-d-kangkai', 'baha-d-wenhou', 'baha-d-pengci',
-  ];
-  assert.equal(verifiedIds.every((id) => bahamut.find((team) => team.id === id)?.status === '已核'), true);
-  assert.equal(bahamut.find((team) => team.id === 'baha-d-qiaoliao').status, '已核');
-  assert.equal(bahamut.filter((team) => team.status === '已核').length, 21);
-  const dami = scenario.recommended.filter((team) => team.origin === 'dami');
+  assert.equal(bahamut.every((team) => team.status === '已核' && team.originLabel === '巴哈玩家版'), true);
+  assert.equal(bahamut.findIndex((team) => team.author !== '24李老师') > bahamut.findIndex((team) => team.author === '24李老师'), true);
+  assert.equal(bahamut.filter((team) => team.author === '24李老师').every((team, index) => bahamut[index].author === '24李老师'), true);
+  const removed = ['hanyan-dahan-gong', 'baha-a-xuyou', 'hanyan-huangma', 'hanyan-faguan', 'hanyan-wumou', 'baha-b-jiaxu-2', 'baha-b-xunyou-1', 'baha-c-fugui', 'baha-c-roudu', 'hanyan-taiwei', 'hanyan-kangkai', 'baha-d-shuzhi'];
+  assert.equal(removed.every((id) => !scenario.recommended.some((team) => team.id === id)), true);
+  const dahan = bahamut.find((team) => team.id === 'baha-d-dahan');
+  assert.equal(dahan.status, '已核');
+  assert.deepEqual(dahan.alternatives.map((item) => item.id), ['hanyan-dahan-gong', 'baha-b-gong-1', 'baha-b-gong-2', 'baha-b-gong-3']);
+  assert.equal(dahan.alternatives[0].status, '待核');
+  assert.equal(dahan.alternatives[1].status, '已核');
+  const fugui = dami.find((team) => team.id === 'dami-fugui');
+  assert.equal(fugui.status, '待核');
+  assert.equal(fugui.alternatives.find((item) => item.id === 'baha-b-jiaxu-2').status, '已核');
+  assert.equal(dami.find((team) => team.id === 'dami-madai').status, '待核');
+  assert.equal(scenario.recommended.some((team) => team.id === 'dami-xingcai'), true);
+  assert.equal(scenario.recommended.some((team) => team.id === 'hanyan-qilin'), true);
+  assert.equal(scenario.recommended.some((team) => team.id === 'hanyan-beifa'), true);
+  assert.equal(scenario.recommended.some((team) => team.id === 'baha-a-huangfu'), true);
+  assert.equal(scenario.recommended.some((team) => team.id === 'baha-a-chengpu'), true);
   assert.equal(dami.length, 9);
   assert.equal(dami.every((team) => team.status === '待核' && team.applyReady === false && team.originLabel === '大米團隊（截圖）' && team.author === '三國志黑暗大米' && team.source === 'https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536' && team.note.startsWith('使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認')), true);
   assert.deepEqual(dami.filter((team) => team.scenarioOnly).map((team) => team.title), ['蜀智盾', '北伐盾']);
@@ -299,5 +306,5 @@ test('generals and tactics are internally consistent', () => {
   const xuyou = scenario.recommended.find((team) => team.id === 'hanyan-qianlong-lvbu').members[0];
   assert.deepEqual(xuyou.traits, ['靈動', '出奇']);
   assert.deepEqual(xuyou.aptNeed, { troop: '弓', letter: 'S' });
-  assert.equal(scenario.recommended.filter((team) => team.officialSource).length, 8);
+  assert.equal(scenario.recommended.filter((team) => team.officialSource).length, 4);
 });

@@ -290,6 +290,10 @@ button.grow-name { cursor: pointer; }
 .mini.origin { color: #e7c98a; border-color: #b8964a; }
 .mini.limited { color: #d7b4f0; border-color: #d7b4f0; font-weight: 700; }
 .sheet h4 { margin: 18px 0 4px; font-size: 16px; }
+.alts { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); }
+.alts h4 { margin: 0 0 8px; font-size: 14px; }
+.alt + .alt { margin-top: 8px; }
+.alt ul { margin: 4px 0 0; }
 .apt.boost { outline: 1px solid var(--han); }
 .scenario-field { display: block; margin-top: 8px; }
 .cite { margin-left: 6px; font-size: 13px; }

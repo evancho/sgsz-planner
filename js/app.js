@@ -1844,9 +1844,9 @@ function recommendSheet() {
   const player = list.filter((team) => team.origin === 'bahamut');
   const dami = list.filter((team) => team.origin === 'dami');
   const body = list.length ? `
+    ${recommendGroup('大米團隊（截圖）', dami, '使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。這組不提供套用。同型優先：大米，其次 24李老师，再其餘。', current)}
+    ${recommendGroup('巴哈玩家版', player, '已核只代表來源轉錄正確，不代表隊伍強度。24李老师的隊伍排在其他巴哈作者前面。', current)}
     ${recommendGroup('官方推薦', official, '整理站內容已核，官方原圖待核。', current)}
-    ${recommendGroup('巴哈玩家版', player, '已核只代表來源轉錄正確，不代表隊伍強度。', current)}
-    ${recommendGroup('大米團隊（截圖）', dami, '使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認。這組不提供套用。', current)}
   ` : `<p>「${esc(scenarioName(current.scenario))}」還沒有推薦隊伍。</p>`;
   return sheet('推薦隊伍', `
     <p class="sub">套用時缺武將不能加入，缺戰法會留空。方略與奇略順序會跟著寫進隊伍。</p>
@@ -1908,7 +1908,25 @@ function recommendCard(team, current) {
       ${canApply
         ? `<button type="button" class="btn primary" data-action="apply-recommend" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入這隊</button>`
         : '<p class="faint">僅供參考，不提供套用。</p>'}
+      ${altHtml(team)}
     </article>`;
+}
+
+function altHtml(team) {
+  const list = team.alternatives || [];
+  if (!list.length) return '';
+  const cards = list.map((alt) => {
+    const status = alt.status === '已核'
+      ? '<span class="mini verified">已核</span>'
+      : '<span class="mini review">待核</span>';
+    const origin = alt.originLabel ? `<span class="mini origin">${esc(alt.originLabel)}</span>` : '';
+    const who = alt.author ? `<span class="faint">${esc(alt.author)}</span>` : '';
+    const link = alt.source ? `<a class="cite" href="${esc(alt.source)}" target="_blank" rel="noopener">來源</a>` : '';
+    const official = alt.officialSource ? `<a class="cite" href="${esc(alt.officialSource)}" target="_blank" rel="noopener">官方原貼</a>` : '';
+    const diffs = (alt.diffs || []).map((line) => `<li>${esc(line)}</li>`).join('');
+    return `<div class="alt"><p><strong>${esc(alt.title)}</strong> ${origin}${status}${who}${link}${official}</p>${diffs ? `<ul>${diffs}</ul>` : ''}</div>`;
+  }).join('');
+  return `<div class="alts"><h4>替代配置</h4>${cards}</div>`;
 }
 
 function customPicker() {

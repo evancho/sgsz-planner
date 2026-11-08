@@ -973,9 +973,33 @@ export function normalizeRecommended(list) {
     if (source) team.source = source;
     if (officialSource) team.officialSource = officialSource;
     if (note) team.note = note;
+    const alternatives = normalizeAlternatives(raw.alternatives);
+    if (alternatives.length) team.alternatives = alternatives;
     teams.push(team);
   }
   return teams;
+}
+
+function normalizeAlternatives(list) {
+  if (!Array.isArray(list)) return [];
+  return list.slice(0, 8).map((raw) => {
+    if (!raw || typeof raw !== 'object') return null;
+    const item = {
+      id: cleanId(raw.id) || '',
+      title: clip(raw.title, 40) || '替代配置',
+      status: recordStatus(raw.status),
+      diffs: (Array.isArray(raw.diffs) ? raw.diffs : []).map((line) => clip(line, 160)).filter(Boolean).slice(0, 8),
+    };
+    const originLabel = clip(raw.originLabel, 24);
+    const author = clip(raw.author, 24);
+    const source = clip(raw.source, 180);
+    const officialSource = clip(raw.officialSource, 180);
+    if (originLabel) item.originLabel = originLabel;
+    if (author) item.author = author;
+    if (source) item.source = source;
+    if (officialSource) item.officialSource = officialSource;
+    return item;
+  }).filter(Boolean);
 }
 
 function aptNeedOf(raw) {
