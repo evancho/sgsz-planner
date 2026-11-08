@@ -424,11 +424,12 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(scenario.recommended.find((team) => team.id === 'baha-d-saozi').rank, 'T2');
   assert.deepEqual(scenario.hanConvert.toHan, ['caocao', 'liubei', 'sunjian', 'gongsunzan', 'lvbu', 'jiaxu', 'sp-yuanshao', 'sp-xunyu', 'yuanshu']);
   assert.deepEqual(scenario.hanConvert.ids, scenario.hanConvert.toHan);
-  assert.equal(scenario.hanConvert.status, '已核');
+  assert.equal(scenario.hanConvert.status, '待核');
   assert.equal(scenario.hanConvert.max, 3);
   assert.equal(scenario.hanConvert.source, 'https://sgsdeck.com/seasons/pk-s27');
   assert.match(scenario.hanConvert.officialPost, /facebook.com/);
-  assert.match(scenario.hanConvert.note, /不能同時/);
+  assert.match(scenario.hanConvert.note, /依使用者指定/);
+  assert.match(scenario.hanConvert.note, /仍待確認/);
   const fugui = dami.find((team) => team.id === 'dami-fugui');
   assert.equal(fugui.status, '待核');
   assert.equal(fugui.alternatives.find((item) => item.id === 'baha-b-jiaxu-2').status, '已核');
@@ -472,6 +473,9 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(heshi.apt.騎, 'C');
   assert.match(heshi.note, /武將頁弓 B/);
   assert.match(heshi.note, /弓 A/);
+  assert.match(heshi.note, /弓待核/);
+  assert.match(heshi.note, /定位待核/);
+  assert.equal(heshi.note.includes('待補'), false);
   assert.equal(heshi.debutScenario, 'hanyan');
   assert.equal(heshi.scenarioLimit, undefined);
   assert.equal(heshi.scenarios, undefined);
@@ -487,7 +491,11 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(fitsScenario(y40, 'yingxiong'), true);
   assert.equal(fitsScenario(y40, 'hanyan'), true);
   assert.equal(y40.innate, '天威嘯陣');
-  assert.match(y40.note, /傳承/);
+  assert.match(y40.note, /傳承待核/);
+  assert.match(y40.note, /定位待核/);
+  assert.match(y40.note, /動態待核/);
+  assert.match(y40.note, /典藏待核/);
+  assert.equal(y40.note.includes('待補'), false);
   assert.match(y40.note, /全賽季名將卡包/);
   assert.match(y40.note, /NewsID=13659/);
   for (const id of ['baoxin', 'liuzhang', 'liudai', 'chunyuqiong', 'liuyu', 'zhangyun', 'xugong']) {
@@ -498,6 +506,8 @@ test('generals and tactics are internally consistent', () => {
     assert.equal(liang.cost, null);
     assert.equal(liang.innate, '');
     assert.equal(liang.apt.弓, '待核');
+    assert.match(liang.note, /仍待核/);
+    assert.equal(liang.note.includes('待補'), false);
     assert.equal(liang.scenarios, undefined);
     assert.equal(liang.scenarioLimit, undefined);
     assert.equal(liang.debutScenario, 'hanyan');

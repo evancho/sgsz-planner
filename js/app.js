@@ -38,6 +38,7 @@ import {
   presentCamp,
   nextCampOverride,
   applyCampOverride,
+  teamCountry,
   tacticGapLine,
   dropUnownedTactics,
   dropUsedTactics,
@@ -918,7 +919,7 @@ function meritBanner(current, teamId = '') {
 
 function hanButton(general) {
   const base = generalsById().get(general.id) || general;
-  const action = nextCampOverride(base, account().camps || {}, ui.catalog?.hanConvert || {});
+  const action = nextCampOverride(base, account().camps || {}, ui.catalog?.hanConvert || {}, generalsById());
   if (!action.show) return '';
   const converted = Boolean(general.campOrigin);
   const sourceNote = ui.catalog?.hanConvert?.note || '';
@@ -1146,13 +1147,25 @@ function coexistHtml(current) {
   return `<div class="warn-block">${lines.map((line) => `<p class="warn">${esc(line)}</p>`).join('')}</div>`;
 }
 
+function accountTeamCountry(team, current = account()) {
+  return teamCountry(team.members, (id) => {
+    const raw = generalsById().get(id);
+    return raw ? presentCamp(raw, current?.camps).camp : null;
+  });
+}
+
 function teamCard(team, map, index, count) {
-  const names = team.members.map((member) => map.get(member?.generalId)?.name || '空').join(' / ');
+  const current = account();
+  const names = team.members.map((member) => {
+    const raw = map.get(member?.generalId);
+    return raw ? plainName(presentCamp(raw, current.camps)) : '空';
+  }).join(' / ');
+  const country = accountTeamCountry(team, current);
   return `
     <article class="team-card">
       <div class="team-card-top">
         <a class="team-card-main" href="#/teams/${esc(team.id)}">
-          <div class="row-between"><h3>${esc(team.name)}${team.substitute ? '<span class="tag alt-team">替</span>' : ''}</h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
+          <div class="row-between"><h3>${esc(team.name)}${team.substitute ? '<span class="tag alt-team">替</span>' : ''} <span class="tag">${campInk(country)}</span></h3><span class="cost">統御 ${teamCost(team, map)}</span></div>
           <p>${esc(names)}</p>
           ${planLine(team)}
           ${team.notes ? `<p class="muted team-notes">${esc(team.notes)}</p>` : ''}
@@ -1177,6 +1190,7 @@ function teamView(id) {
         <div class="team-title">
           <a class="faint" href="#/teams">隊伍</a>
           <h2><label class="sr" for="team-name">隊伍名稱</label><input id="team-name" class="field" data-model="team-name" data-id="${esc(team.id)}" value="${esc(team.name)}" maxlength="24" autocomplete="off"></h2>
+          <span class="tag">${campInk(accountTeamCountry(team, current))}</span>
         </div>
         <div class="btn-row team-tools">
           <button type="button" class="btn" data-action="share-team" data-id="${esc(team.id)}">分享</button>
@@ -1186,7 +1200,7 @@ function teamView(id) {
       <label>備註
         <textarea id="team-notes" class="notes" data-model="team-notes" data-id="${esc(team.id)}" maxlength="500">${esc(team.notes)}</textarea>
       </label>
-      <p class="sub" style="margin:10px 0">統御合計 ${teamCost(team, map)}。數字只供配隊參考，賽季上限不在這裡鎖死。</p>
+      <p class="sub" style="margin:10px 0">統御合計 ${teamCost(team, map)}。陣營依目前轉群／轉漢後的有效陣營。數字只供配隊參考，賽季上限不在這裡鎖死。</p>
       ${planEditor(team, current)}
       ${coexistHtml(current)}
       ${meritBanner(current, team.id)}
@@ -1362,12 +1376,7 @@ function templateOwnershipGaps(template, current) {
 }
 
 function recommendCountry(team) {
-  const camps = (team.members || [])
-    .map((member) => generalsById().get(member?.generalId)?.camp)
-    .filter(Boolean);
-  const unique = [...new Set(camps)];
-  if (unique.length === 1) return unique[0];
-  return '混合';
+  return teamCountry(team.members, (id) => generalsById().get(id)?.camp || null);
 }
 
 function templatePool() {
@@ -1448,6 +1457,7 @@ function templateResultsMarkup() {
           <strong>${esc(templateDisplayName(team))}</strong>
           <span class="tag red-total">總紅度 ${red}</span>
           <span class="tag">${campInk(team.country)}</span>
+          <span class="faint">來源預設</span>
           ${review}${source}${badge}
           <p>${esc(names)}</p>
           ${planLine(team)}
@@ -1488,7 +1498,7 @@ function templateSheet() {
         <label>劇本
           <select id="template-scenario" class="field" data-action="set-template-scenario">${scenarioOptions}</select>
         </label>
-        <label>國家
+        <label>國家（來源預設陣營）
           <select id="template-country" class="field" data-action="set-template-country">${countryOptions}</select>
         </label>
         <label>排序
@@ -2178,7 +2188,7 @@ function onClick(event) {
     case 'toggle-han': {
       const generalId = el.dataset.id;
       const base = generalsById().get(generalId);
-      const action = nextCampOverride(base, current.camps || {}, ui.catalog?.hanConvert || {});
+      const action = nextCampOverride(base, current.camps || {}, ui.catalog?.hanConvert || {}, generalsById());
       if (!action.show) break;
       if (action.blocked) {
         toast(action.reason || '目前不能轉換陣營');

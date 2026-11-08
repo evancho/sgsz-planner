@@ -1,4 +1,4 @@
-/** 政廳漢室轉換。群轉漢與漢轉群各最多 3 名，兩種方向不能同時。 */
+/** 政廳漢室轉換。最多 3 名依 sgsdeck 仍待確認；方向互斥與漢將可轉群依使用者指定。 */
 
 const TO_HAN = [
   'caocao',
@@ -13,11 +13,11 @@ const TO_HAN = [
 ];
 
 export const hanConvert = {
-  status: '已核',
+  status: '待核',
   max: 3,
   source: 'https://sgsdeck.com/seasons/pk-s27',
   officialPost: 'https://www.facebook.com/100064157226677/posts/1545693490912544/',
-  note: '依 sgsdeck 漢焰總覽。群轉漢自選最多 3 名；自動轉漢與漢陣營新武將可轉回群，最多 3 名。有轉群就不能同時轉漢，反之亦然。',
+  note: '群轉漢自選最多 3 名、漢轉群最多 3 名依 sgsdeck，仍待確認。方向互斥與漢將都可轉群依使用者指定。',
   toHan: TO_HAN,
   /** 兼容舊欄位。 */
   ids: TO_HAN,

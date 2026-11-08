@@ -1417,12 +1417,26 @@ export function presentCamp(general, camps) {
   return { ...general, camp: override, campOrigin: general.camp };
 }
 
-export function campOverrideCounts(camps) {
+function catalogCampOf(catalogById, generalId) {
+  if (!catalogById || !generalId) return null;
+  const row = typeof catalogById.get === 'function' ? catalogById.get(generalId) : catalogById[generalId];
+  if (!row) return null;
+  return typeof row === 'string' ? row : (row.camp || null);
+}
+
+/**
+ * 名額只算「覆寫後陣營與圖鑑不同」的項目。
+ * 未知武將 ID、或覆寫等於圖鑑陣營的舊資料，都不佔名額；camps 本身不裁切。
+ */
+export function campOverrideCounts(camps, catalogById) {
   let toHan = 0;
   let toQun = 0;
-  for (const value of Object.values(camps || {})) {
+  for (const [generalId, value] of Object.entries(camps || {})) {
+    if (value !== '漢' && value !== '群') continue;
+    const catalogCamp = catalogCampOf(catalogById, generalId);
+    if (!catalogCamp || value === catalogCamp) continue;
     if (value === '漢') toHan += 1;
-    else if (value === '群') toQun += 1;
+    else toQun += 1;
   }
   return { toHan, toQun };
 }
@@ -1440,13 +1454,17 @@ export function campConvertMax(convert) {
 /**
  * 下一個陣營覆寫。null 表示恢復圖鑑預設。
  * blocked 時 reason 說明為什麼不能轉。
+ * catalogById 用來算有效名額；缺圖鑑的覆寫不計入。
  */
-export function nextCampOverride(general, camps, convert = {}) {
+export function nextCampOverride(general, camps, convert = {}, catalogById) {
   if (!general?.id) return { target: null, label: '', show: false, blocked: true, reason: '找不到武將' };
+  const catalog = catalogById || new Map([[general.id, general]]);
   const current = camps?.[general.id];
+  const active = current === '漢' || current === '群' ? current : null;
+  const effective = active && active !== general.camp ? active : null;
   const max = campConvertMax(convert);
-  const counts = campOverrideCounts(camps);
-  if (current === '漢' || current === '群') {
+  const counts = campOverrideCounts(camps, catalog);
+  if (effective) {
     return {
       target: null,
       label: `恢復${general.camp}`,
@@ -1486,6 +1504,20 @@ export function nextCampOverride(general, camps, convert = {}) {
   return { target: null, label: '', show: false, blocked: true, reason: '' };
 }
 
+/** 隊伍國家／陣營標籤。resolveCamp(id) 回圖鑑或有效陣營。 */
+export function teamCountry(members, resolveCamp) {
+  const camps = (members || [])
+    .map((member) => {
+      const id = member?.generalId;
+      if (!id || typeof resolveCamp !== 'function') return null;
+      return resolveCamp(id) || null;
+    })
+    .filter(Boolean);
+  const unique = [...new Set(camps)];
+  if (unique.length === 1) return unique[0];
+  return '混合';
+}
+
 export function applyCampOverride(camps, generalId, target) {
   const next = { ...(camps || {}) };
   const id = cleanId(generalId);
@@ -1507,7 +1539,7 @@ function normalizeHanConvert(raw) {
   }
   const max = Number(raw?.max);
   return {
-    status: raw?.status === '待核' ? '待核' : '已核',
+    status: raw?.status === '已核' ? '已核' : '待核',
     max: Number.isInteger(max) && max > 0 ? max : 3,
     source: clip(raw?.source, 180),
     officialPost: clip(raw?.officialPost, 180),

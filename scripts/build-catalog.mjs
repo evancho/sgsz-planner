@@ -238,7 +238,7 @@ const generals = [
 const SEASON_PK = 'https://sgsdeck.com/seasons/pk-s27';
 const SEASON_BINGYAN = 'https://sgsdeck.com/seasons/og-兵演春秋';
 const DEBUT_NOTE = '首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。';
-const LIANG_NOTE = `漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待補。${DEBUT_NOTE}`;
+const LIANG_NOTE = `漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待核。${DEBUT_NOTE}`;
 
 for (const [id, name] of [
   ['baoxin', '鮑信'],
@@ -275,7 +275,7 @@ generals.push(
     debutScenario: 'hanyan',
     status: '已核',
     sourceUrl: 'https://sgsdeck.com/generals/SP曹操',
-    note: `適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」，本圖鑑的軍事／內政對不上，定位待補。${DEBUT_NOTE}`,
+    note: `適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」，本圖鑑的軍事／內政對不上，定位待核。${DEBUT_NOTE}`,
   }),
   pendingGeneral({
     id: 'heshi',
@@ -289,7 +289,7 @@ generals.push(
     debutScenario: 'hanyan',
     status: '已核',
     sourceUrl: 'https://sgsdeck.com/generals/何氏',
-    note: `自帶帷內擅權、傳承絕計折謀。弓適性衝突：武將頁弓 B，賽季頁 https://sgsdeck.com/seasons/pk-s27 弓 A，弓待補。頁首標「謀」，定位待補。典藏未見於武將頁。${DEBUT_NOTE}`,
+    note: `自帶帷內擅權、傳承絕計折謀。弓適性衝突：武將頁弓 B，賽季頁 https://sgsdeck.com/seasons/pk-s27 弓 A，弓待核。頁首標「謀」，定位待核。典藏待核。${DEBUT_NOTE}`,
   }),
   pendingGeneral({
     id: 'y40-lvbu',
@@ -301,7 +301,7 @@ generals.push(
     innate: '天威嘯陣',
     status: '已核',
     sourceUrl: 'https://sgsdeck.com/generals/40Y呂布',
-    note: '獨立卡，不是普通呂布。兵演春秋推出後自動轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。武將頁取得方式寫全賽季名將卡包、三國志系列 40 週年紀念名將卡包。台灣新聞稿 https://news.omg.com.tw/News/NewsContent?NewsID=13659 寫免費送給全服主公。各劇本都能選。自帶天威嘯陣。傳承武將頁未列。頁首標「武」，定位待補。動態、典藏未見於武將頁。可轉回群。',
+    note: '獨立卡，不是普通呂布。兵演春秋推出後自動轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。武將頁取得方式寫全賽季名將卡包、三國志系列 40 週年紀念名將卡包。台灣新聞稿 https://news.omg.com.tw/News/NewsContent?NewsID=13659 寫免費送給全服主公。各劇本都能選。自帶天威嘯陣。傳承待核。頁首標「武」，定位待核。動態待核、典藏待核。可轉回群。',
   }),
 );
 

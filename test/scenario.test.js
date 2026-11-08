@@ -12,9 +12,11 @@ import {
   meritWarningLines,
   nextCampOverride,
   normalizeAccountFile,
+  normalizeCamps,
   normalizeRecommended,
   normalizeState,
   presentCamp,
+  teamCountry,
   teamFromRecommended,
 } from '../js/logic.js';
 
@@ -60,32 +62,66 @@ test('漢 camp override round-trips and is not scenario limited', () => {
 });
 
 test('群轉漢與漢轉群最多三名且方向互斥', () => {
-  const convert = { max: 3, toHan: ['caocao', 'lvbu', 'jiaxu'] };
+  const convert = { max: 3, toHan: ['caocao', 'lvbu', 'jiaxu', 'sunjian'] };
   const cao = { id: 'caocao', name: '曹操', camp: '魏' };
   const lv = { id: 'lvbu', name: '呂布', camp: '群' };
   const jx = { id: 'jiaxu', name: '賈詡', camp: '魏' };
   const diao = { id: 'diaochan', name: '貂蟬', camp: '漢' };
   const luzhi = { id: 'sp-luzhi', name: 'SP盧植', camp: '漢' };
   const spcao = { id: 'sp-caocao', name: 'SP曹操', camp: '漢' };
-  assert.equal(nextCampOverride(cao, {}, convert).label, '轉漢');
-  assert.equal(nextCampOverride(diao, {}, convert).label, '轉群');
+  const sunjian = { id: 'sunjian', name: '孫堅', camp: '吳' };
+  const y40 = { id: 'y40-lvbu', name: '40Y呂布', camp: '漢' };
+  const catalog = new Map([cao, lv, jx, diao, luzhi, spcao, sunjian, y40].map((row) => [row.id, row]));
+  assert.equal(nextCampOverride(cao, {}, convert, catalog).label, '轉漢');
+  assert.equal(nextCampOverride(diao, {}, convert, catalog).label, '轉群');
   assert.deepEqual(presentCamp(cao, { caocao: '漢' }), { ...cao, camp: '漢', campOrigin: '魏' });
   assert.deepEqual(presentCamp(diao, { diaochan: '群' }), { ...diao, camp: '群', campOrigin: '漢' });
   let camps = applyCampOverride({}, 'caocao', '漢');
   camps = applyCampOverride(camps, 'lvbu', '漢');
   camps = applyCampOverride(camps, 'jiaxu', '漢');
-  assert.deepEqual(campOverrideCounts(camps), { toHan: 3, toQun: 0 });
-  assert.equal(nextCampOverride(cao, camps, convert).label, '恢復魏');
-  assert.match(nextCampOverride({ id: 'sunjian', name: '孫堅', camp: '吳' }, camps, { ...convert, toHan: [...convert.toHan, 'sunjian'] }).reason, /最多 3/);
-  assert.match(nextCampOverride(diao, camps, convert).reason, /不能同時轉群/);
+  assert.deepEqual(campOverrideCounts(camps, catalog), { toHan: 3, toQun: 0 });
+  assert.equal(nextCampOverride(cao, camps, convert, catalog).label, '恢復魏');
+  assert.match(nextCampOverride(sunjian, camps, convert, catalog).reason, /最多 3/);
+  assert.match(nextCampOverride(diao, camps, convert, catalog).reason, /不能同時轉群/);
   camps = applyCampOverride({}, 'diaochan', '群');
   camps = applyCampOverride(camps, 'sp-luzhi', '群');
   camps = applyCampOverride(camps, 'sp-caocao', '群');
-  assert.deepEqual(campOverrideCounts(camps), { toHan: 0, toQun: 3 });
-  assert.match(nextCampOverride(cao, camps, convert).reason, /不能同時轉漢/);
-  assert.match(nextCampOverride({ id: 'y40-lvbu', name: '40Y呂布', camp: '漢' }, camps, convert).reason, /最多 3/);
-  assert.equal(nextCampOverride(luzhi, camps, convert).label, '恢復漢');
-  assert.equal(nextCampOverride(spcao, camps, convert).show, true);
+  assert.deepEqual(campOverrideCounts(camps, catalog), { toHan: 0, toQun: 3 });
+  assert.match(nextCampOverride(cao, camps, convert, catalog).reason, /不能同時轉漢/);
+  assert.match(nextCampOverride(y40, camps, convert, catalog).reason, /最多 3/);
+  assert.equal(nextCampOverride(luzhi, camps, convert, catalog).label, '恢復漢');
+  assert.equal(nextCampOverride(spcao, camps, convert, catalog).show, true);
+});
+
+test('舊 camps 與圖鑑相同或未知 ID 不佔轉換名額且不刪資料', () => {
+  const convert = { max: 3, toHan: ['gongsunzan', 'caocao'] };
+  const luzhi = { id: 'sp-luzhi', name: 'SP盧植', camp: '漢' };
+  const diao = { id: 'sp-diaochan', name: 'SP貂蟬', camp: '漢' };
+  const dong = { id: 'dongzhuo', name: '董卓', camp: '漢' };
+  const gongsun = { id: 'gongsunzan', name: '公孫瓚', camp: '群' };
+  const spcao = { id: 'sp-caocao', name: 'SP曹操', camp: '漢' };
+  const catalog = new Map([luzhi, diao, dong, gongsun, spcao].map((row) => [row.id, row]));
+  const stale = { 'sp-luzhi': '漢', 'sp-diaochan': '漢', dongzhuo: '漢', 'ghost-general': '漢' };
+  assert.deepEqual(normalizeCamps(stale), stale);
+  assert.deepEqual(campOverrideCounts(stale, catalog), { toHan: 0, toQun: 0 });
+  assert.equal(nextCampOverride(gongsun, stale, convert, catalog).blocked, false);
+  assert.equal(nextCampOverride(gongsun, stale, convert, catalog).label, '轉漢');
+  assert.equal(nextCampOverride(spcao, stale, convert, catalog).blocked, false);
+  assert.equal(nextCampOverride(spcao, stale, convert, catalog).label, '轉群');
+  assert.equal(nextCampOverride(luzhi, stale, convert, catalog).label, '轉群');
+  const restored = normalizeState({
+    app: 'sgsz-planner',
+    backupVersion: 2,
+    accounts: [{ id: 'acct-stale', name: '舊轉', camps: stale }],
+  });
+  assert.deepEqual(restored.state.accounts[0].camps, stale);
+});
+
+test('隊伍國家跟隨 resolveCamp，有效陣營可與圖鑑不同', () => {
+  const members = [{ generalId: 'sp-luzhi' }, { generalId: 'sp-diaochan' }, { generalId: 'sp-caocao' }];
+  assert.equal(teamCountry(members, () => '漢'), '漢');
+  assert.equal(teamCountry(members, (id) => (id === 'sp-caocao' ? '群' : '漢')), '混合');
+  assert.equal(teamCountry(members, (id) => (id === 'sp-caocao' ? '群' : '群')), '群');
 });
 
 test('訓兵振旅 makes non-仙人 aptitudes S and warns past the limits', () => {
