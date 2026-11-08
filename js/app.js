@@ -1540,15 +1540,6 @@ function templateResultsMarkup() {
     const bases = [...new Set((team.members || []).map((member) => member?.resolveBasis).filter(Boolean))];
     const blocked = state.blocked;
     const notes = state.notes;
-    const missing = team.fromRecommended
-      ? [...(state.gaps?.generals || []).map((name) => name), ...(state.gaps?.tactics || [])]
-      : [];
-    const badge = team.fromRecommended
-      ? `<span class="chip ${missing.length ? '' : 'on'}">${missing.length ? `缺 ${missing.length} 項` : '可組'}</span>`
-      : '';
-    const source = team.fromRecommended && team.source
-      ? `<a class="cite" href="${esc(team.source)}" target="_blank" rel="noopener">來源</a>`
-      : '';
     const basis = team.fromRecommended && team.rankBasis
       ? `<p class="faint">${esc(team.rankBasis)}</p>`
       : '';
@@ -1559,8 +1550,6 @@ function templateResultsMarkup() {
             <strong>${esc(templateDisplayName(team))}</strong>
             <span class="tag red-total">總紅度 ${red}</span>
             <span class="tag">${campInk(team.country)}</span>
-            <span class="faint">來源預設</span>
-            ${source}${badge}
           </div>
           <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入</button>
         </div>
@@ -1601,13 +1590,13 @@ function templateSheet() {
         <label>劇本
           <select id="template-scenario" class="field" data-action="set-template-scenario">${scenarioOptions}</select>
         </label>
-        <label>國家（來源預設陣營）
+        <label>國家
           <select id="template-country" class="field" data-action="set-template-country">${countryOptions}</select>
         </label>
         <label>排序
           <select id="template-sort" class="field" data-action="set-template-sort">
-            <option value="rank" ${ui.templates.sort === 'red' ? '' : 'selected'}>強度</option>
-            <option value="red" ${ui.templates.sort === 'red' ? 'selected' : ''}>紅度</option>
+            <option value="red" ${ui.templates.sort === 'rank' ? '' : 'selected'}>紅度</option>
+            <option value="rank" ${ui.templates.sort === 'rank' ? 'selected' : ''}>強度</option>
           </select>
         </label>
       </div>
@@ -2613,7 +2602,7 @@ function onClick(event) {
         query: '',
         substitute: false,
         grayTactics: false,
-        sort: 'rank',
+        sort: 'red',
       };
       render();
       break;
