@@ -1164,36 +1164,7 @@ export function normalizeRecommended(list) {
     const id = cleanId(raw?.id);
     if (!id || seen.has(id)) continue;
     seen.add(id);
-    const members = [0, 1, 2].map((index) => {
-      const member = raw?.members?.[index];
-      if (!member || typeof member !== 'object') return null;
-      const generalId = cleanId(member.generalId) || null;
-      const generalName = clip(member.generalName, 24);
-      if (!generalId && !generalName) return null;
-      const next = {
-        generalId,
-        generalName,
-        learned: [0, 1].map((slot) => cleanId(member.learned?.[slot]) || null),
-        learnedNames: [0, 1].map((slot) => clip(member.learnedNames?.[slot], 40)),
-      };
-      const bingshu = normalizeBook(member.bingshu);
-      if (bingshu) next.bingshu = bingshu;
-      const tacticsRaw = clip(member.tacticsRaw, 80);
-      const bingshuRaw = clip(member.bingshuRaw, 80);
-      if (tacticsRaw) next.tacticsRaw = tacticsRaw;
-      if (bingshuRaw) next.bingshuRaw = bingshuRaw;
-      const remark = clip(member.remark, 160);
-      if (remark) next.remark = remark;
-      const traits = stringList(member.traits, 6);
-      if (traits.length) next.traits = traits;
-      const aptNeed = aptNeedOf(member.aptNeed || member.apt);
-      if (aptNeed) next.aptNeed = aptNeed;
-      const resolveBasis = clip(member.resolveBasis, 180);
-      if (resolveBasis) next.resolveBasis = resolveBasis;
-      const generalChoices = generalChoicesOf(member.generalChoices);
-      if (generalChoices.length) next.generalChoices = generalChoices;
-      return next;
-    });
+    const members = [0, 1, 2].map((index) => normalizeRecommendedMember(raw?.members?.[index]));
     const team = {
       id,
       scenario: normalizeScenario(raw.scenario),
@@ -1236,7 +1207,7 @@ export function normalizeRecommended(list) {
       if (Object.keys(formal).length) team.trickFormal = formal;
     }
     if (team.rank) {
-      team.rankStatus = '待核';
+      team.rankStatus = recordStatus(raw.rankStatus);
       const rankBasis = clip(raw.rankBasis, 240);
       const rankConfidence = ['低', '中低', '中', '中高'].includes(raw.rankConfidence) ? raw.rankConfidence : '';
       const rankSources = normalizeRankSources(raw.rankSources);
@@ -1260,6 +1231,36 @@ function normalizeRankSources(list) {
   }).filter(Boolean);
 }
 
+function normalizeRecommendedMember(member) {
+  if (!member || typeof member !== 'object') return null;
+  const generalId = cleanId(member.generalId) || null;
+  const generalName = clip(member.generalName, 24);
+  if (!generalId && !generalName) return null;
+  const next = {
+    generalId,
+    generalName,
+    learned: [0, 1].map((slot) => cleanId(member.learned?.[slot]) || null),
+    learnedNames: [0, 1].map((slot) => clip(member.learnedNames?.[slot], 40)),
+  };
+  const bingshu = normalizeBook(member.bingshu);
+  if (bingshu) next.bingshu = bingshu;
+  const tacticsRaw = clip(member.tacticsRaw, 80);
+  const bingshuRaw = clip(member.bingshuRaw, 80);
+  if (tacticsRaw) next.tacticsRaw = tacticsRaw;
+  if (bingshuRaw) next.bingshuRaw = bingshuRaw;
+  const remark = clip(member.remark, 160);
+  if (remark) next.remark = remark;
+  const traits = stringList(member.traits, 6);
+  if (traits.length) next.traits = traits;
+  const aptNeed = aptNeedOf(member.aptNeed || member.apt);
+  if (aptNeed) next.aptNeed = aptNeed;
+  const resolveBasis = clip(member.resolveBasis, 180);
+  if (resolveBasis) next.resolveBasis = resolveBasis;
+  const generalChoices = generalChoicesOf(member.generalChoices);
+  if (generalChoices.length) next.generalChoices = generalChoices;
+  return next;
+}
+
 function normalizeAlternatives(list) {
   if (!Array.isArray(list)) return [];
   return list.slice(0, 8).map((raw) => {
@@ -1278,8 +1279,48 @@ function normalizeAlternatives(list) {
     if (author) item.author = author;
     if (source) item.source = source;
     if (officialSource) item.officialSource = officialSource;
+    if (raw.applyReady === false) item.applyReady = false;
+    const members = [0, 1, 2].map((index) => normalizeRecommendedMember(raw.members?.[index]));
+    if (members.some(Boolean)) item.members = members;
+    if (Array.isArray(raw.strategy)) item.strategy = stringList(raw.strategy, 1);
+    if (Array.isArray(raw.tricks)) {
+      item.tricks = raw.tricksBound === false ? stringList(raw.tricks, 8) : trickSlots(raw.tricks);
+      if (raw.tricksBound === false) item.tricksBound = false;
+    }
+    const note = clip(raw.note, 240);
+    if (note) item.note = note;
     return item;
   }).filter(Boolean);
+}
+
+/** Turn a main recommended card + alternative into one applyable template. */
+export function recommendedFromAlternative(parent, alt) {
+  if (!parent || !alt) return null;
+  const title = clip(alt.title, 40) || '替代配置';
+  const noteBits = [
+    ...(Array.isArray(alt.diffs) ? alt.diffs : []),
+    alt.note || '',
+    parent.note || '',
+  ].filter(Boolean);
+  const base = {
+    ...parent,
+    id: cleanId(alt.id) || parent.id,
+    title,
+    note: clip(noteBits.join('；'), 240),
+    source: alt.source || parent.source,
+    alternatives: undefined,
+  };
+  if (alt.officialSource) base.officialSource = alt.officialSource;
+  if (alt.applyReady === false) base.applyReady = false;
+  else if (parent.applyReady === false && alt.members?.length) delete base.applyReady;
+  if (alt.members?.length) base.members = alt.members;
+  if (Array.isArray(alt.strategy)) base.strategy = alt.strategy;
+  if (Array.isArray(alt.tricks)) {
+    base.tricks = alt.tricks;
+    if (alt.tricksBound === false) base.tricksBound = false;
+    else delete base.tricksBound;
+  }
+  return base;
 }
 
 function generalChoicesOf(raw) {

@@ -16,6 +16,7 @@ import {
   normalizeRecommended,
   normalizeState,
   presentCamp,
+  recommendedFromAlternative,
   teamCountry,
   teamFromRecommended,
 } from '../js/logic.js';
@@ -185,6 +186,38 @@ test('recommended teams keep strategy, trick order, empty tactics and source', (
   assert.equal(built.members[0].vacated[1], '桃園結義');
   assert.equal(built.members[0].bingshu.primary, 'sanjun');
   assert.match(built.notes, /sgsdeck/);
+});
+
+test('recommended rankStatus stays verified and alternatives can be applied', () => {
+  const [team] = normalizeRecommended([{
+    id: 'hanyan-main',
+    scenario: 'hanyan',
+    title: '主卡',
+    status: '已核',
+    rank: 'T0.5',
+    rankStatus: '已核',
+    members: [{ generalId: 'sp-machao', generalName: 'SP馬超', learned: [null, null], learnedNames: [] }],
+    alternatives: [{
+      id: 'hanyan-alt',
+      title: '官方整理版',
+      status: '已核',
+      originLabel: '官方推薦',
+      diffs: ['許攸只列臨危救主'],
+      members: [{ generalId: 'xuyou', generalName: '許攸', learned: [null, null], learnedNames: [] }],
+      strategy: ['強攻'],
+      tricks: ['甲', '乙', '丙', '丁', '戊'],
+    }],
+  }]);
+  assert.equal(team.rankStatus, '已核');
+  assert.equal(team.alternatives[0].members[0].generalId, 'xuyou');
+  const applied = recommendedFromAlternative(team, team.alternatives[0]);
+  assert.equal(applied.title, '官方整理版');
+  assert.equal(applied.members[0].generalId, 'xuyou');
+  assert.deepEqual(applied.strategy, ['強攻']);
+  assert.equal(applied.alternatives, undefined);
+  const built = teamFromRecommended(applied, 'team-alt');
+  assert.match(built.name, /官方整理版/);
+  assert.equal(built.members[0].generalId, 'xuyou');
 });
 
 test('player teams keep unbound tricks, apply flag, author and per-team status', () => {

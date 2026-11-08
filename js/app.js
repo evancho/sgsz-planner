@@ -68,6 +68,7 @@ import {
   teamCost,
   teamFromTemplate,
   templateDisplayName,
+  recommendedFromAlternative,
   templateScenarios,
   STRATEGY_CHOICES,
   coexistenceLines,
@@ -1545,9 +1546,6 @@ function templateResultsMarkup() {
     const badge = team.fromRecommended
       ? `<span class="chip ${missing.length ? '' : 'on'}">${missing.length ? `缺 ${missing.length} 項` : '可組'}</span>`
       : '';
-    const review = team.fromRecommended && (team.status === '待核' || team.rankStatus === '待核')
-      ? '<span class="mini review">待核</span>'
-      : '';
     const source = team.fromRecommended && team.source
       ? `<a class="cite" href="${esc(team.source)}" target="_blank" rel="noopener">來源</a>`
       : '';
@@ -1556,21 +1554,23 @@ function templateResultsMarkup() {
       : '';
     return `
       <li class="template-item${blocked ? ' blocked' : ''}">
-        <div>
-          <strong>${esc(templateDisplayName(team))}</strong>
-          <span class="tag red-total">總紅度 ${red}</span>
-          <span class="tag">${campInk(team.country)}</span>
-          <span class="faint">來源預設</span>
-          ${review}${source}${badge}
-          <p>${esc(names)}</p>
-          ${planLine(team)}
-          ${unresolved.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
-          ${bases.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
-          ${basis}
-          ${notes.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
-          ${team.fromRecommended ? altHtml(team) : ''}
+        <div class="template-head">
+          <div>
+            <strong>${esc(templateDisplayName(team))}</strong>
+            <span class="tag red-total">總紅度 ${red}</span>
+            <span class="tag">${campInk(team.country)}</span>
+            <span class="faint">來源預設</span>
+            ${source}${badge}
+          </div>
+          <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入</button>
         </div>
-        <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入</button>
+        <p>${esc(names)}</p>
+        ${planLine(team)}
+        ${unresolved.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
+        ${bases.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
+        ${basis}
+        ${notes.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
+        ${team.fromRecommended ? altHtml(team, current, usage, tactics) : ''}
       </li>`;
   }).join('');
   return `
@@ -2078,17 +2078,29 @@ function tacticPicker() {
 }
 
 
-function altHtml(team) {
+function altHtml(team, current, usage, tactics) {
   const list = team.alternatives || [];
   if (!list.length) return '';
   const cards = list.map((alt) => {
-    const status = alt.status === '待核' ? '<span class="mini review">待核</span>' : '';
+    const applyTeam = recommendedFromAlternative(team, alt);
+    const state = applyTeam ? templateBlockState({ ...applyTeam, fromRecommended: true }, current, usage, tactics) : { blocked: true };
     const origin = alt.originLabel ? `<span class="mini origin">${esc(alt.originLabel)}</span>` : '';
     const who = alt.author ? `<span class="faint">${esc(alt.author)}</span>` : '';
     const link = alt.source ? `<a class="cite" href="${esc(alt.source)}" target="_blank" rel="noopener">來源</a>` : '';
     const official = alt.officialSource ? `<a class="cite" href="${esc(alt.officialSource)}" target="_blank" rel="noopener">官方原貼</a>` : '';
     const diffs = (alt.diffs || []).map((line) => `<li>${esc(line)}</li>`).join('');
-    return `<div class="alt"><p><strong>${esc(alt.title)}</strong> ${origin}${status}${who}${link}${official}</p>${diffs ? `<ul>${diffs}</ul>` : ''}</div>`;
+    const warn = state.notes?.length ? `<p class="faint">${esc(state.notes.join('；'))}</p>` : '';
+    return `
+      <div class="alt">
+        <div class="alt-head">
+          <div>
+            <p><strong>${esc(alt.title)}</strong> ${origin}${who}${link}${official}</p>
+          </div>
+          <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" data-alt-id="${esc(alt.id || '')}" ${state.blocked ? 'disabled' : ''}>加入</button>
+        </div>
+        ${diffs ? `<ul>${diffs}</ul>` : ''}
+        ${warn}
+      </div>`;
   }).join('');
   return `<div class="alts"><h4>替代配置</h4>${cards}</div>`;
 }
@@ -2606,8 +2618,15 @@ function onClick(event) {
       render();
       break;
     case 'add-template': {
-      const template = templatePool().find((item) => item.id === el.dataset.id);
-      if (!template || !ui.templates) break;
+      const master = templatePool().find((item) => item.id === el.dataset.id);
+      if (!master || !ui.templates) break;
+      const altId = el.dataset.altId || '';
+      const alt = altId ? (master.alternatives || []).find((item) => item.id === altId) : null;
+      if (altId && !alt) break;
+      const template = alt
+        ? { ...recommendedFromAlternative(master, alt), fromRecommended: true, country: master.country }
+        : master;
+      if (!template) break;
       if (template.fromRecommended && template.applyReady === false) {
         toast('僅供參考，不提供套用');
         break;

@@ -150,9 +150,28 @@ function rank(team) {
 }
 
 export function applyMerges(list) {
+  const byId = new Map(list.map((team) => [team.id, team]));
   const next = list.filter((team) => !GONE.has(team.id)).map((team) => {
-    const alternatives = ALTS[team.id];
-    return alternatives ? { ...team, alternatives } : team;
+    const metaList = ALTS[team.id];
+    if (!metaList) return team;
+    const alternatives = metaList.map((meta) => {
+      const source = byId.get(meta.id);
+      if (!source) return meta;
+      const row = {
+        ...meta,
+        members: source.members,
+        strategy: source.strategy || [],
+        tricks: source.tricks || [],
+        note: source.note || '',
+        scenario: source.scenario,
+      };
+      if (source.tricksBound === false) row.tricksBound = false;
+      if (source.applyReady === false) row.applyReady = false;
+      if (source.trickFormal) row.trickFormal = source.trickFormal;
+      if (source.officialSource && !row.officialSource) row.officialSource = source.officialSource;
+      return row;
+    });
+    return { ...team, alternatives };
   });
   return next.sort((a, b) => rank(a) - rank(b));
 }
