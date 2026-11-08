@@ -13,8 +13,7 @@ import {
   pickSyncBackup,
   backupsDiffer,
   backupFingerprint,
-  makeConflictAck,
-  conflictPromptDecision,
+  syncMergeDecision,
   archiveBackupFileName,
   touchUpdatedAt,
 } from '../js/logic.js';
@@ -137,31 +136,32 @@ test('backupsDiffer detects content changes and archive names are safe', () => {
   assert.match(archiveBackupFileName(new Date('2026-11-02T10:00:00.000Z'), 'remote'), /^sgsz-planner-archive-remote-2026-11-02T/);
 });
 
-test('conflict ack keeps the same pair from prompting again on this device', () => {
-  const local = {
+test('ordinary local edits push quietly; only both-changed asks', () => {
+  const synced = {
     updatedAt: '2026-11-09T04:17:00.000Z',
     accounts: [{ id: 'a', owned: { guanyu: { red: 1 } }, tacticsOwned: {}, customTactics: [], teams: [] }],
   };
-  const remote = {
-    updatedAt: '2026-11-08T11:15:00.000Z',
-    accounts: [{ id: 'a', owned: { guanyu: { red: 1 } }, tacticsOwned: { bamen: true }, customTactics: [], teams: [] }],
-  };
-  const ackLocal = makeConflictAck('local', local, remote, new Date('2026-11-09T04:18:00.000Z'));
-  assert.equal(ackLocal.choice, 'local');
-  assert.equal(ackLocal.localFp, backupFingerprint(local));
-  assert.equal(ackLocal.remoteFp, backupFingerprint(remote));
-  assert.equal(conflictPromptDecision(ackLocal, local, remote, { quiet: true }), 'local');
-  assert.equal(conflictPromptDecision(ackLocal, local, remote, { quiet: false }), 'local');
-
-  const ackLater = makeConflictAck('later', local, remote);
-  assert.equal(conflictPromptDecision(ackLater, local, remote, { quiet: true }), 'skip');
-  assert.equal(conflictPromptDecision(ackLater, local, remote, { quiet: false }), 'ask');
-
+  const baseline = backupFingerprint(synced);
   const editedLocal = {
-    ...local,
     updatedAt: '2026-11-09T04:20:00.000Z',
     accounts: [{ id: 'a', owned: { guanyu: { red: 2 } }, tacticsOwned: {}, customTactics: [], teams: [] }],
   };
-  assert.equal(conflictPromptDecision(ackLocal, editedLocal, remote, { quiet: true }), 'ask');
-  assert.equal(conflictPromptDecision(null, local, remote), 'ask');
+  assert.equal(syncMergeDecision(editedLocal, synced, baseline, { quiet: true }), 'push-local');
+  assert.equal(syncMergeDecision(editedLocal, synced, baseline, { quiet: false }), 'push-local');
+
+  const newerRemote = {
+    updatedAt: '2026-11-09T04:21:00.000Z',
+    accounts: [{ id: 'a', owned: { guanyu: { red: 1 } }, tacticsOwned: { bamen: true }, customTactics: [], teams: [] }],
+  };
+  assert.equal(syncMergeDecision(synced, newerRemote, baseline, { quiet: true }), 'pull-remote');
+
+  const bothChangedRemote = {
+    updatedAt: '2026-11-09T04:19:00.000Z',
+    accounts: [{ id: 'a', owned: { guanyu: { red: 1 } }, tacticsOwned: { bamen: true }, customTactics: [], teams: [] }],
+  };
+  assert.equal(syncMergeDecision(editedLocal, bothChangedRemote, baseline, { quiet: false }), 'ask');
+  assert.equal(syncMergeDecision(editedLocal, bothChangedRemote, baseline, { quiet: true }), 'push-local');
+
+  assert.equal(syncMergeDecision(editedLocal, synced, '', { quiet: true }), 'push-local');
+  assert.equal(syncMergeDecision(synced, synced, baseline), 'equal');
 });
