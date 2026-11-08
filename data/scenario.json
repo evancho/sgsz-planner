@@ -3,11 +3,11 @@
   "weapons": [],
   "merits": [],
   "hanConvert": {
-    "status": "待核",
+    "status": "已核",
     "max": 3,
     "source": "https://sgsdeck.com/seasons/pk-s27",
     "officialPost": "https://www.facebook.com/100064157226677/posts/1545693490912544/",
-    "note": "群轉漢自選最多 3 名、漢轉群最多 3 名依 sgsdeck，仍待確認。方向互斥與漢將都可轉群依使用者指定。",
+    "note": "群轉漢自選最多 3 名、漢轉群最多 3 名。方向互斥與漢將都可轉群依使用者指定。",
     "toHan": [
       "caocao",
       "liubei",
