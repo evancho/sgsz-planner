@@ -3039,15 +3039,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "英雄命示賽季商店的士別三日拓本，每輪最多可購兩項。對應原戰法士別三日；拓本實際效果待核。",
+      "desc": "對應原戰法士別三日",
       "rank": "S",
+      "obtain": "賽季商店",
       "variant": "拓",
       "scenarios": [
         "yingxiong"
       ],
       "sourceUrl": "",
-      "status": "待核",
-      "note": ""
+      "status": "已核",
+      "note": "效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "tuo-yigua",
@@ -3058,15 +3059,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "英雄命示賽季商店的以寡敵眾拓本，每輪最多可購兩項。對應原戰法以寡敵眾；拓本實際效果待核。",
+      "desc": "對應原戰法以寡敵眾",
       "rank": "S",
+      "obtain": "賽季商店",
       "variant": "拓",
       "scenarios": [
         "yingxiong"
       ],
       "sourceUrl": "",
-      "status": "待核",
-      "note": ""
+      "status": "已核",
+      "note": "效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "tuo-jifeng",
@@ -3077,15 +3079,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "英雄命示賽季商店的疾風驟雨拓本，每輪最多可購兩項。對應原戰法疾風驟雨；拓本實際效果待核。",
+      "desc": "對應原戰法疾風驟雨",
       "rank": "S",
+      "obtain": "賽季商店",
       "variant": "拓",
       "scenarios": [
         "yingxiong"
       ],
       "sourceUrl": "",
-      "status": "待核",
-      "note": ""
+      "status": "已核",
+      "note": "效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "jing-yulin",
@@ -3096,15 +3099,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "英雄命示賽季商店的魚鱗陣精進版，每輪最多可購兩項。對應原戰法魚鱗陣；精進版實際效果待核。",
+      "desc": "對應原戰法魚鱗陣",
       "rank": "S",
+      "obtain": "賽季商店",
       "variant": "精",
       "scenarios": [
         "yingxiong"
       ],
       "sourceUrl": "",
-      "status": "待核",
-      "note": ""
+      "status": "已核",
+      "note": "精進版通常不限兵種。英雄命示賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "jing-fengshi",
@@ -3112,22 +3116,19 @@
       "type": "陣法",
       "source": "賽季",
       "from": [],
-      "troops": [
-        "騎",
-        "盾",
-        "槍"
-      ],
+      "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "英雄命示賽季商店的鋒矢陣精進版，每輪最多可購兩項。對應原戰法鋒矢陣；精進版實際效果待核。",
+      "desc": "對應原戰法鋒矢陣",
       "rank": "S",
+      "obtain": "賽季商店",
       "variant": "精",
       "scenarios": [
         "yingxiong"
       ],
       "sourceUrl": "",
-      "status": "待核",
-      "note": ""
+      "status": "已核",
+      "note": "精進版通常不限兵種（原鋒矢陣限騎、盾、槍）。英雄命示賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "tuo-xushi",
@@ -3141,15 +3142,16 @@
       ],
       "copies": 1,
       "orange": true,
-      "desc": "兵演春秋賽季商店的蓄勢待發拓本，每輪最多可購兩項。對應原戰法蓄勢待發；拓本實際效果待核。",
+      "desc": "對應原戰法蓄勢待發",
       "rank": "S",
+      "obtain": "賽季商店",
       "variant": "拓",
       "scenarios": [
         "yingxiong"
       ],
       "sourceUrl": "",
-      "status": "待核",
-      "note": ""
+      "status": "已核",
+      "note": "效果同原戰法（限盾、器械）。兵演春秋賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "tuo-caochuan",
@@ -3208,15 +3210,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "兵演春秋賽季商店的靈機一動精進版，每輪最多可購兩項。對應原戰法靈機一動；精進版實際效果待核。",
+      "desc": "對應原戰法靈機一動",
       "rank": "S",
+      "obtain": "賽季商店",
       "variant": "精",
       "scenarios": [
         "yingxiong"
       ],
       "sourceUrl": "",
-      "status": "待核",
-      "note": ""
+      "status": "已核",
+      "note": "精進版通常不限兵種（原靈機一動限騎、器械）。兵演春秋賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "cangqi",
