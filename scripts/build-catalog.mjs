@@ -238,7 +238,8 @@ const generals = [
 const SEASON_PK = 'https://sgsdeck.com/seasons/pk-s27';
 const SEASON_BINGYAN = 'https://sgsdeck.com/seasons/og-兵演春秋';
 const SHOT = '使用者遊戲截圖 2026-11-08';
-const DEBUT_NOTE = '首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。可轉群。';
+const KEEP_NOTE = '漢陣營之後常規劇本也可繼續用。可轉群。';
+const DEBUT_NOTE = `首次登場是漢焰長明。${KEEP_NOTE}`;
 const LIANG_NOTE = `漢焰長明賽季頁列為漢陣營良將。統御依${SHOT}。sgsdeck 武將頁 404，定位、適性、自帶、傳承仍待核。${DEBUT_NOTE}`;
 
 for (const [id, name, cost] of [
@@ -273,7 +274,7 @@ const SHOT_HAN = [
     apt: { 騎: 'C', 盾: 'B', 弓: 'S', 槍: 'B', 器械: 'A' },
     innate: '鎮壓黃巾',
     sourceUrl: 'https://sgsdeck.com/generals/朱儁',
-    note: `陣營漢、統御 6、良將、適性騎C盾B弓S槍B器A、自帶鎮壓黃巾（指揮）依${SHOT}武將詳情頁；可見描述「免疫沙暴並造成叛逆…」，完整效果待核。sgsdeck 個人頁曾寫千里馳援，不採用。傳承 sgsdeck 寫聲東擊西，仍待核。個人頁舊標群，不採用。不是 SP朱儁。定位待核。${DEBUT_NOTE}`,
+    note: `陣營漢、統御 6、良將、適性騎C盾B弓S槍B器A、自帶鎮壓黃巾（指揮）依${SHOT}武將詳情頁；可見描述「免疫沙暴並造成叛逃」，完整效果待核。sgsdeck 個人頁曾寫千里馳援，不採用。傳承 sgsdeck 寫聲東擊西，仍待核。個人頁舊標群，不採用。不是 SP朱儁。定位待核。不猜首登賽季。${KEEP_NOTE}`,
   },
   {
     id: 'huangfusong',
@@ -281,7 +282,7 @@ const SHOT_HAN = [
     cost: 5,
     quality: '良將',
     sourceUrl: '',
-    note: `陣營漢、統御 5、良將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/皇甫嵩 404，適性、自帶、傳承、定位待核。不是 SP皇甫嵩。${DEBUT_NOTE}`,
+    note: `陣營漢、統御 5、良將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/皇甫嵩 404，適性、自帶、傳承、定位待核。不是 SP皇甫嵩。不猜首登賽季。${KEEP_NOTE}`,
   },
   {
     id: 'luzhi',
@@ -291,7 +292,7 @@ const SHOT_HAN = [
     apt: { 騎: 'B', 盾: 'C', 弓: 'A', 槍: 'B', 器械: 'B' },
     innate: '五穀豐登',
     sourceUrl: 'https://sgsdeck.com/generals/盧植',
-    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶五穀豐登、傳承五穀豐登依 sgsdeck 個人頁；個人頁舊標群，不採用。不是 SP盧植。定位待核。${DEBUT_NOTE}`,
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶五穀豐登、傳承五穀豐登依 sgsdeck 個人頁；個人頁舊標群，不採用。不是 SP盧植。定位待核。不猜首登賽季。${KEEP_NOTE}`,
   },
   {
     id: 'kongrong',
@@ -301,7 +302,7 @@ const SHOT_HAN = [
     apt: { 騎: 'A', 盾: 'B', 弓: 'C', 槍: 'C', 器械: 'C' },
     innate: '謙讓',
     sourceUrl: 'https://sgsdeck.com/generals/孔融',
-    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶謙讓、傳承謙讓依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。${DEBUT_NOTE}`,
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶謙讓、傳承謙讓依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。不猜首登賽季。${KEEP_NOTE}`,
   },
   {
     id: 'zhangren',
@@ -311,7 +312,7 @@ const SHOT_HAN = [
     apt: { 騎: 'C', 盾: 'B', 弓: 'S', 槍: 'B', 器械: 'B' },
     innate: '落鳳',
     sourceUrl: 'https://sgsdeck.com/generals/張任',
-    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶落鳳、傳承落鳳依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。${DEBUT_NOTE}`,
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶落鳳、傳承落鳳依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。不猜首登賽季。${KEEP_NOTE}`,
   },
   {
     id: 'chenlin',
@@ -321,7 +322,7 @@ const SHOT_HAN = [
     apt: { 騎: 'C', 盾: 'C', 弓: 'B', 槍: 'C', 器械: 'B' },
     innate: '碩果累累',
     sourceUrl: 'https://sgsdeck.com/generals/陳琳',
-    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶碩果累累、傳承落雷依 sgsdeck 個人頁；個人頁舊標魏，不採用。定位待核。${DEBUT_NOTE}`,
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶碩果累累、傳承落雷依 sgsdeck 個人頁；個人頁舊標魏，不採用。定位待核。不猜首登賽季。${KEEP_NOTE}`,
   },
   {
     id: 'liubiao',
@@ -331,7 +332,7 @@ const SHOT_HAN = [
     apt: { 騎: 'B', 盾: 'B', 弓: 'A', 槍: 'C', 器械: 'C' },
     innate: '爭分奪秒',
     sourceUrl: 'https://sgsdeck.com/generals/劉表',
-    note: `陣營漢、統御 3、良將依${SHOT}。適性、自帶爭分奪秒、傳承偃旗息鼓依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。${DEBUT_NOTE}`,
+    note: `陣營漢、統御 3、良將依${SHOT}。適性、自帶爭分奪秒、傳承偃旗息鼓依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。不猜首登賽季。${KEEP_NOTE}`,
   },
 ];
 
@@ -339,7 +340,6 @@ for (const row of SHOT_HAN) {
   generals.push(pendingGeneral({
     ...row,
     camp: '漢',
-    debutScenario: 'hanyan',
     status: '已核',
   }));
 }
@@ -451,26 +451,25 @@ function extra(id, name, type, source, from, troops, desc, more = {}) {
 }
 
 const HANYAN_SEASON = 'https://sgsdeck.com/seasons/pk-s27';
+const USER_OK = '使用者確認 2026-11-08';
 const hanyanShop = (origin) => ({
   scenarios: ['hanyan'],
-  status: '待核',
-  quality: '未核',
+  status: '已核',
   obtain: '賽季商店',
   sourceUrl: HANYAN_SEASON,
-  note: `原戰法：${origin}。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。`,
+  note: `原戰法：${origin}。巴哈攻略同列。${USER_OK}`,
 });
 const hanyanPrint = {
-  status: '待核',
-  quality: '未核',
+  status: '已核',
   sourceUrl: HANYAN_SEASON,
-  note: '巴哈攻略同列這項拓印。品質沒有逐項台港澳來源。',
+  note: `巴哈攻略同列這項拓印。${USER_OK}`,
 };
 const bothShops = {
   scenarios: ['yingxiong', 'hanyan'],
-  quality: '未核',
+  status: '已核',
   obtain: { yingxiong: '賽季商店', hanyan: '拓印四選一' },
   sourceUrl: HANYAN_SEASON,
-  note: '英雄命世從賽季商店取得，漢焰長明改為拓印四選一。品質沒有逐項台港澳來源。',
+  note: `英雄命世從賽季商店取得，漢焰長明改為拓印四選一。${USER_OK}`,
 };
 
 const extraTactics = [
@@ -488,7 +487,9 @@ const extraTactics = [
   extra('yunwei', '運籌帷幄', '指揮', '自帶', ['duwei-machan'], null, '戰鬥前數回合降低友軍受到的傷害，並賦予急救，受傷時有機率依智力獲得治療。'),
   extra('huijun', '麾軍結陣', '指揮', '事件', [], null, '自帶戰法為主動戰法時生效：前4回合提升自身主動戰法發動率（準備戰法提升更高）。第5回合行動前隨機對敵方單體造成兵刃傷害，或治療我軍兵力最低的友軍。', {
     obtain: '事件',
+    status: '已核',
     sourceUrl: 'https://sgsdeck.com/tactics/麾軍結陣',
+    note: USER_OK,
   }),
   extra('yanren', '燕人咆哮', '被動', '自帶', ['zhangfei'], null, '第二、四回合對敵軍全體造成兵刃傷害；目標處於繳械或計窮時降低統率。自身為主將時，第六回合再打一輪。'),
   extra('jiangtian', '江天長焰', '指揮', '自帶', ['sp-zhouyu'], null, '每回合對敵軍施加長焰，提高其受到的謀略傷害，並造成謀略傷害。自身為主將時，長焰夠多有機率再打一次。'),
@@ -498,55 +499,54 @@ const extraTactics = [
   extra('aoni', '傲睨王侯', '指揮', '自帶', ['xuyou'], null, '偷取敵軍屬性，轉為我軍的持續增益。'),
   extra('shenmou', '深謀遠慮', '指揮', '傳承', ['sp-bulianshi'], ['弓', '器械'], '將我軍主將的普通攻擊轉為謀略傷害，造成謀略傷害時治療我軍單體。僅弓兵與器械。'),
   extra('gangrou-ji', '剛柔並濟', '指揮', '傳承', ['sp-dongzhuo'], ['弓', '器械'], '降低我軍兵力最低者受到的傷害，並壓低敵軍兵力最高者的輸出。僅弓兵與器械。'),
-  extra('tuo-duohun', '拓·奪魂挾魄', '主動', '賽季', [], null, '對應原戰法奪魂挾魄；拓本實際效果待核。', bothShops),
+  extra('tuo-duohun', '拓·奪魂挾魄', '主動', '賽季', [], null, '對應原戰法奪魂挾魄', bothShops),
   extra('tuo-shibie', '拓·士別三日', '被動', '賽季', [], null, '英雄命示賽季商店的士別三日拓本，每輪最多可購兩項。對應原戰法士別三日；拓本實際效果待核。'),
   extra('tuo-yigua', '拓·以寡敵眾', '被動', '賽季', [], null, '英雄命示賽季商店的以寡敵眾拓本，每輪最多可購兩項。對應原戰法以寡敵眾；拓本實際效果待核。'),
   extra('tuo-jifeng', '拓·疾風驟雨', '主動', '賽季', [], null, '英雄命示賽季商店的疾風驟雨拓本，每輪最多可購兩項。對應原戰法疾風驟雨；拓本實際效果待核。'),
   extra('jing-yulin', '精·魚鱗陣', '陣法', '賽季', [], null, '英雄命示賽季商店的魚鱗陣精進版，每輪最多可購兩項。對應原戰法魚鱗陣；精進版實際效果待核。'),
   extra('jing-fengshi', '精·鋒矢陣', '陣法', '賽季', [], ['騎', '盾', '槍'], '英雄命示賽季商店的鋒矢陣精進版，每輪最多可購兩項。對應原戰法鋒矢陣；精進版實際效果待核。'),
   extra('tuo-xushi', '拓·蓄勢待發', '指揮', '賽季', [], ['盾', '器械'], '兵演春秋賽季商店的蓄勢待發拓本，每輪最多可購兩項。對應原戰法蓄勢待發；拓本實際效果待核。'),
-  extra('tuo-caochuan', '拓·草船借箭', '主動', '賽季', [], null, '對應原戰法草船借箭；拓本實際效果待核。', bothShops),
-  extra('tuo-guagu', '拓·刮骨療毒', '主動', '賽季', [], null, '對應原戰法刮骨療毒；拓本實際效果待核。', bothShops),
+  extra('tuo-caochuan', '拓·草船借箭', '主動', '賽季', [], null, '對應原戰法草船借箭', bothShops),
+  extra('tuo-guagu', '拓·刮骨療毒', '主動', '賽季', [], null, '對應原戰法刮骨療毒', bothShops),
   extra('jing-lingji', '精·靈機一動', '主動', '賽季', [], null, '兵演春秋賽季商店的靈機一動精進版，每輪最多可購兩項。對應原戰法靈機一動；精進版實際效果待核。'),
   extra('cangqi', '藏器待時', '被動', '傳承', ['sp-caocao'], ['盾', '器械'], '前2回合，自身受到的普通攻擊傷害降低10%→20%（受統帥影響）。第3回合起，自身自帶主動戰法發動率提升4%→8%（受武力影響），且造成傷害時有15%→30%機率附帶10%→20%破陣（受武力影響）。僅盾兵與器械。', {
-    status: '待核',
+    status: '已核',
     obtain: '傳承',
     fromNames: ['SP曹操'],
     sourceUrl: 'https://sgsdeck.com/tactics/藏器待時',
-    note: '傳承自 SP曹操。',
+    note: `傳承自 SP曹操。${USER_OK}`,
   }),
   extra('jueji', '絕計折謀', '主動', '傳承', ['heshi'], null, '40%機率對敵軍隨機武將造成謀略傷害（118%→236%，受智力影響），並施加技窮狀態，持續1回合。', {
-    status: '待核',
+    status: '已核',
     obtain: '傳承',
     fromNames: ['何氏'],
     sourceUrl: 'https://sgsdeck.com/tactics/絕計折謀',
-    note: '傳承自何氏。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。',
+    note: `傳承自何氏。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。${USER_OK}`,
   }),
   extra('taoyuan', '桃園結義', '指揮', '事件', [], null, '每回合有20%→40%機率（受統率影響，每種效果獨立判定）：我軍魅力最高者治療我軍單體（受智力影響）；統率最高者對敵軍智力最低者造成謀略傷害（受統率影響）；武力最高者對敵軍統率最低者造成兵刃傷害。該傷害率受我軍累計溢出治療量影響，觸發後重置。', {
-    status: '待核',
+    status: '已核',
     obtain: '事件',
     exchange: ['liubei', 'guanyu', 'zhangfei'],
     sourceUrl: 'https://sgsdeck.com/tactics/桃園結義',
-    note: '事件兌換武將依巴哈攻略 https://forum.gamer.com.tw/C.php?bsn=36815&snA=11630 。整理站兌換欄未列武將名。',
+    note: `事件兌換武將依巴哈攻略 https://forum.gamer.com.tw/C.php?bsn=36815&snA=11630 。整理站兌換欄未列武將名。${USER_OK}`,
   }),
-  extra('tuo-zhongzhi', '拓·眾志成城', '指揮', '賽季', [], null, '對應原戰法眾志成城；拓本實際效果待核。', {
+  extra('tuo-zhongzhi', '拓·眾志成城', '指揮', '賽季', [], null, '對應原戰法眾志成城', {
     ...hanyanPrint,
     scenarios: ['hanyan'],
     obtain: '拓印四選一',
   }),
-  extra('heng-e', '衡軛陣', '陣法', '賽季', [], null, '沒有對應原版。實際效果待核。', {
+  extra('heng-e', '衡軛陣', '陣法', '賽季', [], null, '沒有對應原版。', {
     scenarios: ['hanyan'],
-    status: '待核',
-    quality: '未核',
+    status: '已核',
     obtain: '賽季商店',
     sourceUrl: HANYAN_SEASON,
-    note: '賽季商店新增陣法，沒有對應原版。係數待核。巴哈攻略同列。品質沒有逐項台港澳來源。',
+    note: `賽季商店新增陣法，沒有對應原版。巴哈攻略同列。${USER_OK}`,
   }),
-  extra('zhuan-xingyi', '轉·形一陣', '陣法', '賽季', [], null, '對應原戰法形一陣；轉本實際效果待核。', hanyanShop('形一陣')),
-  extra('zhuan-weizhen', '轉·威震華夏', '主動', '賽季', [], null, '對應原戰法威震華夏；轉本實際效果待核。', hanyanShop('威震華夏')),
-  extra('tuo-jushi', '拓·聚石成金', '主動', '賽季', [], null, '對應原戰法聚石成金；拓本實際效果待核。', hanyanShop('聚石成金')),
-  extra('tuo-zhene', '拓·鎮扼防拒', '指揮', '賽季', [], null, '對應原戰法鎮扼防拒；拓本實際效果待核。', hanyanShop('鎮扼防拒')),
-  extra('zhuan-shizi', '轉·獅子奮迅', '主動', '賽季', [], null, '對應原戰法獅子奮迅；轉本實際效果待核。', hanyanShop('獅子奮迅')),
+  extra('zhuan-xingyi', '轉·形一陣', '陣法', '賽季', [], null, '對應原戰法形一陣', hanyanShop('形一陣')),
+  extra('zhuan-weizhen', '轉·威震華夏', '主動', '賽季', [], null, '對應原戰法威震華夏', hanyanShop('威震華夏')),
+  extra('tuo-jushi', '拓·聚石成金', '主動', '賽季', [], null, '對應原戰法聚石成金', hanyanShop('聚石成金')),
+  extra('tuo-zhene', '拓·鎮扼防拒', '指揮', '賽季', [], null, '對應原戰法鎮扼防拒', hanyanShop('鎮扼防拒')),
+  extra('zhuan-shizi', '轉·獅子奮迅', '主動', '賽季', [], null, '對應原戰法獅子奮迅', hanyanShop('獅子奮迅')),
 ];
 
 const tactics = [...tacticRows.map(t), ...extraTactics.map(t)];

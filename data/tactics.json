@@ -2862,7 +2862,7 @@
       "obtain": "事件",
       "sourceUrl": "https://sgsdeck.com/tactics/麾軍結陣",
       "status": "已核",
-      "note": ""
+      "note": "使用者確認 2026-11-08"
     },
     {
       "id": "yanren",
@@ -3015,8 +3015,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "對應原戰法奪魂挾魄；拓本實際效果待核。",
-      "quality": "未核",
+      "desc": "對應原戰法奪魂挾魄",
+      "rank": "S",
       "obtain": {
         "yingxiong": "賽季商店",
         "hanyan": "拓印四選一"
@@ -3027,8 +3027,8 @@
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。品質沒有逐項台港澳來源。"
+      "status": "已核",
+      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。使用者確認 2026-11-08"
     },
     {
       "id": "tuo-shibie",
@@ -3160,8 +3160,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "對應原戰法草船借箭；拓本實際效果待核。",
-      "quality": "未核",
+      "desc": "對應原戰法草船借箭",
+      "rank": "S",
       "obtain": {
         "yingxiong": "賽季商店",
         "hanyan": "拓印四選一"
@@ -3172,8 +3172,8 @@
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。品質沒有逐項台港澳來源。"
+      "status": "已核",
+      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。使用者確認 2026-11-08"
     },
     {
       "id": "tuo-guagu",
@@ -3184,8 +3184,8 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "對應原戰法刮骨療毒；拓本實際效果待核。",
-      "quality": "未核",
+      "desc": "對應原戰法刮骨療毒",
+      "rank": "S",
       "obtain": {
         "yingxiong": "賽季商店",
         "hanyan": "拓印四選一"
@@ -3196,8 +3196,8 @@
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。品質沒有逐項台港澳來源。"
+      "status": "已核",
+      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。使用者確認 2026-11-08"
     },
     {
       "id": "jing-lingji",
@@ -3239,8 +3239,8 @@
         "SP曹操"
       ],
       "sourceUrl": "https://sgsdeck.com/tactics/藏器待時",
-      "status": "待核",
-      "note": "傳承自 SP曹操。"
+      "status": "已核",
+      "note": "傳承自 SP曹操。使用者確認 2026-11-08"
     },
     {
       "id": "jueji",
@@ -3260,8 +3260,8 @@
         "何氏"
       ],
       "sourceUrl": "https://sgsdeck.com/tactics/絕計折謀",
-      "status": "待核",
-      "note": "傳承自何氏。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。"
+      "status": "已核",
+      "note": "傳承自何氏。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。使用者確認 2026-11-08"
     },
     {
       "id": "taoyuan",
@@ -3281,8 +3281,8 @@
         "zhangfei"
       ],
       "sourceUrl": "https://sgsdeck.com/tactics/桃園結義",
-      "status": "待核",
-      "note": "事件兌換武將依巴哈攻略 https://forum.gamer.com.tw/C.php?bsn=36815&snA=11630 。整理站兌換欄未列武將名。"
+      "status": "已核",
+      "note": "事件兌換武將依巴哈攻略 https://forum.gamer.com.tw/C.php?bsn=36815&snA=11630 。整理站兌換欄未列武將名。使用者確認 2026-11-08"
     },
     {
       "id": "tuo-zhongzhi",
@@ -3293,16 +3293,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "對應原戰法眾志成城；拓本實際效果待核。",
-      "quality": "未核",
+      "desc": "對應原戰法眾志成城",
+      "rank": "S",
       "obtain": "拓印四選一",
       "variant": "拓",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "巴哈攻略同列這項拓印。品質沒有逐項台港澳來源。"
+      "status": "已核",
+      "note": "巴哈攻略同列這項拓印。使用者確認 2026-11-08"
     },
     {
       "id": "heng-e",
@@ -3313,15 +3313,15 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "沒有對應原版。實際效果待核。",
-      "quality": "未核",
+      "desc": "沒有對應原版。",
+      "rank": "S",
       "obtain": "賽季商店",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "賽季商店新增陣法，沒有對應原版。係數待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
+      "status": "已核",
+      "note": "賽季商店新增陣法，沒有對應原版。巴哈攻略同列。使用者確認 2026-11-08"
     },
     {
       "id": "zhuan-xingyi",
@@ -3332,16 +3332,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "對應原戰法形一陣；轉本實際效果待核。",
-      "quality": "未核",
+      "desc": "對應原戰法形一陣",
+      "rank": "S",
       "obtain": "賽季商店",
       "variant": "轉",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "原戰法：形一陣。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
+      "status": "已核",
+      "note": "原戰法：形一陣。巴哈攻略同列。使用者確認 2026-11-08"
     },
     {
       "id": "zhuan-weizhen",
@@ -3352,16 +3352,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "對應原戰法威震華夏；轉本實際效果待核。",
-      "quality": "未核",
+      "desc": "對應原戰法威震華夏",
+      "rank": "S",
       "obtain": "賽季商店",
       "variant": "轉",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "原戰法：威震華夏。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
+      "status": "已核",
+      "note": "原戰法：威震華夏。巴哈攻略同列。使用者確認 2026-11-08"
     },
     {
       "id": "tuo-jushi",
@@ -3372,16 +3372,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "對應原戰法聚石成金；拓本實際效果待核。",
-      "quality": "未核",
+      "desc": "對應原戰法聚石成金",
+      "rank": "S",
       "obtain": "賽季商店",
       "variant": "拓",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "原戰法：聚石成金。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
+      "status": "已核",
+      "note": "原戰法：聚石成金。巴哈攻略同列。使用者確認 2026-11-08"
     },
     {
       "id": "tuo-zhene",
@@ -3392,16 +3392,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "對應原戰法鎮扼防拒；拓本實際效果待核。",
-      "quality": "未核",
+      "desc": "對應原戰法鎮扼防拒",
+      "rank": "S",
       "obtain": "賽季商店",
       "variant": "拓",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "原戰法：鎮扼防拒。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
+      "status": "已核",
+      "note": "原戰法：鎮扼防拒。巴哈攻略同列。使用者確認 2026-11-08"
     },
     {
       "id": "zhuan-shizi",
@@ -3412,16 +3412,16 @@
       "troops": null,
       "copies": 1,
       "orange": true,
-      "desc": "對應原戰法獅子奮迅；轉本實際效果待核。",
-      "quality": "未核",
+      "desc": "對應原戰法獅子奮迅",
+      "rank": "S",
       "obtain": "賽季商店",
       "variant": "轉",
       "scenarios": [
         "hanyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
-      "status": "待核",
-      "note": "原戰法：獅子奮迅。效果差異待核。巴哈攻略同列。品質沒有逐項台港澳來源。"
+      "status": "已核",
+      "note": "原戰法：獅子奮迅。巴哈攻略同列。使用者確認 2026-11-08"
     }
   ]
 }

@@ -160,11 +160,14 @@ test('generals and tactics are internally consistent', () => {
     assert.equal(tactic.source, '賽季');
     assert.equal(tactic.orange, true);
     if (id === 'tuo-duohun') {
-      assert.equal(tactic.quality, '未核');
-      assert.equal(tactic.rank, undefined);
+      assert.equal(tactic.quality, undefined);
+      assert.equal(tactic.rank, 'S');
+      assert.equal(tactic.status, '已核');
       assert.equal(tactic.desc.includes('英雄命示'), false);
+      assert.equal(tactic.desc.includes('待核'), false);
       assert.equal(tactic.obtain.yingxiong, '賽季商店');
       assert.equal(tactic.obtain.hanyan, '拓印四選一');
+      assert.match(tactic.note, /使用者確認 2026-11-08/);
     } else {
       assert.equal(tactic.rank, 'S');
       assert.match(tactic.desc, /英雄命示賽季商店/);
@@ -192,11 +195,14 @@ test('generals and tactics are internally consistent', () => {
     assert.equal(tactic.source, source);
     assert.deepEqual(tactic.troops, troops);
     if (id === 'tuo-caochuan' || id === 'tuo-guagu') {
-      assert.equal(tactic.quality, '未核');
-      assert.equal(tactic.rank, undefined);
+      assert.equal(tactic.quality, undefined);
+      assert.equal(tactic.rank, 'S');
+      assert.equal(tactic.status, '已核');
       assert.equal(tactic.desc.includes('兵演春秋'), false);
+      assert.equal(tactic.desc.includes('待核'), false);
       assert.equal(tactic.obtain.hanyan, '拓印四選一');
       assert.equal(tactic.obtain.yingxiong, '賽季商店');
+      assert.match(tactic.note, /使用者確認 2026-11-08/);
     } else {
       assert.equal(tactic.rank, 'S');
       if (source === '賽季') assert.match(tactic.desc, /兵演春秋賽季商店/);
@@ -263,17 +269,23 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(huijun.scenarios, undefined);
   const hanyanAlso = new Set(['tuo-caochuan', 'tuo-guagu', 'tuo-duohun']);
   const hanyanOnly = new Set(['tuo-zhongzhi', 'heng-e', 'zhuan-xingyi', 'zhuan-weizhen', 'tuo-jushi', 'tuo-zhene', 'zhuan-shizi']);
-  const hanyanOpen = new Set(['cangqi', 'jueji', 'taoyuan']);
+  const hanyanOpen = new Set(['cangqi', 'jueji', 'taoyuan', 'huijun']);
   for (const tactic of tacticsFile.tactics) {
     if (hanyanAlso.has(tactic.id)) {
       assert.deepEqual(tactic.scenarios, ['yingxiong', 'hanyan'], tactic.id);
-      assert.equal(tactic.status, '待核', tactic.id);
+      assert.equal(tactic.status, '已核', tactic.id);
+      assert.equal(tactic.quality, undefined, tactic.id);
+      assert.equal(tactic.rank, 'S', tactic.id);
+      assert.equal(tactic.desc.includes('待核'), false, tactic.id);
+      assert.match(tactic.note, /使用者確認 2026-11-08/, tactic.id);
       assert.match(tactic.sourceUrl, /^https:\/\/sgsdeck.com\//, tactic.id);
     } else if (hanyanOnly.has(tactic.id)) {
       assert.deepEqual(tactic.scenarios, ['hanyan'], tactic.id);
-      assert.equal(tactic.status, '待核', tactic.id);
-      assert.equal(tactic.quality, '未核', tactic.id);
-      assert.equal(tactic.rank, undefined, tactic.id);
+      assert.equal(tactic.status, '已核', tactic.id);
+      assert.equal(tactic.quality, undefined, tactic.id);
+      assert.equal(tactic.rank, 'S', tactic.id);
+      assert.equal(tactic.desc.includes('待核'), false, tactic.id);
+      assert.match(tactic.note, /使用者確認 2026-11-08/, tactic.id);
       assert.equal(tactic.obtain, tactic.id === 'tuo-zhongzhi' ? '拓印四選一' : '賽季商店', tactic.id);
       assert.match(tactic.sourceUrl, /^https:\/\/sgsdeck.com\/seasons\/pk-s27$/, tactic.id);
     } else if (tactic.variant === '拓' || tactic.variant === '精') {
@@ -289,7 +301,8 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(cangqi.source, '傳承');
   assert.equal(cangqi.type, '被動');
   assert.equal(cangqi.rank, 'S');
-  assert.equal(cangqi.status, '待核');
+  assert.equal(cangqi.status, '已核');
+  assert.match(cangqi.note, /使用者確認 2026-11-08/);
   assert.deepEqual(cangqi.troops, ['盾', '器械']);
   assert.deepEqual(cangqi.from, ['sp-caocao']);
   assert.deepEqual(cangqi.fromNames, ['SP曹操']);
@@ -298,12 +311,16 @@ test('generals and tactics are internally consistent', () => {
   const jueji = byName.get('絕計折謀');
   assert.equal(jueji.source, '傳承');
   assert.equal(jueji.type, '主動');
+  assert.equal(jueji.status, '已核');
+  assert.match(jueji.note, /使用者確認 2026-11-08/);
   assert.deepEqual(jueji.fromNames, ['何氏']);
   assert.equal(jueji.scenarios, undefined);
   assert.equal(jueji.sourceUrl, 'https://sgsdeck.com/tactics/絕計折謀');
   const taoyuan = byName.get('桃園結義');
   assert.equal(taoyuan.source, '事件');
   assert.equal(taoyuan.type, '指揮');
+  assert.equal(taoyuan.status, '已核');
+  assert.match(taoyuan.note, /使用者確認 2026-11-08/);
   assert.deepEqual(taoyuan.exchange, ['liubei', 'guanyu', 'zhangfei']);
   assert.equal(taoyuan.scenarios, undefined);
   assert.equal(fitsScenario(taoyuan, 'regular'), true);
@@ -553,11 +570,13 @@ test('generals and tactics are internally consistent', () => {
     assert.equal(general.innate, innate);
     assert.equal(general.scenarios, undefined);
     assert.equal(general.scenarioLimit, undefined);
-    assert.equal(general.debutScenario, 'hanyan');
+    assert.equal(general.debutScenario, undefined);
+    assert.equal(general.note.includes('首次登場'), false, id);
     assert.equal(generalListed(general, 'regular'), true);
     assert.equal(generalListed(general, 'hanyan'), true);
     assert.match(general.note, /使用者遊戲截圖 2026-11-08/);
     assert.match(general.note, /可轉群/);
+    assert.match(general.note, /不猜首登賽季/);
     if (apt) assert.deepEqual(general.apt, apt);
     else assert.equal(general.apt.弓, '待核');
   }
@@ -569,7 +588,8 @@ test('generals and tactics are internally consistent', () => {
   assert.notEqual(zhujun.id, 'sp-zhujun');
   assert.equal(zhujun.innate, '鎮壓黃巾');
   assert.match(zhujun.note, /鎮壓黃巾/);
-  assert.match(zhujun.note, /免疫沙暴並造成叛逆/);
+  assert.match(zhujun.note, /免疫沙暴並造成叛逃/);
+  assert.equal(zhujun.note.includes('叛逆'), false);
   assert.match(zhujun.note, /千里馳援/);
   assert.match(zhujun.note, /不採用/);
   assert.equal(generalsFile.generals.find((item) => item.id === 'luzhi').name, '盧植');
@@ -592,10 +612,13 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(scenario.recommended.filter((team) => team.officialSource).length, 4);
   const variants = tacticsFile.tactics.filter((item) => /^(拓|精|轉)·/.test(item.name));
   assert.equal(variants.every((item) => !item.desc.includes('沿用原戰法')), true);
-  assert.match(byName.get('拓·草船借箭').desc, /對應原戰法草船借箭；拓本實際效果待核/);
-  assert.match(byName.get('拓·刮骨療毒').desc, /對應原戰法刮骨療毒；拓本實際效果待核/);
-  assert.match(byName.get('拓·奪魂挾魄').desc, /對應原戰法奪魂挾魄；拓本實際效果待核/);
-  assert.match(byName.get('轉·形一陣').desc, /對應原戰法形一陣；轉本實際效果待核/);
+  assert.equal(byName.get('拓·草船借箭').desc, '對應原戰法草船借箭');
+  assert.equal(byName.get('拓·刮骨療毒').desc, '對應原戰法刮骨療毒');
+  assert.equal(byName.get('拓·奪魂挾魄').desc, '對應原戰法奪魂挾魄');
+  assert.equal(byName.get('轉·形一陣').desc, '對應原戰法形一陣');
+  assert.equal(byName.get('衡軛陣').desc, '沒有對應原版。');
+  assert.equal(huijun.status, '已核');
+  assert.match(huijun.note, /使用者確認 2026-11-08/);
   assert.match(huijun.desc, /自帶戰法為主動戰法時生效/);
   assert.match(huijun.desc, /或治療/);
   assert.equal(huijun.desc.includes('造成傷害並治療'), false);
