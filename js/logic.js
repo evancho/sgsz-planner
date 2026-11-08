@@ -502,7 +502,7 @@ export function generalOverlaps(account, members, generalsById) {
   const hits = [];
   const seen = new Set();
   for (const member of members || []) {
-    const generalId = member?.generalId;
+    const generalId = member?.generalId || chooseSeatGeneral(member, { owned: account?.owned, usage });
     if (!generalId || seen.has(generalId)) continue;
     const general = generalsById?.get(generalId);
     const name = general?.name || member.generalName || generalId;
@@ -749,21 +749,50 @@ export function memberTacticPlan(member, lookup = {}) {
   return { learned, unknown, alternatives };
 }
 
-/** 圖鑑對不上的武將不丟配置。回傳給卡片和加入後備註。 */
+/** 斜線寫明的兩位武將，用帳號實際擁有、且沒在別隊的那一位。都沒有就回 null。 */
+export function chooseSeatGeneral(member, lookup = {}) {
+  if (member?.generalId) return member.generalId;
+  const choices = Array.isArray(member?.generalChoices) ? member.generalChoices : [];
+  if (!choices.length || !lookup.owned) return null;
+  const free = [];
+  const held = [];
+  for (const choice of choices) {
+    if (!choice?.id || !lookup.owned[choice.id]) continue;
+    const where = lookup.usage?.generalTeams?.get(choice.id);
+    if (where) held.push(choice);
+    else free.push(choice);
+  }
+  if (free.length) return free[0].id;
+  if (held.length) return held[0].id;
+  return null;
+}
+
+/** 圖鑑對不上、或還沒選定的武將，原配置留在卡片和備註。 */
 export function unresolvedSeatNote(member, lookup = {}) {
   if (!member || member.generalId) return '';
   const name = String(member.generalName || '').trim() || '未命名';
+  const choices = Array.isArray(member.generalChoices) ? member.generalChoices : [];
   const plan = memberTacticPlan(member, lookup);
   const equipped = plan.learned
     .map((id) => lookup.tacticById?.(id)?.name || lookup.tacticName?.(id) || '')
     .filter((label) => label && label !== '');
   const raw = String(member.tacticsRaw || '').trim();
   const tacticText = equipped.length ? equipped.join('、') : raw;
-  const bits = [`未解析武將 ${name}`];
+  const who = choices.length
+    ? `${name}（${choices.map((choice) => choice.name).filter(Boolean).join('或')}擇一）`
+    : `未解析武將 ${name}`;
+  const bits = [who];
   if (tacticText) bits.push(tacticText);
   if (plan.alternatives.length) bits.push(`替代：${plan.alternatives.join('、')}`);
   if (plan.unknown.length) bits.push(plan.unknown.join('、'));
   return bits.join(' ');
+}
+
+function missingGeneralLabel(member, lookup) {
+  if (member.generalId) return lookup.generalName?.(member.generalId) || member.generalName || member.generalId;
+  if (member.generalChoices?.length) return member.generalName || member.generalChoices.map((choice) => choice.name).join('／');
+  const name = String(member.generalName || '').trim() || '未命名';
+  return `未解析武將：${name}／待核`;
 }
 
 /** 帳號還沒有的武將、傳承戰法。圖鑑未收、寫在未收錄裡的戰法也算缺少。兵書不算。 */
@@ -777,10 +806,23 @@ export function ownershipGaps(members, account, lookup = {}) {
   for (const member of members || []) {
     if (!member) continue;
     const generalId = member.generalId;
-    // 圖鑑沒有這格武將時，原名留在卡片與加入後備註，不當成缺武將擋下整隊。
-    if (generalId && !account?.owned?.[generalId] && !seenGenerals.has(generalId)) {
+    const choices = Array.isArray(member.generalChoices) ? member.generalChoices : [];
+    const choiceReady = choices.some((choice) => choice?.id && account?.owned?.[choice.id]);
+    if (choices.length && !choiceReady) {
+      const label = missingGeneralLabel(member, lookup);
+      if (!seenGenerals.has(label)) {
+        seenGenerals.add(label);
+        generals.push(label);
+      }
+    } else if (!generalId && !choices.length) {
+      const label = missingGeneralLabel(member, lookup);
+      if (!seenGenerals.has(label)) {
+        seenGenerals.add(label);
+        generals.push(label);
+      }
+    } else if (generalId && !account?.owned?.[generalId] && !seenGenerals.has(generalId)) {
       seenGenerals.add(generalId);
-      generals.push(member.generalName || generalName(generalId) || generalId);
+      generals.push(missingGeneralLabel(member, lookup) || generalName(generalId) || generalId);
     }
     const plan = memberTacticPlan(member, lookup);
     for (const label of plan.unknown) {
@@ -1097,6 +1139,10 @@ export function normalizeRecommended(list) {
       if (traits.length) next.traits = traits;
       const aptNeed = aptNeedOf(member.aptNeed || member.apt);
       if (aptNeed) next.aptNeed = aptNeed;
+      const resolveBasis = clip(member.resolveBasis, 180);
+      if (resolveBasis) next.resolveBasis = resolveBasis;
+      const generalChoices = generalChoicesOf(member.generalChoices);
+      if (generalChoices.length) next.generalChoices = generalChoices;
       return next;
     });
     const team = {
@@ -1187,6 +1233,20 @@ function normalizeAlternatives(list) {
   }).filter(Boolean);
 }
 
+function generalChoicesOf(raw) {
+  if (!Array.isArray(raw)) return [];
+  const choices = [];
+  const seen = new Set();
+  for (const item of raw.slice(0, 4)) {
+    const id = cleanId(item?.id);
+    const name = clip(item?.name, 24);
+    if (!id || !name || seen.has(id)) continue;
+    seen.add(id);
+    choices.push({ id, name });
+  }
+  return choices;
+}
+
 function aptNeedOf(raw) {
   const troop = clip(raw?.troop, 4);
   const letter = String(raw?.letter || '');
@@ -1210,6 +1270,7 @@ function recommendedNotes(rec) {
   if (rec.note) lines.push(rec.note);
   for (const member of rec.members || []) {
     if (member?.remark) lines.push(`${member.generalName || ''} ${member.remark}`.trim());
+    if (member?.resolveBasis) lines.push(member.resolveBasis);
   }
   return clip(lines.join('；'), 500);
 }
@@ -1226,12 +1287,17 @@ export function teamFromRecommended(rec, teamId, lookup) {
     substitute: false,
     members: [0, 1, 2].map((index) => {
       const member = rec.members?.[index];
-      if (!member?.generalId) {
+      const picked = chooseSeatGeneral(member, lookup || {});
+      if (!picked || member?.generalChoices?.length) {
         const seat = unresolvedSeatNote(member, lookup || {});
         if (seat) extraNotes.push(seat);
-        return null;
       }
-      const base = { generalId: member.generalId, bingshu: member.bingshu || null };
+      if (!picked) return null;
+      if (!member.generalId && member.generalChoices?.length) {
+        const rest = member.generalChoices.filter((choice) => choice.id !== picked).map((choice) => choice.name);
+        if (rest.length) extraNotes.push(`武將替代：${rest.join('、')}`);
+      }
+      const base = { generalId: picked, bingshu: member.bingshu || null };
       if (member.traits?.length) base.traits = member.traits;
       if (member.aptNeed) base.aptNeed = member.aptNeed;
       if (!lookup) {

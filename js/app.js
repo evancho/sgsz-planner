@@ -1324,6 +1324,8 @@ function tacticLookup(current = account()) {
     tacticName: (id) => list.find((tactic) => tactic.id === id)?.name || '',
     tacticById: (id) => list.find((tactic) => tactic.id === id) || null,
     tacticByName: (name) => list.find((tactic) => tactic.name === name) || null,
+    owned: current.owned,
+    usage: buildUsage(current),
   };
 }
 
@@ -1407,6 +1409,7 @@ function templateResultsMarkup() {
     const unresolved = (team.members || [])
       .map((member) => unresolvedSeatNote(member, tacticLookup(current)))
       .filter(Boolean);
+    const bases = [...new Set((team.members || []).map((member) => member?.resolveBasis).filter(Boolean))];
     const blocked = state.blocked;
     const notes = state.notes;
     const missing = team.fromRecommended
@@ -1434,6 +1437,7 @@ function templateResultsMarkup() {
           <p>${esc(names)}</p>
           ${planLine(team)}
           ${unresolved.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
+          ${bases.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
           ${basis}
           ${notes.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
           ${team.fromRecommended ? altHtml(team) : ''}

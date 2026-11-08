@@ -37,12 +37,12 @@ const chui = () => book('shiji', 'sanjun', 'chuilian', 'tongjun');
 
 export const hanyanRecommended = [
   team('hanyan-dahan-gong', '大漢弓', '整軍', 's27-official-dahan-gong', [
-    seat(null, 'SP曹操', ['taoyuan', 'gangrou-ji'], ['桃園結義', '剛柔並濟'], sanjun()),
+    seat(null, 'SP曹操', ['taoyuan', 'gangrou-ji'], ['桃園結義', '剛柔並濟'], sanjun(), '原文與 sgsdeck 主將是 SP曹操。圖鑑未收，不改成曹操。'),
     seat('sp-luzhi', 'SP盧植', ['yanxing', 'xiandeng'], ['雁行陣', '先登死士'], sanjun()),
     seat('sp-diaochan', 'SP貂蟬', ['shencang', 'luli'], ['深藏若虛', '戮力同心'], sanjun()),
   ], ['芒碭隱蹤', '沛縣聚義', '約法三章', '鴻門遁險', '推食解衣']),
   team('hanyan-sanshi-lvbu', '三勢40Y呂布盾', '強攻', 's27-official-sanshi-lvbu-dun', [
-    seat(null, '40Y呂布', ['xueren', 'chenmu'], ['血刃爭鋒', '瞋目橫矛'], book('jiubian', 'shiruo', 'jiuzhan', 'yanxu')),
+    seat(null, '40Y呂布', ['xueren', 'chenmu'], ['血刃爭鋒', '瞋目橫矛'], book('jiubian', 'shiruo', 'jiuzhan', 'yanxu'), '官方卡名 40Y呂布。圖鑑只有普通呂布，不替換。'),
     seat('sp-fazheng', 'SP法正', ['xushidai', 'tengjia'], ['蓄勢待發', '藤甲兵'], chui()),
     seat('xuyou', '許攸', ['sanshi', 'linwei'], ['三勢陣', '臨危救主'], chui()),
   ], ['橫掃河西', '追亡逐北', '博浪椎秦', '臨危不懼', '壯志不絕']),
@@ -77,7 +77,7 @@ export const hanyanRecommended = [
     seat('zhugeliang', '諸葛亮', ['dangfeng', 'guagu'], ['當鋒摧決', '刮骨療毒'], book('jiubian', 'yuanqi', 'lijun', 'chiyuan')),
   ], ['設伏十面', '楚歌四起', '背水列陣', '多多益善', '博浪椎秦']),
   team('hanyan-lvdiaolu', '40Y呂貂盧弓', '久戰', 's27-official-lv-diao-lu-gong', [
-    seat(null, '40Y呂布', ['xueren', 'yinxian'], ['血刃爭鋒', '引弦力戰'], book('jiubian', 'shiruo', 'jiuzhan', 'yanxu'), { traits: ['踩踏', '無雙'] }),
+    seat(null, '40Y呂布', ['xueren', 'yinxian'], ['血刃爭鋒', '引弦力戰'], book('jiubian', 'shiruo', 'jiuzhan', 'yanxu'), { traits: ['踩踏', '無雙'], remark: '官方卡名 40Y呂布。圖鑑只有普通呂布，不替換。' }),
     seat('sp-luzhi', 'SP盧植', ['yanxing', 'gangrou-ji'], ['雁行陣', '剛柔並濟'], sanjun(), { traits: ['護主', '妖氣'] }),
     seat('sp-diaochan', 'SP貂蟬', ['shencang', 'luli'], ['深藏若虛', '戮力同心'], sanjun(), { traits: ['雍雅', '妖氣'] }),
   ], ['橫掃河西', '追亡逐北', '鴻門遁險', '沛縣聚義', '約法三章'], '', false),

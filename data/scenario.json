@@ -1225,7 +1225,8 @@
             null
           ],
           "learnedNames": [],
-          "tacticsRaw": "桃園結義、剛柔並濟"
+          "tacticsRaw": "桃園結義、剛柔並濟",
+          "resolveBasis": "原文與 sgsdeck 大漢弓主將是 SP曹操。圖鑑未收 SP曹操，不改成曹操。"
         },
         {
           "generalId": "sp-luzhi",
@@ -1476,7 +1477,7 @@
       "note": "作者稱可變弓盾。變體不自行補。",
       "members": [
         {
-          "generalId": null,
+          "generalId": "sp-machao",
           "generalName": "SP馬超",
           "learned": [
             null,
@@ -1486,14 +1487,15 @@
           "tacticsRaw": "當峰、催峰斷刃"
         },
         {
-          "generalId": null,
+          "generalId": "sp-huangfusong",
           "generalName": "SP皇埔嵩",
           "learned": [
             null,
             null
           ],
           "learnedNames": [],
-          "tacticsRaw": "草船、萬軍"
+          "tacticsRaw": "草船、萬軍",
+          "resolveBasis": "巴哈 11651 皇馬寫「SP皇埔嵩草船萬軍」，與官方皇馬槍 SP皇甫嵩（草船借箭、萬軍奪帥）同一格。埔是甫的錯字。"
         },
         {
           "generalId": "xuyou",
@@ -1738,7 +1740,18 @@
             null
           ],
           "learnedNames": [],
-          "tacticsRaw": "臨危救主／乘敵不虞、雁形陣"
+          "tacticsRaw": "臨危救主／乘敵不虞、雁形陣",
+          "resolveBasis": "巴哈 11651 原文「SP呂蒙/程普」，斜線是二擇一。",
+          "generalChoices": [
+            {
+              "id": "sp-lvmeng",
+              "name": "SP呂蒙"
+            },
+            {
+              "id": "chengpu",
+              "name": "程普"
+            }
+          ]
         }
       ],
       "alternatives": [
@@ -1861,7 +1874,7 @@
       "note": "每將6000～7000兵。SP朱儁可換張飛（橫掃、疾風驟雨）或SP袁紹（擎刀、疾風驟雨）。",
       "members": [
         {
-          "generalId": null,
+          "generalId": "zhoutai",
           "generalName": "周泰",
           "learned": [
             null,
@@ -1935,10 +1948,11 @@
           "learnedNames": [],
           "tacticsRaw": "藏器、血刃",
           "bingshuRaw": "蠻勇武略執銳／示敵百戰掩虛",
-          "remark": "全兵種S"
+          "remark": "全兵種S",
+          "resolveBasis": "巴哈 11645 把 40呂、40呂布、奉先混用。官方卡名是 40Y呂布，圖鑑沒有這張卡，不改成普通呂布。"
         },
         {
-          "generalId": null,
+          "generalId": "sp-fazheng",
           "generalName": "sp法",
           "learned": [
             null,
@@ -1946,10 +1960,11 @@
           ],
           "learnedNames": [],
           "tacticsRaw": "蓄勢、三勢",
-          "bingshuRaw": "三軍統軍錘鍊"
+          "bingshuRaw": "三軍統軍錘鍊",
+          "resolveBasis": "巴哈 11645 先寫 sp法 的發動率，同一段後文改稱滿紅sp法正。對應圖鑑 SP法正。"
         },
         {
-          "generalId": null,
+          "generalId": "sp-huangfusong",
           "generalName": "sp皇",
           "learned": [
             null,
@@ -1958,7 +1973,8 @@
           "learnedNames": [],
           "tacticsRaw": "藤甲、臨危",
           "bingshuRaw": "援其勵軍掩虛",
-          "remark": "盾散＋群"
+          "remark": "盾散＋群",
+          "resolveBasis": "巴哈 11645 皇甫版本寫「需要攜帶sp皇甫」。李老師 11651 把同一格寫成 SP皇埔嵩。圖鑑是 SP皇甫嵩。"
         }
       ],
       "rank": "T0",
@@ -2009,7 +2025,8 @@
           "learnedNames": [],
           "tacticsRaw": "藏器、文武",
           "bingshuRaw": "蠻勇武略執銳／示敵百戰掩虛",
-          "remark": "全兵種S"
+          "remark": "全兵種S",
+          "resolveBasis": "巴哈 11645 把 40呂、40呂布、奉先混用。官方卡名是 40Y呂布，圖鑑沒有這張卡，不改成普通呂布。"
         },
         {
           "generalId": "chengpu",
@@ -2023,7 +2040,7 @@
           "bingshuRaw": "無戰守勢防備"
         },
         {
-          "generalId": null,
+          "generalId": "sp-fazheng",
           "generalName": "sp法",
           "learned": [
             null,
@@ -2031,7 +2048,8 @@
           ],
           "learnedNames": [],
           "tacticsRaw": "蓄勢、轉形一",
-          "bingshuRaw": "三軍統軍錘鍊"
+          "bingshuRaw": "三軍統軍錘鍊",
+          "resolveBasis": "巴哈 11645 先寫 sp法 的發動率，同一段後文改稱滿紅sp法正。對應圖鑑 SP法正。"
         }
       ],
       "rank": "T0",
@@ -2085,7 +2103,8 @@
               "jiuzhan",
               "yanxu"
             ]
-          }
+          },
+          "remark": "官方卡名 40Y呂布。圖鑑只有普通呂布，不替換。"
         },
         {
           "generalId": "sp-fazheng",
@@ -2494,6 +2513,7 @@
               "yanxu"
             ]
           },
+          "remark": "官方卡名 40Y呂布。圖鑑只有普通呂布，不替換。",
           "traits": [
             "踩踏",
             "無雙"
