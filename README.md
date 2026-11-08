@@ -39,7 +39,7 @@ Android 可用 Chrome 的「加到主畫面」。電腦直接用瀏覽器即可�
 
 可選。連上之後，本機變更會在短時間內與 OneDrive **App 專用資料夾**裡的 `sgsz-planner-backup.json` 自動同步。每位使用者登**自己的** Microsoft 帳號；不會寫入別人的 OneDrive。權限只有 `Files.ReadWrite.AppFolder`，讀不到該帳號其他檔案。
 
-衝突規則：本機與雲端**內容不同**時會跳出視窗，讓你選「使用本機」或「使用雲端」，**不會自動覆蓋**。選定後，被蓋掉的那一份會先存成 OneDrive 應用程式資料夾裡的封存檔（`sgsz-planner-archive-…json`），主檔 `sgsz-planner-backup.json` 才改成你選的那一邊。內容相同則安靜略過。
+衝突規則：本機與雲端**內容不同**時會跳出視窗，讓你選「使用本機」或「使用雲端」，**不會自動覆蓋**。選定後，被蓋掉的那一份會先存成 OneDrive 應用程式資料夾裡的封存檔（`sgsz-planner-archive-…json`），主檔 `sgsz-planner-backup.json` 才改成你選的那一邊。同一台裝置上選過的同一組內容不會再跳；任一邊有新變更才會再問。按「稍後」只略過背景同步，手動「立即同步」仍可再選。內容相同則安靜略過。
 
 ### 設定（維護者／fork 一次）
 

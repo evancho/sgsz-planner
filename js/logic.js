@@ -180,6 +180,32 @@ export function backupsDiffer(local, remote) {
   return backupFingerprint(local) !== backupFingerprint(remote);
 }
 
+/** Remember a conflict choice on this device so the same pair does not keep prompting. */
+export function makeConflictAck(choice, local, remote, when = new Date()) {
+  return {
+    choice,
+    localFp: backupFingerprint(local),
+    remoteFp: backupFingerprint(remote),
+    at: when instanceof Date ? when.toISOString() : String(when || ''),
+  };
+}
+
+/**
+ * Same local/remote fingerprints as a prior choice on this device:
+ * - local/remote → re-apply that choice quietly
+ * - later + quiet sync → skip the dialog
+ * Different content → ask again
+ * @returns {'ask' | 'skip' | 'local' | 'remote'}
+ */
+export function conflictPromptDecision(ack, local, remote, options = {}) {
+  if (!ack || !local || !remote) return 'ask';
+  if (ack.choice !== 'local' && ack.choice !== 'remote' && ack.choice !== 'later') return 'ask';
+  if (ack.localFp !== backupFingerprint(local) || ack.remoteFp !== backupFingerprint(remote)) return 'ask';
+  if (ack.choice === 'local' || ack.choice === 'remote') return ack.choice;
+  if (ack.choice === 'later' && options.quiet) return 'skip';
+  return 'ask';
+}
+
 export function archiveBackupFileName(when = new Date(), side = 'backup') {
   const stamp = when.toISOString().replace(/[:.]/g, '-');
   const label = side === 'local' || side === 'remote' ? side : 'backup';
