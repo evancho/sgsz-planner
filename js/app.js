@@ -91,6 +91,8 @@ import {
   backupsDiffer,
   backupSubstance,
   isSparseBackup,
+  makeConflictAck,
+  conflictPromptDecision,
   updateAccount,
   usefulInnate,
 } from './logic.js';
@@ -98,6 +100,7 @@ import { loadState, saveState } from './store.js';
 
 const SYNC_DEBOUNCE_MS = 1500;
 const SYNC_LAST_KEY = 'sgsz-onedrive-last-sync';
+const SYNC_CONFLICT_ACK_KEY = 'sgsz-onedrive-conflict-ack';
 
 const ui = {
   catalog: null,
@@ -295,6 +298,38 @@ function setSyncLast(iso) {
   }
 }
 
+function readConflictAck() {
+  try {
+    return JSON.parse(localStorage.getItem(SYNC_CONFLICT_ACK_KEY) || 'null');
+  } catch {
+    return null;
+  }
+}
+
+function writeConflictAck(choice, local, remote) {
+  try {
+    localStorage.setItem(SYNC_CONFLICT_ACK_KEY, JSON.stringify(makeConflictAck(choice, local, remote)));
+  } catch {
+    /* ignore quota */
+  }
+}
+
+function clearConflictAck() {
+  try {
+    localStorage.removeItem(SYNC_CONFLICT_ACK_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+function dismissSyncConflict(choice = 'later') {
+  const conflict = ui.syncConflict;
+  if (conflict?.local && conflict?.remote) writeConflictAck(choice, conflict.local, conflict.remote);
+  ui.syncConflict = null;
+  ui.sync.status = 'idle';
+  render();
+}
+
 async function refreshSyncStatus() {
   try {
     const config = await import('./onedrive-config.js');
@@ -348,11 +383,12 @@ function openSyncConflict(localPayload, remotePayload) {
   toast('本機與 OneDrive 資料不同，請選擇要保留哪一邊');
 }
 
-async function resolveSyncConflict(choice) {
-  const conflict = ui.syncConflict;
+async function resolveSyncConflict(choice, options = {}) {
+  const conflict = options.conflict || ui.syncConflict;
   if (!conflict || (choice !== 'local' && choice !== 'remote')) return;
+  const quiet = Boolean(options.quiet);
   ui.sync.status = 'syncing';
-  render();
+  if (!quiet) render();
   try {
     const api = await loadOneDriveApi();
     if (choice === 'local') {
@@ -361,7 +397,7 @@ async function resolveSyncConflict(choice) {
       if (!archived.ok) {
         ui.sync.status = 'error';
         ui.sync.error = archived.error || '無法備份雲端舊檔';
-        toast(ui.sync.error);
+        if (!quiet) toast(ui.sync.error);
         render();
         return;
       }
@@ -371,7 +407,7 @@ async function resolveSyncConflict(choice) {
       if (!uploaded.ok) {
         ui.sync.status = 'error';
         ui.sync.error = uploaded.error;
-        toast(uploaded.error);
+        if (!quiet) toast(uploaded.error);
         render();
         return;
       }
@@ -379,10 +415,11 @@ async function resolveSyncConflict(choice) {
         ui.state = { ...ui.state, updatedAt: toUpload.updatedAt };
         saveState(ui.state);
       }
+      writeConflictAck('local', conflict.local, conflict.remote);
       ui.syncConflict = null;
       setSyncLast(new Date().toISOString());
       ui.sync.status = 'idle';
-      toast(`已使用本機，雲端舊檔已存成 ${archived.fileName || 'archive'}`);
+      if (!quiet) toast(`已使用本機，雲端舊檔已存成 ${archived.fileName || 'archive'}`);
       render();
       return;
     }
@@ -391,7 +428,7 @@ async function resolveSyncConflict(choice) {
     if (!archived.ok) {
       ui.sync.status = 'error';
       ui.sync.error = archived.error || '無法備份本機舊檔';
-      toast(ui.sync.error);
+      if (!quiet) toast(ui.sync.error);
       render();
       return;
     }
@@ -399,7 +436,7 @@ async function resolveSyncConflict(choice) {
     if (!normalized.ok) {
       ui.sync.status = 'error';
       ui.sync.error = normalized.error || '雲端備份無法讀取';
-      toast(ui.sync.error);
+      if (!quiet) toast(ui.sync.error);
       render();
       return;
     }
@@ -408,20 +445,21 @@ async function resolveSyncConflict(choice) {
     if (!keepRemote.ok) {
       ui.sync.status = 'error';
       ui.sync.error = keepRemote.error;
-      toast(keepRemote.error);
+      if (!quiet) toast(keepRemote.error);
       render();
       return;
     }
     commit(normalized.state, { keepStamp: true, skipSync: true });
+    writeConflictAck('remote', conflict.local, conflict.remote);
     ui.syncConflict = null;
     setSyncLast(new Date().toISOString());
     ui.sync.status = 'idle';
-    toast(`已使用雲端，本機舊檔已存成 ${archived.fileName || 'archive'}`);
+    if (!quiet) toast(`已使用雲端，本機舊檔已存成 ${archived.fileName || 'archive'}`);
     render();
   } catch (error) {
     ui.sync.status = 'error';
     ui.sync.error = error?.message || '同步失敗';
-    toast(ui.sync.error);
+    if (!quiet) toast(ui.sync.error);
     render();
   }
 }
@@ -481,10 +519,26 @@ async function syncWithOneDrive(options = {}) {
         return;
       }
       if (!backupsDiffer(localForSync, downloaded.payload)) {
+        clearConflictAck();
         ui.syncConflict = null;
         setSyncLast(new Date().toISOString());
         ui.sync.status = 'idle';
         if (!options.quiet) toast('已是最新');
+        return;
+      }
+      const decision = conflictPromptDecision(readConflictAck(), localForSync, downloaded.payload, {
+        quiet: options.quiet,
+      });
+      if (decision === 'skip') {
+        ui.syncConflict = null;
+        ui.sync.status = 'idle';
+        return;
+      }
+      if (decision === 'local' || decision === 'remote') {
+        await resolveSyncConflict(decision, {
+          quiet: true,
+          conflict: { local: localForSync, remote: downloaded.payload },
+        });
         return;
       }
       openSyncConflict(localForSync, downloaded.payload);
@@ -2804,9 +2858,7 @@ function onClick(event) {
       void resolveSyncConflict('remote');
       break;
     case 'sync-conflict-later':
-      ui.syncConflict = null;
-      ui.sync.status = 'idle';
-      render();
+      dismissSyncConflict('later');
       break;
     case 'import-text':
       stageImport(document.getElementById('import-text')?.value || '');
@@ -3311,8 +3363,8 @@ function bind() {
     }
     if (event.key !== 'Escape') return;
     if (ui.syncConflict) {
-      ui.syncConflict = null;
-      ui.sync.status = 'idle';
+      dismissSyncConflict('later');
+      return;
     } else if (ui.dialog) {
       ui.dialog = null;
       ui.pendingImport = null;
