@@ -557,6 +557,7 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(builtDahan.members[1].generalId, 'sp-luzhi');
   assert.equal(builtDahan.members[2].generalId, 'sp-diaochan');
   const huangfu = scenario.recommended.find((team) => team.id === 'baha-a-huangfu');
+  assert.equal(huangfu.title, '三勢40Y呂／皇甫版本');
   const huangfuGaps = ownershipGaps(huangfu.members, { owned: {}, tacticsOwned: {} }, gapLookup);
   const huangfuLine = generalGapLine(huangfuGaps);
   assert.equal(huangfu.members[0].generalId, 'y40-lvbu');
@@ -575,13 +576,18 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(huangma.members[1].generalId, 'sp-huangfusong');
   assert.match(huangma.members[1].resolveBasis, /埔是甫的錯字/);
   const pengci = scenario.recommended.find((team) => team.id === 'baha-d-pengci');
+  assert.equal(pengci.title, '碰瓷／潛龍周泰');
   assert.equal(pengci.members[0].generalId, 'zhoutai');
   const chengpuSeat = scenario.recommended.find((team) => team.id === 'baha-a-chengpu');
+  assert.equal(chengpuSeat.title, '三勢40Y呂／程普（松鼠）版本');
   assert.equal(chengpuSeat.members[0].generalId, 'y40-lvbu');
   assert.match(chengpuSeat.members[0].resolveBasis, /40呂／40呂布／奉先/);
+  assert.equal(scenario.recommended.find((team) => team.id === 'baha-d-taishi').title, '大漢弓／太師版');
+  assert.equal(huangma.title, '皇馬槍');
   const lvbu = scenario.recommended.find((team) => team.id === 'hanyan-sanshi-lvbu');
   assert.equal(lvbu.members[0].generalId, 'y40-lvbu');
   assert.match(lvbu.members[0].remark, /不是普通呂布/);
+  assert.equal(lvbu.alternatives[0].title, '許攸版本');
   const lvdiaolu = scenario.recommended.find((team) => team.id === 'hanyan-lvdiaolu');
   assert.equal(lvdiaolu.members[0].generalId, 'y40-lvbu');
   const hanNew = ['sp-caocao', 'heshi', 'baoxin', 'liuzhang', 'liudai', 'chunyuqiong', 'liuyu', 'zhangyun', 'xugong', 'y40-lvbu'];

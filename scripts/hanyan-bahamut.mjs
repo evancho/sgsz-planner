@@ -109,17 +109,17 @@ const bookLv = '蠻勇武略執銳／示敵百戰掩虛';
 const bookFa = '三軍統軍錘鍊';
 
 export const hanyanBahamut = [
-  team('baha-a-xuyou', '許攸版本', A, [
+  team('baha-a-xuyou', '三勢40Y呂／許攸版本', A, [
     seat('40呂', '藏器、血刃', { generalId: 'y40-lvbu', bingshuRaw: bookLv, remark: '全兵種S', resolveBasis: BASIS_40 }),
     seat('sp法', '蓄勢、三勢', { bingshuRaw: bookFa, generalId: 'sp-fazheng', resolveBasis: BASIS_FA }),
     seat('許攸', '藤甲、臨危', { bingshuRaw: bookFa, remark: '盾散' }),
   ], ['韜晦', '背水', '十面', '長安', '多多'], '作者稱輸出上限高、防速攻較弱。血刃可換的寫法不另開隊伍。'),
-  team('baha-a-huangfu', '皇甫版本', A, [
+  team('baha-a-huangfu', '三勢40Y呂／皇甫版本', A, [
     seat('40呂', '藏器、血刃', { generalId: 'y40-lvbu', bingshuRaw: bookLv, remark: '全兵種S', resolveBasis: BASIS_40 }),
     seat('sp法', '蓄勢、三勢', { bingshuRaw: bookFa, generalId: 'sp-fazheng', resolveBasis: BASIS_FA }),
     seat('sp皇', '藤甲、臨危', { bingshuRaw: '援其勵軍掩虛', remark: '盾散＋群', generalId: 'sp-huangfusong', resolveBasis: BASIS_HUANG }),
   ], ['韜晦', '背水', '十面', '長安', '多多']),
-  team('baha-a-chengpu', '程普（松鼠）版本', A, [
+  team('baha-a-chengpu', '三勢40Y呂／程普（松鼠）版本', A, [
     seat('40呂', '藏器、文武', { generalId: 'y40-lvbu', bingshuRaw: bookLv, remark: '全兵種S', resolveBasis: BASIS_40 }),
     seat('程普', '藤甲、臨危', { bingshuRaw: '無戰守勢防備' }),
     seat('sp法', '蓄勢、轉形一', { bingshuRaw: bookFa, generalId: 'sp-fazheng', resolveBasis: BASIS_FA }),
@@ -169,11 +169,11 @@ export const hanyanBahamut = [
     seat('SP盧植', '先登死士、雁形陣', { remark: '1速' }),
     seat('SP貂蟬', '勠力同心、深藏若虛'),
   ], ['推衣解食', '沛縣聚義', '約法三章', '鴻門遇險', '茫蕩隱蹤'], '漢弓多可先帶移花接木。兵書、方略原文未寫。'),
-  team('baha-d-taishi', '太師弓', D, [
+  team('baha-d-taishi', '大漢弓／太師版', D, [
     seat('SP董卓', '桃園結義、先登死士'),
     seat('SP盧植', '剛柔、雁形陣', { remark: '1速' }),
     seat('SP貂蟬', '勠力同心、深藏若虛'),
-  ], ['推衣解食', '沛縣聚義', '約法三章', '鴻門遇險', '茫蕩隱蹤'], '沒有抽滿SP曹操的替代。兵書、方略原文未寫。'),
+  ], ['推衣解食', '沛縣聚義', '約法三章', '鴻門遇險', '茫蕩隱蹤'], '沒有抽滿SP曹操時的大漢弓替代。兵書、方略原文未寫。'),
   team('baha-d-qianlong-fa', '潛龍法正盾', D, [
     seat('SP法正', '蓄勢待發、潛龍陣'),
     seat('周瑜', '奪魄、風助火勢'),
@@ -184,7 +184,7 @@ export const hanyanBahamut = [
     seat('諸葛亮', '刮骨／藤甲兵、乘敵不虞'),
     seat('SP法正', '蓄勢待發、拓鎮扼防拒'),
   ], ['芒砀隐踪', '沛县聚义', '波浪推秦', '推食解衣', '约法三章'], '前期刮骨、後期藤甲。正文未明寫每人全S使用方式。'),
-  team('baha-d-huangma', '皇馬', D, [
+  team('baha-d-huangma', '皇馬槍', D, [
     seat('SP馬超', '當峰、催峰斷刃'),
     seat('SP皇埔嵩', '草船、萬軍', { generalId: 'sp-huangfusong', resolveBasis: BASIS_PU }),
     seat('許攸', '臨危救主／乘敵不虞、解煩衛'),
@@ -215,7 +215,7 @@ export const hanyanBahamut = [
     seat('左慈', '臨危救主、暫避鋒芒'),
     seat('呂布', '當峰、催峰'),
   ], ['背水列阵', '设伏十面', '波浪推秦', '受书', '多多益善'], '諸葛亮／甘寧變體逐格不全，不補。'),
-  team('baha-d-pengci', '碰瓷系列／潛龍周泰袁術和SP朱儁', D, [
+  team('baha-d-pengci', '碰瓷／潛龍周泰', D, [
     seat('周泰', '潛龍、盛氣'),
     seat('袁術', '焚輜、上兵伐謀'),
     seat('SP朱儁', '太平、無當'),

@@ -1336,7 +1336,7 @@
     {
       "id": "baha-d-taishi",
       "scenario": "hanyan",
-      "title": "太師弓",
+      "title": "大漢弓／太師版",
       "status": "已核",
       "origin": "bahamut",
       "originLabel": "巴哈玩家版",
@@ -1354,7 +1354,7 @@
         "鴻門遇險",
         "茫蕩隱蹤"
       ],
-      "note": "沒有抽滿SP曹操的替代。兵書、方略原文未寫。",
+      "note": "沒有抽滿SP曹操時的大漢弓替代。兵書、方略原文未寫。",
       "members": [
         {
           "generalId": "sp-dongzhuo",
@@ -1467,7 +1467,7 @@
     {
       "id": "baha-d-huangma",
       "scenario": "hanyan",
-      "title": "皇馬",
+      "title": "皇馬槍",
       "status": "已核",
       "origin": "bahamut",
       "originLabel": "巴哈玩家版",
@@ -1864,7 +1864,7 @@
     {
       "id": "baha-d-pengci",
       "scenario": "hanyan",
-      "title": "碰瓷系列／潛龍周泰袁術和SP朱儁",
+      "title": "碰瓷／潛龍周泰",
       "status": "已核",
       "origin": "bahamut",
       "originLabel": "巴哈玩家版",
@@ -1929,7 +1929,7 @@
     {
       "id": "baha-a-huangfu",
       "scenario": "hanyan",
-      "title": "皇甫版本",
+      "title": "三勢40Y呂／皇甫版本",
       "status": "已核",
       "origin": "bahamut",
       "originLabel": "巴哈玩家版",
@@ -2006,7 +2006,7 @@
     {
       "id": "baha-a-chengpu",
       "scenario": "hanyan",
-      "title": "程普（松鼠）版本",
+      "title": "三勢40Y呂／程普（松鼠）版本",
       "status": "已核",
       "origin": "bahamut",
       "originLabel": "巴哈玩家版",
@@ -2162,7 +2162,7 @@
       "alternatives": [
         {
           "id": "baha-a-xuyou",
-          "title": "藏器版",
+          "title": "許攸版本",
           "originLabel": "巴哈玩家版",
           "author": "我三弟無敵",
           "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11645",
