@@ -180,30 +180,43 @@ export function backupsDiffer(local, remote) {
   return backupFingerprint(local) !== backupFingerprint(remote);
 }
 
-/** Remember a conflict choice on this device so the same pair does not keep prompting. */
-export function makeConflictAck(choice, local, remote, when = new Date()) {
-  return {
-    choice,
-    localFp: backupFingerprint(local),
-    remoteFp: backupFingerprint(remote),
-    at: when instanceof Date ? when.toISOString() : String(when || ''),
-  };
-}
-
 /**
- * Same local/remote fingerprints as a prior choice on this device:
- * - local/remote → re-apply that choice quietly
- * - later + quiet sync → skip the dialog
- * Different content → ask again
- * @returns {'ask' | 'skip' | 'local' | 'remote'}
+ * Decide how to sync once local and remote fingerprints differ.
+ * Uses the last successfully synced fingerprint as a baseline:
+ * - only local changed → push local
+ * - only remote changed → pull remote
+ * - both changed → ask (unless quiet, then last-write-wins)
+ * No baseline yet → last-write-wins (so ordinary edits never open a dialog)
+ * @returns {'equal'|'push-local'|'pull-remote'|'ask'|'skip'}
  */
-export function conflictPromptDecision(ack, local, remote, options = {}) {
-  if (!ack || !local || !remote) return 'ask';
-  if (ack.choice !== 'local' && ack.choice !== 'remote' && ack.choice !== 'later') return 'ask';
-  if (ack.localFp !== backupFingerprint(local) || ack.remoteFp !== backupFingerprint(remote)) return 'ask';
-  if (ack.choice === 'local' || ack.choice === 'remote') return ack.choice;
-  if (ack.choice === 'later' && options.quiet) return 'skip';
-  return 'ask';
+export function syncMergeDecision(local, remote, baselineFp = '', options = {}) {
+  if (!local || !remote) return 'ask';
+  if (!backupsDiffer(local, remote)) return 'equal';
+
+  const quiet = Boolean(options.quiet);
+  const localFp = backupFingerprint(local);
+  const remoteFp = backupFingerprint(remote);
+  const guarded = pickSyncBackup(local, remote);
+
+  if (guarded.protected === 'local-sparse') return 'pull-remote';
+  if (guarded.protected === 'remote-sparse') return 'push-local';
+
+  if (baselineFp) {
+    const localChanged = localFp !== baselineFp;
+    const remoteChanged = remoteFp !== baselineFp;
+    if (localChanged && !remoteChanged) return 'push-local';
+    if (remoteChanged && !localChanged) return 'pull-remote';
+    if (quiet) {
+      if (guarded.choice === 'local') return 'push-local';
+      if (guarded.choice === 'remote') return 'pull-remote';
+      return 'skip';
+    }
+    return 'ask';
+  }
+
+  if (guarded.choice === 'local') return 'push-local';
+  if (guarded.choice === 'remote') return quiet ? 'pull-remote' : 'ask';
+  return quiet ? 'skip' : 'ask';
 }
 
 export function archiveBackupFileName(when = new Date(), side = 'backup') {
