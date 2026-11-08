@@ -367,6 +367,7 @@ h3 .chip { margin-left: 6px; vertical-align: middle; }
 .apt-S { color: var(--gold); }
 .apt-A { color: #e2a15a; }
 .apt-B { color: #c4b49a; }
+.apt-pending { color: var(--muted, #9a8f80); }
 .check { display: inline-flex; align-items: center; gap: 6px; }
 .box {
   width: 16px; height: 16px;

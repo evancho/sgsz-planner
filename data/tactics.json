@@ -3223,7 +3223,9 @@
       "name": "藏器待時",
       "type": "被動",
       "source": "傳承",
-      "from": [],
+      "from": [
+        "sp-caocao"
+      ],
       "troops": [
         "盾",
         "器械"
@@ -3238,14 +3240,16 @@
       ],
       "sourceUrl": "https://sgsdeck.com/tactics/藏器待時",
       "status": "待核",
-      "note": "傳承自 SP曹操。SP曹操尚未收入武將圖鑑，所以 from 先留空。"
+      "note": "傳承自 SP曹操。"
     },
     {
       "id": "jueji",
       "name": "絕計折謀",
       "type": "主動",
       "source": "傳承",
-      "from": [],
+      "from": [
+        "heshi"
+      ],
       "troops": null,
       "copies": 1,
       "orange": true,
@@ -3257,7 +3261,7 @@
       ],
       "sourceUrl": "https://sgsdeck.com/tactics/絕計折謀",
       "status": "待核",
-      "note": "傳承自何氏。何氏尚未收入武將圖鑑，所以 from 先留空。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。"
+      "note": "傳承自何氏。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。"
     },
     {
       "id": "taoyuan",

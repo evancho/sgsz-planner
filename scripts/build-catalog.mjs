@@ -26,6 +26,32 @@ function parseApt(code) {
   return apt;
 }
 
+function pendingGeneral(row) {
+  const apt = {};
+  for (const troop of APT_ORDER) {
+    const letter = row.apt?.[troop];
+    apt[troop] = /^[SABC]$/.test(letter || '') ? letter : '待核';
+  }
+  return {
+    id: row.id,
+    name: row.name,
+    camp: row.camp,
+    cost: Number.isInteger(row.cost) ? row.cost : null,
+    role: row.role || null,
+    quality: row.quality,
+    collection: false,
+    dynamic: row.dynamic === true ? true : null,
+    awaken: row.awaken === true ? true : null,
+    apt,
+    innate: row.innate || '',
+    nameKey: row.name,
+    scenarios: row.scenarios,
+    sourceUrl: row.sourceUrl,
+    status: '待核',
+    note: row.note || '',
+  };
+}
+
 function g(id, name, camp, cost, role, apt, dyn, innate = '', tags = null) {
   const general = {
     id,
@@ -206,6 +232,74 @@ const generals = [
   g('duwei-machan', '馬禪', '群', 7, '軍事', 'AAAAA', 0, '運籌帷幄', ['都尉']),
 ];
 
+const HANYAN_ONLY = ['hanyan'];
+const BINGYAN_AND_HANYAN = ['yingxiong', 'hanyan'];
+const SEASON_PK = 'https://sgsdeck.com/seasons/pk-s27';
+const SEASON_BINGYAN = 'https://sgsdeck.com/seasons/og-兵演春秋';
+const LIANG_NOTE = '漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。';
+
+for (const [id, name] of [
+  ['baoxin', '鮑信'],
+  ['liuzhang', '劉璋'],
+  ['liudai', '劉岱'],
+  ['chunyuqiong', '淳于瓊'],
+  ['liuyu', '劉虞'],
+  ['zhangyun', '張允'],
+  ['xugong', '許貢'],
+]) {
+  generals.push(pendingGeneral({
+    id,
+    name,
+    camp: '漢',
+    quality: '良將',
+    scenarios: HANYAN_ONLY,
+    sourceUrl: SEASON_PK,
+    note: LIANG_NOTE,
+  }));
+}
+
+generals.push(
+  pendingGeneral({
+    id: 'sp-caocao',
+    name: 'SP曹操',
+    camp: '漢',
+    cost: 7,
+    quality: '名將',
+    dynamic: true,
+    awaken: true,
+    apt: { 騎: 'S', 盾: 'A', 弓: 'S', 槍: 'A', 器械: 'B' },
+    innate: '承天靖世',
+    scenarios: HANYAN_ONLY,
+    sourceUrl: 'https://sgsdeck.com/generals/SP曹操',
+    note: '漢焰新武將。適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」，本圖鑑的軍事／內政對不上，定位待核。',
+  }),
+  pendingGeneral({
+    id: 'heshi',
+    name: '何氏',
+    camp: '漢',
+    cost: 4,
+    quality: '名將',
+    dynamic: true,
+    apt: { 騎: 'C', 盾: 'C', 槍: 'C', 器械: 'C' },
+    innate: '帷內擅權',
+    scenarios: HANYAN_ONLY,
+    sourceUrl: 'https://sgsdeck.com/generals/何氏',
+    note: '漢焰新武將。自帶帷內擅權、傳承絕計折謀。弓適性衝突：武將頁弓 B，賽季頁 https://sgsdeck.com/seasons/pk-s27 弓 A，弓待核。頁首標「謀」，定位待核。典藏未見於武將頁，待核。',
+  }),
+  pendingGeneral({
+    id: 'y40-lvbu',
+    name: '40Y呂布',
+    camp: '漢',
+    cost: 7,
+    quality: '名將',
+    apt: { 騎: 'A', 盾: 'B', 弓: 'S', 槍: 'S', 器械: 'C' },
+    innate: '天威嘯陣',
+    scenarios: BINGYAN_AND_HANYAN,
+    sourceUrl: 'https://sgsdeck.com/generals/40Y呂布',
+    note: '獨立卡，不是普通呂布。兵演春秋推出後轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。不是漢焰專屬。本圖鑑沒有單獨的兵演春秋，英雄命世代表該季之後仍可用，漢焰長明也可選。自帶天威嘯陣。傳承武將頁未列，待核。頁首標「武」，定位待核。動態、典藏未見於武將頁，待核。',
+  }),
+);
+
 const ids = new Set();
 for (const general of generals) {
   if (ids.has(general.id)) throw new Error(`dup ${general.id}`);
@@ -324,19 +418,19 @@ const extraTactics = [
   extra('tuo-caochuan', '拓·草船借箭', '主動', '賽季', [], null, '對應原戰法草船借箭；拓本實際效果待核。', bothShops),
   extra('tuo-guagu', '拓·刮骨療毒', '主動', '賽季', [], null, '對應原戰法刮骨療毒；拓本實際效果待核。', bothShops),
   extra('jing-lingji', '精·靈機一動', '主動', '賽季', [], null, '兵演春秋賽季商店的靈機一動精進版，每輪最多可購兩項。對應原戰法靈機一動；精進版實際效果待核。'),
-  extra('cangqi', '藏器待時', '被動', '傳承', [], ['盾', '器械'], '前2回合，自身受到的普通攻擊傷害降低10%→20%（受統帥影響）。第3回合起，自身自帶主動戰法發動率提升4%→8%（受武力影響），且造成傷害時有15%→30%機率附帶10%→20%破陣（受武力影響）。僅盾兵與器械。', {
+  extra('cangqi', '藏器待時', '被動', '傳承', ['sp-caocao'], ['盾', '器械'], '前2回合，自身受到的普通攻擊傷害降低10%→20%（受統帥影響）。第3回合起，自身自帶主動戰法發動率提升4%→8%（受武力影響），且造成傷害時有15%→30%機率附帶10%→20%破陣（受武力影響）。僅盾兵與器械。', {
     status: '待核',
     obtain: '傳承',
     fromNames: ['SP曹操'],
     sourceUrl: 'https://sgsdeck.com/tactics/藏器待時',
-    note: '傳承自 SP曹操。SP曹操尚未收入武將圖鑑，所以 from 先留空。',
+    note: '傳承自 SP曹操。',
   }),
-  extra('jueji', '絕計折謀', '主動', '傳承', [], null, '40%機率對敵軍隨機武將造成謀略傷害（118%→236%，受智力影響），並施加技窮狀態，持續1回合。', {
+  extra('jueji', '絕計折謀', '主動', '傳承', ['heshi'], null, '40%機率對敵軍隨機武將造成謀略傷害（118%→236%，受智力影響），並施加技窮狀態，持續1回合。', {
     status: '待核',
     obtain: '傳承',
     fromNames: ['何氏'],
     sourceUrl: 'https://sgsdeck.com/tactics/絕計折謀',
-    note: '傳承自何氏。何氏尚未收入武將圖鑑，所以 from 先留空。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。',
+    note: '傳承自何氏。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。',
   }),
   extra('taoyuan', '桃園結義', '指揮', '事件', [], null, '每回合有20%→40%機率（受統率影響，每種效果獨立判定）：我軍魅力最高者治療我軍單體（受智力影響）；統率最高者對敵軍智力最低者造成謀略傷害（受統率影響）；武力最高者對敵軍統率最低者造成兵刃傷害。該傷害率受我軍累計溢出治療量影響，觸發後重置。', {
     status: '待核',

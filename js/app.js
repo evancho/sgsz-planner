@@ -860,12 +860,13 @@ function generalCard(general, current, usage) {
   const nameEl = owned
     ? `<button type="button" class="grow-name" data-action="toggle-expand" data-id="${esc(general.id)}" aria-expanded="${open}"><strong>${esc(name)}</strong></button>`
     : `<div class="grow-name"><strong>${esc(name)}</strong></div>`;
-  const costTitle = duwei ? '統御 7；天賦身經百戰可 +1' : `統御 ${general.cost}`;
+  const costTitle = duwei ? '統御 7；天賦身經百戰可 +1' : (Number.isInteger(general.cost) ? `統御 ${general.cost}` : '統御待核');
+  const costText = Number.isInteger(general.cost) ? `C${general.cost}` : '統御待核';
   return `
     <article class="gcard grow ${CAMP_CLASS[general.camp] || 'qun'} ${open ? 'open' : ''} ${chipHtml ? 'has-chips' : ''}">
       <div class="grow-row">
         <span class="camp">${campInk(general.camp)}</span>
-        <span class="cost" title="${esc(costTitle)}">C${general.cost}</span>
+        <span class="cost" title="${esc(costTitle)}">${esc(costText)}</span>
         ${nameEl}
         <div class="apt-row">${aptHtml(general, current)}${hanButton(general)}</div>
         <button type="button" class="check ${owned ? 'on' : ''}" data-action="toggle-own" data-id="${esc(general.id)}" aria-pressed="${owned ? 'true' : 'false'}"><span class="box"></span>擁有</button>
@@ -887,7 +888,9 @@ function aptHtml(general, current = account()) {
   const apt = aptOf(general, current);
   return TROOP_ORDER.map((troop) => {
     const boosted = apt[troop] !== general.apt?.[troop];
-    return `<span class="apt apt-${apt[troop]}${boosted ? ' boost' : ''}" ${boosted ? 'title="訓兵振旅"' : ''}><i>${aptLabel(troop)}</i>${apt[troop]}</span>`;
+    const letter = apt[troop] || '待核';
+    const known = /^[SABC]$/.test(letter);
+    return `<span class="apt ${known ? `apt-${letter}` : 'apt-pending'}${boosted ? ' boost' : ''}" ${boosted ? 'title="訓兵振旅"' : ''}><i>${aptLabel(troop)}</i>${esc(letter)}</span>`;
   }).join('');
 }
 
@@ -1585,7 +1588,7 @@ function memberCard(team, member, slot, current) {
           <span class="tag">${TEAM_POSITIONS[slot]}</span>
           ${general ? `
             <button type="button" class="member-name" data-action="open-general" data-team="${esc(team.id)}" data-slot="${slot}" aria-label="替換${esc(plainName(general))}">${esc(plainName(general))}${duweiMark(general)}</button>
-            <span class="member-meta">${campInk(general.camp)} · C${general.cost}${isDuwei(general) ? '（天賦可 +1）' : ''} · ${esc(general.role)}</span>
+            <span class="member-meta">${campInk(general.camp)} · ${Number.isInteger(general.cost) ? `C${general.cost}` : '統御待核'}${isDuwei(general) ? '（天賦可 +1）' : ''} · ${esc(general.role || '定位待核')}</span>
             <div class="apt-row">${aptHtml(general, current)}</div>
             ${marks ? `<div class="member-marks">${marks}</div>` : ''}
             ${meritNames.length ? `<div class="member-marks">${meritNames.map((name) => `<span class="mini">${esc(name)}</span>`).join('')}</div>` : ''}
@@ -1819,7 +1822,7 @@ function generalPickerResults() {
         usage,
       });
       const marks = ownedStatusLabels(current.owned[general.id]);
-      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${campInk(general.camp)} C${general.cost} ${esc(plainName(general))}${isDuwei(general) ? ' · 都尉' : ''}${marks.length ? ` · ${esc(marks.join(' · '))}` : ''}${reason ? ` · ${esc(reason)}` : ''}</button>`;
+      return `<button type="button" class="choice" data-action="pick-general" data-id="${esc(general.id)}" ${reason ? 'disabled' : ''}>${campInk(general.camp)} ${Number.isInteger(general.cost) ? `C${general.cost}` : '統御待核'} ${esc(plainName(general))}${isDuwei(general) ? ' · 都尉' : ''}${marks.length ? ` · ${esc(marks.join(' · '))}` : ''}${reason ? ` · ${esc(reason)}` : ''}</button>`;
     }).join('') || `<p class="muted">${empty}</p>`}
   `;
   return { count: `${options.length} 位武將`, list };

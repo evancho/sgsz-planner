@@ -202,6 +202,7 @@ export function isAptitudeAtLeastA(letter) {
 }
 
 export function costBucket(cost) {
+  if (!Number.isInteger(cost)) return '待核';
   if (cost >= 7) return '7+';
   if (cost === 6) return '6';
   if (cost === 5) return '5';
@@ -216,6 +217,7 @@ export function activeChoice(selected, allValues) {
 }
 
 export function dynamicState(general, ownedRecord) {
+  if (general.dynamic == null) return '待核';
   if (!general.dynamic) return '無動態';
   if (ownedRecord?.dynamic) return '已解鎖';
   return '可解鎖';

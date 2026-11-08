@@ -55,13 +55,16 @@ const GENERALS = {
   無雙大喬: 'wushuang-daqiao',
   SP馬超: 'sp-machao',
   周泰: 'zhoutai',
+  SP曹操: 'sp-caocao',
+  sp曹操: 'sp-caocao',
+  '40Y呂布': 'y40-lvbu',
 };
+
+const BASIS_40 = '巴哈 11645 混用 40呂／40呂布／奉先。官方卡名 40Y呂布，對到圖鑑 40Y呂布，不是普通呂布。';
 
 const BASIS_FA = '巴哈 11645 先寫 sp法 的發動率，同一段後文改稱滿紅sp法正。對應圖鑑 SP法正。';
 const BASIS_HUANG = '巴哈 11645 皇甫版本寫「需要攜帶sp皇甫」。李老師 11651 把同一格寫成 SP皇埔嵩。圖鑑是 SP皇甫嵩。';
 const BASIS_PU = '巴哈 11651 皇馬寫「SP皇埔嵩草船萬軍」，與官方皇馬槍 SP皇甫嵩（草船借箭、萬軍奪帥）同一格。埔是甫的錯字。';
-const BASIS_40 = '巴哈 11645 把 40呂、40呂布、奉先混用。官方卡名是 40Y呂布，圖鑑沒有這張卡，不改成普通呂布。';
-const BASIS_CAO = '原文與 sgsdeck 大漢弓主將是 SP曹操。圖鑑未收 SP曹操，不改成曹操。';
 const BASIS_KANG = '巴哈 11651 原文「SP呂蒙/程普」，斜線是二擇一。';
 
 function seat(generalName, tacticsRaw, extra = {}) {
@@ -107,32 +110,32 @@ const bookFa = '三軍統軍錘鍊';
 
 export const hanyanBahamut = [
   team('baha-a-xuyou', '許攸版本', A, [
-    seat('40呂', '藏器、血刃', { bingshuRaw: bookLv, remark: '全兵種S', resolveBasis: BASIS_40 }),
+    seat('40呂', '藏器、血刃', { generalId: 'y40-lvbu', bingshuRaw: bookLv, remark: '全兵種S', resolveBasis: BASIS_40 }),
     seat('sp法', '蓄勢、三勢', { bingshuRaw: bookFa, generalId: 'sp-fazheng', resolveBasis: BASIS_FA }),
     seat('許攸', '藤甲、臨危', { bingshuRaw: bookFa, remark: '盾散' }),
   ], ['韜晦', '背水', '十面', '長安', '多多'], '作者稱輸出上限高、防速攻較弱。血刃可換的寫法不另開隊伍。'),
   team('baha-a-huangfu', '皇甫版本', A, [
-    seat('40呂', '藏器、血刃', { bingshuRaw: bookLv, remark: '全兵種S', resolveBasis: BASIS_40 }),
+    seat('40呂', '藏器、血刃', { generalId: 'y40-lvbu', bingshuRaw: bookLv, remark: '全兵種S', resolveBasis: BASIS_40 }),
     seat('sp法', '蓄勢、三勢', { bingshuRaw: bookFa, generalId: 'sp-fazheng', resolveBasis: BASIS_FA }),
     seat('sp皇', '藤甲、臨危', { bingshuRaw: '援其勵軍掩虛', remark: '盾散＋群', generalId: 'sp-huangfusong', resolveBasis: BASIS_HUANG }),
   ], ['韜晦', '背水', '十面', '長安', '多多']),
   team('baha-a-chengpu', '程普（松鼠）版本', A, [
-    seat('40呂', '藏器、文武', { bingshuRaw: bookLv, remark: '全兵種S', resolveBasis: BASIS_40 }),
+    seat('40呂', '藏器、文武', { generalId: 'y40-lvbu', bingshuRaw: bookLv, remark: '全兵種S', resolveBasis: BASIS_40 }),
     seat('程普', '藤甲、臨危', { bingshuRaw: '無戰守勢防備' }),
     seat('sp法', '蓄勢、轉形一', { bingshuRaw: bookFa, generalId: 'sp-fazheng', resolveBasis: BASIS_FA }),
   ], ['韜晦', '背水', '十面', '月下', '多多'], '控制與坦度取向。'),
   team('baha-b-gong-1', '漢弓／第一套配置', B, [
-    seat('sp曹操', '草船借箭、剛柔並濟', { resolveBasis: BASIS_CAO }),
+    seat('sp曹操', '草船借箭、剛柔並濟'),
     seat('sp盧植', '雁行陣、先登死士', { remark: '1速' }),
     seat('sp貂蟬', '深藏若虛、戮力同心'),
   ], [], '45～48級穩定性取向；曹操2速貼盧植。兵書、方略、奇略原文未寫。'),
   team('baha-b-gong-2', '漢弓／第二套配置', B, [
-    seat('sp曹操', '剛柔並濟、桃園結義', { resolveBasis: BASIS_CAO }),
+    seat('sp曹操', '剛柔並濟、桃園結義'),
     seat('sp盧植', '雁行陣、先登死士'),
     seat('sp貂蟬', '移花接木、戮力同心'),
   ], [], '建議48級後。深藏與移花按環境互換。兵書、方略、奇略原文未寫。'),
   team('baha-b-gong-3', '漢弓／第三套配置', B, [
-    seat('sp曹操', '草船借箭／桃園結義、先登死士', { remark: '原文適用有雍雅沉重', resolveBasis: BASIS_CAO }),
+    seat('sp曹操', '草船借箭／桃園結義、先登死士', { remark: '原文適用有雍雅沉重' }),
     seat('sp貂蟬', '深藏若虛、戮力同心'),
     seat('sp盧植', '雁行陣、剛柔並濟'),
   ], [], '速度盧植＞貂蟬＞曹操。兵書、方略、奇略原文未寫。'),
@@ -162,7 +165,7 @@ export const hanyanBahamut = [
     seat('sp呂蒙（程普也可以）', '雁行陣（當鋒也可以）、草船'),
   ], [], '維持前綴與錯字。方略、奇略原文未寫。'),
   team('baha-d-dahan', '大漢弓', D, [
-    seat('SP曹操', '桃園結義、剛柔並濟', { resolveBasis: BASIS_CAO }),
+    seat('SP曹操', '桃園結義、剛柔並濟'),
     seat('SP盧植', '先登死士、雁形陣', { remark: '1速' }),
     seat('SP貂蟬', '勠力同心、深藏若虛'),
   ], ['推衣解食', '沛縣聚義', '約法三章', '鴻門遇險', '茫蕩隱蹤'], '漢弓多可先帶移花接木。兵書、方略原文未寫。'),

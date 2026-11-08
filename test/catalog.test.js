@@ -48,11 +48,22 @@ test('generals and tactics are internally consistent', () => {
   for (const general of generalsFile.generals) {
     assert.equal(ids.has(general.id), false, general.id);
     ids.add(general.id);
-    assert.equal(general.quality, '名將');
-    assert.ok(['魏', '蜀', '吳', '群'].includes(general.camp));
-    assert.ok(['軍事', '內政'].includes(general.role));
+    const pending = general.status === '待核';
+    if (pending) {
+      assert.ok(['名將', '良將'].includes(general.quality), general.id);
+      assert.ok(['魏', '蜀', '吳', '群', '漢'].includes(general.camp), general.id);
+      assert.ok(general.role == null || ['軍事', '內政'].includes(general.role), general.id);
+      assert.match(general.sourceUrl, /^https:\/\//, general.id);
+      assert.ok(Array.isArray(general.scenarios) && general.scenarios.length, general.id);
+    } else {
+      assert.equal(general.quality, '名將');
+      assert.ok(['魏', '蜀', '吳', '群'].includes(general.camp));
+      assert.ok(['軍事', '內政'].includes(general.role));
+      assert.equal(general.sourceUrl, '');
+    }
     for (const troop of ['騎', '弓', '槍', '盾', '器械']) {
-      assert.match(general.apt[troop], /^[SABC]$/);
+      if (pending && general.apt[troop] === '待核') continue;
+      assert.match(general.apt[troop], /^[SABC]$/, `${general.id} ${troop}`);
     }
     if (general.role === '內政') assert.equal(general.awaken, false);
     assert.equal(general.name.includes('典藏'), false, general.name);
@@ -285,7 +296,7 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(cangqi.rank, 'S');
   assert.equal(cangqi.status, '待核');
   assert.deepEqual(cangqi.troops, ['盾', '器械']);
-  assert.deepEqual(cangqi.from, []);
+  assert.deepEqual(cangqi.from, ['sp-caocao']);
   assert.deepEqual(cangqi.fromNames, ['SP曹操']);
   assert.equal(cangqi.scenarios, undefined);
   assert.equal(cangqi.sourceUrl, 'https://sgsdeck.com/tactics/藏器待時');
@@ -443,7 +454,37 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(beifa.members[0].learned[1], null);
   assert.equal(dami.find((team) => team.id === 'dami-xingcai').members[1].generalId, 'wushuang-xingcai');
   assert.equal(dami.find((team) => team.id === 'dami-wanghong').members[2].learnedNames[1], '大戰士');
-  assert.equal(generalsFile.generals.every((general) => general.status === '已核' && general.sourceUrl === ''), true);
+  assert.equal(generalsFile.generals.filter((general) => general.status === '已核').every((general) => general.sourceUrl === ''), true);
+  const spCao = generalsFile.generals.find((general) => general.id === 'sp-caocao');
+  assert.equal(spCao.camp, '漢');
+  assert.deepEqual(spCao.apt, { 騎: 'S', 盾: 'A', 弓: 'S', 槍: 'A', 器械: 'B' });
+  assert.equal(spCao.innate, '承天靖世');
+  assert.deepEqual(spCao.scenarios, ['hanyan']);
+  assert.equal(spCao.sourceUrl, 'https://sgsdeck.com/generals/SP曹操');
+  const heshi = generalsFile.generals.find((general) => general.id === 'heshi');
+  assert.equal(heshi.apt.弓, '待核');
+  assert.equal(heshi.apt.騎, 'C');
+  assert.match(heshi.note, /武將頁弓 B/);
+  assert.match(heshi.note, /弓 A/);
+  assert.deepEqual(heshi.scenarios, ['hanyan']);
+  const y40 = generalsFile.generals.find((general) => general.id === 'y40-lvbu');
+  assert.notEqual(y40.id, 'lvbu');
+  assert.deepEqual(y40.apt, { 騎: 'A', 盾: 'B', 弓: 'S', 槍: 'S', 器械: 'C' });
+  assert.deepEqual(y40.scenarios, ['yingxiong', 'hanyan']);
+  assert.equal(y40.innate, '天威嘯陣');
+  assert.match(y40.note, /傳承/);
+  for (const id of ['baoxin', 'liuzhang', 'liudai', 'chunyuqiong', 'liuyu', 'zhangyun', 'xugong']) {
+    const liang = generalsFile.generals.find((general) => general.id === id);
+    assert.equal(liang.quality, '良將');
+    assert.equal(liang.camp, '漢');
+    assert.equal(liang.cost, null);
+    assert.equal(liang.innate, '');
+    assert.equal(liang.apt.弓, '待核');
+    assert.deepEqual(liang.scenarios, ['hanyan']);
+    assert.equal(liang.sourceUrl, 'https://sgsdeck.com/seasons/pk-s27');
+  }
+  assert.deepEqual(byName.get('藏器待時').from, ['sp-caocao']);
+  assert.deepEqual(byName.get('絕計折謀').from, ['heshi']);
   assert.equal(byName.get('麾軍結陣').status, '已核');
   assert.equal(scenario.weapons.length, 0);
   assert.equal(scenario.treasures, undefined);
@@ -482,13 +523,24 @@ test('generals and tactics are internally consistent', () => {
   assert.match(builtCheng.notes, /雁行陣/);
   assert.match(builtCheng.notes, /替代：乘敵不虞/);
   const dahanBow = scenario.recommended.find((team) => team.id === 'baha-d-dahan');
-  const dahanGaps = ownershipGaps(dahanBow.members, { owned: { 'sp-luzhi': true, 'sp-diaochan': true }, tacticsOwned: {} }, gapLookup);
-  assert.match(generalGapLine(dahanGaps), /未解析武將：SP曹操／待核/);
-  assert.equal(dahanBow.members[0].generalId, null);
+  assert.equal(dahanBow.members[0].generalId, 'sp-caocao');
+  const dahanMissing = ownershipGaps(dahanBow.members, { owned: { 'sp-luzhi': true, 'sp-diaochan': true }, tacticsOwned: {} }, gapLookup);
+  assert.match(generalGapLine(dahanMissing), /SP曹操/);
+  assert.equal(generalGapLine(dahanMissing).includes('未解析武將'), false);
+  const dahanOwned = { owned: { 'sp-caocao': true, 'sp-luzhi': true, 'sp-diaochan': true }, tacticsOwned: {} };
+  assert.equal(generalGapLine(ownershipGaps(dahanBow.members, dahanOwned, gapLookup)), '');
+  const builtDahan = teamFromRecommended(dahanBow, 'team-dahan', { ...tacticLookup, owned: dahanOwned.owned });
+  assert.equal(builtDahan.members[0].generalId, 'sp-caocao');
+  assert.equal(builtDahan.members[1].generalId, 'sp-luzhi');
+  assert.equal(builtDahan.members[2].generalId, 'sp-diaochan');
   const huangfu = scenario.recommended.find((team) => team.id === 'baha-a-huangfu');
   const huangfuGaps = ownershipGaps(huangfu.members, { owned: {}, tacticsOwned: {} }, gapLookup);
   const huangfuLine = generalGapLine(huangfuGaps);
-  assert.match(huangfuLine, /未解析武將：40呂／待核/);
+  assert.equal(huangfu.members[0].generalId, 'y40-lvbu');
+  assert.match(huangfu.members[0].resolveBasis, /官方卡名 40Y呂布/);
+  assert.match(huangfu.members[0].resolveBasis, /奉先/);
+  assert.match(huangfuLine, /40Y呂布/);
+  assert.equal(huangfuLine.includes('未解析武將：40呂'), false);
   assert.match(huangfuLine, /SP法正/);
   assert.match(huangfuLine, /SP皇甫嵩/);
   assert.equal(huangfu.members[1].generalId, 'sp-fazheng');
@@ -501,9 +553,14 @@ test('generals and tactics are internally consistent', () => {
   assert.match(huangma.members[1].resolveBasis, /埔是甫的錯字/);
   const pengci = scenario.recommended.find((team) => team.id === 'baha-d-pengci');
   assert.equal(pengci.members[0].generalId, 'zhoutai');
+  const chengpuSeat = scenario.recommended.find((team) => team.id === 'baha-a-chengpu');
+  assert.equal(chengpuSeat.members[0].generalId, 'y40-lvbu');
+  assert.match(chengpuSeat.members[0].resolveBasis, /40呂／40呂布／奉先/);
   const lvbu = scenario.recommended.find((team) => team.id === 'hanyan-sanshi-lvbu');
-  assert.equal(lvbu.members[0].generalId, null);
-  assert.match(lvbu.members[0].remark, /不替換/);
+  assert.equal(lvbu.members[0].generalId, 'y40-lvbu');
+  assert.match(lvbu.members[0].remark, /不是普通呂布/);
+  const lvdiaolu = scenario.recommended.find((team) => team.id === 'hanyan-lvdiaolu');
+  assert.equal(lvdiaolu.members[0].generalId, 'y40-lvbu');
   const saozi = scenario.recommended.find((team) => team.id === 'baha-d-saozi');
   assert.equal(saozi.tricks.includes('伺橋受書'), true);
   assert.equal(saozi.trickFormal['伺橋受書'], '圯橋受書');
