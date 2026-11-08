@@ -2623,8 +2623,13 @@ function onClick(event) {
       const altId = el.dataset.altId || '';
       const alt = altId ? (master.alternatives || []).find((item) => item.id === altId) : null;
       if (altId && !alt) break;
+      const applied = alt ? recommendedFromAlternative(master, alt) : null;
+      if (alt && !applied) {
+        toast('這組替代配置無法找齊戰法，未加入');
+        break;
+      }
       const template = alt
-        ? { ...recommendedFromAlternative(master, alt), fromRecommended: true, country: master.country }
+        ? { ...applied, fromRecommended: true, country: master.country }
         : master;
       if (!template) break;
       if (template.fromRecommended && template.applyReady === false) {

@@ -17,6 +17,7 @@ import {
   normalizeState,
   presentCamp,
   recommendedFromAlternative,
+  resolveBingshuRaw,
   teamCountry,
   teamFromRecommended,
 } from '../js/logic.js';
@@ -189,6 +190,12 @@ test('recommended teams keep strategy, trick order, empty tactics and source', (
 });
 
 test('recommended rankStatus stays verified and alternatives can be applied', () => {
+  const seat = (generalId, generalName, learnedNames = ['臨危救主', '解煩衛']) => ({
+    generalId,
+    generalName,
+    learned: [null, null],
+    learnedNames,
+  });
   const [team] = normalizeRecommended([{
     id: 'hanyan-main',
     scenario: 'hanyan',
@@ -196,28 +203,65 @@ test('recommended rankStatus stays verified and alternatives can be applied', ()
     status: '已核',
     rank: 'T0.5',
     rankStatus: '已核',
-    members: [{ generalId: 'sp-machao', generalName: 'SP馬超', learned: [null, null], learnedNames: [] }],
+    members: [seat('sp-machao', 'SP馬超'), seat('sp-huangfusong', 'SP皇甫嵩'), seat('xuyou', '許攸')],
     alternatives: [{
       id: 'hanyan-alt',
       title: '官方整理版',
       status: '已核',
       originLabel: '官方推薦',
       diffs: ['許攸只列臨危救主'],
-      members: [{ generalId: 'xuyou', generalName: '許攸', learned: [null, null], learnedNames: [] }],
+      members: [seat('sp-machao', 'SP馬超'), seat('sp-huangfusong', 'SP皇甫嵩'), seat('xuyou', '許攸', ['臨危救主', '解煩衛'])],
       strategy: ['強攻'],
       tricks: ['甲', '乙', '丙', '丁', '戊'],
+    }, {
+      id: 'desc-only',
+      title: '描述型弓',
+      status: '已核',
+      diffs: ['只要弓、沒有逐格戰法'],
     }],
   }]);
   assert.equal(team.rankStatus, '已核');
-  assert.equal(team.alternatives[0].members[0].generalId, 'xuyou');
+  assert.equal(team.alternatives.length, 1);
+  assert.equal(team.alternatives[0].members[2].generalId, 'xuyou');
+  assert.equal(recommendedFromAlternative(team, { id: 'desc-only', title: '描述型弓', diffs: ['弓'] }), null);
   const applied = recommendedFromAlternative(team, team.alternatives[0]);
   assert.equal(applied.title, '官方整理版');
-  assert.equal(applied.members[0].generalId, 'xuyou');
+  assert.equal(applied.members[2].generalId, 'xuyou');
   assert.deepEqual(applied.strategy, ['強攻']);
   assert.equal(applied.alternatives, undefined);
   const built = teamFromRecommended(applied, 'team-alt');
   assert.match(built.name, /官方整理版/);
-  assert.equal(built.members[0].generalId, 'xuyou');
+  assert.equal(built.members[2].generalId, 'xuyou');
+});
+
+test('bingshuRaw abbreviations resolve when structured bingshu is absent', () => {
+  assert.deepEqual(resolveBingshuRaw('三軍統軍錘鍊'), {
+    branch: 'shiji',
+    primary: 'sanjun',
+    secondary: ['tongjun', 'chuilian'],
+  });
+  assert.deepEqual(resolveBingshuRaw('以退＋善戰＋精準'), {
+    branch: 'yongjian',
+    primary: 'yitui',
+    secondary: ['shanzhan', 'jingzhun'],
+  });
+  assert.deepEqual(resolveBingshuRaw('蠻勇武略執銳／示敵百戰掩虛'), {
+    branch: 'zuozhan',
+    primary: 'manyong',
+    secondary: ['wulue', 'zhirui'],
+  });
+  const built = teamFromRecommended({
+    title: '測',
+    members: [{
+      generalId: 'sp-guojia',
+      generalName: 'SP郭嘉',
+      learned: ['duohun', 'dangfeng'],
+      learnedNames: [],
+      bingshuRaw: '以退＋善戰＋精準',
+    }, null, null],
+  }, 'team-book');
+  assert.equal(built.members[0].bingshu.primary, 'yitui');
+  assert.deepEqual(built.members[0].bingshu.secondary, ['shanzhan', 'jingzhun']);
 });
 
 test('player teams keep unbound tricks, apply flag, author and per-team status', () => {

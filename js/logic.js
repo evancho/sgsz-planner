@@ -673,6 +673,8 @@ export const TACTIC_ALIASES = {
   奪魂攜魄: 'duohun',
   當峰: 'dangfeng',
   當鋒: 'dangfeng',
+  當鋒摧決: 'dangfeng',
+  當鋒催決: 'dangfeng',
   催峰: 'cuifeng',
   催峰斷刃: 'cuifeng',
   雁形: 'yanxing',
@@ -680,6 +682,8 @@ export const TACTIC_ALIASES = {
   勠力: 'luli',
   勠力同心: 'luli',
   戮力: 'luli',
+  聚石: 'tuo-jushi',
+  聚石成金: 'tuo-jushi',
   拓聚石: 'tuo-jushi',
   拓聚石成金: 'tuo-jushi',
   拓草船: 'tuo-caochuan',
@@ -804,11 +808,12 @@ export function memberTacticPlan(member, lookup = {}) {
   return { learned, unknown, alternatives };
 }
 
-/** 斜線寫明的兩位武將，用帳號實際擁有、且沒在別隊的那一位。都沒有就回 null。 */
+/** 斜線寫明的兩位武將，用帳號實際擁有、且沒在別隊的那一位。沒有擁有資料時先取前者。 */
 export function chooseSeatGeneral(member, lookup = {}) {
   if (member?.generalId) return member.generalId;
   const choices = Array.isArray(member?.generalChoices) ? member.generalChoices : [];
-  if (!choices.length || !lookup.owned) return null;
+  if (!choices.length) return null;
+  if (!lookup.owned) return choices[0]?.id || null;
   const free = [];
   const held = [];
   for (const choice of choices) {
@@ -1261,15 +1266,34 @@ function normalizeRecommendedMember(member) {
   return next;
 }
 
+/** 替代配置必須自備三席可對圖鑑的武將與戰法；純描述、缺席不列。 */
+export function alternativeMembersReady(members) {
+  const seats = [0, 1, 2].map((index) => members?.[index]).filter(Boolean);
+  if (seats.length !== 3) return false;
+  return seats.every((member) => {
+    const hasGeneral = Boolean(member.generalId)
+      || (Array.isArray(member.generalChoices) && member.generalChoices.some((choice) => choice?.id));
+    if (!hasGeneral) return false;
+    const hasTactics = (Array.isArray(member.learned) && member.learned.some(Boolean))
+      || (Array.isArray(member.learnedNames) && member.learnedNames.some((name) => String(name || '').trim()))
+      || Boolean(String(member.tacticsRaw || '').trim());
+    return hasTactics;
+  });
+}
+
 function normalizeAlternatives(list) {
   if (!Array.isArray(list)) return [];
   return list.slice(0, 8).map((raw) => {
     if (!raw || typeof raw !== 'object') return null;
+    if (raw.applyReady === false) return null;
+    const members = [0, 1, 2].map((index) => normalizeRecommendedMember(raw.members?.[index]));
+    if (!alternativeMembersReady(members)) return null;
     const item = {
       id: cleanId(raw.id) || '',
       title: clip(raw.title, 40) || '替代配置',
       status: recordStatus(raw.status),
       diffs: (Array.isArray(raw.diffs) ? raw.diffs : []).map((line) => clip(line, 160)).filter(Boolean).slice(0, 8),
+      members,
     };
     const originLabel = clip(raw.originLabel, 24);
     const author = clip(raw.author, 24);
@@ -1279,9 +1303,6 @@ function normalizeAlternatives(list) {
     if (author) item.author = author;
     if (source) item.source = source;
     if (officialSource) item.officialSource = officialSource;
-    if (raw.applyReady === false) item.applyReady = false;
-    const members = [0, 1, 2].map((index) => normalizeRecommendedMember(raw.members?.[index]));
-    if (members.some(Boolean)) item.members = members;
     if (Array.isArray(raw.strategy)) item.strategy = stringList(raw.strategy, 1);
     if (Array.isArray(raw.tricks)) {
       item.tricks = raw.tricksBound === false ? stringList(raw.tricks, 8) : trickSlots(raw.tricks);
@@ -1296,6 +1317,7 @@ function normalizeAlternatives(list) {
 /** Turn a main recommended card + alternative into one applyable template. */
 export function recommendedFromAlternative(parent, alt) {
   if (!parent || !alt) return null;
+  if (!alternativeMembersReady(alt.members)) return null;
   const title = clip(alt.title, 40) || '替代配置';
   const noteBits = [
     ...(Array.isArray(alt.diffs) ? alt.diffs : []),
@@ -1308,12 +1330,11 @@ export function recommendedFromAlternative(parent, alt) {
     title,
     note: clip(noteBits.join('；'), 240),
     source: alt.source || parent.source,
+    members: alt.members,
     alternatives: undefined,
   };
   if (alt.officialSource) base.officialSource = alt.officialSource;
-  if (alt.applyReady === false) base.applyReady = false;
-  else if (parent.applyReady === false && alt.members?.length) delete base.applyReady;
-  if (alt.members?.length) base.members = alt.members;
+  if (parent.applyReady === false) delete base.applyReady;
   if (Array.isArray(alt.strategy)) base.strategy = alt.strategy;
   if (Array.isArray(alt.tricks)) {
     base.tricks = alt.tricks;
@@ -1353,6 +1374,66 @@ function normalizeBook(raw) {
   };
 }
 
+/** 巴哈簡寫兵書對圖鑑。只吃原文已寫的縮寫，不從別隊補。 */
+const BINGSHU_RAW_TOKENS = [
+  ['蠻勇非勇', 'zuozhan', 'primary', 'manyong'],
+  ['蠻勇', 'zuozhan', 'primary', 'manyong'],
+  ['示敵以弱', 'jiubian', 'primary', 'shiruo'],
+  ['示敵', 'jiubian', 'primary', 'shiruo'],
+  ['援其必攻', 'jiubian', 'primary', 'yuanqi'],
+  ['援其', 'jiubian', 'primary', 'yuanqi'],
+  ['無戰而勝', 'junxing', 'primary', 'wuzhan'],
+  ['無戰', 'junxing', 'primary', 'wuzhan'],
+  ['三軍之眾', 'shiji', 'primary', 'sanjun'],
+  ['三軍', 'shiji', 'primary', 'sanjun'],
+  ['以退為進', 'yongjian', 'primary', 'yitui'],
+  ['以退', 'yongjian', 'primary', 'yitui'],
+  ['武略', 'zuozhan', 'secondary', 'wulue'],
+  ['執銳', 'zuozhan', 'secondary', 'zhirui'],
+  ['百戰', 'jiubian', 'secondary', 'baizhan'],
+  ['掩虛', 'jiubian', 'secondary', 'yanxu'],
+  ['勵軍', 'jiubian', 'secondary', 'lijun'],
+  ['守勢', 'junxing', 'secondary', 'shoushi'],
+  ['防備', 'junxing', 'secondary', 'fangbei'],
+  ['統軍', 'shiji', 'secondary', 'tongjun'],
+  ['錘煉', 'shiji', 'secondary', 'chuilian'],
+  ['錘鍊', 'shiji', 'secondary', 'chuilian'],
+  ['善戰', 'yongjian', 'secondary', 'shanzhan'],
+  ['精準', 'yongjian', 'secondary', 'jingzhun'],
+].sort((a, b) => b[0].length - a[0].length);
+
+export function resolveBingshuRaw(raw) {
+  const text = String(raw || '').trim();
+  if (!text) return null;
+  const side = text.split(/[／/]/)[0] || '';
+  let rest = side.replace(/[＋+、，,\s]/g, '');
+  if (!rest) return null;
+  let branch = '';
+  let primary = null;
+  const secondary = [];
+  while (rest) {
+    const hit = BINGSHU_RAW_TOKENS.find(([token]) => rest.startsWith(token));
+    if (!hit) return null;
+    const [token, nextBranch, role, id] = hit;
+    if (branch && branch !== nextBranch) return null;
+    branch = nextBranch;
+    if (role === 'primary') {
+      if (primary) return null;
+      primary = id;
+    } else {
+      if (secondary.length >= 2 || secondary.includes(id)) return null;
+      secondary.push(id);
+    }
+    rest = rest.slice(token.length);
+  }
+  if (!branch || !primary || secondary.length !== 2) return null;
+  return { branch, primary, secondary: [secondary[0], secondary[1]] };
+}
+
+function memberBingshu(member) {
+  return normalizeBook(member?.bingshu) || resolveBingshuRaw(member?.bingshuRaw);
+}
+
 function recommendedNotes(rec) {
   const lines = [];
   if (rec.source) lines.push(`來源 ${rec.source}`);
@@ -1387,7 +1468,7 @@ export function teamFromRecommended(rec, teamId, lookup) {
         const rest = member.generalChoices.filter((choice) => choice.id !== picked).map((choice) => choice.name);
         if (rest.length) extraNotes.push(`武將替代：${rest.join('、')}`);
       }
-      const base = { generalId: picked, bingshu: member.bingshu || null };
+      const base = { generalId: picked, bingshu: memberBingshu(member) };
       if (member.traits?.length) base.traits = member.traits;
       if (member.aptNeed) base.aptNeed = member.aptNeed;
       if (!lookup) {

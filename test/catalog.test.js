@@ -444,10 +444,9 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(dahan.rankConfidence, '中高');
   assert.equal(dahan.alternatives.every((item) => item.rank === undefined), true);
   const huangmaAlts = bahamut.find((team) => team.id === 'baha-d-huangma');
-  assert.equal(huangmaAlts.alternatives[0].id, 'hanyan-huangma');
-  assert.ok(huangmaAlts.alternatives[0].members?.some(Boolean));
-  assert.equal(huangmaAlts.alternatives[1].id, 'baha-d-huangma-gong');
-  assert.equal(huangmaAlts.alternatives[1].members, undefined);
+  assert.equal(huangmaAlts.alternatives.map((item) => item.id).join(','), 'hanyan-huangma');
+  assert.ok(huangmaAlts.alternatives[0].members?.every((member) => member?.generalId));
+  assert.equal(huangmaAlts.alternatives.some((item) => item.id === 'baha-d-huangma-gong'), false);
   const ranks = { T0: 0, 'T0.5': 0, T1: 0, 'T1.5': 0, T2: 0, '黑科技': 0 };
   for (const team of scenario.recommended) {
     assert.equal(team.status, '已核', team.id);
