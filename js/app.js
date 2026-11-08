@@ -80,6 +80,7 @@ import {
   effectiveApt,
   meritWarningLines,
   teamFromRecommended,
+  unresolvedSeatNote,
   touchUpdatedAt,
   pickSyncBackup,
   backupsDiffer,
@@ -1089,7 +1090,13 @@ function planLine(team) {
   const parts = [];
   if (team.strategy?.length) parts.push(`方略 ${team.strategy.join('、')}`);
   const tricks = (team.tricks || []).filter(Boolean);
-  if (tricks.length) parts.push(`奇略 ${tricks.join('→')}`);
+  if (tricks.length) {
+    const shown = tricks.map((name) => {
+      const formal = team.trickFormal?.[name];
+      return formal && formal !== name ? `${name}（${formal}）` : name;
+    });
+    parts.push(`奇略 ${shown.join('→')}`);
+  }
   if (!parts.length) return '';
   return `<p class="faint">${esc(parts.join(' · '))}</p>`;
 }
@@ -1397,6 +1404,9 @@ function templateResultsMarkup() {
   const matched = placeBlockedTemplatesLast(rows, (row) => row.state.blocked);
   const items = matched.map(({ team, state, red }) => {
     const names = (team.members || []).map((member) => member.generalName).filter(Boolean).join(' / ');
+    const unresolved = (team.members || [])
+      .map((member) => unresolvedSeatNote(member, tacticLookup(current)))
+      .filter(Boolean);
     const blocked = state.blocked;
     const notes = state.notes;
     const missing = team.fromRecommended
@@ -1422,6 +1432,8 @@ function templateResultsMarkup() {
           <span class="tag">${campInk(team.country)}</span>
           ${review}${source}${badge}
           <p>${esc(names)}</p>
+          ${planLine(team)}
+          ${unresolved.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
           ${basis}
           ${notes.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
           ${team.fromRecommended ? altHtml(team) : ''}

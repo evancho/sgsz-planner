@@ -68,8 +68,8 @@ function seat(generalName, tacticsRaw, extra = {}) {
   return member;
 }
 
-function team(id, title, meta, members, tricks = [], note = '', applyReady = true) {
-  return {
+function team(id, title, meta, members, tricks = [], note = '', applyReady = true, trickFormal = null) {
+  const row = {
     id,
     scenario: 'hanyan',
     title,
@@ -87,6 +87,8 @@ function team(id, title, meta, members, tricks = [], note = '', applyReady = tru
     note,
     members,
   };
+  if (trickFormal) row.trickFormal = trickFormal;
+  return row;
 }
 
 const bookLv = '蠻勇武略執銳／示敵百戰掩虛';
@@ -182,7 +184,7 @@ export const hanyanBahamut = [
     seat('孫權', '當峰、兵無'),
     seat('SP步練師', '八門、深謀遠慮'),
     seat('無雙大喬', '獨行付斗、草船'),
-  ], ['推衣解食', '伺橋受書', '臨危不懼', '借箸代籌', '約法三章'], '作者說模擬評分好但本人實戰拉胯。'),
+  ], ['推衣解食', '伺橋受書', '臨危不懼', '借箸代籌', '約法三章'], '作者說模擬評分好但本人實戰拉胯。', true, { 伺橋受書: '圯橋受書' }),
   team('baha-d-kangkai', '慷慨弓', D, [
     seat('甘寧', '草船、錦帆軍'),
     seat('太史慈', '當峰、催峰斷刃'),

@@ -749,6 +749,23 @@ export function memberTacticPlan(member, lookup = {}) {
   return { learned, unknown, alternatives };
 }
 
+/** 圖鑑對不上的武將不丟配置。回傳給卡片和加入後備註。 */
+export function unresolvedSeatNote(member, lookup = {}) {
+  if (!member || member.generalId) return '';
+  const name = String(member.generalName || '').trim() || '未命名';
+  const plan = memberTacticPlan(member, lookup);
+  const equipped = plan.learned
+    .map((id) => lookup.tacticById?.(id)?.name || lookup.tacticName?.(id) || '')
+    .filter((label) => label && label !== '');
+  const raw = String(member.tacticsRaw || '').trim();
+  const tacticText = equipped.length ? equipped.join('、') : raw;
+  const bits = [`未解析武將 ${name}`];
+  if (tacticText) bits.push(tacticText);
+  if (plan.alternatives.length) bits.push(`替代：${plan.alternatives.join('、')}`);
+  if (plan.unknown.length) bits.push(plan.unknown.join('、'));
+  return bits.join(' ');
+}
+
 /** 帳號還沒有的武將、傳承戰法。圖鑑未收、寫在未收錄裡的戰法也算缺少。兵書不算。 */
 export function ownershipGaps(members, account, lookup = {}) {
   const generals = [];
@@ -760,10 +777,7 @@ export function ownershipGaps(members, account, lookup = {}) {
   for (const member of members || []) {
     if (!member) continue;
     const generalId = member.generalId;
-    if (!generalId && member.generalName && !seenGenerals.has(member.generalName)) {
-      seenGenerals.add(member.generalName);
-      generals.push(member.generalName);
-    }
+    // 圖鑑沒有這格武將時，原名留在卡片與加入後備註，不當成缺武將擋下整隊。
     if (generalId && !account?.owned?.[generalId] && !seenGenerals.has(generalId)) {
       seenGenerals.add(generalId);
       generals.push(member.generalName || generalName(generalId) || generalId);
@@ -1117,6 +1131,15 @@ export function normalizeRecommended(list) {
     if (source) team.source = source;
     if (officialSource) team.officialSource = officialSource;
     if (note) team.note = note;
+    if (raw.trickFormal && typeof raw.trickFormal === 'object') {
+      const formal = {};
+      for (const [key, value] of Object.entries(raw.trickFormal)) {
+        const from = clip(key, 24);
+        const to = clip(value, 24);
+        if (from && to) formal[from] = to;
+      }
+      if (Object.keys(formal).length) team.trickFormal = formal;
+    }
     if (team.rank) {
       team.rankStatus = '待核';
       const rankBasis = clip(raw.rankBasis, 240);
@@ -1203,7 +1226,11 @@ export function teamFromRecommended(rec, teamId, lookup) {
     substitute: false,
     members: [0, 1, 2].map((index) => {
       const member = rec.members?.[index];
-      if (!member?.generalId) return null;
+      if (!member?.generalId) {
+        const seat = unresolvedSeatNote(member, lookup || {});
+        if (seat) extraNotes.push(seat);
+        return null;
+      }
       const base = { generalId: member.generalId, bingshu: member.bingshu || null };
       if (member.traits?.length) base.traits = member.traits;
       if (member.aptNeed) base.aptNeed = member.aptNeed;
@@ -1220,7 +1247,12 @@ export function teamFromRecommended(rec, teamId, lookup) {
       return memberWithLearned(base, plan.learned, vacated);
     }),
   };
-  if (extraNotes.length) team.notes = clip([team.notes, ...extraNotes].filter(Boolean).join('；'), 500);
+  if (rec.trickFormal && typeof rec.trickFormal === 'object') {
+    for (const [from, to] of Object.entries(rec.trickFormal)) {
+      if (from && to) extraNotes.push(`${from}對照${to}`);
+    }
+  }
+  if (extraNotes.length) team.notes = clip([...extraNotes, team.notes].filter(Boolean).join('；'), 500);
   if (strategy.length) team.strategy = strategy;
   if (tricks.length) team.tricks = tricks;
   return team;
