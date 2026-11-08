@@ -1,4 +1,4 @@
-/** 漢焰長明官方推薦 16 隊。戰法對目錄原版，缺的只留原名。全部待核。 */
+/** 漢焰長明官方推薦 16 隊。戰法對目錄原版，缺的只留原名。 */
 const OFFICIAL = 'https://www.facebook.com/100064157226677/posts/1549258503889376/';
 
 function book(branch, primary, left, right) {
@@ -14,7 +14,6 @@ function seat(generalId, generalName, learned, learnedNames, bingshu, extra = ''
   return member;
 }
 
-const SOURCE_NOTE = '官方原圖待核';
 const IMMORTAL_IDS = new Set(['zhangjiao', 'yuji', 'zuoci']);
 
 function xunbingNote(members) {
@@ -27,11 +26,11 @@ function team(id, title, strategy, slug, members, tricks, note = '', withOfficia
     id,
     scenario: 'hanyan',
     title,
-    status: '待核',
+    status: '已核',
     strategy: [strategy],
     tricks,
     source: `https://sgsdeck.com/recommended/${slug}`,
-    note: [SOURCE_NOTE, note, xunbingNote(members)].filter(Boolean).join('。'),
+    note: [note, xunbingNote(members)].filter(Boolean).join('。'),
     members,
   };
   if (withOfficial) row.officialSource = OFFICIAL;

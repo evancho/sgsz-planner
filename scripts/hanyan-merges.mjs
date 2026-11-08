@@ -35,7 +35,7 @@ const deck = (slug) => `https://sgsdeck.com/recommended/${slug}`;
 
 const ALTS = {
   'baha-d-dahan': [
-    alt('hanyan-dahan-gong', '官方整理版', '官方推薦', '', deck('s27-official-dahan-gong'), '待核', [
+    alt('hanyan-dahan-gong', '官方整理版', '官方推薦', '', deck('s27-official-dahan-gong'), '已核', [
       '六戰法與主卡相同，只差簡稱。',
       '方略：整軍。三將兵書皆三軍之眾、久戰、統軍。不寫進李老師原卡。',
       '奇略：芒碭隱蹤→沛縣聚義→約法三章→鴻門遁險→推食解衣。',
@@ -63,19 +63,19 @@ const ALTS = {
     ]),
   ],
   'baha-d-huangma': [
-    alt('hanyan-huangma', '官方整理版', '官方推薦', '', deck('s27-official-huangma-qiang'), '待核', [
+    alt('hanyan-huangma', '官方整理版', '官方推薦', '', deck('s27-official-huangma-qiang'), '已核', [
       '許攸只列臨危救主、解煩衛。主卡另可乘敵不虞。',
       '方略：強攻。三將兵書另列，不覆寫主卡。',
       '奇略：橫掃河西→封狼居胥→摧鋒陷敵→斬逆納降→追亡逐北。',
     ], FB),
-    alt('baha-d-huangma-gong', '皇馬弓', '巴哈玩家版', '24李老师', D, '待核', [
+    alt('baha-d-huangma-gong', '皇馬弓', '巴哈玩家版', '24李老师', D, '已核', [
       'SP皇甫嵩：雁形陣、草船，或不帶草船、改先登。',
       '許攸：臨危救主、錦帆軍。SP馬超技能留言未重列。',
       '兵書、方略、奇略未另列，不從槍版複製。',
     ]),
   ],
   'dami-madai': [
-    alt('hanyan-faguan', '官方整理版', '官方推薦', '', deck('s27-official-fa-guan-dun'), '待核', [
+    alt('hanyan-faguan', '官方整理版', '官方推薦', '', deck('s27-official-fa-guan-dun'), '已核', [
       '馬岱固定藤甲兵、魚鱗陣；SP法正固定非攻制勝。',
       '方略：襲擾。六戰法與兵書在這支選法下與主卡相同。',
       '奇略：設伏十面→背水列陣→楚歌四起→治延軍勢→多多益善。',
@@ -83,7 +83,7 @@ const ALTS = {
     ], FB),
   ],
   'dami-fugui': [
-    alt('hanyan-wumou', '官方整理版', '官方推薦', '', deck('s27-official-wumou-qi'), '待核', [
+    alt('hanyan-wumou', '官方整理版', '官方推薦', '', deck('s27-official-wumou-qi'), '已核', [
       '郭嘉上兵伐謀、賈詡戮力同心時，六戰法與主卡這支相同。',
       'SP郭嘉兵書：以治擊亂、鬼謀、將威。方略：謀算。',
       '奇略：設伏十面→背水列陣→楚歌四起→多多益善→合圍夾擊。',
@@ -119,7 +119,7 @@ const ALTS = {
     ]),
   ],
   'dami-taiwei': [
-    alt('hanyan-taiwei', '刮骨版', '官方推薦', '', deck('s27-official-taiwei-dun'), '待核', [
+    alt('hanyan-taiwei', '刮骨版', '官方推薦', '', deck('s27-official-taiwei-dun'), '已核', [
       '滿寵：蓄勢待發、刮骨療毒。形一陣改刮骨，不是轉·形一陣。',
       '司馬懿兵書：樂善好施、統軍、錘煉。',
       '方略：整軍。',
@@ -127,7 +127,7 @@ const ALTS = {
     ], FB),
   ],
   'baha-d-kangkai': [
-    alt('hanyan-kangkai', '官方整理版', '官方推薦', '', deck('s27-official-kangkai-gong'), '待核', [
+    alt('hanyan-kangkai', '官方整理版', '官方推薦', '', deck('s27-official-kangkai-gong'), '已核', [
       'SP呂蒙固定雁行陣、臨危救主。主卡另可程普或乘敵不虞。',
       '方略：強攻。奇略五張及順序與主卡相同。',
       '兵書與特技另列，不寫進李老師原卡。',

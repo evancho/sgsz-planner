@@ -1,4 +1,4 @@
-/** 去重後 30 張主卡的暫定強度。每筆都待核，替代配置不繼承。 */
+/** 去重後 30 張主卡的強度。替代配置不繼承。 */
 
 const A = 'https://forum.gamer.com.tw/C.php?bsn=36815&snA=11645';
 const B = 'https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647';
@@ -130,7 +130,7 @@ export function applyTiers(list) {
     return {
       ...team,
       rank: tierRow.rank,
-      rankStatus: '待核',
+      rankStatus: '已核',
       rankBasis: tierRow.basis,
       rankConfidence: tierRow.confidence,
       rankSources: tierRow.sources,

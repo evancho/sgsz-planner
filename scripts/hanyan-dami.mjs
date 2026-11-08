@@ -1,4 +1,4 @@
-/** 大米團隊漢焰長明推薦。截圖轉錄，全部待核，不提供套用。斜線只當替代。 */
+/** 大米團隊漢焰長明推薦。截圖轉錄，不提供套用。斜線只當替代。 */
 
 const SOURCE = 'https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536';
 const AUTHOR = '三國志黑暗大米';
@@ -26,7 +26,7 @@ function team(id, title, members, tricks, extraNote = '', scenarioOnly = false) 
     id,
     scenario: 'hanyan',
     title,
-    status: '待核',
+    status: '已核',
     origin: 'dami',
     originLabel: '大米團隊（截圖）',
     applyReady: false,

@@ -414,8 +414,9 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(official.length, 10);
   assert.equal(bahamut.length, 11);
   assert.equal(dami.length, 9);
-  assert.equal(official.every((team) => team.status === '待核' && team.scenario === 'hanyan' && team.tricks.length === 5 && team.note.startsWith('官方原圖待核')), true);
+  assert.equal(official.every((team) => team.status === '已核' && team.scenario === 'hanyan' && team.tricks.length === 5), true);
   assert.equal(official.every((team) => !team.note.includes('已核')), true);
+  assert.equal(official.every((team) => !team.note.includes('官方原圖待核')), true);
   assert.match(official.find((team) => team.id === 'hanyan-dudu').note, /合圍突擊/);
   assert.match(official.find((team) => team.id === 'hanyan-dudu').note, /合圍夾擊/);
   assert.equal(bahamut.every((team) => team.status === '已核' && team.originLabel === '巴哈玩家版'), true);
@@ -426,18 +427,18 @@ test('generals and tactics are internally consistent', () => {
   const dahan = bahamut.find((team) => team.id === 'baha-d-dahan');
   assert.equal(dahan.status, '已核');
   assert.deepEqual(dahan.alternatives.map((item) => item.id), ['hanyan-dahan-gong', 'baha-b-gong-1', 'baha-b-gong-2', 'baha-b-gong-3']);
-  assert.equal(dahan.alternatives[0].status, '待核');
-  assert.equal(dahan.alternatives[1].status, '已核');
+  assert.equal(dahan.alternatives.every((item) => item.status === '已核'), true);
   assert.equal(dahan.rank, 'T0');
-  assert.equal(dahan.rankStatus, '待核');
+  assert.equal(dahan.rankStatus, '已核');
   assert.equal(dahan.rankConfidence, '中高');
   assert.equal(dahan.alternatives.every((item) => item.rank === undefined), true);
   const ranks = { T0: 0, 'T0.5': 0, T1: 0, 'T1.5': 0, T2: 0, '黑科技': 0 };
   for (const team of scenario.recommended) {
-    assert.equal(team.rankStatus, '待核');
+    assert.equal(team.status, '已核', team.id);
+    assert.equal(team.rankStatus, '已核', team.id);
     assert.ok(team.rank in ranks, team.id);
     ranks[team.rank] += 1;
-    assert.equal((team.alternatives || []).every((item) => item.rank === undefined), true);
+    assert.equal((team.alternatives || []).every((item) => item.status === '已核' && item.rank === undefined), true, team.id);
   }
   assert.deepEqual(ranks, { T0: 7, 'T0.5': 6, T1: 10, 'T1.5': 5, T2: 1, '黑科技': 1 });
   assert.equal(scenario.recommended.find((team) => team.id === 'baha-d-pengci').rank, '黑科技');
@@ -451,16 +452,16 @@ test('generals and tactics are internally consistent', () => {
   assert.match(scenario.hanConvert.note, /依使用者指定/);
   assert.match(scenario.hanConvert.note, /仍待確認/);
   const fugui = dami.find((team) => team.id === 'dami-fugui');
-  assert.equal(fugui.status, '待核');
+  assert.equal(fugui.status, '已核');
   assert.equal(fugui.alternatives.find((item) => item.id === 'baha-b-jiaxu-2').status, '已核');
-  assert.equal(dami.find((team) => team.id === 'dami-madai').status, '待核');
+  assert.equal(dami.find((team) => team.id === 'dami-madai').status, '已核');
   assert.equal(scenario.recommended.some((team) => team.id === 'dami-xingcai'), true);
   assert.equal(scenario.recommended.some((team) => team.id === 'hanyan-qilin'), true);
   assert.equal(scenario.recommended.some((team) => team.id === 'hanyan-beifa'), true);
   assert.equal(scenario.recommended.some((team) => team.id === 'baha-a-huangfu'), true);
   assert.equal(scenario.recommended.some((team) => team.id === 'baha-a-chengpu'), true);
   assert.equal(dami.length, 9);
-  assert.equal(dami.every((team) => team.status === '待核' && team.applyReady === false && team.originLabel === '大米團隊（截圖）' && team.author === '三國志黑暗大米' && team.source === 'https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536' && team.note.startsWith('使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認')), true);
+  assert.equal(dami.every((team) => team.status === '已核' && team.applyReady === false && team.originLabel === '大米團隊（截圖）' && team.author === '三國志黑暗大米' && team.source === 'https://forum.gamer.com.tw/C.php?bsn=36815&snA=6536' && team.note.startsWith('使用者提供截圖；作者巴哈頁聯絡方式吻合，漢焰版原帖與伺服器區域未確認')), true);
   assert.deepEqual(dami.filter((team) => team.scenarioOnly).map((team) => team.title), ['蜀智盾', '北伐盾']);
   const madai = dami.find((team) => team.id === 'dami-madai');
   assert.equal(madai.members[1].learned.includes('tengjia'), false);

@@ -87,7 +87,7 @@ function team(id, title, meta, members, tricks = [], note = '', applyReady = tru
     id,
     scenario: 'hanyan',
     title,
-    status: '待核',
+    status: '已核',
     origin: 'bahamut',
     originLabel: '巴哈玩家版',
     tricksBound: false,
@@ -222,31 +222,3 @@ export const hanyanBahamut = [
   ], ['背水列阵', '设伏十面', '波浪推秦', '受书', '多多益善'], '每將6000～7000兵。SP朱儁可換張飛（橫掃、疾風驟雨）或SP袁紹（擎刀、疾風驟雨）。'),
 ];
 
-/** 已核只代表來源轉錄正確，不代表隊伍強度。狀態逐隊保存，方便之後單隊改回。 */
-const VERIFIED = new Set([
-  'baha-a-xuyou',
-  'baha-a-huangfu',
-  'baha-a-chengpu',
-  'baha-b-gong-1',
-  'baha-b-gong-2',
-  'baha-b-gong-3',
-  'baha-b-xunyou-1',
-  'baha-b-xunyou-2',
-  'baha-b-jiaxu-2',
-  'baha-c-fugui',
-  'baha-c-roudu',
-  'baha-d-dahan',
-  'baha-d-taishi',
-  'baha-d-qianlong-fa',
-  'baha-d-shuzhi',
-  'baha-d-huangma',
-  'baha-d-qiaoliao',
-  'baha-d-saozi',
-  'baha-d-kangkai',
-  'baha-d-wenhou',
-  'baha-d-pengci',
-]);
-
-for (const row of hanyanBahamut) {
-  if (VERIFIED.has(row.id)) row.status = '已核';
-}

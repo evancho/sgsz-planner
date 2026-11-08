@@ -36,7 +36,7 @@
       "id": "dami-madai",
       "scenario": "hanyan",
       "title": "馬岱法關盾",
-      "status": "待核",
+      "status": "已核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -145,7 +145,7 @@
           "originLabel": "官方推薦",
           "author": "",
           "source": "https://sgsdeck.com/recommended/s27-official-fa-guan-dun",
-          "status": "待核",
+          "status": "已核",
           "diffs": [
             "馬岱固定藤甲兵、魚鱗陣；SP法正固定非攻制勝。",
             "方略：襲擾。六戰法與兵書在這支選法下與主卡相同。",
@@ -156,7 +156,7 @@
         }
       ],
       "rank": "T0.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站把同六戰法的法關盾標「T0」。Fiona 說台服已跌下 T0。李老師稱它是 40 呂的下替。",
       "rankConfidence": "中",
       "rankSources": [
@@ -178,7 +178,7 @@
       "id": "dami-xingcai",
       "scenario": "hanyan",
       "title": "星彩法關盾",
-      "status": "待核",
+      "status": "已核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -280,7 +280,7 @@
         }
       ],
       "rank": "T0.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "李老師稱星彩大於馬岱。整理站把 CO 星彩和馬岱列在同一法關盾。Fiona 說這環境已跌下 T0。",
       "rankConfidence": "中低",
       "rankSources": [
@@ -302,7 +302,7 @@
       "id": "dami-shuzhi",
       "scenario": "hanyan",
       "title": "蜀智盾",
-      "status": "待核",
+      "status": "已核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -416,7 +416,7 @@
         }
       ],
       "rank": "T0.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "李老師稱航母區更推薦蜀智盾、專打高端局，但續航和穩定性遠不如 40 呂和法官。",
       "rankConfidence": "中",
       "rankSources": [
@@ -430,7 +430,7 @@
       "id": "dami-shugong",
       "scenario": "hanyan",
       "title": "蜀弓",
-      "status": "待核",
+      "status": "已核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -521,7 +521,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站把同三將的麒麟弓標「T1」。李老師說大漢怕蜀智弓。這套四格不同，沒有同構築戰報。",
       "rankConfidence": "低",
       "rankSources": [
@@ -539,7 +539,7 @@
       "id": "dami-beifa",
       "scenario": "hanyan",
       "title": "北伐盾",
-      "status": "待核",
+      "status": "已核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -638,7 +638,7 @@
       ],
       "scenarioOnly": true,
       "rank": "T1",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站把北伐盾標「T1」、攻守兼備。這套改知己、奇正和文武，不是同一配置。",
       "rankConfidence": "低",
       "rankSources": [
@@ -652,7 +652,7 @@
       "id": "dami-wanghong",
       "scenario": "hanyan",
       "title": "網紅槍",
-      "status": "待核",
+      "status": "已核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -750,7 +750,7 @@
         }
       ],
       "rank": "T1.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "沒有可用的台港澳同構築評級。依截圖的裸衣加疾風橫掃暫判次選。大戰士仍未核對。",
       "rankConfidence": "低",
       "rankSources": []
@@ -759,7 +759,7 @@
       "id": "dami-fugui",
       "scenario": "hanyan",
       "title": "富貴騎",
-      "status": "待核",
+      "status": "已核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -861,7 +861,7 @@
           "originLabel": "官方推薦",
           "author": "",
           "source": "https://sgsdeck.com/recommended/s27-official-wumou-qi",
-          "status": "待核",
+          "status": "已核",
           "diffs": [
             "郭嘉上兵伐謀、賈詡戮力同心時，六戰法與主卡這支相同。",
             "SP郭嘉兵書：以治擊亂、鬼謀、將威。方略：謀算。",
@@ -884,7 +884,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站把五謀騎標「T0」。Fiona 說賈詡對主流斷檔差於荀攸。漢弓作者說要挑克制打。",
       "rankConfidence": "中",
       "rankSources": [
@@ -906,7 +906,7 @@
       "id": "dami-shuzhi-qi",
       "scenario": "hanyan",
       "title": "叔侄騎",
-      "status": "待核",
+      "status": "已核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -1042,7 +1042,7 @@
         }
       ],
       "rank": "T0.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "Fiona 說高強度航母是荀攸優先於賈詡，但對 40 呂仍是劣勢。漢弓作者建議先出荀攸版五謀。",
       "rankConfidence": "中",
       "rankSources": [
@@ -1060,7 +1060,7 @@
       "id": "dami-taiwei",
       "scenario": "hanyan",
       "title": "太尉盾",
-      "status": "待核",
+      "status": "已核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -1157,7 +1157,7 @@
           "originLabel": "官方推薦",
           "author": "",
           "source": "https://sgsdeck.com/recommended/s27-official-taiwei-dun",
-          "status": "待核",
+          "status": "已核",
           "diffs": [
             "滿寵：蓄勢待發、刮骨療毒。形一陣改刮骨，不是轉·形一陣。",
             "司馬懿兵書：樂善好施、統軍、錘煉。",
@@ -1168,7 +1168,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站把刮骨太尉標「T1」，以減傷加治療為主。李老師列 40 呂怕帶藤甲的太尉盾。",
       "rankConfidence": "中低",
       "rankSources": [
@@ -1244,7 +1244,7 @@
           "originLabel": "官方推薦",
           "author": "",
           "source": "https://sgsdeck.com/recommended/s27-official-dahan-gong",
-          "status": "待核",
+          "status": "已核",
           "diffs": [
             "六戰法與主卡相同，只差簡稱。",
             "方略：整軍。三將兵書皆三軍之眾、久戰、統軍。不寫進李老師原卡。",
@@ -1291,7 +1291,7 @@
         }
       ],
       "rank": "T0",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "李老師稱四環神之首大漢弓，和 40 呂布平分天下。整理站也標「T0」。漢弓作者提醒 45 到 48 級的法傷弱點。",
       "rankConfidence": "中高",
       "rankSources": [
@@ -1365,7 +1365,7 @@
         }
       ],
       "rank": "T0.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "李老師稱沒抽滿 SP曹操時的最優選擇，強度略有下降，但依然在線。",
       "rankConfidence": "中低",
       "rankSources": [
@@ -1430,7 +1430,7 @@
         }
       ],
       "rank": "T1.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "李老師稱克制和戰損比尚可，但遠遠不值得犧牲兩個體系，推薦程度一般。",
       "rankConfidence": "中",
       "rankSources": [
@@ -1502,7 +1502,7 @@
           "originLabel": "官方推薦",
           "author": "",
           "source": "https://sgsdeck.com/recommended/s27-official-huangma-qiang",
-          "status": "待核",
+          "status": "已核",
           "diffs": [
             "許攸只列臨危救主、解煩衛。主卡另可乘敵不虞。",
             "方略：強攻。三將兵書另列，不覆寫主卡。",
@@ -1516,7 +1516,7 @@
           "originLabel": "巴哈玩家版",
           "author": "24李老师",
           "source": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11651",
-          "status": "待核",
+          "status": "已核",
           "diffs": [
             "SP皇甫嵩：雁形陣、草船，或不帶草船、改先登。",
             "許攸：臨危救主、錦帆軍。SP馬超技能留言未重列。",
@@ -1525,7 +1525,7 @@
         }
       ],
       "rank": "T0.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T0」。Fiona 稱第三幻神。李老師列怕法官、40 呂、大漢弓和蜀智盾，因此下修半級。",
       "rankConfidence": "中",
       "rankSources": [
@@ -1598,7 +1598,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "李老師稱是皇馬之外不錯的去處，但怕法官、大漢弓、40 呂布和五謀，優平馬超。",
       "rankConfidence": "中",
       "rankSources": [
@@ -1666,7 +1666,7 @@
         "伺橋受書": "圯橋受書"
       },
       "rank": "T2",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "李老師稱模擬評分很好，但自己實戰非常拉胯。實戰負評優先於模擬。",
       "rankConfidence": "中低",
       "rankSources": [
@@ -1748,7 +1748,7 @@
           "originLabel": "官方推薦",
           "author": "",
           "source": "https://sgsdeck.com/recommended/s27-official-kangkai-gong",
-          "status": "待核",
+          "status": "已核",
           "diffs": [
             "SP呂蒙固定雁行陣、臨危救主。主卡另可程普或乘敵不虞。",
             "方略：強攻。奇略五張及順序與主卡相同。",
@@ -1758,7 +1758,7 @@
         }
       ],
       "rank": "T1.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T1.5」。李老師稱是平民開荒第一隊，但交戰盯著皇馬打，打其他隊伍是劣勢。",
       "rankConfidence": "中",
       "rankSources": [
@@ -1827,7 +1827,7 @@
         }
       ],
       "rank": "T1.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "李老師稱如果甘寧紅，還不如玩更優先的慷慨弓。這是推薦順位，不能繼承潛龍周瑜版的 T0。",
       "rankConfidence": "低",
       "rankSources": [
@@ -1892,7 +1892,7 @@
         }
       ],
       "rank": "黑科技",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "李老師稱優勢皇馬和太師弓，對大漢弓效果一般，一個武將帶 6000 到 7000 即可。",
       "rankConfidence": "中",
       "rankSources": [
@@ -1965,7 +1965,7 @@
         }
       ],
       "rank": "T0",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "我三弟無敵說皇甫能防止爆頭，但打大漢和內戰會下滑。Fiona 稱綜合能力不錯，防守續航更出眾。",
       "rankConfidence": "中高",
       "rankSources": [
@@ -2040,7 +2040,7 @@
         }
       ],
       "rank": "T0",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "我三弟無敵說換成控制跟坦度，程普版對馬超大優勢。Fiona 稱五到八回合是表現期，建議 49 到 50 級再考慮。",
       "rankConfidence": "中高",
       "rankSources": [
@@ -2058,7 +2058,7 @@
       "id": "hanyan-sanshi-lvbu",
       "scenario": "hanyan",
       "title": "三勢40Y呂布盾",
-      "status": "待核",
+      "status": "已核",
       "strategy": [
         "強攻"
       ],
@@ -2070,7 +2070,7 @@
         "壯志不絕"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-sanshi-lvbu-dun",
-      "note": "官方原圖待核",
+      "note": "",
       "members": [
         {
           "generalId": "y40-lvbu",
@@ -2152,7 +2152,7 @@
         }
       ],
       "rank": "T0",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站直接標「T0」。Fiona 評許攸版在高強度區略好於皇甫嵩和程普。本卡是血刃加瞋目，不是藏器版。",
       "rankConfidence": "低",
       "rankSources": [
@@ -2170,7 +2170,7 @@
       "id": "hanyan-erqiao",
       "scenario": "hanyan",
       "title": "二喬弓",
-      "status": "待核",
+      "status": "已核",
       "strategy": [
         "強攻"
       ],
@@ -2182,7 +2182,7 @@
         "追亡逐北"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-erqiao-gong",
-      "note": "官方原圖待核",
+      "note": "",
       "members": [
         {
           "generalId": "wushuang-daqiao",
@@ -2247,7 +2247,7 @@
       ],
       "officialSource": "https://www.facebook.com/100064157226677/posts/1549258503889376/",
       "rank": "T0",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T0」，轉述推薦指數五星，並稱給孫尚香連擊和破陣。巴哈未見同三將實測。",
       "rankConfidence": "低",
       "rankSources": [
@@ -2261,7 +2261,7 @@
       "id": "hanyan-dudu",
       "scenario": "hanyan",
       "title": "都督弓",
-      "status": "待核",
+      "status": "已核",
       "strategy": [
         "襲擾"
       ],
@@ -2273,7 +2273,7 @@
         "合圍夾擊"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-dudu-gong",
-      "note": "官方原圖待核。原圖寫「合圍突擊」，整理站推定為合圍夾擊。",
+      "note": "原圖寫「合圍突擊」，整理站推定為合圍夾擊。",
       "members": [
         {
           "generalId": "zhouyu",
@@ -2354,7 +2354,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T1」，稱顯著穩定周瑜和陸遜。Fiona 的肉嘟嘟稱既能打續航，也有一定控制。",
       "rankConfidence": "中",
       "rankSources": [
@@ -2372,7 +2372,7 @@
       "id": "hanyan-qilin",
       "scenario": "hanyan",
       "title": "麒麟弓",
-      "status": "待核",
+      "status": "已核",
       "strategy": [
         "謀算"
       ],
@@ -2384,7 +2384,7 @@
         "博浪椎秦"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-qilin-gong",
-      "note": "官方原圖待核",
+      "note": "",
       "members": [
         {
           "generalId": "jiangwei",
@@ -2449,7 +2449,7 @@
       ],
       "officialSource": "https://www.facebook.com/100064157226677/posts/1549258503889376/",
       "rank": "T1",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T1」，稱提高主動戰法發動率和傷害。李老師只把蜀智弓當環境定位，不是這套六戰法實測。",
       "rankConfidence": "低",
       "rankSources": [
@@ -2467,7 +2467,7 @@
       "id": "hanyan-lvdiaolu",
       "scenario": "hanyan",
       "title": "40Y呂貂盧弓",
-      "status": "待核",
+      "status": "已核",
       "strategy": [
         "久戰"
       ],
@@ -2479,7 +2479,7 @@
         "約法三章"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-lv-diao-lu-gong",
-      "note": "官方原圖待核",
+      "note": "",
       "members": [
         {
           "generalId": "y40-lvbu",
@@ -2556,7 +2556,7 @@
         }
       ],
       "rank": "T0",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T0」，稱以治療續航為主，再補增傷和連擊。巴哈 40 呂盾的戰報不能背書這支弓。",
       "rankConfidence": "低",
       "rankSources": [
@@ -2570,7 +2570,7 @@
       "id": "hanyan-qianlong-lvbu",
       "scenario": "hanyan",
       "title": "潛龍呂布弓",
-      "status": "待核",
+      "status": "已核",
       "strategy": [
         "謀算"
       ],
@@ -2582,7 +2582,7 @@
         "合圍夾擊"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-qianlong-lvbu-gong",
-      "note": "官方原圖待核。需訓兵振旅",
+      "note": "需訓兵振旅",
       "members": [
         {
           "generalId": "xuyou",
@@ -2664,7 +2664,7 @@
         }
       ],
       "rank": "T0",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T0」，稱整體以中長回合對抗為主。溫侯弓不能拿來證實或否定這隊。",
       "rankConfidence": "低",
       "rankSources": [
@@ -2678,7 +2678,7 @@
       "id": "hanyan-pangtong-gong",
       "scenario": "hanyan",
       "title": "龐統弓",
-      "status": "待核",
+      "status": "已核",
       "strategy": [
         "謀算"
       ],
@@ -2690,7 +2690,7 @@
         "楚歌四起"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-pangtong-gong",
-      "note": "官方原圖待核。需訓兵振旅",
+      "note": "需訓兵振旅",
       "members": [
         {
           "generalId": "sp-zhugeliang",
@@ -2769,7 +2769,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T1」，稱用對主動戰法增益明顯的奇略來穩定發揮。不是麒麟弓或蜀智。",
       "rankConfidence": "低",
       "rankSources": [
@@ -2783,7 +2783,7 @@
       "id": "hanyan-beifa",
       "scenario": "hanyan",
       "title": "北伐盾",
-      "status": "待核",
+      "status": "已核",
       "strategy": [
         "整軍"
       ],
@@ -2795,7 +2795,7 @@
         "敗中求生"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-beifa-dun",
-      "note": "官方原圖待核。需訓兵振旅",
+      "note": "需訓兵振旅",
       "members": [
         {
           "generalId": "sp-zhugeliang",
@@ -2880,7 +2880,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T1」，稱減傷加治療、攻守兼備。上一季北伐盾的評語不作本季證據。",
       "rankConfidence": "低",
       "rankSources": [
@@ -2894,7 +2894,7 @@
       "id": "hanyan-hedan",
       "scenario": "hanyan",
       "title": "核彈張",
-      "status": "待核",
+      "status": "已核",
       "strategy": [
         "謀算"
       ],
@@ -2906,7 +2906,7 @@
         "定計安儲"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-hedan-zhang",
-      "note": "官方原圖待核。需訓兵振旅",
+      "note": "需訓兵振旅",
       "members": [
         {
           "generalId": "zhoutai",
@@ -2984,7 +2984,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T1」，稱進一步強化陣容中回合的傷害。周泰袁術碰瓷不是這套。",
       "rankConfidence": "低",
       "rankSources": [
@@ -2998,7 +2998,7 @@
       "id": "hanyan-sanxian",
       "scenario": "hanyan",
       "title": "三仙飛熊",
-      "status": "待核",
+      "status": "已核",
       "strategy": [
         "謀算"
       ],
@@ -3010,7 +3010,7 @@
         "功成身退"
       ],
       "source": "https://sgsdeck.com/recommended/s27-official-sanxian-feixiong",
-      "note": "官方原圖待核",
+      "note": "",
       "members": [
         {
           "generalId": "zhangjiao",
@@ -3088,7 +3088,7 @@
         }
       ],
       "rank": "T1.5",
-      "rankStatus": "待核",
+      "rankStatus": "已核",
       "rankBasis": "整理站標「T1.5」，稱整體以張角為核心。漢弓作者只支持張角的克制方向，不能當整隊更高評級。",
       "rankConfidence": "低",
       "rankSources": [
