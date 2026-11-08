@@ -237,27 +237,150 @@ const generals = [
 
 const SEASON_PK = 'https://sgsdeck.com/seasons/pk-s27';
 const SEASON_BINGYAN = 'https://sgsdeck.com/seasons/og-兵演春秋';
-const DEBUT_NOTE = '首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。';
-const LIANG_NOTE = `漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位仍待核。${DEBUT_NOTE}`;
+const SHOT = '使用者遊戲截圖 2026-11-08';
+const DEBUT_NOTE = '首次登場是漢焰長明。漢陣營之後常規劇本也可繼續用。可轉群。';
+const LIANG_NOTE = `漢焰長明賽季頁列為漢陣營良將。統御依${SHOT}。sgsdeck 武將頁 404，定位、適性、自帶、傳承仍待核。${DEBUT_NOTE}`;
 
-for (const [id, name] of [
-  ['baoxin', '鮑信'],
-  ['liuzhang', '劉璋'],
-  ['liudai', '劉岱'],
-  ['chunyuqiong', '淳于瓊'],
-  ['liuyu', '劉虞'],
-  ['zhangyun', '張允'],
-  ['xugong', '許貢'],
+for (const [id, name, cost] of [
+  ['baoxin', '鮑信', 5],
+  ['liuzhang', '劉璋', 3],
+  ['liudai', '劉岱', 4],
+  ['chunyuqiong', '淳于瓊', 5],
+  ['liuyu', '劉虞', 4],
+  ['zhangyun', '張允', 5],
+  ['xugong', '許貢', 4],
 ]) {
   generals.push(pendingGeneral({
     id,
     name,
     camp: '漢',
+    cost,
     quality: '良將',
     debutScenario: 'hanyan',
     status: '已核',
     sourceUrl: SEASON_PK,
     note: LIANG_NOTE,
+  }));
+}
+
+/** 截圖補進的非 SP 漢將。陣營／統御／稀有度依截圖；適性／自帶只用已開的台港澳個人頁。 */
+const SHOT_HAN = [
+  {
+    id: 'zhujun',
+    name: '朱儁',
+    cost: 6,
+    quality: '良將',
+    apt: { 騎: 'C', 盾: 'B', 弓: 'S', 槍: 'B', 器械: 'A' },
+    innate: '',
+    sourceUrl: 'https://sgsdeck.com/generals/朱儁',
+    note: `陣營漢、統御 6、良將依${SHOT}。適性依 sgsdeck 個人頁。自帶待核：sgsdeck 寫千里馳援，台服巴哈 https://forum.gamer.com.tw/C.php?bsn=36815&snA=6234 與 https://forum.gamer.com.tw/C.php?bsn=36815&snA=6992 寫鎮壓黃巾；傳承 sgsdeck 寫聲東擊西。個人頁舊標群，不採用。不是 SP朱儁。定位待核。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'huangfusong',
+    name: '皇甫嵩',
+    cost: 5,
+    quality: '良將',
+    sourceUrl: '',
+    note: `陣營漢、統御 5、良將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/皇甫嵩 404，適性、自帶、傳承、定位待核。不是 SP皇甫嵩。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'luzhi',
+    name: '盧植',
+    cost: 5,
+    quality: '良將',
+    apt: { 騎: 'B', 盾: 'C', 弓: 'A', 槍: 'B', 器械: 'B' },
+    innate: '五穀豐登',
+    sourceUrl: 'https://sgsdeck.com/generals/盧植',
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶五穀豐登、傳承五穀豐登依 sgsdeck 個人頁；個人頁舊標群，不採用。不是 SP盧植。定位待核。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'kongrong',
+    name: '孔融',
+    cost: 5,
+    quality: '良將',
+    apt: { 騎: 'A', 盾: 'B', 弓: 'C', 槍: 'C', 器械: 'C' },
+    innate: '謙讓',
+    sourceUrl: 'https://sgsdeck.com/generals/孔融',
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶謙讓、傳承謙讓依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'zhangren',
+    name: '張任',
+    cost: 5,
+    quality: '良將',
+    apt: { 騎: 'C', 盾: 'B', 弓: 'S', 槍: 'B', 器械: 'B' },
+    innate: '落鳳',
+    sourceUrl: 'https://sgsdeck.com/generals/張任',
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶落鳳、傳承落鳳依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'chenlin',
+    name: '陳琳',
+    cost: 5,
+    quality: '良將',
+    apt: { 騎: 'C', 盾: 'C', 弓: 'B', 槍: 'C', 器械: 'B' },
+    innate: '碩果累累',
+    sourceUrl: 'https://sgsdeck.com/generals/陳琳',
+    note: `陣營漢、統御 5、良將依${SHOT}。適性、自帶碩果累累、傳承落雷依 sgsdeck 個人頁；個人頁舊標魏，不採用。定位待核。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'liubiao',
+    name: '劉表',
+    cost: 3,
+    quality: '良將',
+    apt: { 騎: 'B', 盾: 'B', 弓: 'A', 槍: 'C', 器械: 'C' },
+    innate: '爭分奪秒',
+    sourceUrl: 'https://sgsdeck.com/generals/劉表',
+    note: `陣營漢、統御 3、良將依${SHOT}。適性、自帶爭分奪秒、傳承偃旗息鼓依 sgsdeck 個人頁；個人頁舊標群，不採用。定位待核。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'taoqian',
+    name: '陶謙',
+    cost: 4,
+    quality: '裨將',
+    sourceUrl: '',
+    note: `陣營漢、統御 4、裨將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/陶謙 404，適性、自帶、傳承、定位待核。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'hejin',
+    name: '何進',
+    cost: 3,
+    quality: '裨將',
+    sourceUrl: '',
+    note: `陣營漢、統御 3、裨將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/何進 404，適性、自帶、傳承、定位待核。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'dingyuan',
+    name: '丁原',
+    cost: 3,
+    quality: '裨將',
+    sourceUrl: '',
+    note: `陣營漢、統御 3、裨將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/丁原 404，適性、自帶、傳承、定位待核。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'wangyun',
+    name: '王允',
+    cost: 3,
+    quality: '裨將',
+    sourceUrl: '',
+    note: `陣營漢、統御 3、裨將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/王允 404，適性、自帶、傳承、定位待核。${DEBUT_NOTE}`,
+  },
+  {
+    id: 'liuyao',
+    name: '劉繇',
+    cost: 3,
+    quality: '裨將',
+    sourceUrl: '',
+    note: `陣營漢、統御 3、裨將依${SHOT}。sgsdeck 武將頁 https://sgsdeck.com/generals/劉繇 404，適性、自帶、傳承、定位待核。${DEBUT_NOTE}`,
+  },
+];
+
+for (const row of SHOT_HAN) {
+  generals.push(pendingGeneral({
+    ...row,
+    camp: '漢',
+    debutScenario: 'hanyan',
+    status: '已核',
   }));
 }
 

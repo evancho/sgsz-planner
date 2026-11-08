@@ -48,7 +48,7 @@ test('generals and tactics are internally consistent', () => {
   for (const general of generalsFile.generals) {
     assert.equal(ids.has(general.id), false, general.id);
     ids.add(general.id);
-    assert.ok(['名將', '良將'].includes(general.quality), general.id);
+    assert.ok(['名將', '良將', '裨將'].includes(general.quality), general.id);
     assert.ok(['魏', '蜀', '吳', '群', '漢'].includes(general.camp), general.id);
     assert.ok(general.role == null || ['軍事', '內政'].includes(general.role), general.id);
     if (general.status === '待核') assert.match(general.sourceUrl, /^https:\/\//, general.id);
@@ -498,14 +498,24 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(y40.note.includes('待補'), false);
   assert.match(y40.note, /全賽季名將卡包/);
   assert.match(y40.note, /NewsID=13659/);
-  for (const id of ['baoxin', 'liuzhang', 'liudai', 'chunyuqiong', 'liuyu', 'zhangyun', 'xugong']) {
+  const liangCosts = {
+    baoxin: 5,
+    liuzhang: 3,
+    liudai: 4,
+    chunyuqiong: 5,
+    liuyu: 4,
+    zhangyun: 5,
+    xugong: 4,
+  };
+  for (const [id, cost] of Object.entries(liangCosts)) {
     const liang = generalsFile.generals.find((general) => general.id === id);
     assert.equal(liang.quality, '良將');
     assert.equal(liang.camp, '漢');
     assert.equal(liang.status, '已核');
-    assert.equal(liang.cost, null);
+    assert.equal(liang.cost, cost, id);
     assert.equal(liang.innate, '');
     assert.equal(liang.apt.弓, '待核');
+    assert.match(liang.note, /使用者遊戲截圖 2026-11-08/);
     assert.match(liang.note, /仍待核/);
     assert.equal(liang.note.includes('待補'), false);
     assert.equal(liang.scenarios, undefined);
@@ -516,6 +526,49 @@ test('generals and tactics are internally consistent', () => {
     assert.equal(generalListed(liang, 'hanyan'), true);
     assert.equal(liang.sourceUrl, 'https://sgsdeck.com/seasons/pk-s27');
   }
+  const shotHan = [
+    ['zhujun', '朱儁', 6, '良將', { 騎: 'C', 盾: 'B', 弓: 'S', 槍: 'B', 器械: 'A' }, ''],
+    ['huangfusong', '皇甫嵩', 5, '良將', null, ''],
+    ['luzhi', '盧植', 5, '良將', { 騎: 'B', 盾: 'C', 弓: 'A', 槍: 'B', 器械: 'B' }, '五穀豐登'],
+    ['kongrong', '孔融', 5, '良將', { 騎: 'A', 盾: 'B', 弓: 'C', 槍: 'C', 器械: 'C' }, '謙讓'],
+    ['zhangren', '張任', 5, '良將', { 騎: 'C', 盾: 'B', 弓: 'S', 槍: 'B', 器械: 'B' }, '落鳳'],
+    ['chenlin', '陳琳', 5, '良將', { 騎: 'C', 盾: 'C', 弓: 'B', 槍: 'C', 器械: 'B' }, '碩果累累'],
+    ['liubiao', '劉表', 3, '良將', { 騎: 'B', 盾: 'B', 弓: 'A', 槍: 'C', 器械: 'C' }, '爭分奪秒'],
+    ['taoqian', '陶謙', 4, '裨將', null, ''],
+    ['hejin', '何進', 3, '裨將', null, ''],
+    ['dingyuan', '丁原', 3, '裨將', null, ''],
+    ['wangyun', '王允', 3, '裨將', null, ''],
+    ['liuyao', '劉繇', 3, '裨將', null, ''],
+  ];
+  for (const [id, name, cost, quality, apt, innate] of shotHan) {
+    const general = generalsFile.generals.find((item) => item.id === id);
+    assert.ok(general, id);
+    assert.equal(general.name, name);
+    assert.equal(general.camp, '漢');
+    assert.equal(general.cost, cost);
+    assert.equal(general.quality, quality);
+    assert.equal(general.status, '已核');
+    assert.equal(general.innate, innate);
+    assert.equal(general.scenarios, undefined);
+    assert.equal(general.scenarioLimit, undefined);
+    assert.equal(general.debutScenario, 'hanyan');
+    assert.equal(generalListed(general, 'regular'), true);
+    assert.equal(generalListed(general, 'hanyan'), true);
+    assert.match(general.note, /使用者遊戲截圖 2026-11-08/);
+    assert.match(general.note, /可轉群/);
+    if (apt) assert.deepEqual(general.apt, apt);
+    else assert.equal(general.apt.弓, '待核');
+  }
+  assert.equal(generalsFile.generals.find((item) => item.id === 'zhujun').name, '朱儁');
+  assert.notEqual(generalsFile.generals.find((item) => item.id === 'zhujun').id, 'sp-zhujun');
+  assert.match(generalsFile.generals.find((item) => item.id === 'zhujun').note, /千里馳援/);
+  assert.match(generalsFile.generals.find((item) => item.id === 'zhujun').note, /鎮壓黃巾/);
+  assert.equal(generalsFile.generals.find((item) => item.id === 'zhujun').innate, '');
+  assert.equal(generalsFile.generals.find((item) => item.id === 'luzhi').name, '盧植');
+  assert.equal(generalsFile.generals.find((item) => item.id === 'sp-luzhi').name, 'SP盧植');
+  assert.equal(generalsFile.generals.find((item) => item.id === 'huangfusong').name, '皇甫嵩');
+  assert.equal(generalsFile.generals.find((item) => item.id === 'sp-huangfusong').name, 'SP皇甫嵩');
+  assert.equal(generalsFile.generals.filter((item) => item.camp === '漢').length, 34);
   assert.deepEqual(byName.get('藏器待時').from, ['sp-caocao']);
   assert.deepEqual(byName.get('絕計折謀').from, ['heshi']);
   assert.equal(byName.get('麾軍結陣').status, '已核');
