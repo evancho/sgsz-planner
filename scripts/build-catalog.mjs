@@ -32,7 +32,7 @@ function pendingGeneral(row) {
     const letter = row.apt?.[troop];
     apt[troop] = /^[SABC]$/.test(letter || '') ? letter : '待核';
   }
-  return {
+  const general = {
     id: row.id,
     name: row.name,
     camp: row.camp,
@@ -45,11 +45,14 @@ function pendingGeneral(row) {
     apt,
     innate: row.innate || '',
     nameKey: row.name,
-    scenarios: row.scenarios,
     sourceUrl: row.sourceUrl,
     status: '待核',
     note: row.note || '',
   };
+  if (Array.isArray(row.scenarios) && row.scenarios.length) general.scenarios = row.scenarios;
+  if (row.debutScenario) general.debutScenario = row.debutScenario;
+  if (row.scenarioLimit) general.scenarioLimit = row.scenarioLimit;
+  return general;
 }
 
 function g(id, name, camp, cost, role, apt, dyn, innate = '', tags = null) {
@@ -232,11 +235,15 @@ const generals = [
   g('duwei-machan', '馬禪', '群', 7, '軍事', 'AAAAA', 0, '運籌帷幄', ['都尉']),
 ];
 
-const HANYAN_ONLY = ['hanyan'];
-const BINGYAN_AND_HANYAN = ['yingxiong', 'hanyan'];
 const SEASON_PK = 'https://sgsdeck.com/seasons/pk-s27';
 const SEASON_BINGYAN = 'https://sgsdeck.com/seasons/og-兵演春秋';
-const LIANG_NOTE = '漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。';
+const HANYAN_LIMIT = {
+  status: '待核',
+  scenarios: ['hanyan'],
+  sourceUrl: SEASON_PK,
+};
+const DEBUT_NOTE = '首次登場劇本是漢焰長明。來源只說漢焰新登場，不能證明其他劇本不能用，所以劇本專屬另記，適用劇本限制待核，先不拿來隱藏。';
+const LIANG_NOTE = `漢焰長明賽季頁列為漢陣營良將。sgsdeck 武將頁 404，巴哈沒有可核對的統御、定位、適性、自帶、傳承，這些欄位待核。${DEBUT_NOTE}`;
 
 for (const [id, name] of [
   ['baoxin', '鮑信'],
@@ -252,7 +259,8 @@ for (const [id, name] of [
     name,
     camp: '漢',
     quality: '良將',
-    scenarios: HANYAN_ONLY,
+    debutScenario: 'hanyan',
+    scenarioLimit: HANYAN_LIMIT,
     sourceUrl: SEASON_PK,
     note: LIANG_NOTE,
   }));
@@ -269,9 +277,10 @@ generals.push(
     awaken: true,
     apt: { 騎: 'S', 盾: 'A', 弓: 'S', 槍: 'A', 器械: 'B' },
     innate: '承天靖世',
-    scenarios: HANYAN_ONLY,
+    debutScenario: 'hanyan',
+    scenarioLimit: HANYAN_LIMIT,
     sourceUrl: 'https://sgsdeck.com/generals/SP曹操',
-    note: '漢焰新武將。適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」，本圖鑑的軍事／內政對不上，定位待核。',
+    note: `適性、統御、自帶承天靖世、傳承藏器待時見武將頁與賽季頁。頁首標「輔」「典藏版動態立繪」，本圖鑑的軍事／內政對不上，定位待核。${DEBUT_NOTE}`,
   }),
   pendingGeneral({
     id: 'heshi',
@@ -282,9 +291,10 @@ generals.push(
     dynamic: true,
     apt: { 騎: 'C', 盾: 'C', 槍: 'C', 器械: 'C' },
     innate: '帷內擅權',
-    scenarios: HANYAN_ONLY,
+    debutScenario: 'hanyan',
+    scenarioLimit: HANYAN_LIMIT,
     sourceUrl: 'https://sgsdeck.com/generals/何氏',
-    note: '漢焰新武將。自帶帷內擅權、傳承絕計折謀。弓適性衝突：武將頁弓 B，賽季頁 https://sgsdeck.com/seasons/pk-s27 弓 A，弓待核。頁首標「謀」，定位待核。典藏未見於武將頁，待核。',
+    note: `自帶帷內擅權、傳承絕計折謀。弓適性衝突：武將頁弓 B，賽季頁 https://sgsdeck.com/seasons/pk-s27 弓 A，弓待核。頁首標「謀」，定位待核。典藏未見於武將頁，待核。${DEBUT_NOTE}`,
   }),
   pendingGeneral({
     id: 'y40-lvbu',
@@ -294,9 +304,8 @@ generals.push(
     quality: '名將',
     apt: { 騎: 'A', 盾: 'B', 弓: 'S', 槍: 'S', 器械: 'C' },
     innate: '天威嘯陣',
-    scenarios: BINGYAN_AND_HANYAN,
     sourceUrl: 'https://sgsdeck.com/generals/40Y呂布',
-    note: '獨立卡，不是普通呂布。兵演春秋推出後轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。不是漢焰專屬。本圖鑑沒有單獨的兵演春秋，英雄命世代表該季之後仍可用，漢焰長明也可選。自帶天威嘯陣。傳承武將頁未列，待核。頁首標「武」，定位待核。動態、典藏未見於武將頁，待核。',
+    note: '獨立卡，不是普通呂布。兵演春秋推出後轉漢，見 https://sgsdeck.com/seasons/og-兵演春秋 。武將頁取得方式寫全賽季名將卡包、三國志系列 40 週年紀念名將卡包。台灣新聞稿 https://news.omg.com.tw/News/NewsContent?NewsID=13659 寫免費送給全服主公。沒有排除常規劇本的台港澳明文，所以各劇本都能選。自帶天威嘯陣。傳承武將頁未列，待核。頁首標「武」，定位待核。動態、典藏未見於武將頁，待核。',
   }),
 );
 

@@ -34,6 +34,7 @@ import {
   ownershipGaps,
   memberTacticPlan,
   generalGapLine,
+  generalListed,
   tacticGapLine,
   dropUnownedTactics,
   dropUsedTactics,
@@ -158,14 +159,21 @@ function shownInScenario(item) {
 }
 
 function listedGeneral(general) {
-  if (isDuwei(general) && account().scenario === 'hanyan') return false;
-  return shownInScenario(general);
+  return generalListed(general, account().scenario, { showAll: ui.showAllScenarios });
 }
 
 function scenarioMarks(item) {
   const ids = Array.isArray(item?.scenarios) ? item.scenarios : [];
-  if (!ids.length) return '';
-  return ids.map((id) => `<span class="mini scenario-${esc(id)}">${esc(scenarioName(id))}</span>`).join('');
+  const confirmed = ids.map((id) => `<span class="mini scenario-${esc(id)}">${esc(scenarioName(id))}</span>`).join('');
+  const limit = item?.scenarioLimit;
+  if (limit?.status !== '待核' || !Array.isArray(limit.scenarios) || !limit.scenarios.length) return confirmed;
+  const names = limit.scenarios.map((id) => scenarioName(id)).join('、');
+  const label = `僅${names}待核`;
+  const url = /^https?:\/\//.test(String(limit.sourceUrl || '')) ? limit.sourceUrl : '';
+  const chip = url
+    ? `<a class="mini review" href="${esc(url)}" target="_blank" rel="noopener">${esc(label)}</a>`
+    : `<span class="mini review">${esc(label)}</span>`;
+  return `${confirmed}${chip}`;
 }
 
 function citeHtml(item) {
@@ -1795,10 +1803,7 @@ function generalPickerResults() {
   const filters = ui.picker.filters || emptyPickerFilters();
   const ownedCount = ui.catalog.generals.filter((general) => current.owned[general.id]).length;
   const keepId = team.members[ui.picker.slot]?.generalId;
-  let options = ui.catalog.generals.filter((general) => {
-    if (isDuwei(general) && current.scenario === 'hanyan') return false;
-    return listedGeneral(general) || general.id === keepId;
-  }).map((general) => presentGeneral(general, current)).filter((general) => {
+  let options = ui.catalog.generals.filter((general) => listedGeneral(general) || general.id === keepId).map((general) => presentGeneral(general, current)).filter((general) => {
     const owned = current.owned[general.id];
     return matchesGeneral(general, owned, {
       ...emptyFilters(),

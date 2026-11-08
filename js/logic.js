@@ -49,11 +49,18 @@ export function scenarioName(id) {
   return SCENARIOS.find((item) => item.id === normalizeScenario(id)).name;
 }
 
-/** 沒有適用劇本陣列的資料，所有劇本都顯示。有陣列時才限定。 */
+/** 沒有適用劇本陣列的資料，所有劇本都顯示。有陣列時才限定。陣列沒有時間先後。 */
 export function fitsScenario(item, scenarioId) {
   const marks = item?.scenarios;
   if (!Array.isArray(marks) || marks.length === 0) return true;
   return marks.includes(normalizeScenario(scenarioId));
+}
+
+/** 武將列表與空格選將器共用。scenarioLimit 待核時不拿來隱藏。 */
+export function generalListed(general, scenarioId, options = {}) {
+  if (isDuwei(general) && normalizeScenario(scenarioId) === 'hanyan') return false;
+  if (options.showAll) return true;
+  return fitsScenario(general, scenarioId);
 }
 
 export function meritIdList(value) {
