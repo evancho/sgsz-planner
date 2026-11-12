@@ -35,6 +35,8 @@ import {
   memberTacticPlan,
   generalGapLine,
   generalListed,
+  scenarioHidesDuwei,
+  duweiBlockedMessage,
   presentCamp,
   nextCampOverride,
   applyCampOverride,
@@ -1513,7 +1515,7 @@ function templateBlockState(team, current, usage, tactics) {
   const missingBlocked = Boolean(generalGapLine(gaps));
   const tacticBlocked = tacticHits.length > 0;
   const referenceOnly = team.fromRecommended && team.applyReady === false;
-  const duweiBlocked = current.scenario === 'hanyan' && (team.members || []).some((member) => isDuwei(generalsById().get(member?.generalId)));
+  const duweiBlocked = scenarioHidesDuwei(current.scenario) && (team.members || []).some((member) => isDuwei(generalsById().get(member?.generalId)));
   return {
     blocked: generalBlocked || missingBlocked || tacticBlocked || referenceOnly || duweiBlocked,
     gaps,
@@ -1523,7 +1525,7 @@ function templateBlockState(team, current, usage, tactics) {
       tacticGapLine(gaps),
       tacticBlocked ? tacticConflictLine(tacticHits) : '',
       referenceOnly ? '僅供參考，不提供套用' : '',
-      duweiBlocked ? '漢焰長明不能使用都尉' : '',
+      duweiBlocked ? duweiBlockedMessage(current.scenario) : '',
     ].filter(Boolean),
   };
 }
@@ -2639,8 +2641,8 @@ function onClick(event) {
         toast('僅供參考，不提供套用');
         break;
       }
-      if (current.scenario === 'hanyan' && (template.members || []).some((member) => isDuwei(generalsById().get(member?.generalId)))) {
-        toast('漢焰長明不能使用都尉');
+      if (scenarioHidesDuwei(current.scenario) && (template.members || []).some((member) => isDuwei(generalsById().get(member?.generalId)))) {
+        toast(duweiBlockedMessage(current.scenario));
         break;
       }
       if (current.teams.length >= 40) {

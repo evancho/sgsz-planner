@@ -751,13 +751,24 @@ test('generals and tactics are internally consistent', () => {
   assert.match(lingji.note, /5\.5→10/);
   assert.ok(scenario.scenarioInfo.bingyan);
   assert.match(scenario.scenarioInfo.bingyan.confirmed, /漢室轉換（群↔漢，規則與名額同漢焰長明）/);
+  assert.match(scenario.scenarioInfo.bingyan.confirmed, /與漢焰長明一樣沒有都尉/);
   assert.match(scenario.scenarioInfo.bingyan.confirmed, /使用者確認 2026-11-12/);
-  assert.match(scenario.scenarioInfo.bingyan.pending, /都尉是否可用仍待核/);
+  assert.doesNotMatch(scenario.scenarioInfo.bingyan.pending, /都尉是否可用仍待核/);
   assert.doesNotMatch(scenario.scenarioInfo.bingyan.pending, /漢室轉換（群↔漢名額）是否適用仍待核/);
   assert.equal(scenario.scenarioInfo.bingyan.sources.length, 2);
-  const shenheng = generalsFile.generals.find((general) => general.id === 'duwei-shenheng');
-  assert.equal(generalListed(shenheng, 'bingyan'), true);
-  assert.equal(generalListed(shenheng, 'hanyan'), false);
+  const duweiRows = generalsFile.generals.filter((general) => (general.tags || []).includes('都尉'));
+  assert.equal(duweiRows.length, 12);
+  for (const general of duweiRows) {
+    assert.equal(generalListed(general, 'bingyan'), false, general.id);
+    assert.equal(generalListed(general, 'hanyan'), false, general.id);
+    assert.equal(generalListed(general, 'yingxiong'), true, general.id);
+  }
+  const duweiIds = new Set(duweiRows.map((general) => general.id));
+  for (const team of bingyanTeams) {
+    for (const member of team.members || []) {
+      assert.equal(duweiIds.has(member.generalId), false, `${team.id} ${member.generalId}`);
+    }
+  }
   for (const name of ['藏器待時', '絕計折謀', '桃園結義', '麾軍結陣']) {
     assert.equal(fitsScenario(byName.get(name), 'bingyan'), true, name);
     assert.equal(fitsScenario(byName.get(name), 'hanyan'), true, name);
@@ -775,6 +786,7 @@ test('generals and tactics are internally consistent', () => {
   const appSrc = readFileSync(new URL('../js/app.js', import.meta.url), 'utf8');
   assert.match(appSrc, /info\.confirmed/);
   assert.match(appSrc, /data-action="toggle-han"/);
+  assert.match(appSrc, /scenarioHidesDuwei/);
   assert.doesNotMatch(appSrc, /current\.scenario === 'hanyan'.*toggle-han|toggle-han.*current\.scenario === 'hanyan'/);
   const saozi = scenario.recommended.find((team) => team.id === 'baha-d-saozi');
   assert.equal(saozi.tricks.includes('伺橋受書'), true);
