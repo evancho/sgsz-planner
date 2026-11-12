@@ -130,7 +130,7 @@ export function applyTiers(list) {
     return {
       ...team,
       rank: tierRow.rank,
-      rankStatus: '已核',
+      rankStatus: team.origin === 'dami' ? '待核' : '已核',
       rankBasis: tierRow.basis,
       rankConfidence: tierRow.confidence,
       rankSources: tierRow.sources,

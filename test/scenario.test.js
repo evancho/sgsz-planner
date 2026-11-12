@@ -14,7 +14,9 @@ import {
   normalizeAccountFile,
   normalizeCamps,
   normalizeRecommended,
+  normalizeScenario,
   normalizeState,
+  SCENARIOS,
   presentCamp,
   recommendedFromAlternative,
   resolveBingshuRaw,
@@ -45,6 +47,28 @@ test('old backups without a scenario become 英雄命世 and keep owned tactics'
   assert.equal(payload.account.scenario, 'yingxiong');
   const again = normalizeAccountFile(payload);
   assert.equal(again.account.scenario, 'yingxiong');
+});
+
+
+test('兵演春秋 is a first-class scenario and does not inherit 漢焰 limits', () => {
+  assert.deepEqual(SCENARIOS.map((row) => row.id), ['regular', 'yingxiong', 'bingyan', 'hanyan']);
+  assert.equal(normalizeScenario('兵演春秋'), 'bingyan');
+  assert.equal(fitsScenario({ name: '麾軍結陣' }, 'bingyan'), true);
+  assert.equal(fitsScenario({ scenarios: ['bingyan'] }, 'bingyan'), true);
+  assert.equal(fitsScenario({ scenarios: ['bingyan'] }, 'yingxiong'), false);
+  assert.equal(fitsScenario({ scenarios: ['yingxiong'] }, 'bingyan'), false);
+  const teams = normalizeRecommended([
+    { id: 'bingyan-demo', scenario: 'bingyan', title: '示範', status: '待核', rank: 'T0', rankStatus: '待核', origin: 'sgsdeck', originLabel: 'sgsdeck', source: 'https://sgsdeck.com/recommended/example', members: [
+      { generalId: 'lvbu', generalName: '呂布', learned: ['wangong', null], learnedNames: ['彎弓飲羽', '破甲'], points: '武力', unlisted: ['破甲'] },
+      { generalId: 'guojia', generalName: '郭嘉', learned: ['sanshi'], learnedNames: ['三勢陣'] },
+      { generalId: 'wushuang-xiaoqiao', generalName: '無雙小喬', learned: ['wenwu'], learnedNames: ['文武雙全'] },
+    ] },
+  ]);
+  assert.equal(teams[0].scenario, 'bingyan');
+  assert.equal(teams[0].origin, 'sgsdeck');
+  assert.equal(teams[0].status, '待核');
+  assert.equal(teams[0].members[0].points, '武力');
+  assert.deepEqual(teams[0].members[0].unlisted, ['破甲']);
 });
 
 test('unmarked tactics fit every scenario and marked ones use the array', () => {

@@ -197,6 +197,16 @@ function aptOf(general, current = account()) {
   return effectiveApt(general, current.owned?.[general.id], ui.catalog?.merits || []);
 }
 
+function scenarioBriefHtml(scenarioId) {
+  const info = ui.catalog?.scenarioInfo?.[scenarioId];
+  if (!info) return '';
+  const links = (info.sources || []).filter((row) => row?.url).map((row) =>
+    `<a class="cite" href="${esc(row.url)}" target="_blank" rel="noopener">${esc(row.label || '來源')}</a>`
+  ).join('、');
+  const parts = [info.summary, links ? `來源：${links}` : '', info.pending].filter(Boolean);
+  return `<p class="faint scenario-brief">${parts.join(' ')}</p>`;
+}
+
 function hiddenScenarioNote(record, scenarioId) {
   const hidden = hiddenScenarioNames(record, scenarioId, {
     tactic: (id) => tacticsById(record).get(id),
@@ -842,6 +852,7 @@ function accountCard(item, active, index, count) {
               ${SCENARIOS.map((row) => `<option value="${row.id}" ${item.scenario === row.id ? 'selected' : ''}>${row.name}</option>`).join('')}
             </select>
           </label>
+          ${scenarioBriefHtml(item.scenario)}
           <div class="btn-row">
             <button type="button" class="btn" data-action="export-account" data-id="${esc(item.id)}">匯出</button>
             <button type="button" class="btn" data-action="open-account-file" data-id="${esc(item.id)}">載入</button>
@@ -957,7 +968,7 @@ function filterGroup(label, key, values) {
 
 function duweiMark(general) {
   if (!isDuwei(general)) return '';
-  return '<span class="mini duwei" title="英雄命示都尉。統御以 7 計，天賦身經百戰可 +1。">都尉</span>';
+  return '<span class="mini duwei" title="英雄命世都尉。統御以 7 計，天賦身經百戰可 +1。">都尉</span>';
 }
 
 function generalCard(general, current, usage) {
@@ -972,6 +983,7 @@ function generalCard(general, current, usage) {
     ownedMarkHtml(owned),
     where ? `<a class="stamp" href="#/teams/${esc(where.teamId)}">部隊中</a>` : '',
     scenarioMarks(general),
+    citeHtml(general),
   ].filter(Boolean).join('');
   const nameEl = owned
     ? `<button type="button" class="grow-name" data-action="toggle-expand" data-id="${esc(general.id)}" aria-expanded="${open}"><strong>${esc(name)}</strong></button>`
@@ -1550,6 +1562,7 @@ function templateResultsMarkup() {
             <strong>${esc(templateDisplayName(team))}</strong>
             <span class="tag red-total">總紅度 ${red}</span>
             <span class="tag">${campInk(team.country)}</span>
+            ${team.fromRecommended && team.status === '待核' ? '<span class="mini review">待核</span>' : ''}
           </div>
           <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入</button>
         </div>
@@ -1558,6 +1571,7 @@ function templateResultsMarkup() {
         ${unresolved.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
         ${bases.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
         ${basis}
+        ${team.fromRecommended && team.source ? `<p class="faint"><a class="cite" href="${esc(team.source)}" target="_blank" rel="noopener">來源</a>${team.note ? ` ${esc(team.note)}` : ''}</p>` : ''}
         ${notes.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
         ${team.fromRecommended ? altHtml(team, current, usage, tactics) : ''}
       </li>`;
@@ -3481,6 +3495,7 @@ async function loadCatalog() {
     merits: scenario.merits,
     recommended: scenario.recommended,
     hanConvert: scenario.hanConvert,
+    scenarioInfo: scenarioFile.scenarioInfo || {},
     generalsById: new Map(generals.generals.map((general) => [general.id, general])),
   };
 }

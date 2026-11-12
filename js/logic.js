@@ -33,6 +33,7 @@ export function newId(prefix = 'id') {
 export const SCENARIOS = [
   { id: 'regular', name: '常規劇本' },
   { id: 'yingxiong', name: '英雄命世' },
+  { id: 'bingyan', name: '兵演春秋' },
   { id: 'hanyan', name: '漢焰長明' },
 ];
 /** 舊帳號沒有劇本欄位時，視為上一季英雄命世。 */
@@ -1188,6 +1189,9 @@ export function normalizeRecommended(list) {
     } else if (raw.origin === 'dami') {
       team.origin = 'dami';
       team.originLabel = '大米團隊（截圖）';
+    } else if (raw.origin === 'sgsdeck') {
+      team.origin = 'sgsdeck';
+      team.originLabel = clip(raw.originLabel, 24) || 'sgsdeck';
     }
     if (raw.scenarioOnly === true) team.scenarioOnly = true;
     const author = clip(raw.author, 24);
@@ -1263,6 +1267,13 @@ function normalizeRecommendedMember(member) {
   if (resolveBasis) next.resolveBasis = resolveBasis;
   const generalChoices = generalChoicesOf(member.generalChoices);
   if (generalChoices.length) next.generalChoices = generalChoices;
+  const points = clip(member.points, 24);
+  if (points) next.points = points;
+  const unlisted = (Array.isArray(member.unlisted) ? member.unlisted : [])
+    .map((part) => clip(part, 24))
+    .filter(Boolean)
+    .slice(0, 6);
+  if (unlisted.length) next.unlisted = unlisted;
   return next;
 }
 

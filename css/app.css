@@ -307,6 +307,7 @@ button.grow-name { cursor: pointer; }
 .alt-head .btn { flex: 0 0 auto; }
 .apt.boost { outline: 1px solid var(--han); }
 .scenario-field { display: block; margin-top: 8px; }
+.scenario-brief { margin: .4em 0 0; line-height: 1.45; }
 .cite { margin-left: 6px; font-size: 13px; }
 .plan-editor { display: grid; gap: 8px; margin: 8px 0 12px; }
 .trick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
