@@ -36,7 +36,7 @@
       "id": "dami-madai",
       "scenario": "hanyan",
       "title": "馬岱法關盾",
-      "status": "已核",
+      "status": "待核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -231,7 +231,7 @@
         }
       ],
       "rank": "T0.5",
-      "rankStatus": "已核",
+      "rankStatus": "待核",
       "rankBasis": "整理站把同六戰法的法關盾標「T0」。Fiona 說台服已跌下 T0。李老師稱它是 40 呂的下替。",
       "rankConfidence": "中",
       "rankSources": [
@@ -253,7 +253,7 @@
       "id": "dami-xingcai",
       "scenario": "hanyan",
       "title": "星彩法關盾",
-      "status": "已核",
+      "status": "待核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -355,7 +355,7 @@
         }
       ],
       "rank": "T0.5",
-      "rankStatus": "已核",
+      "rankStatus": "待核",
       "rankBasis": "李老師稱星彩大於馬岱。整理站把 CO 星彩和馬岱列在同一法關盾。Fiona 說這環境已跌下 T0。",
       "rankConfidence": "中低",
       "rankSources": [
@@ -377,7 +377,7 @@
       "id": "dami-shuzhi",
       "scenario": "hanyan",
       "title": "蜀智盾",
-      "status": "已核",
+      "status": "待核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -534,7 +534,7 @@
         }
       ],
       "rank": "T0.5",
-      "rankStatus": "已核",
+      "rankStatus": "待核",
       "rankBasis": "李老師稱航母區更推薦蜀智盾、專打高端局，但續航和穩定性遠不如 40 呂和法官。",
       "rankConfidence": "中",
       "rankSources": [
@@ -548,7 +548,7 @@
       "id": "dami-shugong",
       "scenario": "hanyan",
       "title": "蜀弓",
-      "status": "已核",
+      "status": "待核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -639,7 +639,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "已核",
+      "rankStatus": "待核",
       "rankBasis": "整理站把同三將的麒麟弓標「T1」。李老師說大漢怕蜀智弓。這套四格不同，沒有同構築戰報。",
       "rankConfidence": "低",
       "rankSources": [
@@ -657,7 +657,7 @@
       "id": "dami-beifa",
       "scenario": "hanyan",
       "title": "北伐盾",
-      "status": "已核",
+      "status": "待核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -756,7 +756,7 @@
       ],
       "scenarioOnly": true,
       "rank": "T1",
-      "rankStatus": "已核",
+      "rankStatus": "待核",
       "rankBasis": "整理站把北伐盾標「T1」、攻守兼備。這套改知己、奇正和文武，不是同一配置。",
       "rankConfidence": "低",
       "rankSources": [
@@ -770,7 +770,7 @@
       "id": "dami-wanghong",
       "scenario": "hanyan",
       "title": "網紅槍",
-      "status": "已核",
+      "status": "待核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -868,7 +868,7 @@
         }
       ],
       "rank": "T1.5",
-      "rankStatus": "已核",
+      "rankStatus": "待核",
       "rankBasis": "沒有可用的台港澳同構築評級。依截圖的裸衣加疾風橫掃暫判次選。大戰士仍未核對。",
       "rankConfidence": "低",
       "rankSources": []
@@ -877,7 +877,7 @@
       "id": "dami-fugui",
       "scenario": "hanyan",
       "title": "富貴騎",
-      "status": "已核",
+      "status": "待核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -1113,7 +1113,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "已核",
+      "rankStatus": "待核",
       "rankBasis": "整理站把五謀騎標「T0」。Fiona 說賈詡對主流斷檔差於荀攸。漢弓作者說要挑克制打。",
       "rankConfidence": "中",
       "rankSources": [
@@ -1135,7 +1135,7 @@
       "id": "dami-shuzhi-qi",
       "scenario": "hanyan",
       "title": "叔侄騎",
-      "status": "已核",
+      "status": "待核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -1335,7 +1335,7 @@
         }
       ],
       "rank": "T0.5",
-      "rankStatus": "已核",
+      "rankStatus": "待核",
       "rankBasis": "Fiona 說高強度航母是荀攸優先於賈詡，但對 40 呂仍是劣勢。漢弓作者建議先出荀攸版五謀。",
       "rankConfidence": "中",
       "rankSources": [
@@ -1353,7 +1353,7 @@
       "id": "dami-taiwei",
       "scenario": "hanyan",
       "title": "太尉盾",
-      "status": "已核",
+      "status": "待核",
       "origin": "dami",
       "originLabel": "大米團隊（截圖）",
       "applyReady": false,
@@ -1545,7 +1545,7 @@
         }
       ],
       "rank": "T1",
-      "rankStatus": "已核",
+      "rankStatus": "待核",
       "rankBasis": "整理站把刮骨太尉標「T1」，以減傷加治療為主。李老師列 40 呂怕帶藤甲的太尉盾。",
       "rankConfidence": "中低",
       "rankSources": [
@@ -3908,6 +3908,2008 @@
           "url": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647"
         }
       ]
+    },
+    {
+      "id": "bingyan-40y-lvbu-b",
+      "scenario": "bingyan",
+      "title": "40Y 呂布弓（王異法正）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-40y-lvbu-b",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "y40-lvbu",
+          "generalName": "40Y呂布",
+          "learned": [
+            "yinxian",
+            "xueren"
+          ],
+          "learnedNames": [
+            "引弦力戰",
+            "血刃爭鋒"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yitui",
+            "secondary": [
+              "jingzhun",
+              "chizhong"
+            ]
+          },
+          "points": "武力"
+        },
+        {
+          "generalId": "wangyi",
+          "generalName": "王異",
+          "learned": [
+            "duohun",
+            "dangfeng"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "當鋒摧決"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "wentao",
+              "cangdao"
+            ]
+          },
+          "points": "智力"
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            "sanshi",
+            "linwei"
+          ],
+          "learnedNames": [
+            "三勢陣",
+            "臨危救主"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "智力",
+          "remark": "配弓兵寶物升級為 S。擅長對抗皇馬槍、五謀騎；對非藤甲法關盾互有勝負"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-40y-lvbu-xiandeng",
+      "scenario": "bingyan",
+      "title": "40Y 呂布弓（精·先登死士）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-40y-lvbu-xiandeng",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "y40-lvbu",
+          "generalName": "40Y呂布",
+          "learned": [
+            "xueren",
+            "yinxian"
+          ],
+          "learnedNames": [
+            "血刃爭鋒",
+            "引弦力戰"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "points": "武力",
+          "remark": "兵書大書可換不勇則死"
+        },
+        {
+          "generalId": "sp-luzhi",
+          "generalName": "SP盧植",
+          "learned": [
+            "yanxing",
+            "xiandeng"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "先登死士"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "統率",
+          "remark": "先登死士需改造為 精·先登死士，選【抵抗】【抑勢】【奪志】【疊加】"
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            "shencang",
+            "gangrou-ji"
+          ],
+          "learnedNames": [
+            "深藏若虛",
+            "剛柔並濟"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "智力"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-40y-lvbu-d",
+      "scenario": "bingyan",
+      "title": "40Y 呂布弓（董卓貂蟬）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-40y-lvbu-d",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "y40-lvbu",
+          "generalName": "40Y呂布",
+          "learned": [
+            "xueren",
+            "yinxian"
+          ],
+          "learnedNames": [
+            "血刃爭鋒",
+            "引弦力戰"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "points": "武力",
+          "remark": "兵書大書可換不勇則死"
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            "shencang",
+            "gangrou-ji"
+          ],
+          "learnedNames": [
+            "深藏若虛",
+            "剛柔並濟"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "智力"
+        },
+        {
+          "generalId": "sp-dongzhuo",
+          "generalName": "SP董卓",
+          "learned": [
+            "yanxing",
+            "xiandeng"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "先登死士"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "統率",
+          "remark": "也可用董卓。先登死士需改造為 精·先登死士，選【抑勢】【抵抗】"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-40y-lvbu-a",
+      "scenario": "bingyan",
+      "title": "40Y 呂布弓（貂蟬盧植）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-40y-lvbu-a",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "y40-lvbu",
+          "generalName": "40Y呂布",
+          "learned": [
+            "xueren",
+            "yinxian"
+          ],
+          "learnedNames": [
+            "血刃爭鋒",
+            "引弦力戰"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "points": "武力",
+          "remark": "兵書可換 以直報怨 / 精準 / 持重"
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            "shencang",
+            "gangrou-ji"
+          ],
+          "learnedNames": [
+            "深藏若虛",
+            "剛柔並濟"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "jiuzhan"
+            ]
+          },
+          "points": "智力",
+          "remark": "提升治療與減傷"
+        },
+        {
+          "generalId": "sp-luzhi",
+          "generalName": "SP盧植",
+          "learned": [
+            "yanxing",
+            "xiandeng"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "先登死士"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "jiuzhan"
+            ]
+          },
+          "points": "統率",
+          "remark": "雁行陣為部隊轉移負面效果"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-wumou-bow-baimaobing",
+      "scenario": "bingyan",
+      "title": "五謀弓（轉·白毦兵）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-wumou-bow-baimaobing",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "sp-xunyu",
+          "generalName": "SP荀彧",
+          "learned": [
+            "baimao",
+            "guagu"
+          ],
+          "learnedNames": [
+            "白毦兵",
+            "刮骨療毒"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "points": "智力",
+          "remark": "配政令寶物升級為 S。白毦兵需改造為 轉·白毦兵（選【轉·彎弓】轉弓兵）"
+        },
+        {
+          "generalId": "sp-guojia",
+          "generalName": "SP郭嘉",
+          "learned": [
+            "duohun",
+            "dangfeng"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "當鋒摧決"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "qizheng",
+            "secondary": [
+              "cangdao",
+              "wentao"
+            ]
+          },
+          "points": "智力",
+          "remark": "配弓兵寶物升級為 S"
+        },
+        {
+          "generalId": "jiaxu",
+          "generalName": "賈詡",
+          "learned": [
+            "lingji",
+            "shangbing"
+          ],
+          "learnedNames": [
+            "靈機一動",
+            "上兵伐謀"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "points": "智力",
+          "remark": "靈機一動需改造為 精·靈機一動"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-wunv-cavalry-hubaoqi",
+      "scenario": "bingyan",
+      "title": "吳女騎（精·虎豹騎）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-wunv-cavalry-hubaoqi",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "wushuang-daqiao",
+          "generalName": "無雙大喬",
+          "learned": [
+            "meihuo",
+            "caochuan"
+          ],
+          "learnedNames": [
+            "魅惑",
+            "草船借箭"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "dongruo",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "統率",
+          "remark": "大兵書可換三軍之眾"
+        },
+        {
+          "generalId": "sunshangxiang",
+          "generalName": "孫尚香",
+          "learned": [
+            "dangfeng",
+            "sucheng"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "速乘其利"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "shengzhan",
+              "cangdao"
+            ]
+          },
+          "points": "武力",
+          "remark": "加點帶驚鴻。兵書可換 以治擊亂 / 神機 / 將威"
+        },
+        {
+          "generalId": "wushuang-xiaoqiao",
+          "generalName": "無雙小喬",
+          "learned": [
+            "linwei",
+            "hubao"
+          ],
+          "learnedNames": [
+            "臨危救主",
+            "虎豹騎"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "zhenge",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "武力 統率",
+          "remark": "虎豹騎需改造為 精·虎豹騎，選【神行】【操演】【延益】【重創】"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-taishi-bow-feixiong",
+      "scenario": "bingyan",
+      "title": "太師弓（轉·飛熊軍）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-taishi-bow-feixiong",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "sp-dongzhuo",
+          "generalName": "SP董卓",
+          "learned": [
+            "feixiong",
+            "shangbing"
+          ],
+          "learnedNames": [
+            "飛熊軍",
+            "上兵伐謀"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "統率",
+          "remark": "飛熊軍需改造為 轉·飛熊軍（選【轉·彎弓】轉弓兵）"
+        },
+        {
+          "generalId": "sp-luzhi",
+          "generalName": "SP盧植",
+          "learned": [
+            "yanxing",
+            "gangrou-ji"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "剛柔並濟"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "統率"
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            "shencang",
+            "luli"
+          ],
+          "learnedNames": [
+            "深藏若虛",
+            "戮力同心"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "智力"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-zhangfei-nuke-bow",
+      "scenario": "bingyan",
+      "title": "張飛核彈弓（精·無當飛軍）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-zhangfei-nuke-bow",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "learned": [
+            "qianlong",
+            "shengqi"
+          ],
+          "learnedNames": [
+            "潛龍陣",
+            "盛氣凌敵"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "points": "統率",
+          "remark": "兵書可換 誘敵之策 / 掩虛 / 勵軍"
+        },
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "learned": [
+            "jifeng",
+            "gangyong"
+          ],
+          "learnedNames": [
+            "疾風驟雨",
+            "剛勇無前"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yitui",
+            "secondary": [
+              "jingzhun",
+              "chizhong"
+            ]
+          },
+          "points": "武力",
+          "remark": "配政令與弓兵寶物升級為 S。加點帶雄烈"
+        },
+        {
+          "generalId": "sp-zhujun",
+          "generalName": "SP朱儁",
+          "learned": [
+            "wudang",
+            "taiping"
+          ],
+          "learnedNames": [
+            "無當飛軍",
+            "太平道法"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yitui",
+            "secondary": [
+              "jingzhun",
+              "chizhong"
+            ]
+          },
+          "points": "智力",
+          "remark": "無當飛軍需改造為 精·無當飛軍，選【兼修】【未定】【破軍】【智絕】"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-faguan-shield-tengjia",
+      "scenario": "bingyan",
+      "title": "法關盾（精·藤甲兵）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-faguan-shield-tengjia",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "sp-guanyu",
+          "generalName": "SP關羽",
+          "learned": [
+            "yigua",
+            "jifeng"
+          ],
+          "learnedNames": [
+            "以寡敵眾",
+            "疾風驟雨"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "fenji",
+            "secondary": [
+              "baizhan",
+              "yanxu"
+            ]
+          },
+          "points": "武力"
+        },
+        {
+          "generalId": "madai",
+          "generalName": "馬岱",
+          "learned": [
+            "yulin",
+            "tengjia"
+          ],
+          "learnedNames": [
+            "魚鱗陣",
+            "藤甲兵"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "統率",
+          "remark": "也可用無雙星彩。藤甲兵需改造為 精·藤甲兵，選【忍耐】【藤甲】【免疫】【堅韌】"
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            "xushidai",
+            "feigong"
+          ],
+          "learnedNames": [
+            "蓄勢待發",
+            "非攻制勝"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "智力"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-huangma-spear-jiefanwei",
+      "scenario": "bingyan",
+      "title": "皇馬槍（精·解煩衛）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-huangma-spear-jiefanwei",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "摧鋒斷刃"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "points": "武力"
+        },
+        {
+          "generalId": "sp-huangfusong",
+          "generalName": "SP皇甫嵩",
+          "learned": [
+            "caochuan",
+            "wanjun"
+          ],
+          "learnedNames": [
+            "草船借箭",
+            "萬軍奪帥"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "shenshi",
+            "secondary": [
+              "kaihe",
+              "fenli"
+            ]
+          },
+          "points": "統率"
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            "linwei",
+            "jiefan"
+          ],
+          "learnedNames": [
+            "臨危救主",
+            "解煩衛"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "xibing",
+            "secondary": [
+              "shoushi",
+              "fangbei"
+            ]
+          },
+          "points": "智力",
+          "remark": "解煩衛需改造為 精·解煩衛，選【精研】【武魁】【救護】【軍心】"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-dongzhuo-bow-xiandeng",
+      "scenario": "bingyan",
+      "title": "董卓弓（精·先登死士）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-dongzhuo-bow-xiandeng",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "y40-lvbu",
+          "generalName": "40Y呂布",
+          "learned": [
+            "xueren",
+            "yinxian"
+          ],
+          "learnedNames": [
+            "血刃爭鋒",
+            "引弦力戰"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "points": "武力",
+          "remark": "兵書大書可換不勇則死"
+        },
+        {
+          "generalId": "sp-diaochan",
+          "generalName": "SP貂蟬",
+          "learned": [
+            "shencang",
+            "gangrou-ji"
+          ],
+          "learnedNames": [
+            "深藏若虛",
+            "剛柔並濟"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "智力"
+        },
+        {
+          "generalId": "sp-dongzhuo",
+          "generalName": "SP董卓",
+          "learned": [
+            "yanxing",
+            "xiandeng"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "先登死士"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "統率",
+          "remark": "也可用董卓。先登死士需改造為 精·先登死士，選【抵抗】【抑勢】【奪志】【疊加】"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-xuyou-spmachao-cavalry",
+      "scenario": "bingyan",
+      "title": "許攸馬超騎",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-xuyou-spmachao-cavalry",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "wushuang-daqiao",
+          "generalName": "無雙大喬",
+          "learned": [
+            "qianlong",
+            "duxing"
+          ],
+          "learnedNames": [
+            "潛龍陣",
+            "獨行赴斗"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "統率",
+          "remark": "配騎兵寶物升級為 S。高統率配獨行赴鬥承擔敵軍傷害"
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            "linwei",
+            "hubao"
+          ],
+          "learnedNames": [
+            "臨危救主",
+            "虎豹騎"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "智力",
+          "remark": "使用魏登庸令轉魏陣營。虎豹騎需改造為 精·虎豹騎，提升馬超突擊發動率"
+        },
+        {
+          "generalId": "sp-machao",
+          "generalName": "SP馬超",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "摧鋒斷刃"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "suzhan",
+              "yanxu"
+            ]
+          },
+          "points": "武力 速度",
+          "remark": "維持經典戰法搭配，在大喬和許攸輔助下穩定輸出"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-taoyuan-shield-huijun",
+      "scenario": "bingyan",
+      "title": "桃園盾（麾軍結陣）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T0.5",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-taoyuan-shield-huijun",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "liubei",
+          "generalName": "劉備",
+          "learned": [
+            "xianzhen",
+            "guagu"
+          ],
+          "learnedNames": [
+            "陷陣營",
+            "刮骨療毒"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              "yanxu",
+              "lijun"
+            ]
+          },
+          "points": "智力",
+          "remark": "透過自帶戰法和刮骨療毒，承擔部隊的治療和解控效果"
+        },
+        {
+          "generalId": "guanyu",
+          "generalName": "關羽",
+          "learned": [
+            "weimou",
+            "huijun"
+          ],
+          "learnedNames": [
+            "威謀靡亢",
+            "麾軍結陣"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "points": "武力 速度",
+          "remark": "任命關興軍師技。戰法可換破陣摧堅 / 絕其汲道"
+        },
+        {
+          "generalId": "zhangfei",
+          "generalName": "張飛",
+          "learned": [
+            "gangyong",
+            "jiqi"
+          ],
+          "learnedNames": [
+            "剛勇無前",
+            "擊其惰歸"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yizhi-bao",
+            "secondary": [
+              "jingzhun",
+              "shanzhan"
+            ]
+          },
+          "points": "武力",
+          "remark": "剛勇無前和擊其惰歸提高傷害"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-40y-lvbu-c",
+      "scenario": "bingyan",
+      "title": "40Y 呂布群弓（甘寧許攸）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-40y-lvbu-c",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "ganning",
+          "generalName": "甘寧",
+          "learned": [
+            "jinfan",
+            "caochuan"
+          ],
+          "learnedNames": [
+            "錦帆軍",
+            "草船借箭"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "武力",
+          "remark": "使用登庸令·群轉群陣營"
+        },
+        {
+          "generalId": "y40-lvbu",
+          "generalName": "40Y呂布",
+          "learned": [
+            "xueren",
+            "yinxian"
+          ],
+          "learnedNames": [
+            "血刃爭鋒",
+            "引弦力戰"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yizhi-bao",
+            "secondary": [
+              "jingzhun",
+              "chizhong"
+            ]
+          },
+          "points": "武力",
+          "remark": "兵書可換 不勇則死 / 武略 / 執銳"
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            "yanxing",
+            "linwei"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "臨危救主"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "智力 統率",
+          "remark": "配弓兵寶物升級為 S。臨危救主提供治療和謀略減傷"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-40y-lvbu-qun-bow-jinfan",
+      "scenario": "bingyan",
+      "title": "40Y 呂布群弓（精·錦帆軍）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-40y-lvbu-qun-bow-jinfan",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "ganning",
+          "generalName": "甘寧",
+          "learned": [
+            "caochuan",
+            "jinfan"
+          ],
+          "learnedNames": [
+            "草船借箭",
+            "錦帆軍"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "武力 統率",
+          "remark": "使用登庸令·群轉群陣營。錦帆軍需改造為 精·錦帆軍，選【神射】【勇武】【招架】【營嘯】"
+        },
+        {
+          "generalId": "y40-lvbu",
+          "generalName": "40Y呂布",
+          "learned": [
+            "yinxian",
+            "xueren"
+          ],
+          "learnedNames": [
+            "引弦力戰",
+            "血刃爭鋒"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "points": "武力"
+        },
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            "linwei",
+            "yanxing"
+          ],
+          "learnedNames": [
+            "臨危救主",
+            "雁行陣"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "智力"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-beifa-shield-huweijun",
+      "scenario": "bingyan",
+      "title": "北伐盾（精·虎衛軍）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-beifa-shield-huweijun",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "sp-zhugeliang",
+          "generalName": "SP諸葛亮",
+          "learned": [
+            "huwei",
+            "xushidai"
+          ],
+          "learnedNames": [
+            "虎衛軍",
+            "蓄勢待發"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "統率",
+          "remark": "配政令與盾兵寶物升級為 S。虎衛軍需改造為 精·虎衛軍"
+        },
+        {
+          "generalId": "guanxing",
+          "generalName": "關興",
+          "learned": [
+            "qianli",
+            "wenwu"
+          ],
+          "learnedNames": [
+            "千里走單騎",
+            "文武雙全"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "points": "武力",
+          "remark": "也可用關羽"
+        },
+        {
+          "generalId": "zhangbao",
+          "generalName": "張苞",
+          "learned": [
+            "futang",
+            "feigong"
+          ],
+          "learnedNames": [
+            "赴湯蹈火",
+            "非攻制勝"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "zhenge",
+            "secondary": [
+              "tongjun",
+              "chuilian"
+            ]
+          },
+          "points": "統率",
+          "remark": "配盾兵寶物升級為 S"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-lvbu-zhouyu-bow",
+      "scenario": "bingyan",
+      "title": "呂布周瑜弓",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-lvbu-zhouyu-bow",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "xuyou",
+          "generalName": "許攸",
+          "learned": [
+            "qianlong",
+            "linwei"
+          ],
+          "learnedNames": [
+            "潛龍陣",
+            "臨危救主"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "智力",
+          "remark": "配弓兵寶物升級為 S。使用魏登庸令轉魏陣營"
+        },
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "摧鋒斷刃"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "chizhong",
+              "jingzhun"
+            ]
+          },
+          "points": "武力",
+          "remark": "作為一速，當鋒摧決破防，高頻普攻＋摧鋒斷刃壓制敵軍輸出"
+        },
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "learned": [
+            "duohun",
+            "fenzui"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "焚輜營壘"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "智力",
+          "remark": "作為尾速，敵軍智力被持續壓制下打出大量謀略傷害"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-lvguoqiao-baima",
+      "scenario": "bingyan",
+      "title": "呂郭喬（精·白馬義從）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-lvguoqiao-baima",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "lvbu",
+          "generalName": "呂布",
+          "learned": [
+            "wangong",
+            null
+          ],
+          "learnedNames": [
+            "彎弓飲羽",
+            "破甲"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "chizhong",
+              "jingzhun"
+            ]
+          },
+          "points": "武力",
+          "remark": "任命貂蟬軍師",
+          "unlisted": [
+            "破甲"
+          ]
+        },
+        {
+          "generalId": "guojia",
+          "generalName": "郭嘉",
+          "learned": [
+            "sanshi",
+            "huochi"
+          ],
+          "learnedNames": [
+            "三勢陣",
+            "火熾原燎"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "半智半統"
+        },
+        {
+          "generalId": "wushuang-xiaoqiao",
+          "generalName": "無雙小喬",
+          "learned": [
+            "wenwu",
+            "baima"
+          ],
+          "learnedNames": [
+            "文武雙全",
+            "白馬義從"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yitui",
+            "secondary": [
+              "jingzhun",
+              "chizhong"
+            ]
+          },
+          "points": "武力",
+          "remark": "白馬義從需改造為 精·白馬義從，選【飛馳】【習武】【靈光】【久戰】"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-taishici-bow",
+      "scenario": "bingyan",
+      "title": "太史慈弓",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-taishici-bow",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "ganning",
+          "generalName": "甘寧",
+          "learned": [
+            "caochuan",
+            "jinfan"
+          ],
+          "learnedNames": [
+            "草船借箭",
+            "錦帆軍"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "統率",
+          "remark": "利用草船借箭和樂善好施效果，為部隊提供高額治療量"
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "摧鋒斷刃"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "points": "武力",
+          "remark": "大兵書可換蠻勇非勇。摧鋒斷刃壓制敵人輸出，當鋒摧決施加控制"
+        },
+        {
+          "generalId": "sp-lvmeng",
+          "generalName": "SP呂蒙",
+          "learned": [
+            "linwei",
+            "yanxing"
+          ],
+          "learnedNames": [
+            "臨危救主",
+            "雁行陣"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "jiuzhan",
+              "tongjun"
+            ]
+          },
+          "points": "統率",
+          "remark": "提供控制，高統率搭配雁行陣可最大發揮效果"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-jiangwei-feixiong-cavalry",
+      "scenario": "bingyan",
+      "title": "姜維飛熊軍",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-jiangwei-feixiong-cavalry",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "jiangwei",
+          "generalName": "姜維",
+          "learned": [
+            "duohun",
+            "shangbing"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "上兵伐謀"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "manyong",
+            "secondary": [
+              "zhirui",
+              "wentao"
+            ]
+          },
+          "points": "智力",
+          "remark": "使用魏登庸令轉魏陣營"
+        },
+        {
+          "generalId": "caocao",
+          "generalName": "曹操",
+          "learned": [
+            "meihuo",
+            "fengshi"
+          ],
+          "learnedNames": [
+            "魅惑",
+            "鋒矢陣"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "智力 統率",
+          "remark": "加點帶援助甲"
+        },
+        {
+          "generalId": "manchong",
+          "generalName": "滿寵",
+          "learned": [
+            "feixiong",
+            "lingji"
+          ],
+          "learnedNames": [
+            "飛熊軍",
+            "靈機一動"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "智力",
+          "remark": "飛熊軍需改造為 精·飛熊軍"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-zhangjiao-yuji-cavalry",
+      "scenario": "bingyan",
+      "title": "張角于吉騎",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-zhangjiao-yuji-cavalry",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "zhangjiao",
+          "generalName": "張角",
+          "learned": [
+            "taiping",
+            "wenwu"
+          ],
+          "learnedNames": [
+            "太平道法",
+            "文武雙全"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "jizhan",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "points": "智力",
+          "remark": "配騎兵寶物升級為 S。士別三日可保障生存並造成傷害，文武雙全大幅提升智力"
+        },
+        {
+          "generalId": "yuji",
+          "generalName": "于吉",
+          "learned": [
+            "caochuan",
+            "feixiong"
+          ],
+          "learnedNames": [
+            "草船借箭",
+            "飛熊軍"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "統率（1速）",
+          "remark": "一速發動草船借箭解控。也可用竭力佐謀＋刮骨療毒替代草船借箭"
+        },
+        {
+          "generalId": "zuoci",
+          "generalName": "左慈",
+          "learned": [
+            "fengshi",
+            "guagu"
+          ],
+          "learnedNames": [
+            "鋒矢陣",
+            "刮骨療毒"
+          ],
+          "bingshu": {
+            "branch": "jiubian",
+            "primary": "yuanqi",
+            "secondary": [
+              null,
+              "jiuzhu"
+            ]
+          },
+          "points": "智力",
+          "remark": "攜帶鋒矢陣為張角提供穩定增傷",
+          "unlisted": [
+            "散仙"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bingyan-kangkai-bow-jinfan",
+      "scenario": "bingyan",
+      "title": "慷慨弓（精·錦帆軍）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-kangkai-bow-jinfan",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "ganning",
+          "generalName": "甘寧",
+          "learned": [
+            "caochuan",
+            "jinfan"
+          ],
+          "learnedNames": [
+            "草船借箭",
+            "錦帆軍"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "leshan",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "武力 統率",
+          "remark": "錦帆軍需改造為 精·錦帆軍，選【神射】【勇武】【招架】【營嘯】"
+        },
+        {
+          "generalId": "taishici",
+          "generalName": "太史慈",
+          "learned": [
+            "dangfeng",
+            "cuifeng"
+          ],
+          "learnedNames": [
+            "當鋒摧決",
+            "摧鋒斷刃"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "shengyi",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "points": "武力"
+        },
+        {
+          "generalId": "sp-lvmeng",
+          "generalName": "SP呂蒙",
+          "learned": [
+            "linwei",
+            "yanxing"
+          ],
+          "learnedNames": [
+            "臨危救主",
+            "雁行陣"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "統率"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-quan-cavalry-hubaoqi",
+      "scenario": "bingyan",
+      "title": "權騎（精·虎豹騎）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-quan-cavalry-hubaoqi",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "sunquan",
+          "generalName": "孫權",
+          "learned": [
+            "yiqi",
+            "baiqi"
+          ],
+          "learnedNames": [
+            "一騎當千",
+            "百騎劫營"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "yigu",
+            "secondary": [
+              "wulue",
+              "zhirui"
+            ]
+          },
+          "points": "武力"
+        },
+        {
+          "generalId": "lingtong",
+          "generalName": "凌統",
+          "learned": [
+            "luoyi",
+            "dangfeng"
+          ],
+          "learnedNames": [
+            "裸衣血戰",
+            "當鋒摧決"
+          ],
+          "bingshu": {
+            "branch": "zuozhan",
+            "primary": "buyong",
+            "secondary": [
+              "shengzhan",
+              "fenxian"
+            ]
+          },
+          "points": "武力 速度"
+        },
+        {
+          "generalId": "zhoutai",
+          "generalName": "周泰",
+          "learned": [
+            "hubao",
+            "fengshi"
+          ],
+          "learnedNames": [
+            "虎豹騎",
+            "鋒矢陣"
+          ],
+          "bingshu": {
+            "branch": "junxing",
+            "primary": "shoudao",
+            "secondary": [
+              "shoushi",
+              "jingxin"
+            ]
+          },
+          "points": "統率",
+          "remark": "虎豹騎需改造為 精·虎豹騎，選【神行】【衝鋒】【延益】【重創】"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-dudu-bow-baimaobing",
+      "scenario": "bingyan",
+      "title": "都督弓（轉·白毦兵）",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-dudu-bow-baimaobing",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "zhouyu",
+          "generalName": "周瑜",
+          "learned": [
+            "duohun",
+            "fenzui"
+          ],
+          "learnedNames": [
+            "奪魂挾魄",
+            "焚輜營壘"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "yuanmou",
+              "tongjun"
+            ]
+          },
+          "points": "智力"
+        },
+        {
+          "generalId": "luxun",
+          "generalName": "陸遜",
+          "learned": [
+            "luli",
+            "baimao"
+          ],
+          "learnedNames": [
+            "戮力同心",
+            "白毦兵"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "chuqi",
+            "secondary": [
+              "jingzhun",
+              "kaihe"
+            ]
+          },
+          "points": "智力",
+          "remark": "白毦兵需改造為 轉·白毦兵（選【轉·彎弓】轉弓兵）；靈機一動需改造為 精·靈機一動"
+        },
+        {
+          "generalId": "sp-lvmeng",
+          "generalName": "SP呂蒙",
+          "learned": [
+            "yanxing",
+            "caochuan"
+          ],
+          "learnedNames": [
+            "雁行陣",
+            "草船借箭"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "統率"
+        }
+      ]
+    },
+    {
+      "id": "bingyan-guanyu-weiyan-fazheng-shield",
+      "scenario": "bingyan",
+      "title": "關魏法盾",
+      "status": "待核",
+      "origin": "sgsdeck",
+      "originLabel": "sgsdeck",
+      "rank": "T1",
+      "rankStatus": "待核",
+      "source": "https://sgsdeck.com/recommended/og-bingyan-guanyu-weiyan-fazheng-shield",
+      "note": "sgsdeck 轉錄，官網原文待再核",
+      "members": [
+        {
+          "generalId": "guanyu",
+          "generalName": "關羽",
+          "learned": [
+            "pozhen",
+            "yulin"
+          ],
+          "learnedNames": [
+            "破陣摧堅",
+            "魚鱗陣"
+          ],
+          "bingshu": {
+            "branch": "xushi",
+            "primary": "houfa",
+            "secondary": [
+              "guimou",
+              "jiangwei-book"
+            ]
+          },
+          "points": "武力",
+          "remark": "任命關興軍師技。高武力高統率配魚鱗陣，為副將提供抵禦"
+        },
+        {
+          "generalId": "weiyan",
+          "generalName": "魏延",
+          "learned": [
+            "jueqi",
+            "suoxiang"
+          ],
+          "learnedNames": [
+            "絕其汲道",
+            "所向披靡"
+          ],
+          "bingshu": {
+            "branch": "yongjian",
+            "primary": "yitui",
+            "secondary": [
+              "chizhong",
+              "jingzhun"
+            ]
+          },
+          "points": "武力",
+          "remark": "先禁療再打大量傷害"
+        },
+        {
+          "generalId": "sp-fazheng",
+          "generalName": "SP法正",
+          "learned": [
+            "xushidai",
+            "xianzhen"
+          ],
+          "learnedNames": [
+            "蓄勢待發",
+            "陷陣營"
+          ],
+          "bingshu": {
+            "branch": "shiji",
+            "primary": "sanjun",
+            "secondary": [
+              "chuilian",
+              "tongjun"
+            ]
+          },
+          "points": "智力",
+          "remark": "為部隊提供剛毅和治療能力。全隊懼怕必中效果，如吳騎"
+        }
+      ]
     }
-  ]
+  ],
+  "scenarioInfo": {
+    "bingyan": {
+      "summary": "兵演春秋於 2026-09-05 開放。新聞稿記載東西陣營與四座資源州、以佔領城池數計算霸業、新手期 50 小時、16 種兵種改造與 4 個改造欄位可免費重置、施政紀要、賽季商店拓印與精研及登庸令；40Y呂布自帶天威嘯陣，萬燈同祝活動至 2026-12-31。",
+      "sources": [
+        {
+          "label": "巴哈姆特 GNN（廠商原文）",
+          "url": "https://gnn.gamer.com.tw/detail.php?sn=311072"
+        },
+        {
+          "label": "OMG 新聞",
+          "url": "https://news.omg.com.tw/News/NewsContent?NewsID=13659"
+        }
+      ],
+      "pending": "都尉與漢室轉換是否適用待核。官網劇本介紹頁（2026-11-12）已 404，商店與政令細項依 sgsdeck 轉錄待再核。"
+    }
+  }
 }

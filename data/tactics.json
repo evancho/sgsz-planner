@@ -2862,7 +2862,7 @@
       "obtain": "事件",
       "sourceUrl": "https://sgsdeck.com/tactics/麾軍結陣",
       "status": "已核",
-      "note": "使用者確認 2026-11-08"
+      "note": "使用者確認 2026-11-08。台港澳新聞稿（https://gnn.gamer.com.tw/detail.php?sn=311072 、https://news.omg.com.tw/News/NewsContent?NewsID=13659）寫作「魔軍結陣」，圖鑑依遊戲內／sgsdeck 用「麾軍結陣」。"
     },
     {
       "id": "yanren",
@@ -3019,16 +3019,18 @@
       "rank": "S",
       "obtain": {
         "yingxiong": "賽季商店",
-        "hanyan": "拓印四選一"
+        "hanyan": "拓印四選一",
+        "bingyan": "賽季商店"
       },
       "variant": "拓",
       "scenarios": [
         "yingxiong",
-        "hanyan"
+        "hanyan",
+        "bingyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "已核",
-      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。使用者確認 2026-11-08"
+      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。兵演春秋賽季商店依 sgsdeck 轉錄，官網原文待再核（https://sgsdeck.com/seasons/og-兵演春秋）。使用者確認 2026-11-08"
     },
     {
       "id": "tuo-shibie",
@@ -3044,11 +3046,11 @@
       "obtain": "賽季商店",
       "variant": "拓",
       "scenarios": [
-        "yingxiong"
+        "bingyan"
       ],
-      "sourceUrl": "",
-      "status": "已核",
-      "note": "效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09"
+      "sourceUrl": "https://sgsdeck.com/seasons/og-兵演春秋",
+      "status": "待核",
+      "note": "效果同原戰法。兵演春秋賽季商店。sgsdeck 轉錄，官網原文待再核（https://sgsdeck.com/seasons/og-兵演春秋）。"
     },
     {
       "id": "tuo-yigua",
@@ -3068,7 +3070,7 @@
       ],
       "sourceUrl": "",
       "status": "已核",
-      "note": "效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09"
+      "note": "效果同原戰法。英雄命世賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "tuo-jifeng",
@@ -3088,7 +3090,7 @@
       ],
       "sourceUrl": "",
       "status": "已核",
-      "note": "效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09"
+      "note": "效果同原戰法。英雄命世賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "jing-yulin",
@@ -3108,7 +3110,7 @@
       ],
       "sourceUrl": "",
       "status": "已核",
-      "note": "精進版通常不限兵種。英雄命示賽季商店。使用者確認 2026-11-09"
+      "note": "精進版通常不限兵種。英雄命世賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "jing-fengshi",
@@ -3128,7 +3130,7 @@
       ],
       "sourceUrl": "",
       "status": "已核",
-      "note": "精進版通常不限兵種（原鋒矢陣限騎、盾、槍）。英雄命示賽季商店。使用者確認 2026-11-09"
+      "note": "精進版通常不限兵種（原鋒矢陣限騎、盾、槍）。英雄命世賽季商店。使用者確認 2026-11-09"
     },
     {
       "id": "tuo-xushi",
@@ -3147,11 +3149,11 @@
       "obtain": "賽季商店",
       "variant": "拓",
       "scenarios": [
-        "yingxiong"
+        "bingyan"
       ],
-      "sourceUrl": "",
-      "status": "已核",
-      "note": "效果同原戰法（限盾、器械）。兵演春秋賽季商店。使用者確認 2026-11-09"
+      "sourceUrl": "https://sgsdeck.com/seasons/og-兵演春秋",
+      "status": "待核",
+      "note": "效果同原戰法（限盾、器械）。兵演春秋賽季商店。sgsdeck 轉錄，官網原文待再核（https://sgsdeck.com/seasons/og-兵演春秋）。"
     },
     {
       "id": "tuo-caochuan",
@@ -3166,16 +3168,18 @@
       "rank": "S",
       "obtain": {
         "yingxiong": "賽季商店",
-        "hanyan": "拓印四選一"
+        "hanyan": "拓印四選一",
+        "bingyan": "賽季商店"
       },
       "variant": "拓",
       "scenarios": [
         "yingxiong",
-        "hanyan"
+        "hanyan",
+        "bingyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "已核",
-      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。使用者確認 2026-11-08"
+      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。兵演春秋賽季商店依 sgsdeck 轉錄，官網原文待再核（https://sgsdeck.com/seasons/og-兵演春秋）。使用者確認 2026-11-08"
     },
     {
       "id": "tuo-guagu",
@@ -3190,16 +3194,18 @@
       "rank": "S",
       "obtain": {
         "yingxiong": "賽季商店",
-        "hanyan": "拓印四選一"
+        "hanyan": "拓印四選一",
+        "bingyan": "賽季商店"
       },
       "variant": "拓",
       "scenarios": [
         "yingxiong",
-        "hanyan"
+        "hanyan",
+        "bingyan"
       ],
       "sourceUrl": "https://sgsdeck.com/seasons/pk-s27",
       "status": "已核",
-      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。使用者確認 2026-11-08"
+      "note": "英雄命世從賽季商店取得，漢焰長明改為拓印四選一。兵演春秋賽季商店依 sgsdeck 轉錄，官網原文待再核（https://sgsdeck.com/seasons/og-兵演春秋）。使用者確認 2026-11-08"
     },
     {
       "id": "jing-lingji",
@@ -3215,11 +3221,11 @@
       "obtain": "賽季商店",
       "variant": "精",
       "scenarios": [
-        "yingxiong"
+        "bingyan"
       ],
-      "sourceUrl": "",
-      "status": "已核",
-      "note": "精進版通常不限兵種（原靈機一動限騎、器械）。兵演春秋賽季商店。使用者確認 2026-11-09"
+      "sourceUrl": "https://sgsdeck.com/seasons/og-兵演春秋",
+      "status": "待核",
+      "note": "精進版通常不限兵種（原靈機一動限騎、器械）。兵演春秋賽季商店。sgsdeck 轉錄，官網原文待再核（https://sgsdeck.com/seasons/og-兵演春秋）。"
     },
     {
       "id": "cangqi",

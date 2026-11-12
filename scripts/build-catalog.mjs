@@ -12,6 +12,7 @@ import { applyMerges } from './hanyan-merges.mjs';
 import { applyTiers } from './hanyan-tiers.mjs';
 import { hanConvert } from './han-convert.mjs';
 import { hanyanMerits, hanyanRecommended } from './hanyan-recommended.mjs';
+import { bingyanRecommended } from './bingyan-recommended.mjs';
 
 const VERSION = '1.2.9';
 
@@ -45,10 +46,9 @@ function pendingGeneral(row) {
     apt,
     innate: row.innate || '',
     nameKey: row.name,
-    // 武將列表不寫來源／備註，跟一般卡一樣乾淨。
-    sourceUrl: '',
+    sourceUrl: row.sourceUrl || '',
     status: row.status === '待核' ? '待核' : '已核',
-    note: '',
+    note: row.note || '',
   };
   if (Array.isArray(row.scenarios) && row.scenarios.length) general.scenarios = row.scenarios;
   if (row.debutScenario) general.debutScenario = row.debutScenario;
@@ -221,7 +221,7 @@ const generals = [
   g('zoushi', '鄒氏', '群', 3, '內政', 'CBCCC', 0),
   g('dongbai', '董白', '群', 3, '軍事', 'CCCBC', 1),
   g('caiwenji', '蔡文姬', '漢', 3, '軍事', 'BCCCC', 1),
-  // 英雄命示都尉。拜師才決定陣營，名冊預設群。適性未知，暫以全 A 佔位。統御記基礎 7。
+  // 英雄命世都尉。拜師才決定陣營，名冊預設群。適性未知，暫以全 A 佔位。統御記基礎 7。
   g('duwei-shenheng', '沈姮', '群', 7, '軍事', 'AAAAA', 0, '風焰相形', ['都尉']),
   g('duwei-qinxi', '秦溪', '群', 7, '軍事', 'AAAAA', 0, '先聲奪人', ['都尉']),
   g('duwei-liuqin', '柳沁', '群', 7, '軍事', 'AAAAA', 0, '杯弓蛇影', ['都尉']),
@@ -322,9 +322,9 @@ function t(row) {
   if (row.name.startsWith('拓·')) tactic.variant = '拓';
   else if (row.name.startsWith('精·')) tactic.variant = '精';
   else if (row.name.startsWith('轉·')) tactic.variant = '轉';
-  // 沒指定劇本時，拓·／精·／轉· 先視為英雄命世。事件與傳承不因前綴以外的來源而被限定。
+  // 拓·／精·／轉· 必須在資料列明確寫 scenarios，不再預設成英雄命世。
   if (row.scenarios) tactic.scenarios = row.scenarios;
-  else if (tactic.variant) tactic.scenarios = ['yingxiong'];
+  else if (tactic.variant) throw new Error(`variant tactic ${row.id} needs scenarios`);
   if (row.exchange?.length) tactic.exchange = row.exchange;
   if (row.fromNames?.length) tactic.fromNames = row.fromNames;
   // 戰法的 source 仍是傳承／事件／自帶／賽季。網址放 sourceUrl，避免蓋掉來源類型。
@@ -350,7 +350,9 @@ function extra(id, name, type, source, from, troops, desc, more = {}) {
 }
 
 const HANYAN_SEASON = 'https://sgsdeck.com/seasons/pk-s27';
+const BINGYAN_SEASON = 'https://sgsdeck.com/seasons/og-兵演春秋';
 const USER_OK = '使用者確認 2026-11-08';
+const SGSDECK_PENDING = 'sgsdeck 轉錄，官網原文待再核';
 const hanyanShop = (origin) => ({
   scenarios: ['hanyan'],
   status: '已核',
@@ -364,12 +366,25 @@ const hanyanPrint = {
   note: `巴哈攻略同列這項拓印。${USER_OK}`,
 };
 const bothShops = {
-  scenarios: ['yingxiong', 'hanyan'],
+  scenarios: ['yingxiong', 'hanyan', 'bingyan'],
   status: '已核',
-  obtain: { yingxiong: '賽季商店', hanyan: '拓印四選一' },
+  obtain: { yingxiong: '賽季商店', hanyan: '拓印四選一', bingyan: '賽季商店' },
   sourceUrl: HANYAN_SEASON,
-  note: `英雄命世從賽季商店取得，漢焰長明改為拓印四選一。${USER_OK}`,
+  note: `英雄命世從賽季商店取得，漢焰長明改為拓印四選一。兵演春秋賽季商店依 ${SGSDECK_PENDING}（${BINGYAN_SEASON}）。${USER_OK}`,
 };
+const yingxiongShop = (note) => ({
+  scenarios: ['yingxiong'],
+  status: '已核',
+  obtain: '賽季商店',
+  note,
+});
+const bingyanShop = (note) => ({
+  scenarios: ['bingyan'],
+  status: '待核',
+  obtain: '賽季商店',
+  sourceUrl: BINGYAN_SEASON,
+  note: `${note}${SGSDECK_PENDING}（${BINGYAN_SEASON}）。`,
+});
 
 const extraTactics = [
   extra('fengyan', '風焰相形', '指揮', '自帶', ['duwei-shenheng'], null, '成功發動主動或突擊戰法時，有機率治療我軍單體，並有較高機率立刻再施放一次；再次發動無需準備與冷卻。'),
@@ -388,7 +403,7 @@ const extraTactics = [
     obtain: '事件',
     status: '已核',
     sourceUrl: 'https://sgsdeck.com/tactics/麾軍結陣',
-    note: USER_OK,
+    note: `${USER_OK}。台港澳新聞稿（https://gnn.gamer.com.tw/detail.php?sn=311072 、https://news.omg.com.tw/News/NewsContent?NewsID=13659）寫作「魔軍結陣」，圖鑑依遊戲內／sgsdeck 用「麾軍結陣」。`,
   }),
   extra('yanren', '燕人咆哮', '被動', '自帶', ['zhangfei'], null, '第二、四回合對敵軍全體造成兵刃傷害；目標處於繳械或計窮時降低統率。自身為主將時，第六回合再打一輪。'),
   extra('jiangtian', '江天長焰', '指揮', '自帶', ['sp-zhouyu'], null, '每回合對敵軍施加長焰，提高其受到的謀略傷害，並造成謀略傷害。自身為主將時，長焰夠多有機率再打一次。'),
@@ -400,43 +415,15 @@ const extraTactics = [
   extra('gangrou-ji', '剛柔並濟', '指揮', '傳承', ['sp-dongzhuo'], ['弓', '器械'], '降低我軍兵力最低者受到的傷害，並壓低敵軍兵力最高者的輸出。僅弓兵與器械。'),
   extra('tuo-duohun', '拓·奪魂挾魄', '主動', '賽季', [], null, '對應原戰法奪魂挾魄', bothShops),
   // 拓本效果同原戰法（兵種限制也相同）；精進版通常不限兵種。使用者確認 2026-11-09。
-  extra('tuo-shibie', '拓·士別三日', '被動', '賽季', [], null, '對應原戰法士別三日', {
-    status: '已核',
-    obtain: '賽季商店',
-    note: `效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09`,
-  }),
-  extra('tuo-yigua', '拓·以寡敵眾', '被動', '賽季', [], null, '對應原戰法以寡敵眾', {
-    status: '已核',
-    obtain: '賽季商店',
-    note: `效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09`,
-  }),
-  extra('tuo-jifeng', '拓·疾風驟雨', '主動', '賽季', [], null, '對應原戰法疾風驟雨', {
-    status: '已核',
-    obtain: '賽季商店',
-    note: `效果同原戰法。英雄命示賽季商店。使用者確認 2026-11-09`,
-  }),
-  extra('jing-yulin', '精·魚鱗陣', '陣法', '賽季', [], null, '對應原戰法魚鱗陣', {
-    status: '已核',
-    obtain: '賽季商店',
-    note: `精進版通常不限兵種。英雄命示賽季商店。使用者確認 2026-11-09`,
-  }),
-  extra('jing-fengshi', '精·鋒矢陣', '陣法', '賽季', [], null, '對應原戰法鋒矢陣', {
-    status: '已核',
-    obtain: '賽季商店',
-    note: `精進版通常不限兵種（原鋒矢陣限騎、盾、槍）。英雄命示賽季商店。使用者確認 2026-11-09`,
-  }),
-  extra('tuo-xushi', '拓·蓄勢待發', '指揮', '賽季', [], ['盾', '器械'], '對應原戰法蓄勢待發', {
-    status: '已核',
-    obtain: '賽季商店',
-    note: `效果同原戰法（限盾、器械）。兵演春秋賽季商店。使用者確認 2026-11-09`,
-  }),
+  extra('tuo-shibie', '拓·士別三日', '被動', '賽季', [], null, '對應原戰法士別三日', bingyanShop('效果同原戰法。兵演春秋賽季商店。')),
+  extra('tuo-yigua', '拓·以寡敵眾', '被動', '賽季', [], null, '對應原戰法以寡敵眾', yingxiongShop('效果同原戰法。英雄命世賽季商店。使用者確認 2026-11-09')),
+  extra('tuo-jifeng', '拓·疾風驟雨', '主動', '賽季', [], null, '對應原戰法疾風驟雨', yingxiongShop('效果同原戰法。英雄命世賽季商店。使用者確認 2026-11-09')),
+  extra('jing-yulin', '精·魚鱗陣', '陣法', '賽季', [], null, '對應原戰法魚鱗陣', yingxiongShop('精進版通常不限兵種。英雄命世賽季商店。使用者確認 2026-11-09')),
+  extra('jing-fengshi', '精·鋒矢陣', '陣法', '賽季', [], null, '對應原戰法鋒矢陣', yingxiongShop('精進版通常不限兵種（原鋒矢陣限騎、盾、槍）。英雄命世賽季商店。使用者確認 2026-11-09')),
+  extra('tuo-xushi', '拓·蓄勢待發', '指揮', '賽季', [], ['盾', '器械'], '對應原戰法蓄勢待發', bingyanShop('效果同原戰法（限盾、器械）。兵演春秋賽季商店。')),
   extra('tuo-caochuan', '拓·草船借箭', '主動', '賽季', [], null, '對應原戰法草船借箭', bothShops),
   extra('tuo-guagu', '拓·刮骨療毒', '主動', '賽季', [], null, '對應原戰法刮骨療毒', bothShops),
-  extra('jing-lingji', '精·靈機一動', '主動', '賽季', [], null, '對應原戰法靈機一動', {
-    status: '已核',
-    obtain: '賽季商店',
-    note: `精進版通常不限兵種（原靈機一動限騎、器械）。兵演春秋賽季商店。使用者確認 2026-11-09`,
-  }),
+  extra('jing-lingji', '精·靈機一動', '主動', '賽季', [], null, '對應原戰法靈機一動', bingyanShop('精進版通常不限兵種（原靈機一動限騎、器械）。兵演春秋賽季商店。')),
   extra('cangqi', '藏器待時', '被動', '傳承', ['sp-caocao'], ['盾', '器械'], '前2回合，自身受到的普通攻擊傷害降低10%→20%（受統帥影響）。第3回合起，自身自帶主動戰法發動率提升4%→8%（受武力影響），且造成傷害時有15%→30%機率附帶10%→20%破陣（受武力影響）。僅盾兵與器械。', {
     status: '已核',
     obtain: '傳承',
@@ -635,8 +622,8 @@ for (const branch of bingshu.branches) {
 
 const meta = {
   catalogVersion: VERSION,
-  updated: '2026-11-08',
-  scope: '戰鬥類 S 級收到兗州之戰的公開清冊，並補上已核對的後續事件戰法；A 級只收已核對類型的常用戰法。另收英雄命示都尉自帶，以及賽季商店的拓本與精進陣法（含兵演春秋）。直接編輯 scripts/tactic-catalog.mjs 或本腳本的增補列後重跑建置即可擴充。',
+  updated: '2026-11-12',
+  scope: '戰鬥類 S 級收到兗州之戰的公開清冊，並補上已核對的後續事件戰法；A 級只收已核對類型的常用戰法。另收英雄命世都尉自帶，以及賽季商店的拓本與精進陣法（含兵演春秋，須明確標劇本）。直接編輯 scripts/tactic-catalog.mjs 或本腳本的增補列後重跑建置即可擴充。',
 };
 
 writeFileSync('data/meta.json', `${JSON.stringify(meta, null, 2)}\n`);
@@ -648,7 +635,20 @@ writeFileSync('data/scenario.json', `${JSON.stringify({
   weapons: [],
   merits: hanyanMerits,
   hanConvert,
-  recommended: applyTiers(applyMerges([...hanyanDami, ...hanyanBahamut, ...hanyanRecommended])),
+  recommended: [
+    ...applyTiers(applyMerges([...hanyanDami, ...hanyanBahamut, ...hanyanRecommended])),
+    ...bingyanRecommended,
+  ],
+  scenarioInfo: {
+    bingyan: {
+      summary: '兵演春秋於 2026-09-05 開放。新聞稿記載東西陣營與四座資源州、以佔領城池數計算霸業、新手期 50 小時、16 種兵種改造與 4 個改造欄位可免費重置、施政紀要、賽季商店拓印與精研及登庸令；40Y呂布自帶天威嘯陣，萬燈同祝活動至 2026-12-31。',
+      sources: [
+        { label: '巴哈姆特 GNN（廠商原文）', url: 'https://gnn.gamer.com.tw/detail.php?sn=311072' },
+        { label: 'OMG 新聞', url: 'https://news.omg.com.tw/News/NewsContent?NewsID=13659' },
+      ],
+      pending: '都尉與漢室轉換是否適用待核。官網劇本介紹頁（2026-11-12）已 404，商店與政令細項依 sgsdeck 轉錄待再核。',
+    },
+  },
 }, null, 2)}\n`);
 
 const byCamp = {};

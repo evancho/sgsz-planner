@@ -26,7 +26,7 @@ function team(id, title, members, tricks, extraNote = '', scenarioOnly = false) 
     id,
     scenario: 'hanyan',
     title,
-    status: '已核',
+    status: '待核',
     origin: 'dami',
     originLabel: '大米團隊（截圖）',
     applyReady: false,
