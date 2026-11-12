@@ -427,6 +427,14 @@
           "sourceUrl": "",
           "status": "已核",
           "note": ""
+        },
+        {
+          "id": "sanxian",
+          "name": "散仙",
+          "desc": "獲得 6% 規避。",
+          "sourceUrl": "https://forum.gamer.com.tw/C.php?bsn=36815&snA=5254",
+          "status": "已核",
+          "note": "九變小兵書。效果「獲得 6% 規避」見巴哈兵書大全 https://forum.gamer.com.tw/C.php?bsn=36815&snA=5254（2021-11-28）與 sgsdeck https://sgsdeck.com/guides/military-books（2026-10-27）。巴哈文寫僅于吉、張角、左慈、華佗可帶；sgsdeck 未列此限制。"
         }
       ],
       "sourceUrl": "",

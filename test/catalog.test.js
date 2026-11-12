@@ -80,9 +80,14 @@ test('generals and tactics are internally consistent', () => {
   for (const tactic of tacticsFile.tactics) {
     assert.equal(tacticIds.has(tactic.id), false, tactic.id);
     tacticIds.add(tactic.id);
-    assert.equal(tactic.orange, true);
-    if (tactic.quality === '未核') assert.equal(tactic.rank, undefined, tactic.name);
-    else assert.ok(tactic.rank === 'S' || tactic.rank === 'A', tactic.name);
+    if (tactic.id === 'pojia') {
+      assert.equal(tactic.orange, false, tactic.id);
+      assert.equal(tactic.rank, 'B', tactic.name);
+    } else {
+      assert.equal(tactic.orange, true, tactic.id);
+      if (tactic.quality === '未核') assert.equal(tactic.rank, undefined, tactic.name);
+      else assert.ok(tactic.rank === 'S' || tactic.rank === 'A', tactic.name);
+    }
     assert.ok(tactic.desc.length > 0);
     for (const fromId of tactic.from) assert.equal(ids.has(fromId), true, `${tactic.id} -> ${fromId}`);
   }
@@ -719,12 +724,31 @@ test('generals and tactics are internally consistent', () => {
   assert.deepEqual(bingyanRanks, { T0: 12, 'T0.5': 1, T1: 12 });
   const lvguoqiao = bingyanTeams.find((team) => team.id === 'bingyan-lvguoqiao-baima');
   assert.deepEqual(lvguoqiao.members[0].learnedNames, ['彎弓飲羽', '破甲']);
-  assert.deepEqual(lvguoqiao.members[0].unlisted, ['破甲']);
+  assert.deepEqual(lvguoqiao.members[0].learned, ['wangong', 'pojia']);
+  assert.equal(lvguoqiao.members[0].unlisted, undefined);
   const zhangjiaoTeam = bingyanTeams.find((team) => team.id === 'bingyan-zhangjiao-yuji-cavalry');
-  assert.deepEqual(zhangjiaoTeam.members[2].unlisted, ['散仙']);
-  assert.equal(zhangjiaoTeam.members[2].bingshu.secondary[0], null);
+  assert.equal(zhangjiaoTeam.members[2].unlisted, undefined);
+  assert.deepEqual(zhangjiaoTeam.members[2].bingshu.secondary, ['sanxian', 'jiuzhu']);
+  const pojia = byName.get('破甲');
+  assert.equal(pojia.id, 'pojia');
+  assert.equal(pojia.rank, 'B');
+  assert.equal(pojia.type, '突擊');
+  assert.equal(pojia.source, '傳承');
+  assert.equal(pojia.status, '待核');
+  assert.equal(pojia.sourceUrl, 'https://sgsdeck.com/tactics/破甲');
+  assert.match(pojia.desc, /9→18 點統率/);
+  const sanxian = bingshu.branches.find((branch) => branch.id === 'jiubian').secondary.find((item) => item.id === 'sanxian');
+  assert.equal(sanxian.name, '散仙');
+  assert.equal(sanxian.status, '已核');
+  assert.match(sanxian.note, /6% 規避/);
+  assert.equal(sanxian.sourceUrl, 'https://forum.gamer.com.tw/C.php?bsn=36815&snA=5254');
+  const lingji = byName.get('精·靈機一動');
+  assert.equal(lingji.status, '待核');
+  assert.match(lingji.desc, /全兵種可用/);
+  assert.match(lingji.note, /snA=11574/);
+  assert.match(lingji.note, /5\.5→10/);
   assert.ok(scenario.scenarioInfo.bingyan);
-  assert.match(scenario.scenarioInfo.bingyan.pending, /都尉與漢室轉換是否適用待核/);
+  assert.match(scenario.scenarioInfo.bingyan.pending, /都尉是否可用、漢室轉換（群↔漢名額）是否適用仍待核/);
   assert.equal(scenario.scenarioInfo.bingyan.sources.length, 2);
   const saozi = scenario.recommended.find((team) => team.id === 'baha-d-saozi');
   assert.equal(saozi.tricks.includes('伺橋受書'), true);

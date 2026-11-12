@@ -5273,7 +5273,7 @@
           "generalName": "呂布",
           "learned": [
             "wangong",
-            null
+            "pojia"
           ],
           "learnedNames": [
             "彎弓飲羽",
@@ -5288,10 +5288,7 @@
             ]
           },
           "points": "武力",
-          "remark": "任命貂蟬軍師",
-          "unlisted": [
-            "破甲"
-          ]
+          "remark": "任命貂蟬軍師"
         },
         {
           "generalId": "guojia",
@@ -5569,15 +5566,12 @@
             "branch": "jiubian",
             "primary": "yuanqi",
             "secondary": [
-              null,
+              "sanxian",
               "jiuzhu"
             ]
           },
           "points": "智力",
-          "remark": "攜帶鋒矢陣為張角提供穩定增傷",
-          "unlisted": [
-            "散仙"
-          ]
+          "remark": "攜帶鋒矢陣為張角提供穩定增傷"
         }
       ]
     },
@@ -5909,7 +5903,7 @@
           "url": "https://news.omg.com.tw/News/NewsContent?NewsID=13659"
         }
       ],
-      "pending": "都尉與漢室轉換是否適用待核。官網劇本介紹頁（2026-11-12）已 404，商店與政令細項依 sgsdeck 轉錄待再核。"
+      "pending": "都尉是否可用、漢室轉換（群↔漢名額）是否適用仍待核。登庸令是另一套指定武將轉陣營商店，與漢室轉換不同。官網劇本介紹頁（2026-11-12 再查）仍 404、Wayback 無快照；商店六項名單仍依 sgsdeck 引官網、正文待再核。"
     }
   }
 }

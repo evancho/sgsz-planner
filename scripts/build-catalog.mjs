@@ -300,7 +300,7 @@ const TACTIC_SOURCES = ['傳承', '事件', '自帶', '賽季'];
 
 function t(row) {
   const unranked = row.quality === '未核';
-  if (!unranked && row.rank !== 'S' && row.rank !== 'A') throw new Error(`rank ${row.id}`);
+  if (!unranked && row.rank !== 'S' && row.rank !== 'A' && row.rank !== 'B') throw new Error(`rank ${row.id}`);
   if (!TACTIC_TYPES.includes(row.type)) throw new Error(`type ${row.id}`);
   if (!TACTIC_SOURCES.includes(row.source)) throw new Error(`source ${row.id}`);
   const tactic = {
@@ -311,7 +311,7 @@ function t(row) {
     from: row.from,
     troops: row.troops,
     copies: 1,
-    orange: true,
+    orange: row.rank !== 'B',
     desc: row.desc,
   };
   if (!unranked) tactic.rank = row.rank;
@@ -345,7 +345,8 @@ function cite(item, status = '已核') {
 
 function extra(id, name, type, source, from, troops, desc, more = {}) {
   const row = { id, name, type, source, from, troops, desc, ...more };
-  if (more.quality !== '未核') row.rank = 'S';
+  if (more.rank) row.rank = more.rank;
+  else if (more.quality !== '未核') row.rank = 'S';
   return row;
 }
 
@@ -423,7 +424,9 @@ const extraTactics = [
   extra('tuo-xushi', '拓·蓄勢待發', '指揮', '賽季', [], ['盾', '器械'], '對應原戰法蓄勢待發', bingyanShop('效果同原戰法（限盾、器械）。兵演春秋賽季商店。')),
   extra('tuo-caochuan', '拓·草船借箭', '主動', '賽季', [], null, '對應原戰法草船借箭', bothShops),
   extra('tuo-guagu', '拓·刮骨療毒', '主動', '賽季', [], null, '對應原戰法刮骨療毒', bothShops),
-  extra('jing-lingji', '精·靈機一動', '主動', '賽季', [], null, '對應原戰法靈機一動', bingyanShop('精進版通常不限兵種（原靈機一動限騎、器械）。兵演春秋賽季商店。')),
+  extra('jing-lingji', '精·靈機一動', '主動', '賽季', [], null, '對應原戰法靈機一動。全兵種可用，屬性提升較原戰法為弱。', Object.assign(bingyanShop('兵演春秋賽季商店。全兵種、弱化版見巴哈「小海殤」https://forum.gamer.com.tw/C.php?bsn=36815&snA=11574 。'), {
+    note: '兵演春秋賽季商店。全兵種可用、屬性提升較原戰法為弱，見巴哈「小海殤」https://forum.gamer.com.tw/C.php?bsn=36815&snA=11574（2026-09-02）。sgsdeck 寫發動率仍為 55%、智力／統率／魅力提升由 7.5→15 降為 5.5→10，稱引自該文先鋒服截圖；本輪打開該文正文未見此數值，截圖多為政令畫面，數值仍待核。sgsdeck 轉錄，官網原文待再核（https://sgsdeck.com/seasons/og-兵演春秋）。',
+  })),
   extra('cangqi', '藏器待時', '被動', '傳承', ['sp-caocao'], ['盾', '器械'], '前2回合，自身受到的普通攻擊傷害降低10%→20%（受統帥影響）。第3回合起，自身自帶主動戰法發動率提升4%→8%（受武力影響），且造成傷害時有15%→30%機率附帶10%→20%破陣（受武力影響）。僅盾兵與器械。', {
     status: '已核',
     obtain: '傳承',
@@ -462,6 +465,13 @@ const extraTactics = [
   extra('tuo-jushi', '拓·聚石成金', '主動', '賽季', [], null, '對應原戰法聚石成金', hanyanShop('聚石成金')),
   extra('tuo-zhene', '拓·鎮扼防拒', '指揮', '賽季', [], null, '對應原戰法鎮扼防拒', hanyanShop('鎮扼防拒')),
   extra('zhuan-shizi', '轉·獅子奮迅', '主動', '賽季', [], null, '對應原戰法獅子奮迅', hanyanShop('獅子奮迅')),
+  extra('pojia', '破甲', '突擊', '傳承', [], null, '普通攻擊之後，降低攻擊目標 9→18 點統率，持續 2 回合。', {
+    rank: 'B',
+    status: '待核',
+    obtain: '傳承',
+    sourceUrl: 'https://sgsdeck.com/tactics/破甲',
+    note: 'B 級突擊傳承，發動率 100%，五兵種可用。效果依 sgsdeck 戰法頁（2026-10-27 更新）。傳承武將未列。圖鑑原以 S／A 為主，因兵演範本呂郭喬用到而補入。',
+  }),
 ];
 
 const tactics = [...tacticRows.map(t), ...extraTactics.map(t)];
@@ -566,6 +576,7 @@ const bingshu = {
         node('baizhan', '百戰', '自帶主動發動率偏低時更好發動。'),
         node('chiyuan', '馳援', '治療或援護友軍的收益提高。'),
         node('lijun', '勵軍', '隨機提高一名友軍的傷害。'),
+        node('sanxian', '散仙', '獲得 6% 規避。'),
       ],
     },
     {
@@ -619,6 +630,11 @@ for (const branch of bingshu.branches) {
     Object.assign(node, { sourceUrl: '', status: '已核', note: '' });
   }
 }
+const sanxian = bingshu.branches.find((branch) => branch.id === 'jiubian')?.secondary.find((item) => item.id === 'sanxian');
+if (sanxian) {
+  sanxian.sourceUrl = 'https://forum.gamer.com.tw/C.php?bsn=36815&snA=5254';
+  sanxian.note = '九變小兵書。效果「獲得 6% 規避」見巴哈兵書大全 https://forum.gamer.com.tw/C.php?bsn=36815&snA=5254（2021-11-28）與 sgsdeck https://sgsdeck.com/guides/military-books（2026-10-27）。巴哈文寫僅于吉、張角、左慈、華佗可帶；sgsdeck 未列此限制。';
+}
 
 const meta = {
   catalogVersion: VERSION,
@@ -646,7 +662,7 @@ writeFileSync('data/scenario.json', `${JSON.stringify({
         { label: '巴哈姆特 GNN（廠商原文）', url: 'https://gnn.gamer.com.tw/detail.php?sn=311072' },
         { label: 'OMG 新聞', url: 'https://news.omg.com.tw/News/NewsContent?NewsID=13659' },
       ],
-      pending: '都尉與漢室轉換是否適用待核。官網劇本介紹頁（2026-11-12）已 404，商店與政令細項依 sgsdeck 轉錄待再核。',
+      pending: '都尉是否可用、漢室轉換（群↔漢名額）是否適用仍待核。登庸令是另一套指定武將轉陣營商店，與漢室轉換不同。官網劇本介紹頁（2026-11-12 再查）仍 404、Wayback 無快照；商店六項名單仍依 sgsdeck 引官網、正文待再核。',
     },
   },
 }, null, 2)}\n`);

@@ -120,7 +120,7 @@ export const bingyanRecommended = [
     seat("zhouyu", "周瑜", ["duohun", "fenzui"], ["奪魂挾魄", "焚輜營壘"], book("shiji", "sanjun", "chuilian", "tongjun"), { points: "智力", remark: "作為尾速，敵軍智力被持續壓制下打出大量謀略傷害" })
   ]),
   team("bingyan-lvguoqiao-baima", "呂郭喬（精·白馬義從）", "og-bingyan-lvguoqiao-baima", "T1", [
-    seat("lvbu", "呂布", ["wangong", null], ["彎弓飲羽", "破甲"], book("yongjian", "chuqi", "chizhong", "jingzhun"), { points: "武力", remark: "任命貂蟬軍師", unlisted: ["破甲"] }),
+    seat("lvbu", "呂布", ["wangong", "pojia"], ["彎弓飲羽", "破甲"], book("yongjian", "chuqi", "chizhong", "jingzhun"), { points: "武力", remark: "任命貂蟬軍師" }),
     seat("guojia", "郭嘉", ["sanshi", "huochi"], ["三勢陣", "火熾原燎"], book("shiji", "sanjun", "chuilian", "tongjun"), { points: "半智半統" }),
     seat("wushuang-xiaoqiao", "無雙小喬", ["wenwu", "baima"], ["文武雙全", "白馬義從"], book("yongjian", "yitui", "jingzhun", "chizhong"), { points: "武力", remark: "白馬義從需改造為 精·白馬義從，選【飛馳】【習武】【靈光】【久戰】" })
   ]),
@@ -137,7 +137,7 @@ export const bingyanRecommended = [
   team("bingyan-zhangjiao-yuji-cavalry", "張角于吉騎", "og-bingyan-zhangjiao-yuji-cavalry", "T1", [
     seat("zhangjiao", "張角", ["taiping", "wenwu"], ["太平道法", "文武雙全"], book("xushi", "jizhan", "guimou", "jiangwei-book"), { points: "智力", remark: "配騎兵寶物升級為 S。士別三日可保障生存並造成傷害，文武雙全大幅提升智力" }),
     seat("yuji", "于吉", ["caochuan", "feixiong"], ["草船借箭", "飛熊軍"], book("shiji", "sanjun", "chuilian", "tongjun"), { points: "統率（1速）", remark: "一速發動草船借箭解控。也可用竭力佐謀＋刮骨療毒替代草船借箭" }),
-    seat("zuoci", "左慈", ["fengshi", "guagu"], ["鋒矢陣", "刮骨療毒"], book("jiubian", "yuanqi", null, "jiuzhu"), { points: "智力", remark: "攜帶鋒矢陣為張角提供穩定增傷", unlisted: ["散仙"] })
+    seat("zuoci", "左慈", ["fengshi", "guagu"], ["鋒矢陣", "刮骨療毒"], book("jiubian", "yuanqi", "sanxian", "jiuzhu"), { points: "智力", remark: "攜帶鋒矢陣為張角提供穩定增傷" })
   ]),
   team("bingyan-kangkai-bow-jinfan", "慷慨弓（精·錦帆軍）", "og-bingyan-kangkai-bow-jinfan", "T1", [
     seat("ganning", "甘寧", ["caochuan", "jinfan"], ["草船借箭", "錦帆軍"], book("shiji", "leshan", "chuilian", "tongjun"), { points: "武力 統率", remark: "錦帆軍需改造為 精·錦帆軍，選【神射】【勇武】【招架】【營嘯】" }),
