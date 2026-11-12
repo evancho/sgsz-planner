@@ -507,6 +507,8 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(scenario.hanConvert.source, 'https://sgsdeck.com/seasons/pk-s27');
   assert.match(scenario.hanConvert.officialPost, /facebook.com/);
   assert.match(scenario.hanConvert.note, /依使用者指定/);
+  assert.match(scenario.hanConvert.note, /兵演春秋同樣適用/);
+  assert.match(scenario.hanConvert.note, /使用者確認 2026-11-12/);
   assert.doesNotMatch(scenario.hanConvert.note, /仍待確認/);
   const fugui = dami.find((team) => team.id === 'dami-fugui');
   assert.equal(fugui.status, '待核');
@@ -748,8 +750,32 @@ test('generals and tactics are internally consistent', () => {
   assert.match(lingji.note, /snA=11574/);
   assert.match(lingji.note, /5\.5→10/);
   assert.ok(scenario.scenarioInfo.bingyan);
-  assert.match(scenario.scenarioInfo.bingyan.pending, /都尉是否可用、漢室轉換（群↔漢名額）是否適用仍待核/);
+  assert.match(scenario.scenarioInfo.bingyan.confirmed, /漢室轉換（群↔漢，規則與名額同漢焰長明）/);
+  assert.match(scenario.scenarioInfo.bingyan.confirmed, /使用者確認 2026-11-12/);
+  assert.match(scenario.scenarioInfo.bingyan.pending, /都尉是否可用仍待核/);
+  assert.doesNotMatch(scenario.scenarioInfo.bingyan.pending, /漢室轉換（群↔漢名額）是否適用仍待核/);
   assert.equal(scenario.scenarioInfo.bingyan.sources.length, 2);
+  const shenheng = generalsFile.generals.find((general) => general.id === 'duwei-shenheng');
+  assert.equal(generalListed(shenheng, 'bingyan'), true);
+  assert.equal(generalListed(shenheng, 'hanyan'), false);
+  for (const name of ['藏器待時', '絕計折謀', '桃園結義', '麾軍結陣']) {
+    assert.equal(fitsScenario(byName.get(name), 'bingyan'), true, name);
+    assert.equal(fitsScenario(byName.get(name), 'hanyan'), true, name);
+  }
+  for (const name of ['拓·眾志成城', '衡軛陣', '轉·形一陣', '轉·威震華夏', '拓·聚石成金', '拓·鎮扼防拒', '轉·獅子奮迅']) {
+    assert.equal(fitsScenario(byName.get(name), 'bingyan'), false, name);
+    assert.equal(fitsScenario(byName.get(name), 'hanyan'), true, name);
+  }
+  assert.match(byName.get('藏器待時').note, /兵演春秋同樣適用/);
+  assert.match(byName.get('絕計折謀').note, /使用者確認 2026-11-12/);
+  assert.match(byName.get('桃園結義').note, /使用者確認 2026-11-12/);
+  const spCaoNote = generalsFile.generals.find((general) => general.id === 'sp-caocao').note;
+  assert.match(spCaoNote, /兵演春秋同樣可選、可轉群/);
+  assert.match(spCaoNote, /使用者確認 2026-11-12/);
+  const appSrc = readFileSync(new URL('../js/app.js', import.meta.url), 'utf8');
+  assert.match(appSrc, /info\.confirmed/);
+  assert.match(appSrc, /data-action="toggle-han"/);
+  assert.doesNotMatch(appSrc, /current\.scenario === 'hanyan'.*toggle-han|toggle-han.*current\.scenario === 'hanyan'/);
   const saozi = scenario.recommended.find((team) => team.id === 'baha-d-saozi');
   assert.equal(saozi.tricks.includes('伺橋受書'), true);
   assert.equal(saozi.trickFormal['伺橋受書'], '圯橋受書');

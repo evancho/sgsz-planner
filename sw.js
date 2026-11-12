@@ -1,5 +1,5 @@
 // 版本以 data/version.json 為準。發版時改那份檔案，並把 CACHE 改成 sgsz-planner-<version>。
-const CACHE = 'sgsz-planner-1.2.42';
+const CACHE = 'sgsz-planner-1.2.43';
 
 const ASSETS = [
   './',
@@ -24,7 +24,7 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS.map((u) => new Request(u, { cache: 'reload' })))));
 });
 
 self.addEventListener('message', (event) => {

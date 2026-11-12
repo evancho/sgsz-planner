@@ -8,6 +8,7 @@ import {
   emptyAccount,
   exportAccountPayload,
   fitsScenario,
+  generalListed,
   matchesGeneral,
   meritWarningLines,
   nextCampOverride,
@@ -69,6 +70,24 @@ test('兵演春秋 is a first-class scenario and does not inherit 漢焰 limits'
   assert.equal(teams[0].status, '待核');
   assert.equal(teams[0].members[0].points, '武力');
   assert.deepEqual(teams[0].members[0].unlisted, ['破甲']);
+});
+
+
+test('兵演春秋沿用漢室轉換與漢焰傳承事件，但不排除都尉、不收漢焰劇本戰法', () => {
+  const convert = { max: 3, toHan: ['caocao', 'lvbu'], status: '已核' };
+  const cao = { id: 'caocao', name: '曹操', camp: '魏' };
+  const diao = { id: 'diaochan', name: '貂蟬', camp: '漢' };
+  const catalog = new Map([cao, diao].map((row) => [row.id, row]));
+  assert.equal(nextCampOverride(cao, {}, convert, catalog).show, true);
+  assert.equal(nextCampOverride(cao, {}, convert, catalog).label, '轉漢');
+  assert.equal(nextCampOverride(diao, {}, convert, catalog).show, true);
+  assert.equal(nextCampOverride(diao, {}, convert, catalog).label, '轉群');
+  assert.equal(fitsScenario({ name: '藏器待時' }, 'bingyan'), true);
+  assert.equal(fitsScenario({ name: '桃園結義' }, 'bingyan'), true);
+  assert.equal(fitsScenario({ scenarios: ['hanyan'] }, 'bingyan'), false);
+  assert.equal(generalListed({ id: 'sp-caocao', name: 'SP曹操', camp: '漢' }, 'bingyan'), true);
+  assert.equal(generalListed({ id: 'duwei-shenheng', name: '沈姮', tags: ['都尉'] }, 'bingyan'), true);
+  assert.equal(generalListed({ id: 'duwei-shenheng', name: '沈姮', tags: ['都尉'] }, 'hanyan'), false);
 });
 
 test('unmarked tactics fit every scenario and marked ones use the array', () => {

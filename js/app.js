@@ -203,7 +203,7 @@ function scenarioBriefHtml(scenarioId) {
   const links = (info.sources || []).filter((row) => row?.url).map((row) =>
     `<a class="cite" href="${esc(row.url)}" target="_blank" rel="noopener">${esc(row.label || '來源')}</a>`
   ).join('、');
-  const parts = [info.summary, links ? `來源：${links}` : '', info.pending].filter(Boolean);
+  const parts = [info.summary, links ? `來源：${links}` : '', info.confirmed, info.pending].filter(Boolean);
   return `<p class="faint scenario-brief">${parts.join(' ')}</p>`;
 }
 
