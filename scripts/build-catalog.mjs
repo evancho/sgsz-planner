@@ -237,7 +237,8 @@ const generals = [
 ];
 
 const KEEP_NOTE = '漢陣營之後常規劇本也可繼續用。可轉群。';
-const DEBUT_NOTE = `首次登場是漢焰長明。${KEEP_NOTE}`;
+const BINGYAN_OK = '使用者確認 2026-11-12';
+const DEBUT_NOTE = `首次登場是漢焰長明。${KEEP_NOTE}兵演春秋同樣可選、可轉群。${BINGYAN_OK}`;
 
 /** 圖鑑只收名將；良將／裨將不收。 */
 generals.push(
@@ -432,21 +433,21 @@ const extraTactics = [
     obtain: '傳承',
     fromNames: ['SP曹操'],
     sourceUrl: 'https://sgsdeck.com/tactics/藏器待時',
-    note: `傳承自 SP曹操。${USER_OK}`,
+    note: `傳承自 SP曹操。${USER_OK}。兵演春秋同樣適用。${BINGYAN_OK}`,
   }),
   extra('jueji', '絕計折謀', '主動', '傳承', ['heshi'], null, '40%機率對敵軍隨機武將造成謀略傷害（118%→236%，受智力影響），並施加技窮狀態，持續1回合。', {
     status: '已核',
     obtain: '傳承',
     fromNames: ['何氏'],
     sourceUrl: 'https://sgsdeck.com/tactics/絕計折謀',
-    note: `傳承自何氏。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。${USER_OK}`,
+    note: `傳承自何氏。巴哈寫「絕技折謀」，本圖鑑依 sgsdeck 用「絕計折謀」。${USER_OK}。兵演春秋同樣適用。${BINGYAN_OK}`,
   }),
   extra('taoyuan', '桃園結義', '指揮', '事件', [], null, '每回合有20%→40%機率（受統率影響，每種效果獨立判定）：我軍魅力最高者治療我軍單體（受智力影響）；統率最高者對敵軍智力最低者造成謀略傷害（受統率影響）；武力最高者對敵軍統率最低者造成兵刃傷害。該傷害率受我軍累計溢出治療量影響，觸發後重置。', {
     status: '已核',
     obtain: '事件',
     exchange: ['liubei', 'guanyu', 'zhangfei'],
     sourceUrl: 'https://sgsdeck.com/tactics/桃園結義',
-    note: `事件兌換武將依巴哈攻略 https://forum.gamer.com.tw/C.php?bsn=36815&snA=11630 。整理站兌換欄未列武將名。${USER_OK}`,
+    note: `事件兌換武將依巴哈攻略 https://forum.gamer.com.tw/C.php?bsn=36815&snA=11630 。整理站兌換欄未列武將名。${USER_OK}。兵演春秋同樣適用。${BINGYAN_OK}`,
   }),
   extra('tuo-zhongzhi', '拓·眾志成城', '指揮', '賽季', [], null, '對應原戰法眾志成城', {
     ...hanyanPrint,
@@ -662,7 +663,8 @@ writeFileSync('data/scenario.json', `${JSON.stringify({
         { label: '巴哈姆特 GNN（廠商原文）', url: 'https://gnn.gamer.com.tw/detail.php?sn=311072' },
         { label: 'OMG 新聞', url: 'https://news.omg.com.tw/News/NewsContent?NewsID=13659' },
       ],
-      pending: '都尉是否可用、漢室轉換（群↔漢名額）是否適用仍待核。登庸令是另一套指定武將轉陣營商店，與漢室轉換不同。官網劇本介紹頁（2026-11-12 再查）仍 404、Wayback 無快照；商店六項名單仍依 sgsdeck 引官網、正文待再核。',
+      confirmed: '漢室轉換（群↔漢，規則與名額同漢焰長明）、漢焰新武將，以及漢焰傳承戰法、事件戰法在兵演春秋均適用。使用者確認 2026-11-12。',
+      pending: '都尉是否可用仍待核，不沿用漢焰排除。登庸令是另一套指定武將轉陣營商店，與漢室轉換不同。官網劇本介紹頁（2026-11-12 再查）仍 404、Wayback 無快照；商店六項名單仍依 sgsdeck 引官網、正文待再核。',
     },
   },
 }, null, 2)}\n`);
