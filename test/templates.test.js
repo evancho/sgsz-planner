@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import {
   filterTeamTemplates,
+  templateOriginKey,
+  templateOriginOptions,
   orderTeamTemplates,
   placeBlockedTemplatesLast,
   templateOwnedRed,
@@ -102,6 +104,21 @@ test('篩選劇本、國家、隊伍名稱與武將名稱', () => {
   assert.equal(filterTeamTemplates(templates, { query: 'T1' }).some((item) => item.id === 'tpl-001'), false);
   assert.equal(filterTeamTemplates(templates, { country: '群', query: '星彩' }).length, 0);
   assert.ok(filterTeamTemplates(templates, { country: '蜀', query: '星彩' }).length > 0);
+});
+
+test('範本可用來源篩選，搜尋也吃來源與組合名', () => {
+  const scenario = JSON.parse(readFileSync(new URL('../data/scenario.json', import.meta.url)));
+  const teams = scenario.recommended.map((team) => ({ ...team, fromRecommended: true }));
+  const lufu = filterTeamTemplates(teams, { origin: 'lufu' });
+  assert.ok(lufu.length > 0);
+  assert.equal(lufu.every((team) => templateOriginKey(team) === 'lufu'), true);
+  assert.ok(filterTeamTemplates(teams, { origin: 'bahamut' }).every((team) => team.origin === 'bahamut'));
+  assert.ok(filterTeamTemplates(teams, { query: '陸服玩家版' }).some((team) => team.origin === 'lufu'));
+  assert.ok(filterTeamTemplates(teams, { query: '十隊共存' }).some((team) => team.groupLabel === '十隊共存' || (team.alternatives || []).some((item) => item.groupLabel === '十隊共存')));
+  assert.ok(filterTeamTemplates(teams, { query: '秋石小軍師' }).some((team) => team.author === '秋石小軍師'));
+  const options = templateOriginOptions(teams);
+  assert.ok(options.some((item) => item.id === 'lufu' && item.label === '陸服玩家版'));
+  assert.equal(options[0].id, '');
 });
 
 test('範本依強度再依已有紅度，不依國家', () => {

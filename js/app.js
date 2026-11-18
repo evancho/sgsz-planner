@@ -76,6 +76,7 @@ import {
   coexistenceLines,
   TEMPLATE_COUNTRIES,
   filterTeamTemplates,
+  templateOriginOptions,
   orderTeamTemplates,
   placeBlockedTemplatesLast,
   templateOwnedRed,
@@ -1232,7 +1233,7 @@ function planLine(team) {
     parts.push(`奇略 ${shown.join('→')}`);
   }
   if (!parts.length) return '';
-  return `<p class="faint">${esc(parts.join(' · '))}</p>`;
+  return `<p class="faint">${esc(parts.join('；'))}</p>`;
 }
 
 function planEditor(team, current) {
@@ -1565,6 +1566,9 @@ function templateResultsMarkup() {
             <span class="tag red-total">總紅度 ${red}</span>
             <span class="tag">${campInk(team.country)}</span>
             ${team.fromRecommended && team.status === '待核' ? '<span class="mini review">待核</span>' : ''}
+            ${team.fromRecommended && team.originLabel ? `<span class="mini origin">${esc(team.originLabel)}</span>` : ''}
+            ${team.fromRecommended && team.author ? `<span class="faint">${esc(team.author)}</span>` : ''}
+            ${team.groupLabel ? `<span class="mini group">${esc(team.groupLabel)}</span>` : ''}
           </div>
           <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" ${blocked ? 'disabled' : ''}>加入</button>
         </div>
@@ -1573,7 +1577,7 @@ function templateResultsMarkup() {
         ${unresolved.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
         ${bases.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
         ${basis}
-        ${team.fromRecommended && team.source ? `<p class="faint"><a class="cite" href="${esc(team.source)}" target="_blank" rel="noopener">來源</a>${team.note ? ` ${esc(team.note)}` : ''}</p>` : ''}
+        ${team.fromRecommended && (team.source || team.reprintSource) ? `<p class="faint">${team.source ? `<a class="cite" href="${esc(team.source)}" target="_blank" rel="noopener">來源</a>` : ''}${team.reprintSource ? `${team.source ? ' ' : ''}<a class="cite" href="${esc(team.reprintSource)}" target="_blank" rel="noopener">Notion 轉載</a>` : ''}${team.note ? ` ${esc(team.note)}` : ''}</p>` : ''}
         ${notes.map((line) => `<p class="faint">${esc(line)}</p>`).join('')}
         ${team.fromRecommended ? altHtml(team, current, usage, tactics) : ''}
       </li>`;
@@ -1599,6 +1603,10 @@ function templateSheet() {
     const selected = ui.templates.country === value ? 'selected' : '';
     return `<option value="${esc(value)}" ${selected}>${esc(label)}</option>`;
   }).join('');
+  const originOptions = templateOriginOptions(all).map((item) => {
+    const selected = ui.templates.origin === item.id ? 'selected' : '';
+    return `<option value="${esc(item.id)}" ${selected}>${esc(item.label)}</option>`;
+  }).join('');
   return sheet('載入範本隊伍', `
     <div class="template-body">
       <p>從範本新增一隊到帳號「${esc(current.name)}」。不會改動已經有的隊伍。強度會寫進隊伍名稱，加點會寫進備註。還沒擁有的武將不能加入。只缺戰法時可以加入，那些戰法留空。</p>
@@ -1609,6 +1617,9 @@ function templateSheet() {
         <label>國家
           <select id="template-country" class="field" data-action="set-template-country">${countryOptions}</select>
         </label>
+        <label>來源
+          <select id="template-origin" class="field" data-action="set-template-origin">${originOptions}</select>
+        </label>
         <label>排序
           <select id="template-sort" class="field" data-action="set-template-sort">
             <option value="red" ${ui.templates.sort === 'rank' ? '' : 'selected'}>紅度</option>
@@ -1617,7 +1628,7 @@ function templateSheet() {
         </label>
       </div>
       <label>隊伍或武將
-        <input id="template-query" class="search" data-model="template-query" value="${esc(ui.templates.query)}" placeholder="隊伍名稱或武將名稱" autocomplete="off" enterkeyhint="search">
+        <input id="template-query" class="search" data-model="template-query" value="${esc(ui.templates.query)}" placeholder="隊伍、武將、來源或組合名稱" autocomplete="off" enterkeyhint="search">
       </label>
       <div class="template-options">
         <label class="season-opt">
@@ -2090,8 +2101,10 @@ function altHtml(team, current, usage, tactics) {
     const applyTeam = recommendedFromAlternative(team, alt);
     const state = applyTeam ? templateBlockState({ ...applyTeam, fromRecommended: true }, current, usage, tactics) : { blocked: true };
     const origin = alt.originLabel ? `<span class="mini origin">${esc(alt.originLabel)}</span>` : '';
+    const group = alt.groupLabel ? `<span class="mini group">${esc(alt.groupLabel)}</span>` : '';
     const who = alt.author ? `<span class="faint">${esc(alt.author)}</span>` : '';
     const link = alt.source ? `<a class="cite" href="${esc(alt.source)}" target="_blank" rel="noopener">來源</a>` : '';
+    const reprint = alt.reprintSource ? `<a class="cite" href="${esc(alt.reprintSource)}" target="_blank" rel="noopener">Notion 轉載</a>` : '';
     const official = alt.officialSource ? `<a class="cite" href="${esc(alt.officialSource)}" target="_blank" rel="noopener">官方原貼</a>` : '';
     const diffs = (alt.diffs || []).map((line) => `<li>${esc(line)}</li>`).join('');
     const warn = state.notes?.length ? `<p class="faint">${esc(state.notes.join('；'))}</p>` : '';
@@ -2099,7 +2112,7 @@ function altHtml(team, current, usage, tactics) {
       <div class="alt">
         <div class="alt-head">
           <div>
-            <p><strong>${esc(alt.title)}</strong> ${origin}${who}${link}${official}</p>
+            <p><strong>${esc(alt.title)}</strong> ${origin}${group}${who}${link}${reprint}${official}</p>
           </div>
           <button type="button" class="btn" data-action="add-template" data-id="${esc(team.id)}" data-alt-id="${esc(alt.id || '')}" ${state.blocked ? 'disabled' : ''}>加入</button>
         </div>
@@ -2615,6 +2628,7 @@ function onClick(event) {
       ui.templates = {
         scenario: scenarios.includes(accountScenario) ? accountScenario : '',
         country: '',
+        origin: '',
         query: '',
         substitute: false,
         grayTactics: false,
@@ -3053,6 +3067,9 @@ function onChange(event) {
     render();
   } else if (el.dataset.action === 'set-template-country' && ui.templates) {
     ui.templates = { ...ui.templates, country: el.value };
+    render();
+  } else if (el.dataset.action === 'set-template-origin' && ui.templates) {
+    ui.templates = { ...ui.templates, origin: el.value };
     render();
   } else if (el.dataset.action === 'set-template-sort' && ui.templates) {
     ui.templates = { ...ui.templates, sort: el.value === 'red' ? 'red' : 'rank' };
