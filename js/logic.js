@@ -1203,8 +1203,15 @@ export function normalizeRecommended(list) {
     } else if (raw.origin === 'sgsdeck') {
       team.origin = 'sgsdeck';
       team.originLabel = clip(raw.originLabel, 24) || 'sgsdeck';
+    } else if (raw.origin === 'lufu') {
+      team.origin = 'lufu';
+      team.originLabel = '陸服玩家版';
     }
     if (raw.scenarioOnly === true) team.scenarioOnly = true;
+    const reprintSource = clip(raw.reprintSource, 180);
+    const groupLabel = clip(raw.groupLabel, 24);
+    if (reprintSource) team.reprintSource = reprintSource;
+    if (groupLabel) team.groupLabel = groupLabel;
     const author = clip(raw.author, 24);
     const authorAccount = clip(raw.authorAccount, 32);
     const postedAt = clip(raw.postedAt, 40);
@@ -1325,6 +1332,12 @@ function normalizeAlternatives(list) {
     if (author) item.author = author;
     if (source) item.source = source;
     if (officialSource) item.officialSource = officialSource;
+    const reprintSource = clip(raw.reprintSource, 180);
+    const groupLabel = clip(raw.groupLabel, 24);
+    const postedAt = clip(raw.postedAt, 40);
+    if (reprintSource) item.reprintSource = reprintSource;
+    if (groupLabel) item.groupLabel = groupLabel;
+    if (postedAt) item.postedAt = postedAt;
     if (Array.isArray(raw.strategy)) item.strategy = stringList(raw.strategy, 1);
     if (Array.isArray(raw.tricks)) {
       item.tricks = raw.tricksBound === false ? stringList(raw.tricks, 8) : trickSlots(raw.tricks);
@@ -1356,6 +1369,11 @@ export function recommendedFromAlternative(parent, alt) {
     alternatives: undefined,
   };
   if (alt.officialSource) base.officialSource = alt.officialSource;
+  if (alt.reprintSource) base.reprintSource = alt.reprintSource;
+  else if (parent.reprintSource) base.reprintSource = parent.reprintSource;
+  if (alt.groupLabel) base.groupLabel = alt.groupLabel;
+  else if (parent.groupLabel) base.groupLabel = parent.groupLabel;
+  if (alt.author) base.author = alt.author;
   if (parent.applyReady === false) delete base.applyReady;
   if (Array.isArray(alt.strategy)) base.strategy = alt.strategy;
   if (Array.isArray(alt.tricks)) {
@@ -2414,16 +2432,60 @@ export function orderTeamTemplates(teams, redOf = () => 0, mode = 'rank') {
 }
 
 /** 劇本、國家用下拉篩選。文字比對隊伍名稱或武將名稱。 */
+export const TEMPLATE_ORIGIN_OPTIONS = [
+  { id: 'official', label: '官方推薦' },
+  { id: 'bahamut', label: '巴哈玩家版' },
+  { id: 'dami', label: '大米團隊（截圖）' },
+  { id: 'lufu', label: '陸服玩家版' },
+  { id: 'sgsdeck', label: 'sgsdeck' },
+];
+
+/** 範本來源鍵，給篩選下拉用。沒有 origin 的漢焰推薦當官方。 */
+export function templateOriginKey(team) {
+  if (!team) return '';
+  if (team.origin === 'lufu' || team.originLabel === '陸服玩家版') return 'lufu';
+  if (team.origin === 'bahamut' || team.originLabel === '巴哈玩家版') return 'bahamut';
+  if (team.origin === 'dami' || team.originLabel === '大米團隊（截圖）') return 'dami';
+  if (team.origin === 'sgsdeck' || team.originLabel === 'sgsdeck') return 'sgsdeck';
+  if (team.origin === 'official' || team.originLabel === '官方推薦') return 'official';
+  if (team.fromRecommended && !team.origin) return 'official';
+  return '';
+}
+
+export function templateOriginOptions(teams) {
+  const present = new Set((teams || []).map((team) => templateOriginKey(team)).filter(Boolean));
+  return [
+    { id: '', label: '全部' },
+    ...TEMPLATE_ORIGIN_OPTIONS.filter((item) => present.has(item.id)),
+  ];
+}
+
 export function filterTeamTemplates(teams, filters = {}) {
   const scenario = String(filters.scenario || '');
   const country = String(filters.country || '');
+  const origin = String(filters.origin || '');
   const query = String(filters.query || '').trim();
   return (teams || []).filter((team) => {
     if (scenario && team.scenario !== scenario) return false;
     if (country && team.country !== country) return false;
+    if (origin && templateOriginKey(team) !== origin) return false;
     if (!query) return true;
-    if (String(team.title || '').includes(query)) return true;
-    return (team.members || []).some((member) => String(member.generalName || '').includes(query));
+    const hay = [
+      team.title,
+      team.originLabel,
+      team.author,
+      team.groupLabel,
+      team.note,
+    ].map((part) => String(part || ''));
+    if (hay.some((part) => part.includes(query))) return true;
+    if ((team.members || []).some((member) => String(member.generalName || '').includes(query))) return true;
+    return (team.alternatives || []).some((alt) => (
+      String(alt.title || '').includes(query)
+      || String(alt.originLabel || '').includes(query)
+      || String(alt.author || '').includes(query)
+      || String(alt.groupLabel || '').includes(query)
+      || String(alt.note || '').includes(query)
+    ));
   });
 }
 

@@ -8,6 +8,7 @@ import { writeFileSync } from 'node:fs';
 import { tacticRows } from './tactic-catalog.mjs';
 import { hanyanBahamut } from './hanyan-bahamut.mjs';
 import { hanyanDami } from './hanyan-dami.mjs';
+import { hanyanLufu } from './hanyan-lufu.mjs';
 import { applyMerges } from './hanyan-merges.mjs';
 import { applyTiers } from './hanyan-tiers.mjs';
 import { hanConvert } from './han-convert.mjs';
@@ -653,7 +654,7 @@ writeFileSync('data/scenario.json', `${JSON.stringify({
   merits: hanyanMerits,
   hanConvert,
   recommended: [
-    ...applyTiers(applyMerges([...hanyanDami, ...hanyanBahamut, ...hanyanRecommended])),
+    ...applyTiers(applyMerges([...hanyanDami, ...hanyanBahamut, ...hanyanRecommended, ...hanyanLufu])),
     ...bingyanRecommended,
   ],
   scenarioInfo: {

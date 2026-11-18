@@ -452,7 +452,7 @@ test('generals and tactics are internally consistent', () => {
   assert.match(scenario.recommended.find((team) => team.id === 'dami-madai').note, /需訓兵振旅/);
   assert.equal(scenario.recommended.find((team) => team.id === 'hanyan-sanxian').note.includes('需訓兵振旅'), false);
   assert.equal(scenario.recommended.find((team) => team.id === 'baha-d-dahan').note.includes('需訓兵振旅'), false);
-  assert.equal(scenario.recommended.length, 55);
+  assert.equal(scenario.recommended.length, 95);
   const official = scenario.recommended.filter((team) => !team.origin);
   const bahamut = scenario.recommended.filter((team) => team.origin === 'bahamut');
   const dami = scenario.recommended.filter((team) => team.origin === 'dami');
@@ -471,21 +471,22 @@ test('generals and tactics are internally consistent', () => {
   assert.equal(removed.every((id) => !scenario.recommended.some((team) => team.id === id)), true);
   const dahan = bahamut.find((team) => team.id === 'baha-d-dahan');
   assert.equal(dahan.status, '已核');
-  assert.deepEqual(dahan.alternatives.map((item) => item.id), ['hanyan-dahan-gong', 'baha-b-gong-1', 'baha-b-gong-2', 'baha-b-gong-3']);
-  assert.equal(dahan.alternatives.every((item) => item.status === '已核'), true);
+  assert.deepEqual(dahan.alternatives.map((item) => item.id), ['hanyan-dahan-gong', 'baha-b-gong-1', 'baha-b-gong-2', 'baha-b-gong-3', 'lufu-qs-hanshi-luzhi', 'lufu-ay-juma']);
+  assert.equal(dahan.alternatives.filter((item) => !item.id.startsWith('lufu-')).every((item) => item.status === '已核'), true);
+  assert.equal(dahan.alternatives.filter((item) => item.id.startsWith('lufu-')).every((item) => item.status === '待核' && item.originLabel === '陸服玩家版'), true);
   assert.equal(dahan.alternatives.every((item) => Array.isArray(item.members) && item.members.some(Boolean)), true);
   assert.equal(dahan.rank, 'T0');
   assert.equal(dahan.rankStatus, '已核');
   assert.equal(dahan.rankConfidence, '中高');
   assert.equal(dahan.alternatives.every((item) => item.rank === undefined), true);
   const huangmaAlts = bahamut.find((team) => team.id === 'baha-d-huangma');
-  assert.equal(huangmaAlts.alternatives.map((item) => item.id).join(','), 'hanyan-huangma');
+  assert.equal(huangmaAlts.alternatives.map((item) => item.id).join(','), 'hanyan-huangma,lufu-qs-huangma-tongyong,lufu-qs-huangma-neizhan,lufu-qs-huangma-dadi,lufu-qs-huangma-yanxing,lufu-ay-huangma');
   assert.ok(huangmaAlts.alternatives[0].members?.every((member) => member?.generalId));
   assert.equal(huangmaAlts.alternatives.some((item) => item.id === 'baha-d-huangma-gong'), false);
   const hanyanTeams = scenario.recommended.filter((team) => team.scenario === 'hanyan');
   const ranks = { T0: 0, 'T0.5': 0, T1: 0, 'T1.5': 0, T2: 0, '黑科技': 0 };
   for (const team of hanyanTeams) {
-    if (team.origin === 'dami') {
+    if (team.origin === 'dami' || team.origin === 'lufu') {
       assert.equal(team.status, '待核', team.id);
       assert.equal(team.rankStatus, '待核', team.id);
     } else {
@@ -494,10 +495,10 @@ test('generals and tactics are internally consistent', () => {
     }
     assert.ok(team.rank in ranks, team.id);
     ranks[team.rank] += 1;
-    assert.equal((team.alternatives || []).every((item) => item.status === '已核' && item.rank === undefined), true, team.id);
+    assert.equal((team.alternatives || []).every((item) => item.rank === undefined && (item.originLabel === '陸服玩家版' ? item.status === '待核' : item.status === '已核')), true, team.id);
   }
-  assert.equal(hanyanTeams.length, 30);
-  assert.deepEqual(ranks, { T0: 7, 'T0.5': 6, T1: 10, 'T1.5': 5, T2: 1, '黑科技': 1 });
+  assert.equal(hanyanTeams.length, 70);
+  assert.deepEqual(ranks, { T0: 13, 'T0.5': 37, T1: 10, 'T1.5': 6, T2: 3, '黑科技': 1 });
   assert.equal(scenario.recommended.find((team) => team.id === 'baha-d-pengci').rank, '黑科技');
   assert.equal(scenario.recommended.find((team) => team.id === 'baha-d-saozi').rank, 'T2');
   assert.deepEqual(scenario.hanConvert.toHan, ['caocao', 'liubei', 'sunjian', 'gongsunzan', 'lvbu', 'jiaxu', 'sp-yuanshao', 'sp-xunyu', 'yuanshu']);
@@ -794,4 +795,33 @@ test('generals and tactics are internally consistent', () => {
   const builtSaozi = teamFromRecommended(saozi, 'team-saozi', tacticLookup);
   assert.equal(builtSaozi.tricks.includes('伺橋受書'), true);
   assert.match(builtSaozi.notes, /伺橋受書對照圯橋受書/);
+});
+
+test('陸服玩家版秋石與阿焰隊伍標待核，分數不當 T 級', () => {
+  const scenario = JSON.parse(readFileSync(new URL('../data/scenario.json', import.meta.url)));
+  const lufu = scenario.recommended.filter((team) => team.origin === 'lufu');
+  assert.equal(lufu.length, 40);
+  assert.equal(lufu.every((team) => team.originLabel === '陸服玩家版' && team.status === '待核' && team.rankStatus === '待核' && team.scenario === 'hanyan'), true);
+  assert.equal(lufu.every((team) => team.reprintSource && team.source && team.author && team.postedAt), true);
+  const qiushi = lufu.filter((team) => team.author === '秋石小軍師');
+  const ayan = lufu.filter((team) => team.author === '阿焰');
+  assert.equal(qiushi.length, 37);
+  assert.equal(ayan.length, 3);
+  assert.equal(qiushi.every((team) => team.source.includes('mp.weixin.qq.com') && team.reprintSource.includes('337159b6')), true);
+  assert.equal(ayan.every((team) => team.source.includes('kdocs.cn') && team.groupLabel === '十隊共存' && team.note.includes('陸服玩家分') && !['170', '130', '110', '105', '95', '85', '70', '75'].includes(team.rank)), true);
+  assert.ok(lufu.some((team) => team.members.some((member) => member.generalId === 'zhangchunhua')));
+  assert.equal(lufu.every((team) => team.members.every((member) => member.generalId !== 'duwei' && !String(member.generalName || '').includes('都尉'))), true);
+  const cores = new Map();
+  for (const team of scenario.recommended.filter((item) => item.scenario === 'hanyan' && item.origin === 'lufu')) {
+    const key = [...team.members.map((member) => member.generalId)].sort().join('+');
+    cores.set(key, (cores.get(key) || []).concat(team.id));
+  }
+  const dupes = [...cores.values()].filter((ids) => ids.length > 1);
+  assert.deepEqual(dupes, []);
+  const juma = scenario.recommended.find((team) => team.id === 'baha-d-dahan').alternatives.find((item) => item.id === 'lufu-ay-juma');
+  assert.equal(juma.groupLabel, '十隊共存');
+  assert.match(juma.note, /陸服玩家分 170/);
+  assert.equal(juma.tricks[1], '待核');
+  const faguan = scenario.recommended.find((team) => team.id === 'lufu-qs-zhuge-faguan');
+  assert.equal(faguan.alternatives.some((item) => item.id === 'lufu-ay-zhuge-faguan' && item.groupLabel === '十隊共存'), true);
 });

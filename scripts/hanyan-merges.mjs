@@ -17,6 +17,31 @@ const GONE = new Set([
   'hanyan-taiwei',
   'hanyan-kangkai',
   'baha-d-shuzhi',
+  'lufu-qs-wumou-qi',
+  'lufu-qs-wumou-gong',
+  'lufu-qs-xunyou-wumou',
+  'lufu-qs-fugui-taiwei',
+  'lufu-qs-zhenfu-madai',
+  'lufu-qs-faguan-madai',
+  'lufu-qs-shuzhi',
+  'lufu-qs-guanyu-shugong',
+  'lufu-qs-qilin',
+  'lufu-qs-zhenfu-shenhuo-gong',
+  'lufu-qs-shenhuo-gong',
+  'lufu-qs-lao-shenhuo',
+  'lufu-qs-huangma-tongyong',
+  'lufu-qs-huangma-neizhan',
+  'lufu-qs-huangma-dadi',
+  'lufu-qs-huangma-yanxing',
+  'lufu-qs-hanshi-luzhi',
+  'lufu-qs-taishi',
+  'lufu-qs-hedan-zhang',
+  'lufu-ay-juma',
+  'lufu-ay-yunjian',
+  'lufu-ay-huangma',
+  'lufu-ay-hedan-zhujun',
+  'lufu-ay-taiwei',
+  'lufu-ay-beifa-qiang',
 ]);
 
 const B = 'https://forum.gamer.com.tw/C.php?bsn=36815&snA=11647';
@@ -53,6 +78,15 @@ const ALTS = {
       'SP盧植：雁行陣、剛柔並濟。先登從盧植轉給曹操。',
       '速度盧植＞貂蟬＞曹操。原文適用有雍雅沉重。',
     ]),
+  
+    alt('lufu-qs-hanshi-luzhi', '秋石漢室弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '同三將陸服配法。兵書皆三軍之眾、久戰、統軍。',
+      '奇略：推食解衣→芒碭隱蹤→約法三章→鴻門遁險→沛縣聚義。',
+    ]),
+    alt('lufu-ay-juma', '十隊共存拒馬弓', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
+      '阿焰 2026-02-11 十隊共存。陸服玩家分 170，不是 T 級。',
+      '中間可選 SP董卓或 SP盧植。第二張奇略截圖不清，待核。',
+    ]),
   ],
   'hanyan-sanshi-lvbu': [
     alt('baha-a-xuyou', '許攸版本', '巴哈玩家版', '我三弟無敵', A, '已核', [
@@ -68,6 +102,24 @@ const ALTS = {
       '方略：強攻。三將兵書另列，不覆寫主卡。',
       '奇略：橫掃河西→封狼居胥→摧鋒陷敵→斬逆納降→追亡逐北。',
     ], FB),
+  
+    alt('lufu-qs-huangma-tongyong', '秋石通用版', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      'SP馬超當鋒、摧鋒；SP皇甫嵩草船、威謀；許攸解煩衛、臨危。',
+      '方略久戰。表上 SP皇甫嵩轉群。',
+    ]),
+    alt('lufu-qs-huangma-neizhan', '秋石內戰版', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      'SP馬超改虎踞鷹揚，避開盛氣繳械。',
+    ]),
+    alt('lufu-qs-huangma-dadi', '秋石打地版', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      'SP馬超速乘其利、草船借箭；許攸帶鋒矢陣。兩人草船寫法待核。',
+    ]),
+    alt('lufu-qs-huangma-yanxing', '秋石雁行皇馬弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '同三將改弓兵。許攸改錦帆軍。需訓兵振旅。',
+    ]),
+    alt('lufu-ay-huangma', '十隊共存皇馬槍', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
+      '阿焰 2026-02-11 十隊共存。陸服玩家分 105，不是 T 級。',
+      'SP馬超速乘、摧鋒；奇略含芒碭隱蹤、孤軍深入、敗中求生。',
+    ]),
   ],
   'dami-madai': [
     alt('hanyan-faguan', '官方整理版', '官方推薦', '', deck('s27-official-fa-guan-dun'), '已核', [
@@ -76,6 +128,13 @@ const ALTS = {
       '奇略：設伏十面→背水列陣→楚歌四起→治延軍勢→多多益善。',
       '馬岱可換無雙星彩，見星彩法關盾，不併成同一張卡。',
     ], FB),
+  
+    alt('lufu-qs-zhenfu-madai', '秋石鎮撫版', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '馬岱非攻、魚鱗；SP法正蓄勢、拓·鎮扼防拒。',
+    ]),
+    alt('lufu-qs-faguan-madai', '秋石法官盾（馬岱）', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '馬岱藤甲、魚鱗；SP法正非攻、蓄勢。',
+    ]),
   ],
   'dami-fugui': [
     alt('hanyan-wumou', '官方整理版', '官方推薦', '', deck('s27-official-wumou-qi'), '已核', [
@@ -87,6 +146,13 @@ const ALTS = {
       'SP荀彧：戮力同心、刮骨療毒。',
       '賈詡：靈機一動、拓·聚石成金。拓本不當原版。',
       'SP郭嘉：奪魂挾魄、上兵伐謀。',
+    ]),
+  
+    alt('lufu-qs-wumou-qi', '秋石五謀騎', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      'SP荀彧竭力、刮骨並加30速；賈詡靈機、戮力。',
+    ]),
+    alt('lufu-qs-wumou-gong', '秋石五謀弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '同三將改弓。賈詡戮力、絕計折謀。可用弓寶物調整。',
     ]),
   ],
   'dami-shuzhi-qi': [
@@ -104,6 +170,14 @@ const ALTS = {
       '荀攸：轉獅子、上兵。不要和郭嘉同時再帶上兵。',
       'SP郭嘉兵書：以退、善戰、精準。缺當鋒時保留這套。',
     ]),
+  
+    alt('lufu-qs-xunyou-wumou', '秋石荀攸五謀騎', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      'SP荀彧靈機、刮骨並加30速；荀攸轉·獅子奮迅、戮力同心。',
+    ]),
+    alt('lufu-ay-yunjian', '十隊共存雲建盾', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
+      '阿焰 2026-02-11 十隊共存。陸服玩家分 110，不是 T 級。',
+      '同三將改盾。郭嘉奪魂、當鋒；奇略含功成身退。',
+    ]),
   ],
   'hanyan-dudu': [
     alt('baha-c-roudu', '肉嘟嘟', '巴哈玩家版', '4everfiona', C, '已核', [
@@ -111,6 +185,16 @@ const ALTS = {
       '陸遜：拓·鎮扼防拒（功不）、萬軍奪帥。',
       'SP呂蒙：雁行陣（當鋒也可以）、草船。程普也可以。',
       '整套保留。合圍突擊／合圍夾擊疑點仍在主卡。',
+    ]),
+  
+    alt('lufu-qs-zhenfu-shenhuo-gong', '秋石鎮撫神火弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '周瑜奪魂、戮力；陸遜當鋒、拓·鎮扼防拒；SP呂蒙魅惑、雁行。',
+    ]),
+    alt('lufu-qs-shenhuo-gong', '秋石神火弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '周瑜奪魂、風助火勢；陸遜功不、萬軍；SP呂蒙草船、雁行。',
+    ]),
+    alt('lufu-qs-lao-shenhuo', '秋石老周瑜神火弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '第三將是呂蒙不是SP呂蒙。陸遜功不、萬軍。',
     ]),
   ],
   'dami-taiwei': [
@@ -120,6 +204,14 @@ const ALTS = {
       '方略：整軍。',
       '奇略：芒碭隱蹤→推食解衣→沛縣聚義→博浪椎秦→敗中求生。',
     ], FB),
+  
+    alt('lufu-qs-fugui-taiwei', '秋石富貴太尉盾', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '司馬懿熯天、眾志；曹操魅惑、藤甲；滿寵蓄勢、形一陣。',
+    ]),
+    alt('lufu-ay-taiwei', '十隊共存太尉盾', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
+      '阿焰 2026-02-11 十隊共存。陸服玩家分 95，不是 T 級。',
+      '司馬懿眾志、士別。滿寵第二戰法截圖不清，待核。',
+    ]),
   ],
   'baha-d-kangkai': [
     alt('hanyan-kangkai', '官方整理版', '官方推薦', '', deck('s27-official-kangkai-gong'), '已核', [
@@ -134,6 +226,43 @@ const ALTS = {
       '奇略：芒砀隐踪→沛县聚义→波浪推秦→推食解衣→约法三章。',
       '未寫兵書與盾適性，不倒灌進大米主卡。',
     ]),
+  
+    alt('lufu-qs-shuzhi', '秋石蜀智盾', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '盾兵形態。龐統士別、杯蛇；SP法正蓄勢、拓·鎮扼；諸葛亮乘敵、刮骨。',
+    ]),
+  ],
+
+  'hanyan-pangtong-gong': [
+    alt('lufu-qs-guanyu-shugong', '秋石關羽蜀弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '同三將。SP諸葛亮武鋒、先登；龐統當鋒、乘敵；關羽千里走單騎、以寡。',
+    ]),
+  ],
+  'hanyan-qilin': [
+    alt('lufu-qs-qilin', '秋石麒麟弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '姜維雁行、刮骨；諸葛亮當鋒、乘敵；龐統太平、焚輜。',
+    ]),
+  ],
+  'baha-d-taishi': [
+    alt('lufu-qs-taishi', '秋石太師弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '同三將。SP盧植雁行、剛柔；SP董卓桃園、上兵。',
+    ]),
+  ],
+  'hanyan-hedan': [
+    alt('lufu-qs-hedan-zhang', '秋石核彈張', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+      '同三將改弓兵。周泰潛龍、白馬；張飛橫掃、疾風，需訓兵振旅。',
+    ]),
+  ],
+  'baha-d-pengci': [
+    alt('lufu-ay-hedan-zhujun', '十隊共存核彈朱儁', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
+      '阿焰 2026-02-11 十隊共存。陸服玩家分 95，不是 T 級。',
+      '周泰盛氣、潛龍；袁術焚輜、上兵；SP朱儁太平、無當。',
+    ]),
+  ],
+  'hanyan-beifa': [
+    alt('lufu-ay-beifa-qiang', '十隊共存北伐槍', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
+      '阿焰 2026-02-11 十隊共存。陸服玩家分 85，不是 T 級。',
+      '同三將改槍。SP諸葛亮戰法截圖為軍民、眾望，暫對撫輯軍民、眾望所歸，待核。',
+    ]),
   ],
 };
 
@@ -141,6 +270,7 @@ function rank(team) {
   if (team.origin === 'dami') return 0;
   if (team.origin === 'bahamut' && team.author === '24李老师') return 1;
   if (team.origin === 'bahamut') return 2;
+  if (team.origin === 'lufu') return 4;
   return 3;
 }
 
@@ -181,6 +311,9 @@ export function applyMerges(list) {
       if (source.tricksBound === false) row.tricksBound = false;
       if (source.trickFormal) row.trickFormal = source.trickFormal;
       if (source.officialSource && !row.officialSource) row.officialSource = source.officialSource;
+      if (source.reprintSource && !row.reprintSource) row.reprintSource = source.reprintSource;
+      if (source.groupLabel && !row.groupLabel) row.groupLabel = source.groupLabel;
+      if (source.postedAt && !row.postedAt) row.postedAt = source.postedAt;
       return row;
     }).filter(Boolean);
     return alternatives.length ? { ...team, alternatives } : team;
