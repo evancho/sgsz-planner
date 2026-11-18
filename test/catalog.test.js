@@ -843,7 +843,7 @@ test('陸服玩家版備註不得出現雙句號，戰法與奇略須在圖鑑�
       }
     }
   }
-  for (const name of ['疲楚奪勢', '韜晦自污', '居儉避禍', '合圍突擊', '三策並進']) {
+  for (const name of ['疲楚奪勢', '韜晦自污', '居儉避禍', '合圍突擊', '三策並進', '親釋荊縛', '受封增邑', '月下追賢', '藏書納賂']) {
     knownTricks.add(name);
   }
   const pending = /待核|未收錄/;
@@ -858,7 +858,7 @@ test('陸服玩家版備註不得出現雙句號，戰法與奇略須在圖鑑�
     const note = String(team.note || '');
     assert.equal(note.includes('。。'), false, team.id);
     for (const member of team.members || []) {
-      const marks = [member.remark, member.tacticsRaw, note, ...(member.unlisted || [])].join(' ');
+      const marks = [member.remark, member.tacticsRaw, ...(member.unlisted || [])].join(' ');
       for (const name of member.learnedNames || []) {
         const text = String(name || '').trim();
         if (!text) continue;
@@ -872,7 +872,7 @@ test('陸服玩家版備註不得出現雙句號，戰法與奇略須在圖鑑�
     for (const name of team.tricks || []) {
       const text = String(name || '').trim();
       if (!text) continue;
-      const allowed = knownTricks.has(text) || pending.test(text) || pending.test(note);
+      const allowed = knownTricks.has(text) || pending.test(text);
       assert.equal(allowed, true, `${team.id} 奇略 ${text}`);
     }
   }

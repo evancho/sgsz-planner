@@ -85,7 +85,7 @@ const ALTS = {
     ]),
     alt('lufu-ay-juma', '十隊共存拒馬弓', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
       '阿焰 2026-02-11 十隊共存。陸服玩家分 170，不是 T 級。',
-      '中間可選 SP董卓或 SP盧植。第二張奇略截圖不清，待核。',
+      '中間可選 SP董卓或 SP盧植。第二張奇略為疲楚奪勢。',
     ]),
   ],
   'hanyan-sanshi-lvbu': [
@@ -111,7 +111,7 @@ const ALTS = {
       'SP馬超改虎踞鷹揚，避開盛氣繳械。',
     ]),
     alt('lufu-qs-huangma-dadi', '秋石打地版', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
-      'SP馬超速乘其利、草船借箭；許攸帶鋒矢陣。兩人草船寫法待核。',
+      'SP馬超速乘其利、摧鋒斷刃；許攸帶鋒矢陣。',
     ]),
     alt('lufu-qs-huangma-yanxing', '秋石雁行皇馬弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
       '同三將改弓兵。許攸改錦帆軍。需訓兵振旅。',
@@ -210,7 +210,7 @@ const ALTS = {
     ]),
     alt('lufu-ay-taiwei', '十隊共存太尉盾', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
       '阿焰 2026-02-11 十隊共存。陸服玩家分 95，不是 T 級。',
-      '司馬懿眾志、士別。滿寵第二戰法截圖不清，待核。',
+      '司馬懿眾志、士別。滿寵形一陣、嬰城自守。奇略依複刻拒馬展開。',
     ]),
   ],
   'baha-d-kangkai': [
@@ -234,7 +234,7 @@ const ALTS = {
 
   'hanyan-pangtong-gong': [
     alt('lufu-qs-guanyu-shugong', '秋石關羽蜀弓', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
-      '同三將。SP諸葛亮武鋒、先登；龐統當鋒、乘敵；關羽千里走單騎、以寡。',
+      '同三將。SP諸葛亮雁行、先登；龐統當鋒、乘敵；關羽千里走單騎、以寡。',
     ]),
   ],
   'hanyan-qilin': [

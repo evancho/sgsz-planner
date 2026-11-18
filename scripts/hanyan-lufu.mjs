@@ -154,6 +154,8 @@ const qilueXiraoFa = ['設伏十面', '背水列陣', '楚歌四起', '治延軍
 const qilueHanshi = ['推食解衣', '芒碭隱蹤', '約法三章', '鴻門遁險', '沛縣聚義'];
 const qilueYuanmeng = ['芒碭隱蹤', '鴻門遁險', '推食解衣', '約法三章', '沛縣聚義'];
 const qilueJuma = ['推食解衣', '疲楚奪勢', '鴻門遁險', '約法三章', '沛縣聚義'];
+const qilueAyWumou = ['設伏十面', '博浪椎秦', '功成身退', '合圍夾擊', '楚歌四起'];
+const qilueAyHuangma = ['親釋荊縛', '芒碭隱蹤', '橫掃河西', '孤軍深入', '敗中求生'];
 const qilueHuangma = ['親釋荊縛', '橫掃河西', '封狼居胥', '摧鋒陷敵', '斬逆納降'];
 const qilueYuexia = ['月下追賢', '藏書納賂', '治延軍勢', '設伏十面', '多多益善'];
 const qilueShenhuo = ['設伏十面', '月下追賢', '治延軍勢', '藏書納賂', '多多益善'];
@@ -197,7 +199,7 @@ export const hanyanLufuMains = [
   qsTeam('lufu-qs-sima-feixiong', '司馬飛熊騎', 'T0.5', [
     seat('simayi', '司馬懿', ['shangbing', 'zhongzhi'], ['上兵伐謀', '眾志成城'], book('shiji', 'leshan', 'jiuzhan', 'tongjun'), {
       points: '智',
-      traits: ['長慮', '擐甲', '寶物'],
+      traits: ['長慮', '擐甲', '騎寶物'],
     }),
     seat('wangyi', '王異', ['meihuo', 'feixiong'], ['魅惑', '飛熊軍'], chui(), {
       points: '智',
@@ -363,6 +365,7 @@ export const hanyanLufuMains = [
     }),
     seat('huangzhong', '黃忠', ['qianli', 'yigua'], ['千里走單騎', '以寡敵眾'], book('shiji', 'yingji', 'guixin', 'jiuzhan'), {
       points: '武',
+      traits: ['弓神'],
       remark: '表上寫千里單騎，對到圖鑑千里走單騎',
     }),
     seat('zhangbao', '張苞', ['wufeng', 'feigong'], ['武鋒陣', '非攻制勝'], book('jiubian', 'lindi', 'baizhan', 'jiuzhu'), {
@@ -883,7 +886,7 @@ export const hanyanLufuMains = [
     seat('sunshangxiang', '孫尚香', ['jiemeng', 'jinfan'], ['結盟', '錦帆軍'], book('zuozhan', 'shengyi', 'shengzhan', 'zhirui'), {
       points: '武力',
     }),
-  ], [], '', '只適合打野；表稱打架打不動。奇略欄空白。複刻皇馬奇略。'),
+  ], qilueAyHuangma, '', '只適合打野；表稱打架打不動。依複刻皇馬展開。'),
 
   ayTeam('lufu-ay-taoyuan', '桃園盾', 'T2', 75, [
     seat('liubei', '劉備', ['zhiji', 'xianzhen'], ['知己知彼', '陷陣營'], book('jiubian', 'yuanqi', 'yanxu', 'lijun'), {
@@ -898,7 +901,7 @@ export const hanyanLufuMains = [
       points: '武力',
       traits: ['燕頷', '赳赳'],
     }),
-  ], [], '', '打架一般，打野較無壓力。複刻五謀或拒馬奇略。拓印戰法註記為轉·鎮扼防拒、轉·獅子奮迅（圖鑑作拓·鎮扼防拒）。'),
+  ], [], '', '打架一般，打野較無壓力。奇略欄寫複刻五謀或拒馬奇略，看不出複刻哪一隊，待核。拓印戰法註記為轉·鎮扼防拒、轉·獅子奮迅（圖鑑作拓·鎮扼防拒）。'),
 ];
 
 export const hanyanLufuMergeSources = [
@@ -1202,7 +1205,7 @@ export const hanyanLufuMergeSources = [
     }),
     seat('xunyou', '荀攸', ['lingji', 'zhuan-shizi'], ['靈機一動', '轉·獅子奮迅'], chui(), { points: '智力' }),
     seat('sp-guojia', 'SP郭嘉', ['duohun', 'dangfeng'], ['奪魂挾魄', '當鋒摧決'], xibingSF(), { points: '智力' }),
-  ], ['設伏十面', '博浪椎秦', '功成身退', '合圍夾擊', '楚歌四起'], '', '驚蟄隊，50級以後較穩。郭嘉可改點奇正。'),
+  ], qilueAyWumou, '', '驚蟄隊，50級以後較穩。郭嘉可改點奇正。'),
 
   ayTeam('lufu-ay-huangma', '皇馬槍', 'T0', 105, [
     seat('sp-machao', 'SP馬超', ['sucheng', 'cuifeng'], ['速乘其利', '摧鋒斷刃'], yuanqi(), {
@@ -1215,7 +1218,7 @@ export const hanyanLufuMergeSources = [
       remark: '表上標轉群。沒滿配滿裝備會輪到較後',
     }),
     seat('xuyou', '許攸', ['jiefan', 'linwei'], ['解煩衛', '臨危救主'], xibingSF(), { points: '智力' }),
-  ], ['親釋荊縛', '芒碭隱蹤', '橫掃河西', '孤軍深入', '敗中求生'], '', '阿焰把皇馬列為第四隊。'),
+  ], qilueAyHuangma, '', '阿焰把皇馬列為第四隊。'),
 
   ayTeam('lufu-ay-hedan-zhujun', '核彈朱儁', 'T1', 95, [
     seat('zhoutai', '周泰', ['shengqi', 'qianlong'], ['盛氣凌敵', '潛龍陣'], xibingSF(), {
@@ -1226,7 +1229,7 @@ export const hanyanLufuMergeSources = [
     seat('sp-zhujun', 'SP朱儁', ['taiping', 'wudang'], ['太平道法', '無當飛軍'], book('yongjian', 'yizhi-bao', 'jingzhun', 'shanzhan'), {
       points: '智力',
     }),
-  ], ['治延軍勢', '受封增邑', '楚歌四起', '居儉避禍', '合圍夾擊'], '', '表稱目前最強碰瓷隊。與巴哈碰瓷同三將。'),
+  ], ['治延軍勢', '受封增邑', '楚歌四起', '居儉避禍', '合圍夾擊'], '', '表稱目前最強碰瓷隊。與巴哈碰瓷同三將。原圖作避貨，依秋石表訂正。'),
 
   ayTeam('lufu-ay-taiwei', '太尉盾', 'T1', 95, [
     seat('simayi', '司馬懿', ['zhongzhi', 'shibie'], ['眾志成城', '士別三日'], book('shiji', 'leshan', 'tongjun', 'chuilian'), {
@@ -1239,7 +1242,7 @@ export const hanyanLufuMergeSources = [
     seat('manchong', '滿寵', ['xingyi', 'yingcheng'], ['形一陣', '嬰城自守'], chui(), {
       points: '智力',
     }),
-  ], qilueJuma, '', '表上寫複刻拒馬奇略。表稱沒有特別好評，老版本強度。'),
+  ], qilueJuma, '', '依複刻拒馬展開。表稱沒有特別好評，老版本強度。'),
 
   ayTeam('lufu-ay-beifa-qiang', '北伐槍', 'T1.5', 85, [
     seat('sp-zhugeliang', 'SP諸葛亮', ['fuji', 'zhongwang'], ['撫輯軍民', '眾望所歸'], book('jiubian', 'yuanqi', 'suzhan', 'yanxu'), {
@@ -1254,7 +1257,7 @@ export const hanyanLufuMergeSources = [
       points: '武力',
       traits: ['虎峙'],
     }),
-  ], [], '', '打野隊，北伐槍低配版。與北伐盾同三將、兵種改槍。奇略欄寫複刻五謀奇略，未另列五張。'),
+  ], qilueAyWumou, '', '打野隊，北伐槍低配版。與北伐盾同三將、兵種改槍。依複刻五謀展開。'),
 ];
 
 export const hanyanLufu = [...hanyanLufuMains, ...hanyanLufuMergeSources];
