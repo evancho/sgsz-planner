@@ -262,7 +262,7 @@
               "points": "武",
               "traits": [
                 "武聖",
-                "雍睦",
+                "雍雅",
                 "盾寶物"
               ]
             },
@@ -322,7 +322,7 @@
             "治延軍勢",
             "多多益善"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。表稱馬岱是最優法官盾，減傷最大；馬岱速度比關羽快，可吃萬軍奪帥。",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。表稱馬岱是最優法官盾，減傷最大；馬岱速度比關羽快，可吃萬軍奪帥",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -360,7 +360,7 @@
               "points": "武",
               "traits": [
                 "武聖",
-                "雍睦",
+                "雍雅",
                 "盾寶物"
               ]
             },
@@ -726,8 +726,7 @@
           ],
           "note": "前期刮骨、後期藤甲。正文未明寫每人全S使用方式。",
           "scenario": "hanyan",
-          "tricksBound": false,
-          "postedAt": "2026-11-04 20:01:42"
+          "tricksBound": false
         },
         {
           "id": "lufu-qs-shuzhi",
@@ -825,7 +824,7 @@
             "背水列陣",
             "多多益善"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。盾兵形態的蜀智。。需訓兵振旅",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。盾兵形態的蜀智。需訓兵振旅",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -1407,8 +1406,7 @@
           "tricks": [],
           "note": "作者建議48級後可轉賈詡。兵書、方略、奇略原文未寫。",
           "scenario": "hanyan",
-          "tricksBound": false,
-          "postedAt": "2026-10-31 11:33:26"
+          "tricksBound": false
         },
         {
           "id": "lufu-qs-wumou-qi",
@@ -1498,7 +1496,7 @@
             "設伏十面",
             "合圍夾擊"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度，可反彈盛氣凌敵。",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度，可反彈盛氣凌敵",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -1596,7 +1594,7 @@
             "設伏十面",
             "合圍夾擊"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。可用兩件弓寶物改成五謀弓。",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。可用兩件弓寶物改成五謀弓",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -1771,8 +1769,7 @@
           "tricks": [],
           "note": "錯字保持原文。轉獅子未定正式全名。兵書、方略、奇略原文未寫。",
           "scenario": "hanyan",
-          "tricksBound": false,
-          "postedAt": "2026-10-31 11:33:26"
+          "tricksBound": false
         },
         {
           "id": "baha-c-fugui",
@@ -1822,8 +1819,7 @@
           "tricks": [],
           "note": "沒當鋒可改上兵，荀攸另一格改焚營或靈機一動。方略、奇略原文未寫。",
           "scenario": "hanyan",
-          "tricksBound": false,
-          "postedAt": "2026-11-01 23:34:19"
+          "tricksBound": false
         },
         {
           "id": "lufu-qs-xunyou-wumou",
@@ -1921,7 +1917,7 @@
         },
         {
           "id": "lufu-ay-yunjian",
-          "title": "十隊共存雲建盾",
+          "title": "十隊共存五謀臣",
           "originLabel": "陸服玩家版",
           "author": "阿焰",
           "source": "https://www.kdocs.cn/l/ckfvAjUzUXFe",
@@ -1936,11 +1932,11 @@
               "generalName": "SP荀彧",
               "learned": [
                 "guagu",
-                "jieli"
+                "luli"
               ],
               "learnedNames": [
                 "刮骨療毒",
-                "竭力佐謀"
+                "戮力同心"
               ],
               "bingshu": {
                 "branch": "shiji",
@@ -2008,7 +2004,7 @@
             "合圍夾擊",
             "楚歌四起"
           ],
-          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 110。驚蟄隊，50級以後較穩。郭嘉可改點奇正。",
+          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 110。驚蟄隊，50級以後較穩。郭嘉可改點奇正",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/305159b6f9408090a623db74ee237084",
           "groupLabel": "十隊共存",
@@ -2226,7 +2222,7 @@
         },
         {
           "id": "lufu-qs-fugui-taiwei",
-          "title": "秋石富貴太尉盾",
+          "title": "秋石蓄勢太尉盾",
           "originLabel": "陸服玩家版",
           "author": "秋石小軍師",
           "source": "https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A",
@@ -2256,8 +2252,8 @@
               },
               "points": "智",
               "traits": [
-                "長盾",
-                "楯甲"
+                "長慮",
+                "擐甲"
               ]
             },
             {
@@ -2316,7 +2312,7 @@
             "約法三章",
             "沛縣聚義"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。形一陣滿寵蓄勢待發，表稱規避接近五成。",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。形一陣滿寵蓄勢待發，表稱規避接近五成",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -2383,11 +2379,11 @@
               "generalName": "滿寵",
               "learned": [
                 "xingyi",
-                null
+                "yingcheng"
               ],
               "learnedNames": [
                 "形一陣",
-                ""
+                "嬰城自守"
               ],
               "bingshu": {
                 "branch": "shiji",
@@ -2397,14 +2393,18 @@
                   "tongjun"
                 ]
               },
-              "points": "智力",
-              "remark": "第二戰法截圖不清，待核（近熯天或焚城，不臆測）",
-              "tacticsRaw": "形一陣、第二戰法待核"
+              "points": "智力"
             }
           ],
           "strategy": [],
-          "tricks": [],
-          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 95。複剋拒馬奇略。表稱沒有特別好評，老版本強度。滿寵第二戰法與奇略欄待核。",
+          "tricks": [
+            "推食解衣",
+            "疲楚奪勢",
+            "鴻門遁險",
+            "約法三章",
+            "沛縣聚義"
+          ],
+          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 95。表上寫複刻拒馬奇略。表稱沒有特別好評，老版本強度",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/305159b6f9408090a623db74ee237084",
           "groupLabel": "十隊共存",
@@ -2618,8 +2618,7 @@
           "tricks": [],
           "note": "45～48級穩定性取向；曹操2速貼盧植。兵書、方略、奇略原文未寫。",
           "scenario": "hanyan",
-          "tricksBound": false,
-          "postedAt": "2026-10-31 11:33:26"
+          "tricksBound": false
         },
         {
           "id": "baha-b-gong-2",
@@ -2668,8 +2667,7 @@
           "tricks": [],
           "note": "建議48級後。深藏與移花按環境互換。兵書、方略、奇略原文未寫。",
           "scenario": "hanyan",
-          "tricksBound": false,
-          "postedAt": "2026-10-31 11:33:26"
+          "tricksBound": false
         },
         {
           "id": "baha-b-gong-3",
@@ -2720,8 +2718,7 @@
           "tricks": [],
           "note": "速度盧植＞貂蟬＞曹操。兵書、方略、奇略原文未寫。",
           "scenario": "hanyan",
-          "tricksBound": false,
-          "postedAt": "2026-10-31 11:33:26"
+          "tricksBound": false
         },
         {
           "id": "lufu-qs-hanshi-luzhi",
@@ -2824,7 +2821,7 @@
             "鴻門遁險",
             "沛縣聚義"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP曹操威懾壓制對方戰法發動。SP貂蟬可為友軍在治療後減傷。",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP曹操威懾壓制對方戰法發動。SP貂蟬可為友軍在治療後減傷",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -2937,12 +2934,12 @@
           "strategy": [],
           "tricks": [
             "推食解衣",
-            "待核",
+            "疲楚奪勢",
             "鴻門遁險",
             "約法三章",
             "沛縣聚義"
           ],
-          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 170。這隊最強。第二張奇略截圖寫法不清，待核，不臆測為芒碭隱蹤。",
+          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 170。這隊最強。第二張奇略依原圖謄「疲楚奪勢」",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/305159b6f9408090a623db74ee237084",
           "groupLabel": "十隊共存",
@@ -3436,7 +3433,7 @@
               "points": "智",
               "traits": [
                 "援助",
-                "檢寶物"
+                "槍寶物"
               ]
             }
           ],
@@ -3450,7 +3447,7 @@
             "摧鋒陷敵",
             "斬逆納降"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。打非皇馬隊伍時SP馬超可帶乘敵不虞。",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。打非皇馬隊伍時SP馬超可帶乘敵不虞",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -3540,7 +3537,7 @@
               "points": "智",
               "traits": [
                 "援助",
-                "檢寶物"
+                "槍寶物"
               ]
             }
           ],
@@ -3575,11 +3572,11 @@
               "generalName": "SP馬超",
               "learned": [
                 "sucheng",
-                "caochuan"
+                "cuifeng"
               ],
               "learnedNames": [
                 "速乘其利",
-                "草船借箭"
+                "摧鋒斷刃"
               ],
               "bingshu": {
                 "branch": "jiubian",
@@ -3616,12 +3613,11 @@
                 ]
               },
               "points": "統",
-              "remark": "表上標轉群。第三戰法亦寫草船借箭，待核是否重複",
+              "remark": "表上標轉群",
               "traits": [
                 "雍雅",
                 "沉勢"
-              ],
-              "tacticsRaw": "臨危救主、草船借箭"
+              ]
             },
             {
               "generalId": "xuyou",
@@ -3645,7 +3641,7 @@
               "points": "智",
               "traits": [
                 "援助",
-                "檢寶物"
+                "槍寶物"
               ]
             }
           ],
@@ -3659,7 +3655,7 @@
             "摧鋒陷敵",
             "斬逆納降"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP皇甫嵩與SP馬超都寫了草船借箭，第二、三戰法待核。",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -3765,7 +3761,7 @@
             "摧鋒陷敵",
             "斬逆納降"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。經訓兵振旅讓SP馬超變弓S。。需訓兵振旅",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。經訓兵振旅讓SP馬超變弓S。需訓兵振旅",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -3862,7 +3858,7 @@
             "孤軍深入",
             "敗中求生"
           ],
-          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 105。阿焰把皇馬列為第四隊。",
+          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 105。阿焰把皇馬列為第四隊",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/305159b6f9408090a623db74ee237084",
           "groupLabel": "十隊共存",
@@ -4391,7 +4387,7 @@
               ],
               "bingshu": {
                 "branch": "yongjian",
-                "primary": "yitui",
+                "primary": "yizhi-bao",
                 "secondary": [
                   "jingzhun",
                   "shanzhan"
@@ -4405,10 +4401,10 @@
             "治延軍勢",
             "受封增邑",
             "楚歌四起",
-            "居拾遺賢",
+            "居儉避禍",
             "合圍夾擊"
           ],
-          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 95。表稱目前最強碰瓷隊。與巴哈碰瓷同三將。。需訓兵振旅",
+          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 95。表稱目前最強碰瓷隊。與巴哈碰瓷同三將。需訓兵振旅",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/305159b6f9408090a623db74ee237084",
           "groupLabel": "十隊共存",
@@ -4722,8 +4718,7 @@
           ],
           "note": "作者稱輸出上限高、防速攻較弱。血刃可換的寫法不另開隊伍。",
           "scenario": "hanyan",
-          "tricksBound": false,
-          "postedAt": "2026-10-31 13:04:04"
+          "tricksBound": false
         }
       ],
       "rank": "T0",
@@ -4974,8 +4969,7 @@
           "tricks": [],
           "note": "維持前綴與錯字。方略、奇略原文未寫。",
           "scenario": "hanyan",
-          "tricksBound": false,
-          "postedAt": "2026-11-01 23:34:19"
+          "tricksBound": false
         },
         {
           "id": "lufu-qs-zhenfu-shenhuo-gong",
@@ -5071,7 +5065,7 @@
             "藏書納賂",
             "多多益善"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。可用程普（草船威謀）代替SP呂蒙，檔次不過降半檔。",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。可用程普（草船威謀）代替SP呂蒙，檔次不過降半檔",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -5267,7 +5261,7 @@
             "月下追賢",
             "多多益善"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。第三將是呂蒙，不是SP呂蒙。",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。第三將是呂蒙，不是SP呂蒙",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -5460,7 +5454,7 @@
             "多多益善",
             "楚歌四起"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。面對皇馬槍及漢室弓小優勢；法官多帶上兵時，面對下謀看諸葛亮發揮。",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。面對皇馬槍及漢室弓小優勢；法官多帶上兵時，面對下謀看諸葛亮發揮",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -5802,11 +5796,11 @@
               "generalId": "sp-zhugeliang",
               "generalName": "SP諸葛亮",
               "learned": [
-                "wufeng",
+                "yanxing",
                 "xiandeng"
               ],
               "learnedNames": [
-                "武鋒陣",
+                "雁行陣",
                 "先登死士"
               ],
               "bingshu": {
@@ -6034,10 +6028,7 @@
                 ]
               },
               "points": "統率一速",
-              "remark": "第一戰法截圖寫軍民，暫對撫輯軍民，待核",
-              "traits": [
-                "龍驤"
-              ]
+              "remark": "第一戰法截圖寫軍民，暫對撫輯軍民，待核"
             },
             {
               "generalId": "guanxing",
@@ -6058,7 +6049,10 @@
                   "jiangwei-book"
                 ]
               },
-              "points": "武力"
+              "points": "武力",
+              "traits": [
+                "龍驤"
+              ]
             },
             {
               "generalId": "zhangbao",
@@ -6087,7 +6081,7 @@
           ],
           "strategy": [],
           "tricks": [],
-          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 85。打野隊，北伐槍低配版。與北伐盾同三將、兵種改槍。奇略欄寫複剋五謀奇略，未另列五張。",
+          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 85。打野隊，北伐槍低配版。與北伐盾同三將、兵種改槍。奇略欄寫複刻五謀奇略，未另列五張",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/305159b6f9408090a623db74ee237084",
           "groupLabel": "十隊共存",
@@ -6300,7 +6294,7 @@
             "多多益善",
             "楚歌四起"
           ],
-          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。經訓兵振旅讓張飛弓兵提升至S，走弓兵形態。。需訓兵振旅",
+          "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。經訓兵振旅讓張飛弓兵提升至S，走弓兵形態。需訓兵振旅",
           "scenario": "hanyan",
           "reprintSource": "https://spacekid.notion.site/337159b6f94080cdb781e4dd34af19e8",
           "postedAt": "2026-03-20"
@@ -6461,7 +6455,7 @@
         "敗中求生",
         "沛縣聚義"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度，可反彈盛氣凌敵。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度，可反彈盛氣凌敵",
       "members": [
         {
           "generalId": "sp-xunyu",
@@ -6485,8 +6479,7 @@
           "points": "30速+智",
           "remark": "竭力可換移花接木；拒馬弓多時改移花接木配飛熊軍",
           "traits": [
-            "疾馳",
-            "弓寶物"
+            "疾馳"
           ]
         },
         {
@@ -6575,7 +6568,7 @@
         "約法三章",
         "沛縣聚義"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。鎮撫魅惑體系加SP荀彧警戒，表稱強度明顯提升。張春華為名將（統御3），不是藍將。。需訓兵振旅",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。鎮撫魅惑體系加SP荀彧警戒，表稱強度明顯提升。張春華為名將（統御3），不是藍將。需訓兵振旅",
       "members": [
         {
           "generalId": "simayi",
@@ -6598,8 +6591,8 @@
           },
           "points": "智",
           "traits": [
-            "長盾",
-            "楯甲"
+            "長慮",
+            "擐甲"
           ]
         },
         {
@@ -6645,13 +6638,13 @@
               "tongjun"
             ]
           },
-          "points": "30速",
-          "remark": "表上裝備另寫訓兵振旅S騎",
+          "points": "30速+智",
+          "remark": "表上裝備另寫訓兵振旅S盾",
           "traits": [
             "疾馳"
           ],
           "aptNeed": {
-            "troop": "騎",
+            "troop": "盾",
             "letter": "S"
           }
         }
@@ -6687,13 +6680,13 @@
         "整軍"
       ],
       "tricks": [
-        "親釋荊縛",
+        "芒碭隱蹤",
         "推食解衣",
         "博浪椎秦",
         "約法三章",
         "沛縣聚義"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度，可反彈盛氣凌敵。。需訓兵振旅",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度，可反彈盛氣凌敵。需訓兵振旅",
       "members": [
         {
           "generalId": "simayi",
@@ -6711,13 +6704,13 @@
             "primary": "leshan",
             "secondary": [
               "jiuzhan",
-              "guixin"
+              "tongjun"
             ]
           },
           "points": "智",
           "traits": [
-            "長盾",
-            "楯甲",
+            "長慮",
+            "擐甲",
             "寶物"
           ]
         },
@@ -6808,7 +6801,7 @@
         "約法三章",
         "沛縣聚義"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。形一陣滿寵蓄勢待發，表稱規避接近五成；熯天熾地打藤甲法官盾。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。形一陣滿寵蓄勢待發，表稱規避接近五成；熯天熾地打藤甲法官盾",
       "members": [
         {
           "generalId": "simayi",
@@ -6831,8 +6824,8 @@
           },
           "points": "智",
           "traits": [
-            "長盾",
-            "楯甲"
+            "長慮",
+            "擐甲"
           ]
         },
         {
@@ -6942,8 +6935,8 @@
           },
           "points": "智",
           "traits": [
-            "長盾",
-            "楯甲",
+            "長慮",
+            "擐甲",
             "騎寶物"
           ]
         },
@@ -6991,7 +6984,7 @@
             ]
           },
           "points": "智",
-          "remark": "兵書表上寫助軍，暫對圖鑑勵軍，待核。刮骨可換移花接木（拒馬弓多時）",
+          "remark": "刮骨可換移花接木（拒馬弓多時）",
           "traits": [
             "妖氣",
             "長健"
@@ -7002,7 +6995,7 @@
     {
       "id": "lufu-qs-shanhe",
       "scenario": "hanyan",
-      "title": "山河騎",
+      "title": "山河盾",
       "status": "待核",
       "origin": "lufu",
       "originLabel": "陸服玩家版",
@@ -7053,11 +7046,10 @@
             "primary": "yuanqi",
             "secondary": [
               "lijun",
-              "suzhan"
+              "chiyuan"
             ]
           },
           "points": "智",
-          "remark": "兵書表上寫助軍，暫對圖鑑勵軍，待核",
           "traits": [
             "妖氣"
           ]
@@ -7077,15 +7069,11 @@
             "branch": "zuozhan",
             "primary": "manyong",
             "secondary": [
-              "zhirui",
-              null
+              "wentao",
+              "zhirui"
             ]
           },
-          "points": "智",
-          "remark": "主兵書表上寫蠻勇果決，暫對圖鑑蠻勇非勇。第三格兵書未寫",
-          "traits": [
-            "妖氣"
-          ]
+          "points": "智"
         },
         {
           "generalId": "jiaxu",
@@ -7149,7 +7137,7 @@
         "沛縣聚義",
         "博浪椎秦"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。有藏器用親釋荊縛，無藏器用博浪椎秦。敵人火隊多時諸葛亮可改陷陣營。SP關羽帶藏器待時更強。。需訓兵振旅",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。有藏器用親釋荊縛，無藏器用博浪椎秦。敵人火隊多時諸葛亮可改陷陣營。SP關羽帶藏器待時更強。需訓兵振旅",
       "members": [
         {
           "generalId": "sp-guanyu",
@@ -7174,7 +7162,7 @@
           "remark": "藏器可換擊其惰歸",
           "traits": [
             "武聖",
-            "雍睦",
+            "雍雅",
             "盾寶物"
           ]
         },
@@ -7335,7 +7323,7 @@
             "合圍夾擊",
             "楚歌四起"
           ],
-          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 130。藏器用綠色奇略。與秋石同三將，掛成十隊共存替代。。需訓兵振旅"
+          "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 130。藏器用綠色奇略。與秋石同三將，掛成十隊共存替代。需訓兵振旅"
         }
       ]
     },
@@ -7375,7 +7363,7 @@
         "沛縣聚義",
         "博浪椎秦"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。鎮撫劉備進行保護，魅惑援助也可補控制。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。鎮撫劉備進行保護，魅惑援助也可補控制",
       "members": [
         {
           "generalId": "sp-guanyu",
@@ -7400,7 +7388,7 @@
           "remark": "藏器可換非攻制勝",
           "traits": [
             "武聖",
-            "雍睦",
+            "雍雅",
             "盾寶物"
           ]
         },
@@ -7409,11 +7397,11 @@
           "generalName": "劉備",
           "learned": [
             "zhiji",
-            "meihuo"
+            "yulin"
           ],
           "learnedNames": [
             "知己知彼",
-            "魅惑"
+            "魚鱗陣"
           ],
           "bingshu": {
             "branch": "jiubian",
@@ -7423,8 +7411,11 @@
               "yanxu"
             ]
           },
-          "points": "統",
-          "remark": "戰法為知己知彼／魅惑"
+          "points": "智",
+          "remark": "第一戰法為知己知彼／魅惑",
+          "traits": [
+            "昭烈"
+          ]
         },
         {
           "generalId": "sp-fazheng",
@@ -7487,7 +7478,7 @@
               "points": "武",
               "traits": [
                 "武聖",
-                "雍睦",
+                "雍雅",
                 "盾寶物"
               ]
             },
@@ -7591,7 +7582,7 @@
         "沛縣聚義",
         "博浪椎秦"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。漢焰專屬。轉·形一陣拉高SP法正智力；姜維可輔助輸出。。需訓兵振旅",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。漢焰專屬。轉·形一陣拉高SP法正智力；姜維可輔助輸出。需訓兵振旅",
       "members": [
         {
           "generalId": "sp-guanyu",
@@ -7616,7 +7607,7 @@
           "remark": "藏器可換擊其惰歸",
           "traits": [
             "武聖",
-            "雍睦",
+            "雍雅",
             "盾寶物"
           ]
         },
@@ -7735,7 +7726,7 @@
           "remark": "藏器可換擊其惰歸",
           "traits": [
             "武聖",
-            "雍睦",
+            "雍雅",
             "盾寶物"
           ]
         },
@@ -7793,7 +7784,7 @@
     {
       "id": "lufu-qs-longxi",
       "scenario": "hanyan",
-      "title": "龍息盾",
+      "title": "龍忠盾",
       "status": "待核",
       "origin": "lufu",
       "originLabel": "陸服玩家版",
@@ -7822,11 +7813,11 @@
       "tricks": [
         "藏書納賂",
         "暗度陳倉",
-        "韜晦白溝",
+        "韜晦自污",
         "設伏十面",
         "多多益善"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。奇略「韜晦白溝」依表謄寫，正式名稱待核。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載",
       "members": [
         {
           "generalId": "sp-zhugeliang",
@@ -7890,7 +7881,7 @@
               "jiuzhu"
             ]
           },
-          "points": "連武"
+          "points": "速武"
         }
       ]
     },
@@ -7930,7 +7921,7 @@
         "設伏十面",
         "多多益善"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。陸遜帶拓·鎮扼防拒，魅惑援助體系連戰更強。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。陸遜帶拓·鎮扼防拒，魅惑援助體系連戰更強",
       "members": [
         {
           "generalId": "sp-zhouyu",
@@ -8468,7 +8459,7 @@
           "points": "智",
           "traits": [
             "樂奏",
-            "泰檢寶"
+            "槍寶物"
           ]
         },
         {
@@ -8656,7 +8647,7 @@
         "芒碭隱蹤",
         "推食解衣",
         "敗中求生",
-        "沛縣聚義"
+        "博浪椎秦"
       ],
       "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載",
       "members": [
@@ -8866,7 +8857,7 @@
         "摧鋒陷敵",
         "斬逆納降"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。貂蟬經訓兵振旅變槍S，吸傷補控制。SP皇甫嵩已是剛需。。需訓兵振旅",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。貂蟬經訓兵振旅變槍S，吸傷補控制。SP皇甫嵩已是剛需。需訓兵振旅",
       "members": [
         {
           "generalId": "sp-machao",
@@ -8925,11 +8916,11 @@
           "generalName": "貂蟬",
           "learned": [
             "meihuo",
-            "linwei"
+            "jiefan"
           ],
           "learnedNames": [
             "魅惑",
-            "臨危救主"
+            "解煩衛"
           ],
           "bingshu": {
             "branch": "jiubian",
@@ -9108,7 +9099,7 @@
         "鴻門遁險",
         "沛縣聚義"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP貂蟬可以帶友軍在治療後減傷。與大漢弓差在第二將是SP董卓不是SP盧植。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP貂蟬可以帶友軍在治療後減傷。與大漢弓差在第二將是SP董卓不是SP盧植",
       "members": [
         {
           "generalId": "sp-caocao",
@@ -9278,7 +9269,7 @@
             "連營",
             "踩踏",
             "長健",
-            "習武撫江"
+            "習武扶漢"
           ]
         },
         {
@@ -9313,7 +9304,7 @@
     {
       "id": "lufu-qs-xunyu-hangou",
       "scenario": "hanyan",
-      "title": "SP荀彧漢溝弓",
+      "title": "SP荀彧漢肉弓",
       "status": "待核",
       "origin": "lufu",
       "originLabel": "陸服玩家版",
@@ -9346,7 +9337,7 @@
         "鴻門遁險",
         "沛縣聚義"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。表稱SP荀彧與SP貂蟬不論搭配都在 T0.5 以上。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。表稱SP荀彧與SP貂蟬不論搭配都在 T0.5 以上",
       "members": [
         {
           "generalId": "sp-xunyu",
@@ -9398,7 +9389,7 @@
           "traits": [
             "連營",
             "踩踏",
-            "習武撫江"
+            "習武扶漢"
           ]
         },
         {
@@ -9499,11 +9490,11 @@
           "generalName": "SP皇甫嵩",
           "learned": [
             "caochuan",
-            "jiefan"
+            "linwei"
           ],
           "learnedNames": [
             "草船借箭",
-            "解煩衛"
+            "臨危救主"
           ],
           "bingshu": {
             "branch": "yongjian",
@@ -9514,7 +9505,6 @@
             ]
           },
           "points": "統",
-          "remark": "表上寫解煩，對到圖鑑解煩衛",
           "traits": [
             "雍雅",
             "沉勢"
@@ -9524,11 +9514,11 @@
           "generalId": "sp-xunyu",
           "generalName": "SP荀彧",
           "learned": [
-            "linwei",
+            "jiefan",
             "chengdi"
           ],
           "learnedNames": [
-            "臨危救主",
+            "解煩衛",
             "乘敵不虞"
           ],
           "bingshu": {
@@ -9543,7 +9533,7 @@
           "remark": "表上標轉漢",
           "traits": [
             "靈動",
-            "檢寶物"
+            "槍寶物"
           ]
         }
       ]
@@ -9551,7 +9541,7 @@
     {
       "id": "lufu-qs-jiaxu-hangou",
       "scenario": "hanyan",
-      "title": "賈詡漢溝弓",
+      "title": "賈詡漢肉弓",
       "status": "待核",
       "origin": "lufu",
       "originLabel": "陸服玩家版",
@@ -9670,7 +9660,7 @@
     {
       "id": "lufu-qs-zhujun-hangou",
       "scenario": "hanyan",
-      "title": "SP朱儁漢溝弓",
+      "title": "SP朱儁漢肉弓",
       "status": "待核",
       "origin": "lufu",
       "originLabel": "陸服玩家版",
@@ -9703,7 +9693,7 @@
         "鴻門遁險",
         "沛縣聚義"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。武將欄原表為合併格，只看得到 SP董卓；SP朱儁與 SP貂蟬依戰法列推斷，待核",
       "members": [
         {
           "generalId": "sp-dongzhuo",
@@ -9940,7 +9930,7 @@
         "臨危不懼",
         "合圍突擊"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。表稱曹操轉漢、助業台2+1議。奇略末張依表謄「合圍突擊」。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。表稱袁術轉漢、勳業台 2+1 漢。奇略末張依表謄「合圍突擊」",
       "members": [
         {
           "generalId": "yuanshu",
@@ -9962,7 +9952,7 @@
             ]
           },
           "points": "智",
-          "remark": "表上寫獅子奮迅、未標轉。圖鑑僅有轉·獅子奮迅，待核",
+          "remark": "表上標轉漢。寫獅子奮迅、未標轉技。圖鑑僅有轉·獅子奮迅，待核",
           "unlisted": [
             "獅子奮迅"
           ]
@@ -10018,7 +10008,7 @@
     {
       "id": "lufu-qs-kuoluo",
       "scenario": "hanyan",
-      "title": "闊蘿弓",
+      "title": "圓夢弓",
       "status": "待核",
       "origin": "lufu",
       "originLabel": "陸服玩家版",
@@ -10045,13 +10035,13 @@
         "整軍"
       ],
       "tricks": [
-        "推食解衣",
         "芒碭隱蹤",
-        "約法三章",
         "鴻門遁險",
+        "推食解衣",
+        "約法三章",
         "沛縣聚義"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP貂蟬可為友軍在治療後減傷。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP貂蟬可為友軍在治療後減傷",
       "members": [
         {
           "generalId": "sp-diaochan",
@@ -10235,10 +10225,10 @@
             "整軍"
           ],
           "tricks": [
-            "推食解衣",
             "芒碭隱蹤",
-            "約法三章",
             "鴻門遁險",
+            "推食解衣",
+            "約法三章",
             "沛縣聚義"
           ],
           "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載"
@@ -10275,10 +10265,10 @@
         "整軍"
       ],
       "tricks": [
-        "推食解衣",
         "芒碭隱蹤",
-        "約法三章",
         "鴻門遁險",
+        "推食解衣",
+        "約法三章",
         "沛縣聚義"
       ],
       "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載",
@@ -10403,7 +10393,7 @@
         "摧鋒陷敵",
         "斬逆納降"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度可反彈盛氣凌敵。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度可反彈盛氣凌敵",
       "members": [
         {
           "generalId": "guanyinping",
@@ -10476,7 +10466,7 @@
           },
           "points": "智",
           "traits": [
-            "檢寶物"
+            "槍寶物"
           ]
         }
       ]
@@ -10517,7 +10507,7 @@
         "摧鋒陷敵",
         "斬逆納降"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度可反彈盛氣凌敵。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度可反彈盛氣凌敵",
       "members": [
         {
           "generalId": "chengyu",
@@ -10534,7 +10524,7 @@
             "branch": "jiubian",
             "primary": "lindi",
             "secondary": [
-              "yanxu",
+              "chiyuan",
               "lijun"
             ]
           },
@@ -10589,7 +10579,7 @@
           },
           "points": "智",
           "traits": [
-            "檢寶物"
+            "槍寶物"
           ]
         }
       ]
@@ -10655,7 +10645,7 @@
           "remark": "藏器可換疾風驟雨。帶藏器待時更強",
           "traits": [
             "武聖",
-            "援助"
+            "盾寶物"
           ]
         },
         {
@@ -10713,7 +10703,7 @@
     {
       "id": "lufu-qs-chaowei",
       "scenario": "hanyan",
-      "title": "超魏槍",
+      "title": "超姬槍",
       "status": "待核",
       "origin": "lufu",
       "originLabel": "陸服玩家版",
@@ -10827,7 +10817,7 @@
     {
       "id": "lufu-qs-huangzong",
       "scenario": "hanyan",
-      "title": "皇縱槍",
+      "title": "皇冠槍",
       "status": "待核",
       "origin": "lufu",
       "originLabel": "陸服玩家版",
@@ -10935,7 +10925,7 @@
           "points": "智",
           "remark": "威謀可換乘敵不虞",
           "traits": [
-            "檢寶物"
+            "槍寶物"
           ]
         }
       ]
@@ -11093,7 +11083,7 @@
         "治延軍勢",
         "多多益善"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度可反彈盛氣凌敵。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。SP荀彧加30速度可反彈盛氣凌敵",
       "members": [
         {
           "generalId": "chengyu",
@@ -11150,11 +11140,11 @@
           "generalName": "SP荀彧",
           "learned": [
             "weimou",
-            "chengdi"
+            "feigong"
           ],
           "learnedNames": [
             "威謀靡亢",
-            "乘敵不虞"
+            "非攻制勝"
           ],
           "bingshu": {
             "branch": "xushi",
@@ -11164,10 +11154,10 @@
               "zhanbu"
             ]
           },
-          "points": "30速+統",
+          "points": "30速+智",
           "traits": [
             "疾馳",
-            "檢寶物"
+            "槍寶物"
           ]
         }
       ]
@@ -11205,10 +11195,10 @@
         "治延軍勢",
         "受封增邑",
         "設伏十面",
-        "居拾遺賢",
+        "居儉避禍",
         "楚歌四起"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。可當碰瓷用，表稱SP朱儁輸出很穩。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。可當碰瓷用，表稱SP朱儁輸出很穩",
       "members": [
         {
           "generalId": "zhoutai",
@@ -11315,7 +11305,7 @@
         "設伏十面",
         "多多益善"
       ],
-      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。用於碰瓷，後期可把經驗繼承給其他隊伍。與碰瓷／潛龍周泰差在第三將是荀攸。",
+      "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載。用於碰瓷，後期可把經驗繼承給其他隊伍。與碰瓷／潛龍周泰差在第三將是荀攸",
       "members": [
         {
           "generalId": "zhoutai",
@@ -11420,10 +11410,10 @@
         "整軍"
       ],
       "tricks": [
-        "推食解衣",
         "芒碭隱蹤",
-        "約法三章",
         "鴻門遁險",
+        "推食解衣",
+        "約法三章",
         "沛縣聚義"
       ],
       "note": "陸服玩家版，待核。秋石小軍師 2026-03-20，太空小孩 Notion 轉載",
@@ -11544,7 +11534,7 @@
         "三策並進",
         "臨危不懼"
       ],
-      "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 85。打架約 T1.5、打野約 T0。表稱與滿配袁紹朱儁混搭相當，成型更快。",
+      "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 85。打架約 T1.5、打野約 T0。表稱與滿配袁紹朱儁混搭相當，成型更快",
       "members": [
         {
           "generalId": "ganning",
@@ -11575,11 +11565,11 @@
           "generalId": "sp-yuanshao",
           "generalName": "SP袁紹",
           "learned": [
-            "chediao",
+            "powei",
             "jifeng"
           ],
           "learnedNames": [
-            "掣刀斫敵",
+            "破軍威勝",
             "疾風驟雨"
           ],
           "bingshu": {
@@ -11599,11 +11589,11 @@
           "generalId": "gongsunzan",
           "generalName": "公孫瓚",
           "learned": [
-            "jixing",
+            "chediao",
             "qiji"
           ],
           "learnedNames": [
-            "箕形陣",
+            "掣刀斫敵",
             "奇計良謀"
           ],
           "bingshu": {
@@ -11647,18 +11637,18 @@
       ],
       "strategy": [],
       "tricks": [],
-      "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 70。只適合打野；表稱打架打不動。奇略欄空白。複剋皇馬奇略。",
+      "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 70。只適合打野；表稱打架打不動。奇略欄空白。複刻皇馬奇略",
       "members": [
         {
           "generalId": "sunquan",
           "generalName": "孫權",
           "learned": [
             "baoli",
-            "beishe"
+            "guishen"
           ],
           "learnedNames": [
             "暴戾無仁",
-            "杯蛇鬼車"
+            "鬼神霆威"
           ],
           "bingshu": {
             "branch": "zuozhan",
@@ -11747,7 +11737,7 @@
       ],
       "strategy": [],
       "tricks": [],
-      "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 75。打架一般，打野較無壓力。複剋五謀或拒馬奇略。拓印戰法註記為轉·鎮扼防拒、轉·獅子奮迅（圖鑑作拓·鎮扼防拒）。",
+      "note": "陸服玩家版，待核。阿焰 2026-02-11 十隊共存，太空小孩 Notion 轉載。陸服玩家分 75。打架一般，打野較無壓力。複刻五謀或拒馬奇略。拓印戰法註記為轉·鎮扼防拒、轉·獅子奮迅（圖鑑作拓·鎮扼防拒）",
       "members": [
         {
           "generalId": "liubei",

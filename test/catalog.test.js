@@ -821,7 +821,69 @@ test('陸服玩家版秋石與阿焰隊伍標待核，分數不當 T 級', () =>
   const juma = scenario.recommended.find((team) => team.id === 'baha-d-dahan').alternatives.find((item) => item.id === 'lufu-ay-juma');
   assert.equal(juma.groupLabel, '十隊共存');
   assert.match(juma.note, /陸服玩家分 170/);
-  assert.equal(juma.tricks[1], '待核');
+  assert.equal(juma.tricks[1], '疲楚奪勢');
   const faguan = scenario.recommended.find((team) => team.id === 'lufu-qs-zhuge-faguan');
   assert.equal(faguan.alternatives.some((item) => item.id === 'lufu-ay-zhuge-faguan' && item.groupLabel === '十隊共存'), true);
+});
+
+test('陸服玩家版備註不得出現雙句號，戰法與奇略須在圖鑑或標待核', () => {
+  const scenario = JSON.parse(readFileSync(new URL('../data/scenario.json', import.meta.url)));
+  const tactics = JSON.parse(readFileSync(new URL('../data/tactics.json', import.meta.url))).tactics;
+  const tacticNames = new Set(tactics.map((item) => item.name));
+  const knownTricks = new Set();
+  for (const team of scenario.recommended) {
+    if (team.origin === 'lufu') continue;
+    for (const name of team.tricks || []) {
+      if (name) knownTricks.add(name);
+    }
+    for (const alt of team.alternatives || []) {
+      if (alt.originLabel === '陸服玩家版') continue;
+      for (const name of alt.tricks || []) {
+        if (name) knownTricks.add(name);
+      }
+    }
+  }
+  for (const name of ['疲楚奪勢', '韜晦自污', '居儉避禍', '合圍突擊', '三策並進']) {
+    knownTricks.add(name);
+  }
+  const pending = /待核|未收錄/;
+  const walk = [];
+  for (const team of scenario.recommended) {
+    if (team.origin === 'lufu') walk.push(team);
+    for (const alt of team.alternatives || []) {
+      if (alt.originLabel === '陸服玩家版' || alt.origin === 'lufu') walk.push(alt);
+    }
+  }
+  for (const team of walk) {
+    const note = String(team.note || '');
+    assert.equal(note.includes('。。'), false, team.id);
+    for (const member of team.members || []) {
+      const marks = [member.remark, member.tacticsRaw, note, ...(member.unlisted || [])].join(' ');
+      for (const name of member.learnedNames || []) {
+        const text = String(name || '').trim();
+        if (!text) continue;
+        const allowed = tacticNames.has(text)
+          || (member.unlisted || []).includes(text)
+          || pending.test(text)
+          || pending.test(marks);
+        assert.equal(allowed, true, `${team.id} ${member.generalName} ${text}`);
+      }
+    }
+    for (const name of team.tricks || []) {
+      const text = String(name || '').trim();
+      if (!text) continue;
+      const allowed = knownTricks.has(text) || pending.test(text) || pending.test(note);
+      assert.equal(allowed, true, `${team.id} 奇略 ${text}`);
+    }
+  }
+});
+
+test('既有非陸服替代不因合併帶上 postedAt', () => {
+  const scenario = JSON.parse(readFileSync(new URL('../data/scenario.json', import.meta.url)));
+  for (const team of scenario.recommended) {
+    for (const alt of team.alternatives || []) {
+      if (alt.originLabel === '陸服玩家版' || alt.origin === 'lufu') continue;
+      assert.equal(alt.postedAt, undefined, alt.id);
+    }
+  }
 });

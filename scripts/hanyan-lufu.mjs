@@ -47,7 +47,11 @@ function xunbingNote(members) {
 }
 
 function packNote(...parts) {
-  return parts.filter(Boolean).join('。').slice(0, 240);
+  return parts
+    .map((part) => String(part || '').trim().replace(/。+$/g, ''))
+    .filter(Boolean)
+    .join('。')
+    .slice(0, 240);
 }
 
 function qsTeam(id, title, rank, members, tricks, strategy, extraNote = '', alternatives) {
@@ -148,6 +152,8 @@ const qilueZhengjunBai2 = ['芒碭隱蹤', '推食解衣', '博浪椎秦', '敗�
 const qilueMousuanWu = ['臨危不懼', '背水列陣', '誘敵離營', '設伏十面', '合圍夾擊'];
 const qilueXiraoFa = ['設伏十面', '背水列陣', '楚歌四起', '治延軍勢', '多多益善'];
 const qilueHanshi = ['推食解衣', '芒碭隱蹤', '約法三章', '鴻門遁險', '沛縣聚義'];
+const qilueYuanmeng = ['芒碭隱蹤', '鴻門遁險', '推食解衣', '約法三章', '沛縣聚義'];
+const qilueJuma = ['推食解衣', '疲楚奪勢', '鴻門遁險', '約法三章', '沛縣聚義'];
 const qilueHuangma = ['親釋荊縛', '橫掃河西', '封狼居胥', '摧鋒陷敵', '斬逆納降'];
 const qilueYuexia = ['月下追賢', '藏書納賂', '治延軍勢', '設伏十面', '多多益善'];
 const qilueShenhuo = ['設伏十面', '月下追賢', '治延軍勢', '藏書納賂', '多多益善'];
@@ -158,7 +164,7 @@ export const hanyanLufuMains = [
   qsTeam('lufu-qs-wangyi-qi', '王異騎', 'T0', [
     seat('sp-xunyu', 'SP荀彧', ['jieli', 'guagu'], ['竭力佐謀', '刮骨療毒'], chui(), {
       points: '30速+智',
-      traits: ['疾馳', '弓寶物'],
+      traits: ['疾馳'],
       remark: '竭力可換移花接木；拒馬弓多時改移花接木配飛熊軍',
     }),
     seat('wangyi', '王異', ['duohun', 'dangfeng'], ['奪魂挾魄', '當鋒摧決'], qizheng(), {
@@ -174,24 +180,24 @@ export const hanyanLufuMains = [
   qsTeam('lufu-qs-xunyu-taiwei', 'SP荀彧太尉盾', 'T0.5', [
     seat('simayi', '司馬懿', ['hantian', 'zhongzhi'], ['熯天熾地', '眾志成城'], leshan(), {
       points: '智',
-      traits: ['長盾', '楯甲'],
+      traits: ['長慮', '擐甲'],
     }),
     seat('zhangchunhua', '張春華', ['meihuo', 'fengshi'], ['魅惑', '鋒矢陣'], chui(), {
       points: '智',
       traits: ['盾寶物'],
     }),
     seat('sp-xunyu', 'SP荀彧', ['xushidai', 'tuo-zhene'], ['蓄勢待發', '拓·鎮扼防拒'], chui(), {
-      points: '30速',
+      points: '30速+智',
       traits: ['疾馳'],
-      aptNeed: { troop: '騎', letter: 'S' },
-      remark: '表上裝備另寫訓兵振旅S騎',
+      aptNeed: { troop: '盾', letter: 'S' },
+      remark: '表上裝備另寫訓兵振旅S盾',
     }),
   ], qilueZhengjunYue, '整軍', '鎮撫魅惑體系加SP荀彧警戒，表稱強度明顯提升。張春華為名將（統御3），不是藍將。'),
 
   qsTeam('lufu-qs-sima-feixiong', '司馬飛熊騎', 'T0.5', [
-    seat('simayi', '司馬懿', ['shangbing', 'zhongzhi'], ['上兵伐謀', '眾志成城'], leshan(), {
+    seat('simayi', '司馬懿', ['shangbing', 'zhongzhi'], ['上兵伐謀', '眾志成城'], book('shiji', 'leshan', 'jiuzhan', 'tongjun'), {
       points: '智',
-      traits: ['長盾', '楯甲', '寶物'],
+      traits: ['長慮', '擐甲', '寶物'],
     }),
     seat('wangyi', '王異', ['meihuo', 'feixiong'], ['魅惑', '飛熊軍'], chui(), {
       points: '智',
@@ -201,12 +207,12 @@ export const hanyanLufuMains = [
       points: '30速+智',
       traits: ['疾馳'],
     }),
-  ], ['親釋荊縛', '推食解衣', '博浪椎秦', '約法三章', '沛縣聚義'], '整軍', 'SP荀彧加30速度，可反彈盛氣凌敵。'),
+  ], ['芒碭隱蹤', '推食解衣', '博浪椎秦', '約法三章', '沛縣聚義'], '整軍', 'SP荀彧加30速度，可反彈盛氣凌敵。'),
 
   qsTeam('lufu-qs-wangyi-taiwei', '王異太尉盾', 'T0.5', [
     seat('simayi', '司馬懿', ['hantian', 'zhongzhi'], ['熯天熾地', '眾志成城'], leshan(), {
       points: '智',
-      traits: ['長盾', '楯甲'],
+      traits: ['長慮', '擐甲'],
     }),
     seat('wangyi', '王異', ['meihuo', 'tengjia'], ['魅惑', '藤甲兵'], chui(), {
       points: '統',
@@ -221,7 +227,7 @@ export const hanyanLufuMains = [
   qsTeam('lufu-qs-caozhen-feixiong', '曹真飛熊軍', 'T0.5', [
     seat('simayi', '司馬懿', ['shibie', 'zhongzhi'], ['士別三日', '眾志成城'], book('shiji', 'leshan', 'jiuzhan', 'tongjun'), {
       points: '智',
-      traits: ['長盾', '楯甲', '騎寶物'],
+      traits: ['長慮', '擐甲', '騎寶物'],
     }),
     seat('sp-caozhen', 'SP曹真', ['caochuan', 'feixiong'], ['草船借箭', '飛熊軍'], book('junxing', 'xibing', 'gangrou', 'fangbei'), {
       points: '統',
@@ -230,20 +236,17 @@ export const hanyanLufuMains = [
     seat('sp-xunyu', 'SP荀彧', ['fengshi', 'guagu'], ['鋒矢陣', '刮骨療毒'], book('jiubian', 'yuanqi', 'lijun', 'suzhan'), {
       points: '智',
       traits: ['妖氣', '長健'],
-      remark: '兵書表上寫助軍，暫對圖鑑勵軍，待核。刮骨可換移花接木（拒馬弓多時）',
+      remark: '刮骨可換移花接木（拒馬弓多時）',
     }),
   ], qilueZhengjunBo, '整軍'),
 
-  qsTeam('lufu-qs-shanhe', '山河騎', 'T0.5', [
-    seat('caocao', '曹操', ['xushidai', 'guagu'], ['蓄勢待發', '刮骨療毒'], book('jiubian', 'yuanqi', 'lijun', 'suzhan'), {
+  qsTeam('lufu-qs-shanhe', '山河盾', 'T0.5', [
+    seat('caocao', '曹操', ['xushidai', 'guagu'], ['蓄勢待發', '刮骨療毒'], book('jiubian', 'yuanqi', 'lijun', 'chiyuan'), {
       points: '智',
       traits: ['妖氣'],
-      remark: '兵書表上寫助軍，暫對圖鑑勵軍，待核',
     }),
-    seat('haozhao', '郝昭', ['zhongzhi', 'shibie'], ['眾志成城', '士別三日'], book('zuozhan', 'manyong', 'zhirui', null), {
+    seat('haozhao', '郝昭', ['zhongzhi', 'shibie'], ['眾志成城', '士別三日'], manyong('wentao', 'zhirui'), {
       points: '智',
-      traits: ['妖氣'],
-      remark: '主兵書表上寫蠻勇果決，暫對圖鑑蠻勇非勇。第三格兵書未寫',
     }),
     seat('jiaxu', '賈詡', ['dangfeng', 'bingwu'], ['當鋒摧決', '兵無常勢'], qizheng('wentao', 'cangdao'), {
       points: '智',
@@ -254,7 +257,7 @@ export const hanyanLufuMains = [
   qsTeam('lufu-qs-zhuge-faguan', '諸葛法官盾', 'T0', [
     seat('sp-guanyu', 'SP關羽', ['yigua', 'cangqi'], ['以寡敵眾', '藏器待時'], fenji(), {
       points: '武',
-      traits: ['武聖', '雍睦', '盾寶物'],
+      traits: ['武聖', '雍雅', '盾寶物'],
       remark: '藏器可換擊其惰歸',
     }),
     seat('zhugeliang', '諸葛亮', ['tengjia', 'feigong'], ['藤甲兵', '非攻制勝'], chui(), {
@@ -291,12 +294,13 @@ export const hanyanLufuMains = [
   qsTeam('lufu-qs-liubei-faguan', '劉備法官盾', 'T0', [
     seat('sp-guanyu', 'SP關羽', ['yigua', 'cangqi'], ['以寡敵眾', '藏器待時'], fenji(), {
       points: '武',
-      traits: ['武聖', '雍睦', '盾寶物'],
+      traits: ['武聖', '雍雅', '盾寶物'],
       remark: '藏器可換非攻制勝',
     }),
-    seat('liubei', '劉備', ['zhiji', 'meihuo'], ['知己知彼', '魅惑'], book('jiubian', 'yuanqi', 'jiuzhu', 'yanxu'), {
-      points: '統',
-      remark: '戰法為知己知彼／魅惑',
+    seat('liubei', '劉備', ['zhiji', 'yulin'], ['知己知彼', '魚鱗陣'], book('jiubian', 'yuanqi', 'jiuzhu', 'yanxu'), {
+      points: '智',
+      traits: ['昭烈'],
+      remark: '第一戰法為知己知彼／魅惑',
     }),
     seat('sp-fazheng', 'SP法正', ['xushidai', 'tuo-zhene'], ['蓄勢待發', '拓·鎮扼防拒'], chui(), {
       points: '智',
@@ -306,7 +310,7 @@ export const hanyanLufuMains = [
     asAlt(qsTeam('lufu-qs-liubei-faguan-plain', '法官盾（劉備）', 'T0', [
       seat('sp-guanyu', 'SP關羽', ['yigua', 'cangqi'], ['以寡敵眾', '藏器待時'], fenji(), {
         points: '武',
-        traits: ['武聖', '雍睦', '盾寶物'],
+        traits: ['武聖', '雍雅', '盾寶物'],
       }),
       seat('liubei', '劉備', ['tengjia', 'feigong'], ['藤甲兵', '非攻制勝'], book('jiubian', 'yuanqi', 'jiuzhu', 'yanxu'), {
         points: '250統+智',
@@ -323,7 +327,7 @@ export const hanyanLufuMains = [
   qsTeam('lufu-qs-jiangwei-faguan', '姜維法官盾', 'T0', [
     seat('sp-guanyu', 'SP關羽', ['yigua', 'cangqi'], ['以寡敵眾', '藏器待時'], fenji(), {
       points: '武',
-      traits: ['武聖', '雍睦', '盾寶物'],
+      traits: ['武聖', '雍雅', '盾寶物'],
       remark: '藏器可換擊其惰歸',
     }),
     seat('jiangwei', '姜維', ['tengjia', 'feigong'], ['藤甲兵', '非攻制勝'], manyong(), {
@@ -340,7 +344,7 @@ export const hanyanLufuMains = [
   qsTeam('lufu-qs-zhaoyun-faguan', '趙雲法官盾', 'T0.5', [
     seat('sp-guanyu', 'SP關羽', ['yigua', 'cangqi'], ['以寡敵眾', '藏器待時'], fenji(), {
       points: '武',
-      traits: ['武聖', '雍睦', '盾寶物'],
+      traits: ['武聖', '雍雅', '盾寶物'],
       remark: '藏器可換擊其惰歸',
     }),
     seat('zhaoyun', '趙雲', ['tengjia', 'feigong'], ['藤甲兵', '非攻制勝'], book('junxing', 'xibing', 'shoushi', 'tiejia'), {
@@ -353,7 +357,7 @@ export const hanyanLufuMains = [
     }),
   ], qilueXiraoFa, '襲擾'),
 
-  qsTeam('lufu-qs-longxi', '龍息盾', 'T0.5', [
+  qsTeam('lufu-qs-longxi', '龍忠盾', 'T0.5', [
     seat('sp-zhugeliang', 'SP諸葛亮', ['xushidai', 'xianzhen'], ['蓄勢待發', '陷陣營'], chui(), {
       points: '統智',
     }),
@@ -362,9 +366,9 @@ export const hanyanLufuMains = [
       remark: '表上寫千里單騎，對到圖鑑千里走單騎',
     }),
     seat('zhangbao', '張苞', ['wufeng', 'feigong'], ['武鋒陣', '非攻制勝'], book('jiubian', 'lindi', 'baizhan', 'jiuzhu'), {
-      points: '連武',
+      points: '速武',
     }),
-  ], ['藏書納賂', '暗度陳倉', '韜晦白溝', '設伏十面', '多多益善'], '襲擾', '奇略「韜晦白溝」依表謄寫，正式名稱待核。'),
+  ], ['藏書納賂', '暗度陳倉', '韜晦自污', '設伏十面', '多多益善'], '襲擾'),
 
   qsTeam('lufu-qs-sp-zhouyu-dudu', 'SP周瑜都督弓', 'T0.5', [
     seat('sp-zhouyu', 'SP周瑜', ['zhongzhi', 'luli'], ['眾志成城', '戮力同心'], biqi(), { points: '智' }),
@@ -432,7 +436,7 @@ export const hanyanLufuMains = [
   qsTeam('lufu-qs-shenhuo-qiang', '鎮撫神火槍', 'T0.5', [
     seat('zhouyu', '周瑜', ['duohun', 'fengzhuo'], ['奪魂挾魄', '風助火勢'], shengyi(), {
       points: '智',
-      traits: ['樂奏', '泰檢寶'],
+      traits: ['樂奏', '槍寶物'],
     }),
     seat('lvmeng', '呂蒙', ['dangfeng', 'tuo-zhene'], ['當鋒摧決', '拓·鎮扼防拒'], qizheng('wentao', 'cangdao'), {
       points: '智',
@@ -472,7 +476,7 @@ export const hanyanLufuMains = [
       traits: ['援助', '踩踏'],
       remark: '帶踩踏可計窮和震懾',
     }),
-  ], ['親釋荊縛', '芒碭隱蹤', '推食解衣', '敗中求生', '沛縣聚義'], '整軍', '', [
+  ], ['親釋荊縛', '芒碭隱蹤', '推食解衣', '敗中求生', '博浪椎秦'], '整軍', '', [
     asAlt(qsTeam('lufu-qs-lao-zhouyu-chengpu', '老周瑜肉弓（程普）', 'T0.5', [
       seat('zhouyu', '周瑜', ['duohun', 'luli'], ['奪魂挾魄', '戮力同心'], qizheng('wentao', 'shengzhan'), {
         points: '智',
@@ -498,7 +502,7 @@ export const hanyanLufuMains = [
       traits: ['雍雅', '沉勢', '長健'],
       remark: '表上標轉群',
     }),
-    seat('diaochan', '貂蟬', ['meihuo', 'linwei'], ['魅惑', '臨危救主'], book('jiubian', 'shiruo', 'baizhan', 'yanxu'), {
+    seat('diaochan', '貂蟬', ['meihuo', 'jiefan'], ['魅惑', '解煩衛'], book('jiubian', 'shiruo', 'baizhan', 'yanxu'), {
       points: '智',
       traits: ['佳人'],
       aptNeed: { troop: '槍', letter: 'S' },
@@ -545,7 +549,7 @@ export const hanyanLufuMains = [
     }),
     seat('luxun', '陸遜', ['gongbu', 'gangrou-ji'], ['功不唐捐', '剛柔並濟'], book('yongjian', 'chuqi', 'shanzhan', 'fenli'), {
       points: '智',
-      traits: ['連營', '踩踏', '長健', '習武撫江'],
+      traits: ['連營', '踩踏', '長健', '習武扶漢'],
     }),
     seat('sp-diaochan', 'SP貂蟬', ['shencang', 'luli'], ['深藏若虛', '戮力同心'], sanjiu(), {
       points: '智',
@@ -553,7 +557,7 @@ export const hanyanLufuMains = [
     }),
   ], qilueHanshi, '整軍'),
 
-  qsTeam('lufu-qs-xunyu-hangou', 'SP荀彧漢溝弓', 'T0.5', [
+  qsTeam('lufu-qs-xunyu-hangou', 'SP荀彧漢肉弓', 'T0.5', [
     seat('sp-xunyu', 'SP荀彧', ['yanxing', 'gangrou-ji'], ['雁行陣', '剛柔並濟'], sanjiu(), {
       points: '統',
       traits: ['妖氣', '踩踏', '弓寶物'],
@@ -561,7 +565,7 @@ export const hanyanLufuMains = [
     }),
     seat('luxun', '陸遜', ['gongbu', 'wanjun'], ['功不唐捐', '萬軍奪帥'], sanjiu(), {
       points: '智',
-      traits: ['連營', '踩踏', '習武撫江'],
+      traits: ['連營', '踩踏', '習武扶漢'],
     }),
     seat('sp-diaochan', 'SP貂蟬', ['shencang', 'luli'], ['深藏若虛', '戮力同心'], sanjiu(), {
       points: '智',
@@ -574,19 +578,18 @@ export const hanyanLufuMains = [
       points: '武',
       traits: ['神威', '踩踏', '靈動'],
     }),
-    seat('sp-huangfusong', 'SP皇甫嵩', ['caochuan', 'jiefan'], ['草船借箭', '解煩衛'], shenshi(), {
+    seat('sp-huangfusong', 'SP皇甫嵩', ['caochuan', 'linwei'], ['草船借箭', '臨危救主'], shenshi(), {
       points: '統',
       traits: ['雍雅', '沉勢'],
-      remark: '表上寫解煩，對到圖鑑解煩衛',
     }),
-    seat('sp-xunyu', 'SP荀彧', ['linwei', 'chengdi'], ['臨危救主', '乘敵不虞'], houfaBu(), {
+    seat('sp-xunyu', 'SP荀彧', ['jiefan', 'chengdi'], ['解煩衛', '乘敵不虞'], houfaBu(), {
       points: '速最高',
-      traits: ['靈動', '檢寶物'],
+      traits: ['靈動', '槍寶物'],
       remark: '表上標轉漢',
     }),
   ], ['親釋荊縛', '橫掃河西', '孤軍深入', '摧鋒陷敵', '斬逆納降'], '久戰'),
 
-  qsTeam('lufu-qs-jiaxu-hangou', '賈詡漢溝弓', 'T0.5', [
+  qsTeam('lufu-qs-jiaxu-hangou', '賈詡漢肉弓', 'T0.5', [
     seat('sp-dongzhuo', 'SP董卓', ['yanxing', 'gangrou-ji'], ['雁行陣', '剛柔並濟'], sanjiu(), {
       points: '統',
       traits: ['妖氣', '踩踏'],
@@ -602,7 +605,7 @@ export const hanyanLufuMains = [
     }),
   ], qilueHanshi, '整軍'),
 
-  qsTeam('lufu-qs-zhujun-hangou', 'SP朱儁漢溝弓', 'T0.5', [
+  qsTeam('lufu-qs-zhujun-hangou', 'SP朱儁漢肉弓', 'T0.5', [
     seat('sp-dongzhuo', 'SP董卓', ['taoyuan', 'shangbing'], ['桃園結義', '上兵伐謀'], sanjiu(), {
       points: '統',
       traits: ['妖氣', '踩踏'],
@@ -615,7 +618,7 @@ export const hanyanLufuMains = [
       points: '智',
       traits: ['妖氣', '踩踏', '佳人', '回元'],
     }),
-  ], qilueHanshi, '整軍'),
+  ], qilueHanshi, '整軍', '武將欄原表為合併格，只看得到 SP董卓；SP朱儁與 SP貂蟬依戰法列推斷，待核。'),
 
   qsTeam('lufu-qs-meiren', '美人連環弓', 'T0.5', [
     seat('sp-dongzhuo', 'SP董卓', ['yanxing', 'taoyuan'], ['雁行陣', '桃園結義'], sanjiu(), {
@@ -636,7 +639,7 @@ export const hanyanLufuMains = [
   qsTeam('lufu-qs-yuanshu-feixiong', '袁術飛熊騎', 'T0.5', [
     seat('yuanshu', '袁術', [null, 'shangbing'], ['獅子奮迅', '上兵伐謀'], manyong('wentao', 'zhirui'), {
       points: '智',
-      remark: '表上寫獅子奮迅、未標轉。圖鑑僅有轉·獅子奮迅，待核',
+      remark: '表上標轉漢。寫獅子奮迅、未標轉技。圖鑑僅有轉·獅子奮迅，待核',
       unlisted: ['獅子奮迅'],
     }),
     seat('sp-caozhen', 'SP曹真', ['feixiong', 'fengshi'], ['飛熊軍', '鋒矢陣'], chui(), {
@@ -647,9 +650,9 @@ export const hanyanLufuMains = [
       points: '速智',
       remark: '表上標轉漢',
     }),
-  ], ['設伏十面', '楚歌四起', '多多益善', '臨危不懼', '合圍突擊'], '謀算', '表稱曹操轉漢、助業台2+1議。奇略末張依表謄「合圍突擊」。'),
+  ], ['設伏十面', '楚歌四起', '多多益善', '臨危不懼', '合圍突擊'], '謀算', '表稱袁術轉漢、勳業台 2+1 漢。奇略末張依表謄「合圍突擊」。'),
 
-  qsTeam('lufu-qs-kuoluo', '闊蘿弓', 'T0.5', [
+  qsTeam('lufu-qs-kuoluo', '圓夢弓', 'T0.5', [
     seat('sp-diaochan', 'SP貂蟬', ['shencang', 'gangrou-ji'], ['深藏若虛', '剛柔並濟'], sanjiu(), {
       points: '智',
       traits: ['妖氣', '踩踏', '佳人', '回元'],
@@ -662,8 +665,8 @@ export const hanyanLufuMains = [
       points: '智',
       traits: ['妖氣', '踩踏', '援助', '弓寶物'],
     }),
-  ], qilueHanshi, '整軍', 'SP貂蟬可為友軍在治療後減傷。', [
-    asAlt(qsTeam('lufu-qs-kuoluo-zhouyu', '闊蘿弓（周瑜）', 'T0.5', [
+  ], qilueYuanmeng, '整軍', 'SP貂蟬可為友軍在治療後減傷。', [
+    asAlt(qsTeam('lufu-qs-kuoluo-zhouyu', '圓夢弓（周瑜）', 'T0.5', [
       seat('sp-diaochan', 'SP貂蟬', ['shencang', 'gangrou-ji'], ['深藏若虛', '剛柔並濟'], sanjiu(), {
         points: '智',
         traits: ['妖氣', '踩踏', '佳人', '回元'],
@@ -676,7 +679,7 @@ export const hanyanLufuMains = [
         points: '智',
         traits: ['妖氣', '踩踏', '援助', '弓寶物'],
       }),
-    ], qilueHanshi, '整軍'), '周瑜版', ['第二將改普通周瑜：奪魂挾魄、上兵伐謀、枕戈坐甲。']),
+    ], qilueYuanmeng, '整軍'), '周瑜版', ['第二將改普通周瑜：奪魂挾魄、上兵伐謀、枕戈坐甲。']),
   ]),
 
   qsTeam('lufu-qs-qianlong-diao', '潛龍貂', 'T0.5', [
@@ -694,7 +697,7 @@ export const hanyanLufuMains = [
       traits: ['妖氣', '踩踏', '援助'],
       remark: '表上標轉漢',
     }),
-  ], qilueHanshi, '整軍'),
+  ], qilueYuanmeng, '整軍'),
 
   qsTeam('lufu-qs-guanma', '關馬槍', 'T0.5', [
     seat('guanyinping', '關銀屏', ['caochuan', 'qianlong'], ['草船借箭', '潛龍陣'], book('jiubian', 'fenji', 'suzhan', 'baizhan'), {
@@ -708,12 +711,12 @@ export const hanyanLufuMains = [
     }),
     seat('sp-xunyu', 'SP荀彧', ['jiefan', 'linwei'], ['解煩衛', '臨危救主'], xibingSF(), {
       points: '智',
-      traits: ['檢寶物'],
+      traits: ['槍寶物'],
     }),
   ], qilueHuangma, '久戰', 'SP荀彧加30速度可反彈盛氣凌敵。'),
 
   qsTeam('lufu-qs-gouma', '狗馬槍', 'T0.5', [
-    seat('chengyu', '程昱', ['qianlong', 'caochuan'], ['潛龍陣', '草船借箭'], book('jiubian', 'lindi', 'yanxu', 'lijun'), {
+    seat('chengyu', '程昱', ['qianlong', 'caochuan'], ['潛龍陣', '草船借箭'], book('jiubian', 'lindi', 'chiyuan', 'lijun'), {
       points: '統',
       traits: ['援助'],
     }),
@@ -723,14 +726,14 @@ export const hanyanLufuMains = [
     }),
     seat('sp-xunyu', 'SP荀彧', ['jiefan', 'linwei'], ['解煩衛', '臨危救主'], xibingSF(), {
       points: '智',
-      traits: ['檢寶物'],
+      traits: ['槍寶物'],
     }),
   ], qilueHuangma, '久戰', 'SP荀彧加30速度可反彈盛氣凌敵。'),
 
   qsTeam('lufu-qs-yanzhou', '兗州三勢關', 'T0.5', [
     seat('sp-guanyu', 'SP關羽', ['yigua', 'cangqi'], ['以寡敵眾', '藏器待時'], fenji(), {
       points: '武',
-      traits: ['武聖', '援助'],
+      traits: ['武聖', '盾寶物'],
       remark: '藏器可換疾風驟雨。帶藏器待時更強',
     }),
     seat('chengyu', '程昱', ['meihuo', 'feigong'], ['魅惑', '非攻制勝'], book('jiubian', 'lindi', 'lijun', 'chiyuan'), {
@@ -743,7 +746,7 @@ export const hanyanLufuMains = [
     }),
   ], qilueXiraoFa, '襲擾'),
 
-  qsTeam('lufu-qs-chaowei', '超魏槍', 'T0.5', [
+  qsTeam('lufu-qs-chaowei', '超姬槍', 'T0.5', [
     seat('wangyuanji', '王元姬', ['linwei', 'qianlong'], ['臨危救主', '潛龍陣'], yuanqi(), {
       points: '智',
       traits: ['妖氣'],
@@ -759,7 +762,7 @@ export const hanyanLufuMains = [
     }),
   ], qilueHuangma, '久戰'),
 
-  qsTeam('lufu-qs-huangzong', '皇縱槍', 'T0.5', [
+  qsTeam('lufu-qs-huangzong', '皇冠槍', 'T0.5', [
     seat('sp-guanyu', 'SP關羽', ['yigua', 'jifeng'], ['以寡敵眾', '疾風驟雨'], fenji(), {
       points: '武',
       traits: ['武聖', '沉重'],
@@ -771,7 +774,7 @@ export const hanyanLufuMains = [
     }),
     seat('sp-xunyu', 'SP荀彧', ['weimou', 'feigong'], ['威謀靡亢', '非攻制勝'], houfaBu(), {
       points: '智',
-      traits: ['檢寶物'],
+      traits: ['槍寶物'],
       remark: '威謀可換乘敵不虞',
     }),
   ], qilueXiraoFa, '襲擾'),
@@ -803,9 +806,9 @@ export const hanyanLufuMains = [
       points: '武',
       traits: ['武聖', '沉重'],
     }),
-    seat('sp-xunyu', 'SP荀彧', ['weimou', 'chengdi'], ['威謀靡亢', '乘敵不虞'], houfaBu(), {
-      points: '30速+統',
-      traits: ['疾馳', '檢寶物'],
+    seat('sp-xunyu', 'SP荀彧', ['weimou', 'feigong'], ['威謀靡亢', '非攻制勝'], houfaBu(), {
+      points: '30速+智',
+      traits: ['疾馳', '槍寶物'],
     }),
   ], qilueXiraoFa, '襲擾', 'SP荀彧加30速度可反彈盛氣凌敵。'),
 
@@ -821,7 +824,7 @@ export const hanyanLufuMains = [
     seat('sp-yuanshao', 'SP袁紹', ['hengsao', 'jifeng'], ['橫掃千軍', '疾風驟雨'], book('yongjian', 'yitui', 'jingzhun', 'shanzhan'), {
       points: '一速+武',
     }),
-  ], ['治延軍勢', '受封增邑', '設伏十面', '居拾遺賢', '楚歌四起'], '襲擾', '可當碰瓷用，表稱SP朱儁輸出很穩。'),
+  ], ['治延軍勢', '受封增邑', '設伏十面', '居儉避禍', '楚歌四起'], '襲擾', '可當碰瓷用，表稱SP朱儁輸出很穩。'),
 
   qsTeam('lufu-qs-hedan-yuanshu', '核彈袁術', 'T0.5', [
     seat('zhoutai', '周泰', ['qianlong', 'baima'], ['潛龍陣', '白馬義從'], book('junxing', 'shoudao', 'shoushi', 'fangbei'), {
@@ -852,24 +855,24 @@ export const hanyanLufuMains = [
       points: '智',
       traits: ['妖氣', '踩踏', '樂奏', '長健'],
     }),
-  ], qilueHanshi, '整軍'),
+  ], qilueYuanmeng, '整軍'),
 
   ayTeam('lufu-ay-hangong', '漢弓', 'T1.5', 85, [
     seat('ganning', '甘寧', ['woxin', 'hengsao'], ['臥薪嘗膽', '橫掃千軍'], book('zuozhan', 'shengyi', 'shengzhan', 'zhirui'), {
       points: '武力',
       traits: ['習武', '扶漢'],
     }),
-    seat('sp-yuanshao', 'SP袁紹', ['chediao', 'jifeng'], ['掣刀斫敵', '疾風驟雨'], book('zuozhan', 'manyong', 'shengzhan', 'zhirui'), {
+    seat('sp-yuanshao', 'SP袁紹', ['powei', 'jifeng'], ['破軍威勝', '疾風驟雨'], book('zuozhan', 'manyong', 'shengzhan', 'zhirui'), {
       points: '武力二速',
       traits: ['號令'],
     }),
-    seat('gongsunzan', '公孫瓚', ['jixing', 'qiji'], ['箕形陣', '奇計良謀'], book('jiubian', 'fenji', 'suzhan', 'lijun'), {
+    seat('gongsunzan', '公孫瓚', ['chediao', 'qiji'], ['掣刀斫敵', '奇計良謀'], book('jiubian', 'fenji', 'suzhan', 'lijun'), {
       points: '速度',
     }),
   ], ['楚歌四起', '設伏十面', '圯橋受書', '三策並進', '臨危不懼'], '', '打架約 T1.5、打野約 T0。表稱與滿配袁紹朱儁混搭相當，成型更快。'),
 
   ayTeam('lufu-ay-chuanzi', '傳子弓', 'T2', 70, [
-    seat('sunquan', '孫權', ['baoli', 'beishe'], ['暴戾無仁', '杯蛇鬼車'], book('zuozhan', 'shengyi', 'shengzhan', 'zhirui'), {
+    seat('sunquan', '孫權', ['baoli', 'guishen'], ['暴戾無仁', '鬼神霆威'], book('zuozhan', 'shengyi', 'shengzhan', 'zhirui'), {
       points: '武力',
       traits: ['雄才'],
     }),
@@ -880,7 +883,7 @@ export const hanyanLufuMains = [
     seat('sunshangxiang', '孫尚香', ['jiemeng', 'jinfan'], ['結盟', '錦帆軍'], book('zuozhan', 'shengyi', 'shengzhan', 'zhirui'), {
       points: '武力',
     }),
-  ], [], '', '只適合打野；表稱打架打不動。奇略欄空白。複剋皇馬奇略。'),
+  ], [], '', '只適合打野；表稱打架打不動。奇略欄空白。複刻皇馬奇略。'),
 
   ayTeam('lufu-ay-taoyuan', '桃園盾', 'T2', 75, [
     seat('liubei', '劉備', ['zhiji', 'xianzhen'], ['知己知彼', '陷陣營'], book('jiubian', 'yuanqi', 'yanxu', 'lijun'), {
@@ -895,7 +898,7 @@ export const hanyanLufuMains = [
       points: '武力',
       traits: ['燕頷', '赳赳'],
     }),
-  ], [], '', '打架一般，打野較無壓力。複剋五謀或拒馬奇略。拓印戰法註記為轉·鎮扼防拒、轉·獅子奮迅（圖鑑作拓·鎮扼防拒）。'),
+  ], [], '', '打架一般，打野較無壓力。複刻五謀或拒馬奇略。拓印戰法註記為轉·鎮扼防拒、轉·獅子奮迅（圖鑑作拓·鎮扼防拒）。'),
 ];
 
 export const hanyanLufuMergeSources = [
@@ -930,10 +933,10 @@ export const hanyanLufuMergeSources = [
     seat('xunyou', '荀攸', ['zhuan-shizi', 'luli'], ['轉·獅子奮迅', '戮力同心'], chui(), { points: '智' }),
   ], qilueMousuanWu, '謀算'),
 
-  qsTeam('lufu-qs-fugui-taiwei', '富貴太尉盾', 'T0.5', [
+  qsTeam('lufu-qs-fugui-taiwei', '蓄勢太尉盾', 'T0.5', [
     seat('simayi', '司馬懿', ['hantian', 'zhongzhi'], ['熯天熾地', '眾志成城'], leshan(), {
       points: '智',
-      traits: ['長盾', '楯甲'],
+      traits: ['長慮', '擐甲'],
     }),
     seat('caocao', '曹操', ['meihuo', 'tengjia'], ['魅惑', '藤甲兵'], chui(), {
       points: '統',
@@ -945,7 +948,7 @@ export const hanyanLufuMergeSources = [
   qsTeam('lufu-qs-zhenfu-madai', '鎮撫法官盾（馬岱）', 'T0', [
     seat('sp-guanyu', 'SP關羽', ['yigua', 'cangqi'], ['以寡敵眾', '藏器待時'], fenji(), {
       points: '武',
-      traits: ['武聖', '雍睦', '盾寶物'],
+      traits: ['武聖', '雍雅', '盾寶物'],
     }),
     seat('madai', '馬岱', ['feigong', 'yulin'], ['非攻制勝', '魚鱗陣'], book('junxing', 'shoudao', 'jingxin', 'tiejia'), {
       points: '一速+統',
@@ -959,7 +962,7 @@ export const hanyanLufuMergeSources = [
   qsTeam('lufu-qs-faguan-madai', '法官盾（馬岱）', 'T0', [
     seat('sp-guanyu', 'SP關羽', ['yigua', 'cangqi'], ['以寡敵眾', '藏器待時'], fenji(), {
       points: '武',
-      traits: ['武聖', '雍睦', '盾寶物'],
+      traits: ['武聖', '雍雅', '盾寶物'],
     }),
     seat('madai', '馬岱', ['tengjia', 'yulin'], ['藤甲兵', '魚鱗陣'], chui(), {
       points: '一速+統',
@@ -986,7 +989,7 @@ export const hanyanLufuMergeSources = [
   ], ['暗度陳倉', '設伏十面', '博浪椎秦', '背水列陣', '多多益善'], '謀算', '盾兵形態的蜀智。'),
 
   qsTeam('lufu-qs-guanyu-shugong', '關羽蜀弓', 'T0.5', [
-    seat('sp-zhugeliang', 'SP諸葛亮', ['wufeng', 'xiandeng'], ['武鋒陣', '先登死士'], chui(), {
+    seat('sp-zhugeliang', 'SP諸葛亮', ['yanxing', 'xiandeng'], ['雁行陣', '先登死士'], chui(), {
       points: '統',
       aptNeed: { troop: '弓', letter: 'S' },
     }),
@@ -1071,7 +1074,7 @@ export const hanyanLufuMergeSources = [
     }),
     seat('xuyou', '許攸', ['jiefan', 'linwei'], ['解煩衛', '臨危救主'], xibingFB(), {
       points: '智',
-      traits: ['援助', '檢寶物'],
+      traits: ['援助', '槍寶物'],
     }),
   ], qilueHuangma, '久戰', '打非皇馬隊伍時SP馬超可帶乘敵不虞。'),
 
@@ -1088,12 +1091,12 @@ export const hanyanLufuMergeSources = [
     }),
     seat('xuyou', '許攸', ['jiefan', 'linwei'], ['解煩衛', '臨危救主'], book('junxing', 'xibing', 'shoushi', 'fangbei'), {
       points: '智',
-      traits: ['援助', '檢寶物'],
+      traits: ['援助', '槍寶物'],
     }),
   ], qilueHuangma, '久戰'),
 
   qsTeam('lufu-qs-huangma-dadi', '打地皇馬槍', 'T0', [
-    seat('sp-machao', 'SP馬超', ['sucheng', 'caochuan'], ['速乘其利', '草船借箭'], yuanqi(), {
+    seat('sp-machao', 'SP馬超', ['sucheng', 'cuifeng'], ['速乘其利', '摧鋒斷刃'], yuanqi(), {
       points: '全武',
       traits: ['神威', '踩踏'],
       remark: '全帶武力突擊輸出，再加鋒矢陣可打地；注意不要用鋒矢，因為SP馬超會死得快',
@@ -1101,14 +1104,13 @@ export const hanyanLufuMergeSources = [
     seat('sp-huangfusong', 'SP皇甫嵩', ['linwei', 'caochuan'], ['臨危救主', '草船借箭'], shenshi(), {
       points: '統',
       traits: ['雍雅', '沉勢'],
-      remark: '表上標轉群。第三戰法亦寫草船借箭，待核是否重複',
-      tacticsRaw: '臨危救主、草船借箭',
+      remark: '表上標轉群',
     }),
     seat('xuyou', '許攸', ['jiefan', 'fengshi'], ['解煩衛', '鋒矢陣'], book('junxing', 'xibing', 'shoushi', 'fangbei'), {
       points: '智',
-      traits: ['援助', '檢寶物'],
+      traits: ['援助', '槍寶物'],
     }),
-  ], qilueHuangma, '久戰', 'SP皇甫嵩與SP馬超都寫了草船借箭，第二、三戰法待核。'),
+  ], qilueHuangma, '久戰'),
 
   qsTeam('lufu-qs-huangma-yanxing', '雁行皇馬弓', 'T0.5', [
     seat('sp-machao', 'SP馬超', ['dangfeng', 'cuifeng'], ['當鋒摧決', '摧鋒斷刃'], yuanqi(), {
@@ -1191,10 +1193,10 @@ export const hanyanLufuMergeSources = [
       points: '智力',
       traits: ['妖氣', '雍雅', '踩踏', '回元'],
     }),
-  ], ['推食解衣', '待核', '鴻門遁險', '約法三章', '沛縣聚義'], '', '這隊最強。第二張奇略截圖寫法不清，待核，不臆測為芒碭隱蹤。'),
+  ], qilueJuma, '', '這隊最強。第二張奇略依原圖謄「疲楚奪勢」。'),
 
-  ayTeam('lufu-ay-yunjian', '雲建盾', 'T0', 110, [
-    seat('sp-xunyu', 'SP荀彧', ['guagu', 'jieli'], ['刮骨療毒', '竭力佐謀'], chui(), {
+  ayTeam('lufu-ay-yunjian', '五謀臣', 'T0', 110, [
+    seat('sp-xunyu', 'SP荀彧', ['guagu', 'luli'], ['刮骨療毒', '戮力同心'], chui(), {
       points: '智力',
       traits: ['符咒', '靈動', '出奇'],
     }),
@@ -1221,10 +1223,10 @@ export const hanyanLufuMergeSources = [
       aptNeed: { troop: '盾', letter: 'S' },
     }),
     seat('yuanshu', '袁術', ['fenzui', 'shangbing'], ['焚輜營壘', '上兵伐謀'], manyong(), { points: '智力' }),
-    seat('sp-zhujun', 'SP朱儁', ['taiping', 'wudang'], ['太平道法', '無當飛軍'], book('yongjian', 'yitui', 'jingzhun', 'shanzhan'), {
+    seat('sp-zhujun', 'SP朱儁', ['taiping', 'wudang'], ['太平道法', '無當飛軍'], book('yongjian', 'yizhi-bao', 'jingzhun', 'shanzhan'), {
       points: '智力',
     }),
-  ], ['治延軍勢', '受封增邑', '楚歌四起', '居拾遺賢', '合圍夾擊'], '', '表稱目前最強碰瓷隊。與巴哈碰瓷同三將。'),
+  ], ['治延軍勢', '受封增邑', '楚歌四起', '居儉避禍', '合圍夾擊'], '', '表稱目前最強碰瓷隊。與巴哈碰瓷同三將。'),
 
   ayTeam('lufu-ay-taiwei', '太尉盾', 'T1', 95, [
     seat('simayi', '司馬懿', ['zhongzhi', 'shibie'], ['眾志成城', '士別三日'], book('shiji', 'leshan', 'tongjun', 'chuilian'), {
@@ -1234,27 +1236,25 @@ export const hanyanLufuMergeSources = [
       points: '智力',
       traits: ['援助'],
     }),
-    seat('manchong', '滿寵', ['xingyi', null], ['形一陣', ''], chui(), {
+    seat('manchong', '滿寵', ['xingyi', 'yingcheng'], ['形一陣', '嬰城自守'], chui(), {
       points: '智力',
-      remark: '第二戰法截圖不清，待核（近熯天或焚城，不臆測）',
-      tacticsRaw: '形一陣、第二戰法待核',
     }),
-  ], [], '', '複剋拒馬奇略。表稱沒有特別好評，老版本強度。滿寵第二戰法與奇略欄待核。'),
+  ], qilueJuma, '', '表上寫複刻拒馬奇略。表稱沒有特別好評，老版本強度。'),
 
   ayTeam('lufu-ay-beifa-qiang', '北伐槍', 'T1.5', 85, [
     seat('sp-zhugeliang', 'SP諸葛亮', ['fuji', 'zhongwang'], ['撫輯軍民', '眾望所歸'], book('jiubian', 'yuanqi', 'suzhan', 'yanxu'), {
       points: '統率一速',
-      traits: ['龍驤'],
       remark: '第一戰法截圖寫軍民，暫對撫輯軍民，待核',
     }),
     seat('guanxing', '關興', ['qianli', 'pozhen'], ['千里走單騎', '破陣摧堅'], houfa(), {
       points: '武力',
+      traits: ['龍驤'],
     }),
     seat('zhangbao', '張苞', ['qingzhou', 'hengge'], ['青州兵', '橫戈躍馬'], book('zuozhan', 'shengyi', 'shengzhan', 'zhirui'), {
       points: '武力',
       traits: ['虎峙'],
     }),
-  ], [], '', '打野隊，北伐槍低配版。與北伐盾同三將、兵種改槍。奇略欄寫複剋五謀奇略，未另列五張。'),
+  ], [], '', '打野隊，北伐槍低配版。與北伐盾同三將、兵種改槍。奇略欄寫複刻五謀奇略，未另列五張。'),
 ];
 
 export const hanyanLufu = [...hanyanLufuMains, ...hanyanLufuMergeSources];

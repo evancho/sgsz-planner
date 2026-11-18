@@ -1233,7 +1233,7 @@ function planLine(team) {
     parts.push(`奇略 ${shown.join('→')}`);
   }
   if (!parts.length) return '';
-  return `<p class="faint">${esc(parts.join(' · '))}</p>`;
+  return `<p class="faint">${esc(parts.join('；'))}</p>`;
 }
 
 function planEditor(team, current) {

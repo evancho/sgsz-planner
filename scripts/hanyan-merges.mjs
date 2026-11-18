@@ -174,7 +174,7 @@ const ALTS = {
     alt('lufu-qs-xunyou-wumou', '秋石荀攸五謀騎', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
       'SP荀彧靈機、刮骨並加30速；荀攸轉·獅子奮迅、戮力同心。',
     ]),
-    alt('lufu-ay-yunjian', '十隊共存雲建盾', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
+    alt('lufu-ay-yunjian', '十隊共存五謀臣', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
       '阿焰 2026-02-11 十隊共存。陸服玩家分 110，不是 T 級。',
       '同三將改盾。郭嘉奪魂、當鋒；奇略含功成身退。',
     ]),
@@ -205,7 +205,7 @@ const ALTS = {
       '奇略：芒碭隱蹤→推食解衣→沛縣聚義→博浪椎秦→敗中求生。',
     ], FB),
   
-    alt('lufu-qs-fugui-taiwei', '秋石富貴太尉盾', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
+    alt('lufu-qs-fugui-taiwei', '秋石蓄勢太尉盾', '陸服玩家版', '秋石小軍師', 'https://mp.weixin.qq.com/s/cgz066TJU5EnG1xttpZ22A', '待核', [
       '司馬懿熯天、眾志；曹操魅惑、藤甲；滿寵蓄勢、形一陣。',
     ]),
     alt('lufu-ay-taiwei', '十隊共存太尉盾', '陸服玩家版', '阿焰', 'https://www.kdocs.cn/l/ckfvAjUzUXFe', '待核', [
@@ -313,7 +313,7 @@ export function applyMerges(list) {
       if (source.officialSource && !row.officialSource) row.officialSource = source.officialSource;
       if (source.reprintSource && !row.reprintSource) row.reprintSource = source.reprintSource;
       if (source.groupLabel && !row.groupLabel) row.groupLabel = source.groupLabel;
-      if (source.postedAt && !row.postedAt) row.postedAt = source.postedAt;
+      if (source.origin === 'lufu' && source.postedAt && !row.postedAt) row.postedAt = source.postedAt;
       return row;
     }).filter(Boolean);
     return alternatives.length ? { ...team, alternatives } : team;
